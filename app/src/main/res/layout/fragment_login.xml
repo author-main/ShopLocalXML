@@ -32,7 +32,6 @@
         android:id="@+id/layoutPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextMail"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
         android:paddingVertical="8dp"
