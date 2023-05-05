@@ -10,4 +10,112 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+
+    <string name="text_auth">АВТОРИЗАЦИЯ</string>
+    <string name="btn_reg">РЕГИСТРАЦИЯ</string>
+    <string name="btn_rest">ЗАБЫЛИ ПАРОЛЬ?</string>
+    <string name="biometric_title">Войдите в ShopLocal</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="title_restore">Восстановление доступа</string>
+    <string name="title_reg">Регистрация</string>
+    <string name="btn_send">Отправить</string>
+    <string name="text_family">Фамилия</string>
+    <string name="text_name">Имя</string>
+    <string name="text_phone">Телефон</string>
+    <string name="text_email">EMail</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_newpassword">Новый\nпароль</string>
+    <string name="message_restore_email">Вам отправлено письмо\nдля подтверждения изменения\nданных</string>
+    <string name="message_login_error">Ошибка проверки данных клиента.\nВ доступе отказано</string>
+    <string name="text_bestseller">Бестселлер</string>
+    <string name="text_action">Акция</string>
+    <string-array name="bottom_navigation_items">
+        <item>Главная</item>
+        <item>Каталог</item>
+        <item>Корзина</item>
+        <item>Профиль</item>
+    </string-array>
+    <string-array name="bottomsheet_product_items">
+        <item>Добавить в корзину</item>
+        <item>Все товары данного бренда</item>
+        <item>Поместить в избранное</item>
+        <item>Похожие товары</item>
+        <item>Отмена</item>
+        <item>Удалить из избранного</item>
+    </string-array>
+    <string name="currency">P</string>
+    <string name="text_search">Искать в ShopLocal</string>
+    <string name="text_error_speechrecognizer">Система распознавания речи\nне доступна</string>
+    <string name="prompt_speechrecognizer">Не молчи, родной</string>
+    <string name="text_history">История</string>
+    <string name="text_clear">Очистить</string>
+    <string-array name="sort_items">
+        <item>По цене</item>
+        <item>По популярности</item>
+        <item>По рейтингу</item>
+    </string-array>
+    <string name="text_filter">Фильтры</string>
+    <string name="text_discount">Скидка</string>
+    <string name="text_nodiscounts">Без скидок</string>
+    <string name="text_favorite">Избранное</string>
+    <string name="text_from">от</string>
+    <string name="text_to">до</string>
+    <string name="text_price">Цена</string>
+    <string name="text_currency">руб</string>
+    <string name="text_category">Категория</string>
+    <string name="text_brend">Бренд</string>
+    <string name="text_reset">Сбросить</string>
+    <string name="text_perform">Применить</string>
+    <string name="text_viewmode">Вид</string>
+    <string name="text_review">Отзывы</string>
+    <string name="text_question">Вопросы</string>
+    <string name="text_norate">Нет оценок</string>
+    <string-array name="rate">
+        <item>оценка</item>
+        <item>оценки</item>
+        <item>оценок</item>
+    </string-array>
+    <string-array name="review">
+        <item>отзыв</item>
+        <item>отзыва</item>
+        <item>отзывов</item>
+    </string-array>
+    <string-array name="month">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+    <string name="text_final_price">Ваша цена</string>
+    <string name="text_regular_price">Обычная цена</string>
+    <string name="text_black_discount">Черная пятница</string>
+    <string name="text_noname">Noname</string>
+    <string name="text_description">Описание</string>
+    <string name="text_addcart">В корзину</string>
+    <string name="text_datedelivery">Доставим</string>
+    <string name="text_buy_oneclick">Купить в один клик</string>
+    <string name="text_ok">OK</string>
+    <string-array name="typemessage">
+        <item>Информация</item>
+        <item>Доставка</item>
+        <item>Скидки и акции</item>
+        <item>Поздравляем</item>
+    </string-array>
+    <string name="text_usermessages">Сообщения</string>
+    <string name="text_warninginformation">Никому не передавайте свой номер телефона и коды из СМС, даже сотрудникам LocalShop.</string>
+    <string name="text_warninginformation1">Так мы сможем гарантировать безопасность вашего аккаунта.</string>
+    <string name="text_nousermessages">Полковнику\nникто не пишет…</string>
+    <string name="text_delete_usermessages">Сообщение удалено</string>
+    <string name="text_share">Поделиться</string>
+    <string name="text_subjectshare">LocalShop. Этот товар Вам понравится</string>
+    <string name="text_notifyreg">Вы успешно зарегистрировались</string>
 </resources>
