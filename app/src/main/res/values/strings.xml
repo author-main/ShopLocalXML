@@ -120,4 +120,6 @@
     <string name="text_notifyreg">Вы успешно зарегистрировались</string>
     <string name="eCharPassword">○</string>
     <string name="fCharPassword">●</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
