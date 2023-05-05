@@ -118,4 +118,6 @@
     <string name="text_share">Поделиться</string>
     <string name="text_subjectshare">LocalShop. Этот товар Вам понравится</string>
     <string name="text_notifyreg">Вы успешно зарегистрировались</string>
+    <string name="eCharPassword">○</string>
+    <string name="fCharPassword">●</string>
 </resources>
