@@ -103,17 +103,22 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputEmail"
         android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:paddingHorizontal="32dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAuth">
+        app:layout_constraintTop_toBottomOf="@+id/textViewAuth"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.rounded">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableEnd="@drawable/ic_menu_camera"
-            />
+            android:drawableEnd="@drawable/ic_email"
+            android:hint="Email"
+            android:maxLines="1"
+            android:padding="0dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
