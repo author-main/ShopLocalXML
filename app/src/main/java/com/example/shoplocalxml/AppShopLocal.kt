@@ -8,3 +8,8 @@ class AppShopLocal: Application() {
         super.onCreate()
     }
 }
+
+
+/*
+app:boxBackgroundColor="@android:color/transparent"
+android:background="@android:color/transparent">*/
