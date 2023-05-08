@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="PrimaryDark">#FF222831</color>
     <color name="EditTextBackgroundDark">#FF393E46</color>
+    <color name="EditTextBorderErrorDark">#FFA10046</color>
 </resources>
