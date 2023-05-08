@@ -4,11 +4,11 @@
     <item name="cornerSize">8dp</item>
 </style>
 
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.rounded</item>
-        <item name="boxBackgroundColor">#ffff0000</item>
-        <item name="boxStrokeColor">@color/boxstrokecolor</item>
-        <item name="boxStrokeWidth">1dp</item>
-    </style>
+<style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.rounded</item>
+    <item name="boxBackgroundColor">@color/EditTextBackgroundDark</item>
+    <item name="boxStrokeColor">@color/boxstrokecolor</item>
+    <item name="boxStrokeWidth">1dp</item>
+</style>
 
 </resources>
