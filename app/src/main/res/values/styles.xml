@@ -7,7 +7,7 @@
 <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
     <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.rounded</item>
     <item name="boxBackgroundColor">@color/EditTextBackgroundDark</item>
-    <item name="boxStrokeColor">@color/boxstrokecolor</item>
+    <!--<item name="boxStrokeColor">@color/boxstrokecolor</item>-->
     <item name="boxStrokeWidth">1dp</item>
     <item name="android:textColorHint">#ffff0000</item>
     <item name="hintTextColor">#ffff0000</item>
