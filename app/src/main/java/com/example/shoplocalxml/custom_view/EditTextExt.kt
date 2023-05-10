@@ -1,19 +1,110 @@
 package com.example.shoplocalxml.custom_view
 
+import android.R.attr
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.graphics.alpha
+import androidx.core.graphics.red
+import androidx.core.graphics.toColor
+import androidx.core.graphics.toColorInt
+import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toDp
 import com.example.shoplocalxml.toPx
 
+
 class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditText(context, attributes) {
     private val paint = Paint()
+    private var roundBackgroundColor = Color.parseColor("#FF393E46")
+        set(value){
+            field = value
+            setRoundBackground()
+        }
+    private var borderColor     = Color.TRANSPARENT
+        set(value){
+            field = value
+            setRoundBackground()
+        }
+    private var textColor       = Color.parseColor("#FFBEBEBE")
+
+    init {
+        setHintTextColor(textColor.alpha(0.3f))
+        textSize = 15f
+        setTextColor(textColor)
+    }
+
+
+
+  /*  private var background: Drawable
+    init {
+        val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
+        paint.color = Color.BLUE
+        paint.style = Paint.Style.FILL_AND_STROKE
+        paint.strokeWidth = 2.toPx.toFloat()
+        val canvas = Canvas(bitmap)
+        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), 8.toPx.toFloat(), 8.toPx.toFloat(), paint)
+        background = BitmapDrawable(resources, bitmap)
+    }*/
+
+   /* override fun setBackgroundColor(value: Int) {
+        super.setBackgroundColor(value)
+        backgroundColor = value
+        setBackground()
+    }
+
+    fun setBorderColor(value: Int) {
+        borderColor = value
+        setBackground()
+    }*/
+
+    private fun setRoundBackground(){
+        val width  = measuredWidth
+        val height = measuredHeight
+        val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
+        paint.color = roundBackgroundColor
+        paint.style = Paint.Style.FILL
+        paint.isAntiAlias = true
+        val round = 8.toPx.toFloat()
+        val canvas = Canvas(bitmap)
+        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), round, round, paint)
+        if (borderColor != Color.TRANSPARENT) {
+            paint.style = Paint.Style.STROKE
+            val strokeWidth = 1.toPx.toFloat()
+            paint.strokeWidth = strokeWidth
+            paint.color = borderColor
+            canvas.drawRoundRect(
+                strokeWidth,
+                strokeWidth,
+                width.toFloat() - strokeWidth,
+                height.toFloat() - strokeWidth,
+                round,
+                round,
+                paint
+            )
+        }
+        this.background = BitmapDrawable(resources, bitmap)
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val horzPadding = 8.toPx
+        setPadding(horzPadding,
+                   paddingTop,
+                   horzPadding,
+                   paddingBottom
+        )
+
+      /*  val width  = MeasureSpec.getSize(widthMeasureSpec)
+        val height = MeasureSpec.getSize(heightMeasureSpec)*/
+
+
       /*  val width  = MeasureSpec.getSize(widthMeasureSpec)  + 2.toPx
         val height = MeasureSpec.getSize(heightMeasureSpec) + 2.toPx
         setMeasuredDimension(width, height)*/
@@ -34,6 +125,7 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        setRoundBackground()
     }
 }
 
