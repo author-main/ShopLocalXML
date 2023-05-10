@@ -1,27 +1,26 @@
 package com.example.shoplocalxml.custom_view
 
-import android.R.attr
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.graphics.alpha
-import androidx.core.graphics.red
-import androidx.core.graphics.toColor
-import androidx.core.graphics.toColorInt
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.log
-import com.example.shoplocalxml.toDp
 import com.example.shoplocalxml.toPx
 
 
 class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditText(context, attributes) {
     private val paint = Paint()
+    private var drawableRight: Drawable? = null
     private var roundBackgroundColor = Color.parseColor("#FF393E46")
         set(value){
             field = value
@@ -34,6 +33,8 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         }
     private var textColor       = Color.parseColor("#FFBEBEBE")
 
+    private var drawableOnClick: (() -> Unit)? = null
+
     init {
         setHintTextColor(textColor.alpha(0.3f))
         textSize = 15f
@@ -41,8 +42,36 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
     }
 
 
+    fun setDrawableOnClick(action: () -> Unit){
+        drawableOnClick = action
+    }
 
-  /*  private var background: Drawable
+
+    override fun performClick(): Boolean {
+        drawableOnClick?.invoke()
+        return super.performClick()
+    }
+
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.let {
+            val x = event.x.toInt()
+            val y = event.y.toInt()
+            if (it.action == MotionEvent.ACTION_DOWN) {
+                drawableRight?.let{icon ->
+                    val bounds = icon.bounds;
+                    if (drawableOnClick != null && bounds.contains(x, y)) {
+                        performClick()
+                    }
+                }
+            }
+        }
+
+        return super.onTouchEvent(event)
+    }
+
+
+    /*  private var background: Drawable
     init {
         val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
         paint.color = Color.BLUE
@@ -126,6 +155,16 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         setRoundBackground()
+    }
+
+    override fun setCompoundDrawables(
+        left: Drawable?, top: Drawable?,
+        right: Drawable?, bottom: Drawable?
+    ) {
+        if (right != null) {
+            drawableRight = right
+        }
+        super.setCompoundDrawables(left, top, right, bottom)
     }
 }
 

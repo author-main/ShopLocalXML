@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.custom_view.EditTextExt
+import com.example.shoplocalxml.log
 
 /**
  * A simple [Fragment] subclass.
@@ -22,7 +24,12 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        val root = inflater.inflate(R.layout.fragment_login, container, false)
+        val editMail = root.findViewById<EditTextExt>(R.id.editTextTextEmailAddress)
+        editMail.setDrawableOnClick {
+            log("click drawable right...")
+        }
+        return root
     }
 
 }
