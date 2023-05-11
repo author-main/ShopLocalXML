@@ -24,6 +24,7 @@ import com.example.shoplocalxml.toPx
 
 class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditText(context, attributes) {
     private val paint = Paint()
+    private var isCorrect = true
     private var drawableRight: Drawable? = null
     private var roundBackgroundColor = Color.parseColor("#FF393E46")
         set(value){
@@ -199,8 +200,8 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
     private fun getDrawableRight(drawable: Drawable?){
         drawable?.let{icon ->
             drawableRight = icon
-            val color = context.getColor(R.color.drawable_tint_color)
-            icon.setTint(color.alpha(0.5f))
+            val color = context.getColor(R.color.drawable_tint_color).alpha(0.5f)
+            icon.setTint(color)
         }
     }
 
@@ -220,13 +221,15 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         super.setCompoundDrawablesRelative(start, top, end, bottom)
     }
 
+    fun isCorrectValue() = isCorrect
+
     private fun validValue(){
         when (inputType) {
           33 -> {
-              val validate = text?.let {email ->
+              isCorrect = text?.let {email ->
                   !(email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches())
               } ?: false
-              val color = if (validate) Color.TRANSPARENT else context.getColor(R.color.EditTextBorderErrorDark)
+              val color = if (isCorrect) Color.TRANSPARENT else context.getColor(R.color.EditTextBorderErrorDark)
               borderColor = color
           }
 
