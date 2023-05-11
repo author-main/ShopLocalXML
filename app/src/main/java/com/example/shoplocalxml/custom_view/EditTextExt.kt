@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.text.InputType
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatEditText
@@ -45,7 +46,7 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         if (drawableEnd != null)
             setCompoundDrawablesRelative(null, null, drawableEnd, null)
         setHintTextColor(textColor.alpha(0.3f))
-        textSize = 15f
+        //textSize = 15f
         setTextColor(textColor)
     }
 
@@ -86,7 +87,10 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
     }
 
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
-        log(previouslyFocusedRect?.right)
+        if (!focused)
+            validValue()
+        else
+            borderColor = Color.TRANSPARENT
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
     }
 
@@ -119,7 +123,7 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         paint.color = roundBackgroundColor
         paint.style = Paint.Style.FILL
         paint.isAntiAlias = true
-        val round = 8.toPx.toFloat()
+        val round = 12.toPx.toFloat()
         val canvas = Canvas(bitmap)
         canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), round, round, paint)
         if (borderColor != Color.TRANSPARENT) {
@@ -203,6 +207,18 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
 //        this.setCompoundDrawables(start, top, end, bottom)
         super.setCompoundDrawablesRelative(start, top, end, bottom)
     }
+
+    private fun validValue(){
+        when (inputType) {
+          33 -> {
+              borderColor = context.getColor(R.color.EditTextBorderErrorDark)
+              //log("email...")
+          }
+
+        }
+//        log(inputType)
+    }
+
 
     override fun setCompoundDrawables(
         left: Drawable?, top: Drawable?,
