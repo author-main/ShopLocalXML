@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.util.AttributeSet
+import android.util.Patterns
 import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
@@ -222,8 +223,11 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
     private fun validValue(){
         when (inputType) {
           33 -> {
-              borderColor = context.getColor(R.color.EditTextBorderErrorDark)
-              //log("email...")
+              val validate = text?.let {email ->
+                  !(email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches())
+              } ?: false
+              val color = if (validate) Color.TRANSPARENT else context.getColor(R.color.EditTextBorderErrorDark)
+              borderColor = color
           }
 
         }
