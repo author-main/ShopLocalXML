@@ -22,7 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_light"
-        android:paddingVertical="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
         android:text="@string/text_auth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,11 +34,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:paddingVertical="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEmail">
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress">
 
         <TextView
             android:id="@+id/textViewSym1"
@@ -49,6 +51,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/eCharPassword"
+            android:textColor="@color/EditTextFont"
             android:textSize="24sp" />
 
         <TextView
@@ -61,6 +64,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/eCharPassword"
+            android:textColor="@color/EditTextFont"
             android:textSize="24sp" />
 
         <TextView
@@ -73,6 +77,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/eCharPassword"
+            android:textColor="@color/EditTextFont"
             android:textSize="24sp" />
 
         <TextView
@@ -85,6 +90,7 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/eCharPassword"
+            android:textColor="@color/EditTextFont"
             android:textSize="24sp" />
 
         <TextView
@@ -97,40 +103,24 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center"
             android:text="@string/eCharPassword"
+            android:textColor="@color/EditTextFont"
             android:textSize="24sp" />
     </LinearLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputEmail"
-        style="@style/LoginTextInputLayoutStyle"
-        android:layout_width="409dp"
-        android:layout_height="48dp"
-        android:hint="EMail"
-        android:paddingHorizontal="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAuth">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawableEnd="@drawable/ic_email"
-            android:maxLines="1"
-            android:padding="0dp" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.example.shoplocalxml.custom_view.EditTextExt
         android:id="@+id/editTextTextEmailAddress"
         style="@style/EditTextExt"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
         android:drawableEnd="@drawable/ic_email"
         android:ems="10"
         android:hint="EMail"
         android:inputType="textEmailAddress"
+        android:imeOptions="actionDone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAuth" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
@@ -46,7 +48,7 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         if (drawableEnd != null)
             setCompoundDrawablesRelative(null, null, drawableEnd, null)
         setHintTextColor(textColor.alpha(0.3f))
-        //textSize = 15f
+        textSize = 15f
         setTextColor(textColor)
     }
 
@@ -84,6 +86,13 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         }
 
         return super.onTouchEvent(event)
+    }
+
+    override fun onEditorAction(actionCode: Int) {
+        if (actionCode == EditorInfo.IME_ACTION_DONE) {
+            clearFocus()
+        }
+        super.onEditorAction(actionCode)
     }
 
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
@@ -128,7 +137,7 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), round, round, paint)
         if (borderColor != Color.TRANSPARENT) {
             paint.style = Paint.Style.STROKE
-            val strokeWidth = 1.toPx.toFloat()
+            val strokeWidth = 1.toPx.toFloat()+0.5f
             paint.strokeWidth = strokeWidth
             paint.color = borderColor
             canvas.drawRoundRect(
@@ -140,6 +149,8 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
                 round,
                 paint
             )
+
+
         }
         this.background = BitmapDrawable(resources, bitmap)
     }
