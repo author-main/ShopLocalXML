@@ -1,22 +1,20 @@
 package com.example.shoplocalxml.custom_view
 
-import android.R.color
-import android.R.drawable
+import android.R.attr
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 
 
@@ -58,20 +56,27 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
 
 
     override fun performClick(): Boolean {
-        drawableOnClick?.invoke()
         return super.performClick()
     }
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.let {
-            val x = event.x.toInt()
-            val y = event.y.toInt()
             if (it.action == MotionEvent.ACTION_DOWN) {
+                performClick()
                 drawableRight?.let{icon ->
                     val bounds = icon.bounds;
-                    if (drawableOnClick != null && bounds.contains(x, y)) {
-                        performClick()
+                    val x = event.x.toInt()
+                    val y = event.y.toInt()
+                    val placeBounds = Rect().apply {
+                        this.left    = measuredWidth - compoundPaddingRight
+                        this.top     = compoundPaddingTop
+                        this.right   = measuredWidth - 8.toPx
+                        this.bottom  = measuredHeight - compoundPaddingBottom
+                    }
+                    if (drawableOnClick != null && placeBounds.contains(x, y)) {
+                        drawableOnClick?.invoke()
+                        event.action = MotionEvent.ACTION_CANCEL
                     }
                 }
             }
@@ -80,6 +85,10 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         return super.onTouchEvent(event)
     }
 
+    override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+        log(previouslyFocusedRect?.right)
+        super.onFocusChanged(focused, direction, previouslyFocusedRect)
+    }
 
     /*  private var background: Drawable
     init {
@@ -168,6 +177,7 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
 
         return ColorStateList(states, colors)
     }*/
+
 
 
     private fun getDrawableRight(drawable: Drawable?){
