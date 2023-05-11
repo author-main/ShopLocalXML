@@ -121,11 +121,11 @@
 
     <com.example.shoplocalxml.custom_view.EditTextExt
         android:id="@+id/editTextTextEmailAddress"
-        style="@style/Widget.AppCompat.EditText"
+        style="@style/EditTextExt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:drawableRight="@drawable/ic_email"
+        android:drawableEnd="@drawable/ic_email"
         android:ems="10"
         android:hint="EMail"
         android:inputType="text|textEmailAddress"

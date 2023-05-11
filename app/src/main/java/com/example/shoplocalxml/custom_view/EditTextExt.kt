@@ -1,20 +1,22 @@
 package com.example.shoplocalxml.custom_view
 
+import android.R.color
+import android.R.drawable
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 
 
@@ -32,10 +34,18 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
             setRoundBackground()
         }
     private var textColor       = Color.parseColor("#FFBEBEBE")
+    private var drawableRightColor = Color.parseColor("#FFBEBEBE")
+        set (value) {
+            field = value
+            drawableRight?.setTint(value)
+        }
 
     private var drawableOnClick: (() -> Unit)? = null
 
     init {
+        val drawableEnd = compoundDrawablesRelative[2]
+        if (drawableEnd != null)
+            setCompoundDrawablesRelative(null, null, drawableEnd, null)
         setHintTextColor(textColor.alpha(0.3f))
         textSize = 15f
         setTextColor(textColor)
@@ -129,27 +139,10 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
                    horzPadding,
                    paddingBottom
         )
-
-      /*  val width  = MeasureSpec.getSize(widthMeasureSpec)
-        val height = MeasureSpec.getSize(heightMeasureSpec)*/
-
-
-      /*  val width  = MeasureSpec.getSize(widthMeasureSpec)  + 2.toPx
-        val height = MeasureSpec.getSize(heightMeasureSpec) + 2.toPx
-        setMeasuredDimension(width, height)*/
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-      /*  paint.color = Color.BLUE
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 2.toPx.toFloat()
-
-        canvas?.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), 8.toPx.toFloat(), 8.toPx.toFloat(), paint)
-        canvas?.drawText(
-            prefix, defaultLeftPadding,
-            getLineBounds(0, null).toFloat(), paint
-        )*/
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -157,13 +150,60 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         setRoundBackground()
     }
 
+   /* private fun getColorState(): ColorStateList{
+        val states = arrayOf(
+            intArrayOf(android.R.attr.defaultValue) // enabled
+            /*intArrayOf(android.R.attr.state_enabled), // enabled
+            intArrayOf(-android.R.attr.state_enabled), // disabled
+            intArrayOf(-android.R.attr.state_checked), // unchecked
+            intArrayOf(android.R.attr.state_pressed)  // pressed*/
+        )
+
+        val colors = intArrayOf(
+            Color.RED/*,
+            Color.RED,
+            Color.GREEN,
+            Color.BLUE*/
+        )
+
+        return ColorStateList(states, colors)
+    }*/
+
+
+    private fun getDrawableRight(drawable: Drawable?){
+        drawable?.let{icon ->
+            drawableRight = icon
+            val color = context.getColor(R.color.drawable_tint_color)
+            icon.setTint(color.alpha(0.5f))
+        }
+    }
+
+    override fun setCompoundDrawablesRelative(
+        start: Drawable?,
+        top: Drawable?,
+        end: Drawable?,
+        bottom: Drawable?
+    ) {
+       /* end?.let{icon ->
+            drawableRight = icon
+            val color = context.getColor(R.color.drawable_tint_color)
+            icon.setTint(color.alpha(0.5f))
+        }*/
+        getDrawableRight(end)
+//        this.setCompoundDrawables(start, top, end, bottom)
+        super.setCompoundDrawablesRelative(start, top, end, bottom)
+    }
+
     override fun setCompoundDrawables(
         left: Drawable?, top: Drawable?,
         right: Drawable?, bottom: Drawable?
     ) {
-        if (right != null) {
-            drawableRight = right
-        }
+        getDrawableRight(right)
+            /*right?.let{icon ->
+                drawableRight = icon
+                val color = context.getColor(R.color.drawable_tint_color)
+                icon.setTint(color.alpha(0.5f))
+            }*/
         super.setCompoundDrawables(left, top, right, bottom)
     }
 }

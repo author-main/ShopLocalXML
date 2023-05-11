@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
 <style name="ShapeAppearanceOverlay.App.rounded" parent="">
     <item name="cornerFamily">rounded</item>
     <item name="cornerSize">8dp</item>
@@ -12,6 +13,11 @@
     <item name="android:textColorHint">#ffff0000</item>
     <item name="hintTextColor">#ffff0000</item>
 </style>
+
+
+    <style name="EditTextExt" parent="@android:style/Widget.EditText">
+        <item name="android:textColorHint">#70BEBEBE</item>
+    </style>
 
 
 
