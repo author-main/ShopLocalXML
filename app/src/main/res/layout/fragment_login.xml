@@ -9,213 +9,219 @@
             type="com.example.shoplocalxml.ui.login.LoginViewModel"/>
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.login.LoginFragment"
-    >
-
-    <ImageView
-        android:id="@+id/imageLogo"
-        android:layout_width="170dp"
-        android:layout_height="208dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_local_shop" />
-
-    <TextView
-        android:id="@+id/textViewAuth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="0.1"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
-        android:text="@string/text_auth"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageLogo" />
-
-<FrameLayout
-    android:id="@+id/layoutPassword"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:paddingVertical="8dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress">
-
     <LinearLayout
-        android:id="@+id/layoutEmptySymbols"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/textViewSym1"
-            style="@style/TextViewKeyE"/>
-
-        <TextView
-            android:id="@+id/textViewSym2"
-            style="@style/TextViewKeyE"/>
-
-        <TextView
-            android:id="@+id/textViewSym3"
-            style="@style/TextViewKeyE"/>
-
-        <TextView
-            android:id="@+id/textViewSym4"
-            style="@style/TextViewKeyE"/>
-
-        <TextView
-            android:id="@+id/textViewSym5"
-            style="@style/TextViewKeyE"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layoutFillSymbols"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/textViewSym1f"
-            style="@style/TextViewKeyF"/>
-
-        <TextView
-            android:id="@+id/textViewSym2f"
-            style="@style/TextViewKeyF"/>
-
-        <TextView
-            android:id="@+id/textViewSym3f"
-            style="@style/TextViewKeyF"/>
-
-        <TextView
-            android:id="@+id/textViewSym4f"
-            style="@style/TextViewKeyF"/>
-
-        <TextView
-            android:id="@+id/textViewSym5f"
-            style="@style/TextViewKeyF"/>
-    </LinearLayout>
-
-</FrameLayout>
-
-    <com.example.shoplocalxml.custom_view.EditTextExt
-        android:id="@+id/editTextTextEmailAddress"
-        style="@style/EditTextExt"
+        android:id="@+id/layoutMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        android:drawableEnd="@drawable/ic_email"
-        android:ems="10"
-        android:imeOptions="actionDone"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAuth" />
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="360dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutPassword">
-
-        <TableRow
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            tools:context=".ui.login.LoginFragment">
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(1)}"
-                android:id="@+id/buttonKey_1"
-                style="@style/ButtonPasswordKey"
-                android:text="1" />
+            <ImageView
+                android:id="@+id/imageLogo"
+                android:layout_width="170dp"
+                android:layout_height="208dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_local_shop" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(2)}"
-                android:id="@+id/buttonKey_2"
-                style = "@style/ButtonPasswordKey"
-                android:text="2" />
+            <TextView
+                android:id="@+id/textViewAuth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.1"
+                android:paddingTop="24dp"
+                android:paddingBottom="32dp"
+                android:text="@string/text_auth"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageLogo" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(3)}"
-                android:id="@+id/buttonKey_3"
-                style = "@style/ButtonPasswordKey"
-                android:text="3" />
-        </TableRow>
+            <FrameLayout
+                android:id="@+id/layoutPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingVertical="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <LinearLayout
+                    android:id="@+id/layoutEmptySymbols"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(4)}"
-                android:id="@+id/buttonKey_4"
-                style="@style/ButtonPasswordKey"
-                android:text="4" />
+                    <TextView
+                        android:id="@+id/textViewSym1"
+                        style="@style/TextViewKeyE" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(5)}"
-                android:id="@+id/buttonKey_5"
-                style = "@style/ButtonPasswordKey"
-                android:text="5" />
+                    <TextView
+                        android:id="@+id/textViewSym2"
+                        style="@style/TextViewKeyE" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(6)}"
-                android:id="@+id/buttonKey_6"
-                style = "@style/ButtonPasswordKey"
-                android:text="6" />
-        </TableRow>
+                    <TextView
+                        android:id="@+id/textViewSym3"
+                        style="@style/TextViewKeyE" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/textViewSym4"
+                        style="@style/TextViewKeyE" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(7)}"
-                android:id="@+id/buttonKey_7"
-                style="@style/ButtonPasswordKey"
-                android:text="7" />
+                    <TextView
+                        android:id="@+id/textViewSym5"
+                        style="@style/TextViewKeyE" />
+                </LinearLayout>
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(8)}"
-                android:id="@+id/buttonKey_8"
-                style = "@style/ButtonPasswordKey"
-                android:text="8" />
+                <LinearLayout
+                    android:id="@+id/layoutFillSymbols"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(9)}"
-                android:id="@+id/buttonKey_9"
-                style = "@style/ButtonPasswordKey"
-                android:text="9" />
-        </TableRow>
+                    <TextView
+                        android:id="@+id/textViewSym1f"
+                        style="@style/TextViewKeyF" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/textViewSym2f"
+                        style="@style/TextViewKeyF" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(10)}"
-                android:id="@+id/buttonKey_finger"
-                style="@style/ButtonPasswordKey"
-                app:icon="@drawable/ic_fingerprint"/>
+                    <TextView
+                        android:id="@+id/textViewSym3f"
+                        style="@style/TextViewKeyF" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(0)}"
-                android:id="@+id/buttonKey_10"
-                style = "@style/ButtonPasswordKey"
-                android:text="0" />
+                    <TextView
+                        android:id="@+id/textViewSym4f"
+                        style="@style/TextViewKeyF" />
 
-            <Button
-                android:onClick="@{() -> eventhandler.onClick(11)}"
-                android:id="@+id/buttonKey_backspace"
-                style="@style/ButtonPasswordKey"
-                app:icon="@drawable/ic_backspace"/>
-        </TableRow>
+                    <TextView
+                        android:id="@+id/textViewSym5f"
+                        style="@style/TextViewKeyF" />
+                </LinearLayout>
 
-    </TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+
+            <com.example.shoplocalxml.custom_view.EditTextExt
+                android:id="@+id/editTextTextEmailAddress"
+                style="@style/EditTextExt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="48dp"
+                android:layout_marginEnd="48dp"
+                android:drawableEnd="@drawable/ic_email"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAuth" />
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutPassword">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/buttonKey_1"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(1)}"
+                        android:text="1" />
+
+                    <Button
+                        android:id="@+id/buttonKey_2"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(2)}"
+                        android:text="2" />
+
+                    <Button
+                        android:id="@+id/buttonKey_3"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(3)}"
+                        android:text="3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/buttonKey_4"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(4)}"
+                        android:text="4" />
+
+                    <Button
+                        android:id="@+id/buttonKey_5"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(5)}"
+                        android:text="5" />
+
+                    <Button
+                        android:id="@+id/buttonKey_6"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(6)}"
+                        android:text="6" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/buttonKey_7"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(7)}"
+                        android:text="7" />
+
+                    <Button
+                        android:id="@+id/buttonKey_8"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(8)}"
+                        android:text="8" />
+
+                    <Button
+                        android:id="@+id/buttonKey_9"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(9)}"
+                        android:text="9" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/buttonKey_finger"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(10)}"
+                        app:icon="@drawable/ic_fingerprint" />
+
+                    <Button
+                        android:id="@+id/buttonKey_10"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(0)}"
+                        android:text="0" />
+
+                    <Button
+                        android:id="@+id/buttonKey_backspace"
+                        style="@style/ButtonPasswordKey"
+                        android:onClick="@{() -> eventhandler.onClick(11)}"
+                        app:icon="@drawable/ic_backspace" />
+                </TableRow>
+
+            </TableLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
