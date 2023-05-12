@@ -12,6 +12,11 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -38,9 +43,15 @@ class LoginFragment : Fragment() {
                     resources.getString(R.string.fCharPassword)
                     else resources.getString(R.string.eCharPassword)
             }
-
-
-            log(value)
+        }
+        loginViewModel.onValidEmail = {
+            passwordSymbols.forEach{textView ->
+                textView?.text = resources.getString(R.string.eCharPassword)
+            }
+            if (dataBinding.editTextTextEmailAddress.validateValue())
+                dataBinding.editTextTextEmailAddress.text.toString()
+            else
+                null
         }
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_login, container, false)
@@ -51,9 +62,9 @@ class LoginFragment : Fragment() {
         passwordSymbols[3] = dataBinding.textViewSym4
         passwordSymbols[4] = dataBinding.textViewSym5
         dataBinding.eventhandler = loginViewModel
-        dataBinding.editTextTextEmailAddress.setDrawableOnClick {
+        /*dataBinding.editTextTextEmailAddress.setDrawableOnClick {
             log("click drawable right...")
-        }
+        }*/
         return dataBinding.root
     }
 }
