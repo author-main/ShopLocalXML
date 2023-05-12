@@ -1,6 +1,6 @@
 package com.example.shoplocalxml.custom_view
 
-import android.R.attr
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -9,20 +9,20 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.text.InputType
 import android.util.AttributeSet
 import android.util.Patterns
 import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.TintTypedArray.obtainStyledAttributes
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 
 
-class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditText(context, attributes) {
+@SuppressLint("RestrictedApi")
+class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
     private val paint = Paint()
     private var isCorrect = true
     private var drawableRight: Drawable? = null
@@ -37,11 +37,12 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
             setRoundBackground()
         }
     private var textColor       = Color.parseColor("#FFBEBEBE")
-    private var drawableRightColor = Color.parseColor("#FFBEBEBE")
+    private var hintColor       = 0
+    /*private var drawableRightColor = Color.parseColor("#FFBEBEBE")
         set (value) {
             field = value
             drawableRight?.setTint(value)
-        }
+        }*/
 
     private var drawableOnClick: (() -> Unit)? = null
 
@@ -49,9 +50,22 @@ class EditTextExt(context: Context, attributes: AttributeSet) : AppCompatEditTex
         val drawableEnd = compoundDrawablesRelative[2]
         if (drawableEnd != null)
             setCompoundDrawablesRelative(null, null, drawableEnd, null)
-        setHintTextColor(textColor.alpha(0.3f))
         textSize = 15f
         setTextColor(textColor)
+        val sHintColor = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "textColorHint")
+        hintColor = if (sHintColor != null)
+            Color.parseColor(sHintColor)
+        else
+            textColor.alpha(0.5f)
+        setHintTextColor(hintColor)
+/*        val attributes =
+            intArrayOf(android.R.attr.textColorHint)
+        /*val ta = obtainStyledAttributes(context, R.style.EditTextExt, attributes)
+        log(ta.getString(0))*/
+        val a = context.obtainStyledAttributes(attrs, intArrayOf(0), 0, com.example.shoplocalxml.R.style.EditTextExt)
+        a.recycle()*/
+
+
     }
 
 

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.login.LoginViewModel"/>
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginFragment"
@@ -52,7 +60,7 @@
             android:gravity="center"
             android:text="@string/eCharPassword"
             android:textColor="@color/EditTextFont"
-            android:textSize="24sp" />
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/textViewSym2"
@@ -65,7 +73,7 @@
             android:gravity="center"
             android:text="@string/eCharPassword"
             android:textColor="@color/EditTextFont"
-            android:textSize="24sp" />
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/textViewSym3"
@@ -78,7 +86,7 @@
             android:gravity="center"
             android:text="@string/eCharPassword"
             android:textColor="@color/EditTextFont"
-            android:textSize="24sp" />
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/textViewSym4"
@@ -91,7 +99,7 @@
             android:gravity="center"
             android:text="@string/eCharPassword"
             android:textColor="@color/EditTextFont"
-            android:textSize="24sp" />
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/textViewSym5"
@@ -104,7 +112,7 @@
             android:gravity="center"
             android:text="@string/eCharPassword"
             android:textColor="@color/EditTextFont"
-            android:textSize="24sp" />
+            android:textSize="21sp" />
     </LinearLayout>
 
     <com.example.shoplocalxml.custom_view.EditTextExt
@@ -123,7 +131,105 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewAuth" />
 
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="360dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutPassword">
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(1)}"
+                android:id="@+id/buttonKey_1"
+                style="@style/ButtonPasswordKey"
+                android:text="1" />
 
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(2)}"
+                android:id="@+id/buttonKey_2"
+                style = "@style/ButtonPasswordKey"
+                android:text="2" />
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(3)}"
+                android:id="@+id/buttonKey_3"
+                style = "@style/ButtonPasswordKey"
+                android:text="3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(4)}"
+                android:id="@+id/buttonKey_4"
+                style="@style/ButtonPasswordKey"
+                android:text="4" />
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(5)}"
+                android:id="@+id/buttonKey_5"
+                style = "@style/ButtonPasswordKey"
+                android:text="5" />
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(6)}"
+                android:id="@+id/buttonKey_6"
+                style = "@style/ButtonPasswordKey"
+                android:text="6" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(7)}"
+                android:id="@+id/buttonKey_7"
+                style="@style/ButtonPasswordKey"
+                android:text="7" />
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(8)}"
+                android:id="@+id/buttonKey_8"
+                style = "@style/ButtonPasswordKey"
+                android:text="8" />
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(9)}"
+                android:id="@+id/buttonKey_9"
+                style = "@style/ButtonPasswordKey"
+                android:text="9" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(10)}"
+                android:id="@+id/buttonKey_finger"
+                style="@style/ButtonPasswordKey"
+                app:icon="@drawable/ic_fingerprint"/>
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(0)}"
+                android:id="@+id/buttonKey_10"
+                style = "@style/ButtonPasswordKey"
+                android:text="0" />
+
+            <Button
+                android:onClick="@{() -> eventhandler.onClick(11)}"
+                android:id="@+id/buttonKey_backspace"
+                style="@style/ButtonPasswordKey"
+                app:icon="@drawable/ic_backspace"/>
+        </TableRow>
+
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
