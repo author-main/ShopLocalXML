@@ -2,7 +2,6 @@
 <resources>
     <color name="EditTextBackgroundDark">#FF393E46</color>
     <color name="EditTextFont">#BEBEBE</color>
-    <color name="EditTextHint">#FF0000</color>
     <color name="colorAccent">#FF9100</color>
     <color name="black_overlay">#66000000</color>
     <color name="colorDivider">#30ffffff</color>

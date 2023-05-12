@@ -37,83 +37,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageLogo" />
 
+<FrameLayout
+    android:id="@+id/layoutPassword"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:paddingVertical="8dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress">
+
     <LinearLayout
-        android:id="@+id/layoutPassword"
+        android:id="@+id/layoutEmptySymbols"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:paddingVertical="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textViewSym1"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/eCharPassword"
-            android:textColor="@color/EditTextFont"
-            android:textSize="21sp" />
+            style="@style/TextViewKeyE"/>
 
         <TextView
             android:id="@+id/textViewSym2"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/eCharPassword"
-            android:textColor="@color/EditTextFont"
-            android:textSize="21sp" />
+            style="@style/TextViewKeyE"/>
 
         <TextView
             android:id="@+id/textViewSym3"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/eCharPassword"
-            android:textColor="@color/EditTextFont"
-            android:textSize="21sp" />
+            style="@style/TextViewKeyE"/>
 
         <TextView
             android:id="@+id/textViewSym4"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/eCharPassword"
-            android:textColor="@color/EditTextFont"
-            android:textSize="21sp" />
+            style="@style/TextViewKeyE"/>
 
         <TextView
             android:id="@+id/textViewSym5"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/eCharPassword"
-            android:textColor="@color/EditTextFont"
-            android:textSize="21sp" />
+            style="@style/TextViewKeyE"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutFillSymbols"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewSym1f"
+            style="@style/TextViewKeyF"/>
+
+        <TextView
+            android:id="@+id/textViewSym2f"
+            style="@style/TextViewKeyF"/>
+
+        <TextView
+            android:id="@+id/textViewSym3f"
+            style="@style/TextViewKeyF"/>
+
+        <TextView
+            android:id="@+id/textViewSym4f"
+            style="@style/TextViewKeyF"/>
+
+        <TextView
+            android:id="@+id/textViewSym5f"
+            style="@style/TextViewKeyF"/>
+    </LinearLayout>
+
+</FrameLayout>
 
     <com.example.shoplocalxml.custom_view.EditTextExt
         android:id="@+id/editTextTextEmailAddress"

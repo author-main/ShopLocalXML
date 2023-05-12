@@ -34,8 +34,26 @@
     <item name="iconPadding">0dp</item>
     <item name="iconSize">24dp</item>
     <item name="iconTint">@color/EditTextFont</item>
-
 </style>
+
+
+    <style name="TextViewKeyE" parent="@android:style/Widget.TextView">
+        <item name="android:alpha">0.6</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/EditTextFont</item>
+        <item name="android:text">@string/eCharPassword</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+    <style name="TextViewKeyF" parent="@style/TextViewKeyE">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:text">@string/fCharPassword</item>
+    </style>
+
 
 
 

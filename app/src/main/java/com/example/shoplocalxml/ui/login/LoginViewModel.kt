@@ -6,12 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.log
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-    var onChangePassword: ((value: String) -> Unit)? = null
+    var onChangePassword: ((count: Int, type: PasswordSymbol) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
@@ -23,10 +24,15 @@ class LoginViewModel : ViewModel() {
 
     fun onClick(index: Int){
         if (index in 0..11) {
+            var typeKey = PasswordSymbol.NUMBER
             var changed = false
             when (index) {
-                KEY_FINGER -> {}
+                KEY_FINGER -> {
+                    changed = true
+                    typeKey = PasswordSymbol.FINGER_PRINT
+                }
                 KEY_BACKSPACE -> {
+                    typeKey = PasswordSymbol.BACKSPACE
                     if (userPassword.isNotBlank()) {
                         changed = true
                         userPassword = userPassword.substring(0, userPassword.length - 1)
@@ -40,10 +46,10 @@ class LoginViewModel : ViewModel() {
                 }
             }
             if (changed) {
-                onChangePassword?.invoke(userPassword)
+                onChangePassword?.invoke(userPassword.length, typeKey)
                 if (userPassword.length == 5) {
                     viewModelScope.launch {
-                        delay(500)
+                        delay(700)
                         onLogin()
                     }
 

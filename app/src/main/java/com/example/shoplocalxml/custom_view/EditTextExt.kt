@@ -49,7 +49,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         val drawableEnd = compoundDrawablesRelative[2]
         if (drawableEnd != null)
             setCompoundDrawablesRelative(null, null, drawableEnd, null)
-        textSize = 15f
+        textSize = 16f
         setTextColor(textColor)
         val sHintColor = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "textColorHint")
         hintColor = if (sHintColor != null)

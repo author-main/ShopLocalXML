@@ -11,4 +11,5 @@
     <color name="EditTextBackgroundDark">#FF393E46</color>
     <color name="EditTextFont">#BEBEBE</color>
     <color name="EditTextBorderErrorDark">#FFA10046</color>
+    <color name="colorAccent">#FF9100</color>
 </resources>
