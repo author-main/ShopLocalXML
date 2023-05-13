@@ -1,5 +1,6 @@
 package com.example.shoplocalxml.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
+import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 
 
 /**
@@ -22,15 +25,17 @@ import com.example.shoplocalxml.log
  */
 class LoginFragment : Fragment() {
     //private val colorFillSymbol = resources.getColor(R.color.colorAccent, null)
+    private lateinit var accessHandler: AccessHandler
     private lateinit var dataBinding: FragmentLoginBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        accessHandler = AccessHandlerImpl(requireActivity())
         val passwordSymbols = arrayOfNulls<TextView>(5)
         val loginViewModel =
             ViewModelProvider(this)[LoginViewModel::class.java]
@@ -46,6 +51,8 @@ class LoginFragment : Fragment() {
                         }
                     } else if (index > count - 1)
                         textView?.alpha = 0f
+                    /*else
+                        textView?.alpha = 1f*/
                 }
             }
         }
@@ -60,7 +67,7 @@ class LoginFragment : Fragment() {
                 null
         }
         // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.fragment_login, container, false)
+        //val root = inflater.inflate(R.layout.fragment_login, container, false)
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
         passwordSymbols[0] = dataBinding.textViewSym1f
         passwordSymbols[1] = dataBinding.textViewSym2f
@@ -76,4 +83,9 @@ class LoginFragment : Fragment() {
         }*/
         return dataBinding.root
     }
+
+ /*   override fun onAttach(context: Context) {
+        super.onAttach(context)
+        accessHandler = AccessHandlerImpl(requireActivity())
+    }*/
 }
