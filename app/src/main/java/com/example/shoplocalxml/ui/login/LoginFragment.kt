@@ -84,8 +84,4 @@ class LoginFragment : Fragment() {
         return dataBinding.root
     }
 
- /*   override fun onAttach(context: Context) {
-        super.onAttach(context)
-        accessHandler = AccessHandlerImpl(requireActivity())
-    }*/
 }
