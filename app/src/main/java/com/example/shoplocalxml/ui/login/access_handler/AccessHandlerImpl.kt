@@ -17,23 +17,23 @@ class AccessHandlerImpl: AccessHandler {
     }
 
     override fun onLogin(
-        action: ((token: String?) -> Unit)?,
         email: String,
         password: String,
-        finger: Boolean
+        finger: Boolean,
+        action: ((token: String?) -> Unit)?
     ) {
-        passwordStorage?.putPassword(password)
-    }
-
-    override fun onRegister(action: ((result: Boolean) -> Unit)?, vararg userdata: String) {
         TODO("Not yet implemented")
     }
 
-    override fun onRestore(action: ((result: Boolean) -> Unit)?, email: String, password: String) {
+    override fun onRegister(vararg userdata: String, action: ((result: Boolean) -> Unit)?) {
         TODO("Not yet implemented")
     }
 
-    override fun onFingerPrint(action: ((token: String?) -> Unit)?, email: String) {
+    override fun onRestore(email: String, password: String, action: ((result: Boolean) -> Unit)?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFingerPrint(email: String, action: ((token: String?) -> Unit)?) {
         TODO("Not yet implemented")
     }
 }

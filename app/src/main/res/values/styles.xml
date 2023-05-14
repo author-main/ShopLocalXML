@@ -47,7 +47,7 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/EditTextFont</item>
         <item name="android:text">@string/eCharPassword</item>
-        <item name="android:textSize">21sp</item>
+        <item name="android:textSize">23sp</item>
     </style>
     <style name="TextViewKeyF" parent="@style/TextViewKeyE">
         <item name="android:textColor">@color/colorAccent</item>

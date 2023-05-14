@@ -12,7 +12,7 @@ abstract class FingerPrint(private val activity: FragmentActivity) {
     abstract fun onComplete(): Boolean
     companion object {
         fun canAuthenticate() =
-            BiometricManager.from(applicationContext())
+            BiometricManager.from(applicationContext)
                 .canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
     }
 }

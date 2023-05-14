@@ -8,12 +8,15 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
+import com.example.shoplocalxml.FactoryViewModel
 
 
 /**
@@ -34,8 +37,17 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val passwordSymbols = arrayOfNulls<TextView>(5)
-        val loginViewModel =
-            ViewModelProvider(this)[LoginViewModel::class.java]
+        /*val loginViewModel =
+            ViewModelProvider(this)[LoginViewModel::class.java]*/
+
+        val loginViewModel: LoginViewModel by viewModels(factoryProducer = {
+            FactoryViewModel(
+                this,
+                repository
+            )
+        })
+
+
         loginViewModel.onChangePassword = { count, type ->
 
             if (type == PasswordSymbol.FINGER_PRINT) {
@@ -81,14 +93,14 @@ class LoginFragment : Fragment() {
             it?.alpha = 0f
         }
 
-        val accessHandler: AccessHandler = AccessHandlerImpl()
-        accessHandler.setActivityFingerPrint(requireActivity())
-        val existPassword = accessHandler.passwordStorage?.existPassword() ?: false
+        /*val accessHandler: AccessHandler = AccessHandlerImpl()
+        accessHandler.setActivityFingerPrint(requireActivity())*/
+        loginViewModel.setActivityFingerPrint(requireActivity())
+        val existPassword = loginViewModel.existPassword()
         val enabledKeyFingerPrint = existPassword && FingerPrint.canAuthenticate()
         dataBinding.buttonKeyFinger.isEnabled = enabledKeyFingerPrint
         if (!enabledKeyFingerPrint)
             dataBinding.buttonKeyFinger.alpha = 0.3f
-        loginViewModel.setAccessHandler(accessHandler)
         dataBinding.eventhandler = loginViewModel
         /*dataBinding.editTextTextEmailAddress.setDrawableOnClick {
             log("click drawable right...")

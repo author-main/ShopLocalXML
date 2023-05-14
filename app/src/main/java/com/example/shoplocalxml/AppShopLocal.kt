@@ -3,8 +3,10 @@ package com.example.shoplocalxml
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.shoplocalxml.repository.Repository
 
 class AppShopLocal: Application() {
+    private val repository = Repository()
     init{
         instance = this
     }
@@ -13,8 +15,10 @@ class AppShopLocal: Application() {
     }
     companion object {
         private lateinit var instance: AppShopLocal
-        fun applicationContext(): Context =
-            instance.applicationContext
+        val repository: Repository
+            get() = instance.repository
+        val applicationContext: Context
+            get() = instance.applicationContext
     }
 }
 

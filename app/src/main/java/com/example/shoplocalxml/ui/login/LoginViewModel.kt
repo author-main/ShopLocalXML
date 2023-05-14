@@ -9,22 +9,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
-    private var accessHandler: AccessHandler? = null
+class LoginViewModel(private val repository: Repository) : ViewModel() {
+    //private var accessHandler: AccessHandler? = null
     var onChangePassword: ((count: Int, type: PasswordSymbol) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
     private var userPassword    = ""
 
-
-    fun setAccessHandler(value: AccessHandler) {
-        accessHandler = value
+    fun setActivityFingerPrint(activity: FragmentActivity) {
+        repository.setActivityFingerPrint(activity)
     }
+
+    fun existPassword() = repository.existPassword()
 
     fun onClick(index: Int){
         if (index in 0..11) {
@@ -64,9 +66,10 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun onLogin(){
-        val validEmail = onValidEmail?.invoke()
-         if (!validEmail.isNullOrBlank()) {
-             log (validEmail)
+        val email = onValidEmail?.invoke()
+         if (!email.isNullOrBlank()) {
+             log (email)
+            //accessHandler?.onLogin()
          }
         userPassword = ""
     }
