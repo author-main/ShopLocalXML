@@ -8,11 +8,12 @@ import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorageImpl
 import java.net.PasswordAuthentication
 
-class AccessHandlerImpl(activity: FragmentActivity): AccessHandler {
-    private val passwordStorage: PasswordStorage = PasswordStorageImpl()
-    private var fingerPrint: FingerPrint = FingerPrintImpl()
-    init{
-        fingerPrint.setActivity(activity)
+class AccessHandlerImpl: AccessHandler {
+    override var passwordStorage: PasswordStorage? = PasswordStorageImpl()
+    private var fingerPrint: FingerPrint? = null
+
+    override fun setActivityFingerPrint(activity: FragmentActivity) {
+        fingerPrint = FingerPrintImpl(activity)
     }
 
     override fun onLogin(
@@ -21,7 +22,7 @@ class AccessHandlerImpl(activity: FragmentActivity): AccessHandler {
         password: String,
         finger: Boolean
     ) {
-        passwordStorage.putPassword(password)
+        passwordStorage?.putPassword(password)
     }
 
     override fun onRegister(action: ((result: Boolean) -> Unit)?, vararg userdata: String) {
@@ -33,10 +34,6 @@ class AccessHandlerImpl(activity: FragmentActivity): AccessHandler {
     }
 
     override fun onFingerPrint(action: ((token: String?) -> Unit)?, email: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onRemoveUserPassword() {
         TODO("Not yet implemented")
     }
 }

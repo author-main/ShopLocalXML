@@ -1,11 +1,18 @@
 package com.example.shoplocalxml.ui.login.finger_print
 
 import android.content.Context
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
-import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
+import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 
-interface FingerPrint {
-    val passwordStorage: PasswordStorage
-    fun setActivity(activity: FragmentActivity)
-    fun onComplete(): Boolean
+abstract class FingerPrint(private val activity: FragmentActivity) {
+    abstract fun onComplete(): Boolean
+    companion object {
+        fun canAuthenticate() =
+            BiometricManager.from(applicationContext())
+                .canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
+    }
 }

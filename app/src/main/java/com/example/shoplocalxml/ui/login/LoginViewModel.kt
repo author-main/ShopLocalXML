@@ -2,25 +2,29 @@ package com.example.shoplocalxml.ui.login
 
 import android.view.View
 import android.widget.Button
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
+    private var accessHandler: AccessHandler? = null
     var onChangePassword: ((count: Int, type: PasswordSymbol) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
     private var userPassword    = ""
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+
+
+    fun setAccessHandler(value: AccessHandler) {
+        accessHandler = value
     }
-    val text: LiveData<String> = _text
 
     fun onClick(index: Int){
         if (index in 0..11) {
