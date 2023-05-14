@@ -12,4 +12,8 @@ class PasswordStorageImpl: PasswordStorage {
     override fun removePassword() {
         TODO("Not yet implemented")
     }
+
+    override fun existPassword(): Boolean {
+        return true
+    }
 }

@@ -80,12 +80,14 @@ class LoginFragment : Fragment() {
         passwordSymbols.forEach {
             it?.alpha = 0f
         }
-        val canFingerPrint = FingerPrint.canAuthenticate()
-        dataBinding.buttonKeyFinger.isEnabled = canFingerPrint
-        if (!canFingerPrint)
-            dataBinding.buttonKeyFinger.alpha = 0.3f
+
         val accessHandler: AccessHandler = AccessHandlerImpl()
         accessHandler.setActivityFingerPrint(requireActivity())
+        val existPassword = accessHandler.passwordStorage?.existPassword() ?: false
+        val enabledKeyFingerPrint = existPassword && FingerPrint.canAuthenticate()
+        dataBinding.buttonKeyFinger.isEnabled = enabledKeyFingerPrint
+        if (!enabledKeyFingerPrint)
+            dataBinding.buttonKeyFinger.alpha = 0.3f
         loginViewModel.setAccessHandler(accessHandler)
         dataBinding.eventhandler = loginViewModel
         /*dataBinding.editTextTextEmailAddress.setDrawableOnClick {
