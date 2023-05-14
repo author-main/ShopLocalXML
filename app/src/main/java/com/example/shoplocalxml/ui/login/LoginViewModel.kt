@@ -34,6 +34,7 @@ class LoginViewModel : ViewModel() {
                 KEY_FINGER -> {
                     changed = true
                     typeKey = PasswordSymbol.FINGER_PRINT
+                    userPassword = "*****"
                 }
                 KEY_BACKSPACE -> {
                     typeKey = PasswordSymbol.BACKSPACE

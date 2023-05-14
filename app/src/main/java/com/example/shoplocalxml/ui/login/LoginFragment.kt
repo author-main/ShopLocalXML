@@ -36,26 +36,29 @@ class LoginFragment : Fragment() {
         val passwordSymbols = arrayOfNulls<TextView>(5)
         val loginViewModel =
             ViewModelProvider(this)[LoginViewModel::class.java]
-        val accessHandler: AccessHandler = AccessHandlerImpl()
-        accessHandler.setActivityFingerPrint(requireActivity())
-        loginViewModel.setAccessHandler(accessHandler)
-        loginViewModel.onChangePassword = {count, type ->
-            passwordSymbols.forEachIndexed { index, textView ->
-                if (type != PasswordSymbol.FINGER_PRINT) {
+        loginViewModel.onChangePassword = { count, type ->
+
+            if (type == PasswordSymbol.FINGER_PRINT) {
+                passwordSymbols.forEach {
+                    it?.alpha = 1f
+                }
+            } else {
+                passwordSymbols.forEachIndexed { index, textView ->
                     if (index == count - 1) {
                         if (type == PasswordSymbol.NUMBER) {
                             val animation: Animation = AlphaAnimation(0f, 1f)
                             animation.duration = 300
                             textView?.alpha = 1f
                             textView?.startAnimation(animation)
-                        }
-                    } else if (index > count - 1)
-                        textView?.alpha = 0f
-                    /*else
+                        } else if (index > count - 1)
+                            textView?.alpha = 0f
+                        /*else
                         textView?.alpha = 1f*/
+                    }
                 }
             }
         }
+
         loginViewModel.onValidEmail = {
             passwordSymbols.forEach{textView ->
                 textView?.alpha = 0f
@@ -81,6 +84,9 @@ class LoginFragment : Fragment() {
         dataBinding.buttonKeyFinger.isEnabled = canFingerPrint
         if (!canFingerPrint)
             dataBinding.buttonKeyFinger.alpha = 0.3f
+        val accessHandler: AccessHandler = AccessHandlerImpl()
+        accessHandler.setActivityFingerPrint(requireActivity())
+        loginViewModel.setAccessHandler(accessHandler)
         dataBinding.eventhandler = loginViewModel
         /*dataBinding.editTextTextEmailAddress.setDrawableOnClick {
             log("click drawable right...")
