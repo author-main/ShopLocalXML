@@ -7,9 +7,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentActivity
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
 
-abstract class FingerPrint(private val activity: FragmentActivity) {
-    abstract fun onComplete(): Boolean
+abstract class FingerPrint {
+    abstract var passwordStorage: PasswordStorage?
+    abstract fun authenticate(email: String): Boolean
     companion object {
         fun canAuthenticate() =
             BiometricManager.from(applicationContext)

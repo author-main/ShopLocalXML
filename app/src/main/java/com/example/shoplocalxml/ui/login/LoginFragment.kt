@@ -25,12 +25,7 @@ import com.example.shoplocalxml.FactoryViewModel
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment() {
-    //private val colorFillSymbol = resources.getColor(R.color.colorAccent, null)
-    //private lateinit var accessHandler: AccessHandler
     private lateinit var dataBinding: FragmentLoginBinding
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,8 +59,6 @@ class LoginFragment : Fragment() {
                             textView?.startAnimation(animation)
                         } else if (index > count - 1)
                             textView?.alpha = 0f
-                        /*else
-                        textView?.alpha = 1f*/
                     }
                 }
             }

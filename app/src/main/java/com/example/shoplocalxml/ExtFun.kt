@@ -28,7 +28,6 @@ fun<T> log(value: T?) {
     }
 }
 
-
 fun Int.alpha(value: Float): Int {
         val color = this.toColor()
         val red   = color.red()

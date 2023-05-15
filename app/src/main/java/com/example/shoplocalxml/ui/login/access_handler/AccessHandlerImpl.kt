@@ -16,6 +16,7 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
 
     override fun setActivityFingerPrint(activity: FragmentActivity) {
         fingerPrint = FingerPrintImpl(activity)
+        fingerPrint?.passwordStorage = passwordStorage
     }
 
     override fun onLogin(
