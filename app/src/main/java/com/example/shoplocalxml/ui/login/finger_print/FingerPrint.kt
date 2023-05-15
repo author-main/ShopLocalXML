@@ -11,7 +11,8 @@ import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
 
 abstract class FingerPrint {
     abstract var passwordStorage: PasswordStorage?
-    abstract fun authenticate(email: String): Boolean
+    abstract fun promptAuthenticate()
+    abstract var onComplete: ((password: String?) -> Unit)?
     companion object {
         fun canAuthenticate() =
             BiometricManager.from(applicationContext)

@@ -56,7 +56,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                 if (userPassword.length == 5) {
                     viewModelScope.launch {
                         delay(700)
-                        onLogin()
+                        onLogin(typeKey == PasswordSymbol.FINGER_PRINT)
                     }
 
                 }
@@ -64,11 +64,13 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    private fun onLogin(){
+    private fun onLogin(finger: Boolean){
         val email = onValidEmail?.invoke()
          if (!email.isNullOrBlank()) {
-             log (email)
-            //accessHandler?.onLogin()
+             repository.onLogin(email, userPassword, finger) { result ->
+                if (result)
+                    log("login...")
+             }
          }
         userPassword = ""
     }

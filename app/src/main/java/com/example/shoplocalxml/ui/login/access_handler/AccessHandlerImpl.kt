@@ -13,10 +13,15 @@ import java.net.PasswordAuthentication
 class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler {
     override var passwordStorage: PasswordStorage? = PasswordStorageImpl()
     private var fingerPrint: FingerPrint? = null
-
+    private var email: String? = null
     override fun setActivityFingerPrint(activity: FragmentActivity) {
         fingerPrint = FingerPrintImpl(activity)
         fingerPrint?.passwordStorage = passwordStorage
+        fingerPrint?.onComplete = {password ->
+            password?.let{
+
+            }
+        }
     }
 
     override fun onLogin(
@@ -25,7 +30,11 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
         finger: Boolean,
         action: (token: String?) -> Unit
     ) {
-        TODO("Not yet implemented")
+        this.email = email
+        if (finger)
+            fingerPrint?.promptAuthenticate()
+        val token = "1"
+        action(token)
     }
 
     override fun onRegister(vararg userdata: String, action: (result: Boolean) -> Unit) {
