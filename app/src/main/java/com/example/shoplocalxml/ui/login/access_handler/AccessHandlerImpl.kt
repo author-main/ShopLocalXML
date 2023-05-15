@@ -30,9 +30,11 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
         finger: Boolean,
         action: (token: String?) -> Unit
     ) {
-        this.email = email
-        if (finger)
+
+        if (finger) {
+            this.email = email
             fingerPrint?.promptAuthenticate()
+        }
         val token = "1"
         action(token)
     }
