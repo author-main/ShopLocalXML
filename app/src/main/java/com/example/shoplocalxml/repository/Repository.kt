@@ -30,6 +30,25 @@ class Repository {
      */
     private val accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
 
+    fun onLogin(email: String, password: String, finger: Boolean = false, action: ((token: String?) -> Unit)) {
+        accessHandler.onLogin(email, password, finger) {
+            token = it
+            action(token)
+        }
+    }
+    fun onRegister(vararg userdata: String, action: ((result: Boolean) -> Unit)) {
+        accessHandler.onRegister(*userdata) {
+            action(it)
+        }
+    }
+    fun onRestore(email: String, password: String, action: ((result: Boolean) -> Unit)) {
+        accessHandler.onRestore(email, password) {
+            action(it)
+        }
+    }
+
+
+
     /**
      * databaseHandler обрабатывает запросы к БД
      */

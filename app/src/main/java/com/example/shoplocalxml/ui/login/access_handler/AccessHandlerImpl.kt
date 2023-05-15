@@ -21,20 +21,17 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApi): AccessHandler {
         email: String,
         password: String,
         finger: Boolean,
-        action: ((token: String?) -> Unit)?
+        action: (token: String?) -> Unit
     ) {
         TODO("Not yet implemented")
     }
 
-    override fun onRegister(vararg userdata: String, action: ((result: Boolean) -> Unit)?) {
+    override fun onRegister(vararg userdata: String, action: (result: Boolean) -> Unit) {
         TODO("Not yet implemented")
     }
 
-    override fun onRestore(email: String, password: String, action: ((result: Boolean) -> Unit)?) {
+    override fun onRestore(email: String, password: String, action: (result: Boolean) -> Unit) {
         TODO("Not yet implemented")
     }
 
-    override fun onFingerPrint(email: String, action: ((token: String?) -> Unit)?) {
-        TODO("Not yet implemented")
-    }
 }
