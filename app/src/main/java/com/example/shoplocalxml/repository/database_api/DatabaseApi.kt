@@ -8,32 +8,32 @@ import retrofit2.http.*
 interface DatabaseApi {
     @Headers("Content-Type: application/json")
     @POST("/api/{script}")
-    fun queryUser(@Body user: User, @Path("script") phpScript: String): Call<User>
+    suspend fun queryUser(@Body user: User, @Path("script") phpScript: String): Response<User>
 
     @GET("/api/get_products")
-    fun getProducts(@Query("token") token: String,
+    suspend fun getProducts(@Query("token") token: String,
                     @Query("part") part: Int,
-                    @Query("order") order: String): Call<List<Product>>
+                    @Query("order") order: String): Response<List<Product>>
 
     @GET("/api/get_found_products")
-    fun getFoundProducts(@Query("query") query: String,
+    suspend fun getFoundProducts(@Query("query") query: String,
                          @Query("order") order: String,
                          @Query("portion") portion: Int,
                          @Query("uuid") uuid: String,
-                         @Query("token") token: String): Call<List<Product>>
+                         @Query("token") token: String): Response<List<Product>>
 
 
     @GET("/api/get_reviews_product")
-    fun getReviewProduct(@Query("id") id: Int): Call<List<Review>>
+    suspend fun getReviewProduct(@Query("id") id: Int): Response<List<Review>>
 
     @GET("/api/get_brands")
-    fun getBrands(): Call<List<Brand>>
+    suspend fun getBrands(): Response<List<Brand>>
 
     @GET("/api/get_categories")
-    fun getCategories(): Call<List<Category>>
+    suspend fun getCategories(): Response<List<Category>>
 
     @GET("/api/get_messages")
-    fun getMessages(@Query("token") token: String, @Query("count") requestCount: Int): Call<List<UserMessage>>
+    suspend fun getMessages(@Query("token") token: String, @Query("count") requestCount: Int): Response<List<UserMessage>>
 
     @FormUrlEncoded
     @POST("/api/update_favorite")
