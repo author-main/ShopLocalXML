@@ -5,6 +5,7 @@ enum class PasswordSymbol {
     FINGER_PRINT,
     BACKSPACE
 }
+const val KEY_PASSWORD = "password"
 const val EMPTY_STRING = ""
 const val FILE_PREFERENCES      = "settings"
 const val SERVER_URL = "http://192.168.1.10"

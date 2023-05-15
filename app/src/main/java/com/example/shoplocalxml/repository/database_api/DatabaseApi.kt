@@ -22,7 +22,6 @@ interface DatabaseApi {
                          @Query("uuid") uuid: String,
                          @Query("token") token: String): Response<List<Product>>
 
-
     @GET("/api/get_reviews_product")
     suspend fun getReviewProduct(@Query("id") id: Int): Response<List<Review>>
 

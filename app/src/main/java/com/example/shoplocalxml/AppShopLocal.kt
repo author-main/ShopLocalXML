@@ -6,12 +6,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.shoplocalxml.repository.Repository
 
 class AppShopLocal: Application() {
-    private val repository = Repository()
+    private lateinit var repository: Repository
     init{
         instance = this
     }
     override fun onCreate() {
         super.onCreate()
+        repository = Repository()
     }
     companion object {
         private lateinit var instance: AppShopLocal
