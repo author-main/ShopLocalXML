@@ -3,7 +3,6 @@ package com.example.shoplocalxml.repository
 import androidx.fragment.app.FragmentActivity
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
-import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl

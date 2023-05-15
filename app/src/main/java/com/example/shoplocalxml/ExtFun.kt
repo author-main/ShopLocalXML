@@ -5,6 +5,8 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.util.Log
 import android.util.TypedValue
+import androidx.annotation.ArrayRes
+import androidx.annotation.StringRes
 import androidx.core.graphics.toColor
 
 
@@ -34,4 +36,15 @@ fun Int.alpha(value: Float): Int {
         val blue  = color.blue()
         return Color.argb(value, red, green, blue)
 }
+
+fun getStringArrayResource(@ArrayRes id: Int): Array<String> =
+    AppShopLocal.applicationContext.resources.getStringArray(id)
+
+fun getStringResource(@StringRes id: Int): String =
+    try {
+        AppShopLocal.applicationContext.getString(id)
+    }
+    catch (e: Exception){
+        EMPTY_STRING
+    }
 

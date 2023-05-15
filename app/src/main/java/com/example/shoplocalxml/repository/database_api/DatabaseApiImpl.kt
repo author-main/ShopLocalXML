@@ -5,7 +5,10 @@ import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class DatabaseApiImpl: DatabaseApi {
+class DatabaseApiImpl {
+    private val QUERY_REGUSER     = "reg_user"
+    private val QUERY_LOGINUSER   = "login_user"
+    private val QUERY_RESTOREUSER = "restore_user"
     private val retrofitInstance: DatabaseApi
     init{
         val gson = GsonBuilder()
