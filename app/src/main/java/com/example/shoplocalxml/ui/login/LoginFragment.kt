@@ -70,10 +70,10 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel.onValidEmail = {
-            passwordSymbols.forEach{textView ->
+           /* passwordSymbols.forEach{textView ->
                 textView?.alpha = 0f
                 //textView?.setTextColor(resources.getColor(R.color.colorAccent, null))
-            }
+            }*/
             if (dataBinding.editTextTextEmailAddress.validateValue())
                 dataBinding.editTextTextEmailAddress.text.toString()
             else
@@ -113,6 +113,9 @@ class LoginFragment : Fragment() {
                 val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
                 snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
                 snackbarExt.show()
+            }
+            passwordSymbols.forEach{textView ->
+                textView?.alpha = 0f
             }
         }
 

@@ -36,7 +36,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                 KEY_FINGER -> {
                     changed = true
                     typeKey = PasswordSymbol.FINGER_PRINT
-                    userPassword = "*****"
+                    //userPassword = "*****"
                 }
                 KEY_BACKSPACE -> {
                     typeKey = PasswordSymbol.BACKSPACE
@@ -53,12 +53,14 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                 }
             }
             if (changed) {
-                onChangePassword?.invoke(userPassword.length, typeKey)
-                if (userPassword.length == 5) {
-                    viewModelScope.launch {
+                val fingerPrint = typeKey == PasswordSymbol.FINGER_PRINT
+                if (!fingerPrint) onChangePassword?.invoke(userPassword.length, typeKey)
+                if (userPassword.length == 5 || fingerPrint) {
+                    onLogin(fingerPrint)
+                    /*viewModelScope.launch {
                         delay(700)
                         onLogin(typeKey == PasswordSymbol.FINGER_PRINT)
-                    }
+                    }*/
 
                 }
             }
@@ -71,9 +73,14 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         val email = onValidEmail?.invoke()
         if (!email.isNullOrBlank()) {
             repository.onLogin(email, userPassword, finger) { result ->
-                openShop?.invoke(result)
+                viewModelScope.launch {
+                    if (finger)
+                        onChangePassword?.invoke(5, PasswordSymbol.FINGER_PRINT)
+                    delay(500)
+                    openShop?.invoke(result)
+                    userPassword = ""
+                }
             }
         }
-        userPassword = ""
     }
 }
