@@ -2,6 +2,7 @@ package com.example.shoplocalxml.ui.login.access_handler
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.liveData
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
@@ -37,6 +38,7 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
     }
 
     private fun performLogin(email: String, password: String, finger: Boolean, action: (token: String?) -> Unit){
+        databaseApi
         val token: String? = "1"
         if (token != null && !finger)
             passwordStorage?.putPassword(password)

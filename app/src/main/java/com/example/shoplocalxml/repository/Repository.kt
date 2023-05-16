@@ -11,9 +11,9 @@ import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 
 class Repository {
     /**
-     * user - данные текущего пользователя
+     * shopUser - данные текущего пользователя
      */
-    val user: User?
+    val shopUser: User?
         get() = User.getUserData()
 
     /**
@@ -39,13 +39,15 @@ class Repository {
      * token == null при неудачной попытке входа в систему
      */
     fun onLogin(email: String, password: String, finger: Boolean, action: (result: Boolean) -> Unit) {
-        accessHandler.onLogin(email, password, finger) {
+        accessHandler.onLogin(email, password, finger) { it ->
             token = it
             val result = it != null
             if (result) {
                 val user = User.getUserData()
-                user?.email = email
-                user?.saveUserData()
+                user?.let{_user ->
+                    _user.email = email
+                    _user.saveUserData()
+                }
             }
             action(result)
         }

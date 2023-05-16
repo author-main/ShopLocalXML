@@ -17,6 +17,7 @@ import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.log
 
 
 /**
@@ -89,6 +90,10 @@ class LoginFragment : Fragment() {
         /*val accessHandler: AccessHandler = AccessHandlerImpl()
         accessHandler.setActivityFingerPrint(requireActivity())*/
         loginViewModel.setActivityFingerPrint(requireActivity())
+        loginViewModel.getUserEmail()?.let{
+            log(it)
+            dataBinding.editTextTextEmailAddress.setText(it)
+        }
         val existPassword = loginViewModel.existPassword()
         val enabledKeyFingerPrint = existPassword && FingerPrint.canAuthenticate()
         dataBinding.buttonKeyFinger.isEnabled = enabledKeyFingerPrint

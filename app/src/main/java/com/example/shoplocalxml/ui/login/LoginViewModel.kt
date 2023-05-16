@@ -64,6 +64,8 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    fun getUserEmail(): String? = repository.shopUser?.email
+
     private fun onLogin(finger: Boolean){
         val email = onValidEmail?.invoke()
          if (!email.isNullOrBlank()) {
