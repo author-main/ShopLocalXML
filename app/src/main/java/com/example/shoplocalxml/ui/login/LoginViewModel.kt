@@ -70,17 +70,24 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     fun getUserEmail(): String? = repository.shopUser?.email
 
     private fun onLogin(finger: Boolean){
+        fun performOpenShop(value: Boolean){
+            viewModelScope.launch {
+                delay(500)
+                openShop?.invoke(value)
+                userPassword = ""
+            }
+        }
         val email = onValidEmail?.invoke()
         if (!email.isNullOrBlank()) {
             repository.onLogin(email, userPassword, finger) { result ->
                 if (finger)
                     onChangePassword?.invoke(5, PasswordSymbol.FINGER_PRINT)
-                viewModelScope.launch {
-                    delay(500)
-                    openShop?.invoke(result)
-                    userPassword = ""
-                }
+                performOpenShop(result)
             }
+        } else {
+            if (!finger)
+                performOpenShop(false)
         }
+
     }
 }
