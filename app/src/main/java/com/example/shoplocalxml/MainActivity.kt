@@ -1,5 +1,6 @@
 package com.example.shoplocalxml
 
+import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log

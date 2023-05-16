@@ -2,6 +2,8 @@ package com.example.shoplocalxml.repository
 
 import androidx.fragment.app.FragmentActivity
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.isConnectedNet
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
@@ -39,6 +41,7 @@ class Repository {
      * token == null при неудачной попытке входа в систему
      */
     fun onLogin(email: String, password: String, finger: Boolean, action: (result: Boolean) -> Unit) {
+        //log("connected ${isConnectedNet()}...")
         accessHandler.onLogin(email, password, finger) { it ->
             token = it
             val result = it != null

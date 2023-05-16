@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.liveData
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.isConnectedNet
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
@@ -31,6 +32,10 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
         finger: Boolean,
         action: (token: String?) -> Unit
     ) {
+        if (!isConnectedNet()) {
+            action(null)
+            return
+        }
         if (finger) {
             fingerPrint?.onComplete = {storagePassword ->
                 storagePassword?.let{

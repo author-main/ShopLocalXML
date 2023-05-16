@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel(private val repository: Repository) : ViewModel() {
     var onChangePassword: ((count: Int, type: PasswordSymbol) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
+    var openShop: ((open: Boolean) -> Unit)? = null
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
     private var userPassword    = ""
@@ -70,10 +71,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         val email = onValidEmail?.invoke()
          if (!email.isNullOrBlank()) {
              repository.onLogin(email, userPassword, finger) { result ->
-                if (result)
-                    log("login...")
-                else
-                    log("error...")
+                 openShop?.invoke(result)
              }
          }
         userPassword = ""

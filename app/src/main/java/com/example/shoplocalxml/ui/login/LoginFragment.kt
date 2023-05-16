@@ -17,6 +17,9 @@ import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.R
+import com.example.shoplocalxml.custom_view.SnackbarExt
+import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 
 
@@ -102,6 +105,15 @@ class LoginFragment : Fragment() {
         /*dataBinding.editTextTextEmailAddress.setDrawableOnClick {
             log("click drawable right...")
         }*/
+
+        loginViewModel.openShop = {open ->
+            if (!open) {
+                val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
+                snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
+                snackbarExt.show()
+            }
+        }
+
         return dataBinding.root
     }
 

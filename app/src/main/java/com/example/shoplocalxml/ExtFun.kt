@@ -8,6 +8,9 @@ import android.util.TypedValue
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.core.graphics.toColor
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 
 
 val Int.toDp: Int
@@ -46,4 +49,16 @@ fun getStringResource(@StringRes id: Int): String =
     catch (e: Exception){
         EMPTY_STRING
     }
+
+fun isConnectedNet(): Boolean{
+    var connected = false
+    val connectivityManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    connectivityManager.activeNetwork?.let {manager ->
+        connected = connectivityManager.getNetworkCapabilities(manager)?.let{ capabilities ->
+                       capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        } ?: false
+    }
+    return connected
+}
 
