@@ -69,11 +69,11 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     private fun onLogin(finger: Boolean){
         val email = onValidEmail?.invoke()
-         if (!email.isNullOrBlank()) {
-             repository.onLogin(email, userPassword, finger) { result ->
-                 openShop?.invoke(result)
-             }
-         }
+        if (!email.isNullOrBlank()) {
+            repository.onLogin(email, userPassword, finger) { result ->
+                openShop?.invoke(result)
+            }
+        }
         userPassword = ""
     }
 }

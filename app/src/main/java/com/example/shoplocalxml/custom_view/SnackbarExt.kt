@@ -24,6 +24,12 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
     private val snackbar = Snackbar.make(view, text,
         Snackbar.LENGTH_LONG)
     private val onClickListener: View.OnClickListener = View.OnClickListener { onClick() }
+
+    init{
+        instance = snackbar
+    }
+
+
     private fun setTypeSnackbar(value: SnackbarType) {
         val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.roundrect)
         drawable?.let {
@@ -61,11 +67,15 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
         snackbar.setAction(text, onClickListener)
     }
     companion object {
-
+        lateinit var instance: Snackbar
         enum class SnackbarType(val color: Int) {
             INFO(applicationContext.getColor(com.example.shoplocalxml.R.color.EditTextBackgroundDark)),
             WARNING(applicationContext.getColor(com.example.shoplocalxml.R.color.colorAccent)),
             ERROR(applicationContext.getColor(com.example.shoplocalxml.R.color.EditTextBorderErrorDark))
+        }
+        fun hideSnackbar(){
+            if (this::instance.isInitialized)
+                instance.dismiss()
         }
     }
 }

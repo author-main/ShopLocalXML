@@ -49,22 +49,22 @@ class LoginFragment : Fragment() {
 
 
         loginViewModel.onChangePassword = { count, type ->
-
+            SnackbarExt.hideSnackbar()
             if (type == PasswordSymbol.FINGER_PRINT) {
                 passwordSymbols.forEach {
                     it?.alpha = 1f
                 }
             } else {
                 passwordSymbols.forEachIndexed { index, textView ->
-                    if (index == count - 1) {
                         if (type == PasswordSymbol.NUMBER) {
-                            val animation: Animation = AlphaAnimation(0f, 1f)
-                            animation.duration = 300
-                            textView?.alpha = 1f
-                            textView?.startAnimation(animation)
+                            if (index == count - 1) {
+                                val animation: Animation = AlphaAnimation(0f, 1f)
+                                animation.duration = 300
+                                textView?.alpha = 1f
+                                textView?.startAnimation(animation)
+                            }
                         } else if (index > count - 1)
                             textView?.alpha = 0f
-                    }
                 }
             }
         }
