@@ -109,10 +109,10 @@ class LoginFragment : Fragment() {
 
         loginViewModel.openShop = {open ->
             if (!open) {
+                vibrate(400)
                 val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
                 snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
                 snackbarExt.show()
-                vibrate(400)
             }
         }
 
