@@ -21,6 +21,7 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.vibrate
 
 
 /**
@@ -111,6 +112,7 @@ class LoginFragment : Fragment() {
                 val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
                 snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
                 snackbarExt.show()
+                vibrate(400)
             }
         }
 

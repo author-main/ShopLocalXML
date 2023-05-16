@@ -10,6 +10,10 @@ import androidx.annotation.StringRes
 import androidx.core.graphics.toColor
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 
 
@@ -60,5 +64,24 @@ fun isConnectedNet(): Boolean{
         } ?: false
     }
     return connected
+}
+
+fun vibrate(duration: Long) {
+    val vibe =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager =
+                applicationContext
+                    .getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            applicationContext
+                .getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+    val effect: VibrationEffect = VibrationEffect.createOneShot(
+        duration,
+        VibrationEffect.DEFAULT_AMPLITUDE
+    )
+    vibe.vibrate(effect)
 }
 
