@@ -23,7 +23,14 @@ class DatabaseApiImpl {
         retrofitInstance = retrofit.create(DatabaseApi::class.java)
     }
 
-    private suspend fun queryUser(query: String, user: User, action: (user: User)->Unit) {
-        val response: Response<User> = retrofitInstance.queryUser(user, query)
+    private suspend fun queryUser(query: String, user: User): Response<User> {
+        return retrofitInstance.queryUser(user, query)
+    }
+
+    suspend fun loginUser(mail: String, password: String): Response<User> {
+        val user = User.getInstance()
+        user.email      = mail
+        user.password   = password
+        return queryUser(QUERY_LOGINUSER, user)
     }
 }

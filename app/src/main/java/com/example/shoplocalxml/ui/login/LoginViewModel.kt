@@ -72,6 +72,8 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
              repository.onLogin(email, userPassword, finger) { result ->
                 if (result)
                     log("login...")
+                else
+                    log("error...")
              }
          }
         userPassword = ""

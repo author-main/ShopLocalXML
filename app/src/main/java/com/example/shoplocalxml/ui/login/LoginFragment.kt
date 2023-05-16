@@ -91,7 +91,6 @@ class LoginFragment : Fragment() {
         accessHandler.setActivityFingerPrint(requireActivity())*/
         loginViewModel.setActivityFingerPrint(requireActivity())
         loginViewModel.getUserEmail()?.let{
-            log(it)
             dataBinding.editTextTextEmailAddress.setText(it)
         }
         val existPassword = loginViewModel.existPassword()

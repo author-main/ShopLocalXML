@@ -42,5 +42,14 @@ data class User (
                 null
             }
         }
+        fun getInstance() =
+            User(null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null)
+
     }
 }
