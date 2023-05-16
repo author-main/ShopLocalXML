@@ -20,12 +20,14 @@ class FingerPrintImpl(private val activity: FragmentActivity): FingerPrint() {
             .setConfirmationRequired(false)
             .setNegativeButtonText(getStringResource(R.string.button_cancel))
             .build()
-        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding") // не используется
-        val biometricPrompt = createBiometricPrompt()
-        biometricPrompt.authenticate(
-            promptInfo,
-            BiometricPrompt.CryptoObject(cipher)
-        )
+        val cipher = passwordStorage?.getDecryptCipher()
+        cipher?.let {
+            val biometricPrompt = createBiometricPrompt()
+            biometricPrompt.authenticate(
+                promptInfo,
+                BiometricPrompt.CryptoObject(it)
+            )
+        }
     }
 
     private fun createBiometricPrompt(): BiometricPrompt {

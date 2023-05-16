@@ -38,10 +38,16 @@ class Repository {
      * @param action callback передает token пользователя,
      * token == null при неудачной попытке входа в систему
      */
-    fun onLogin(email: String, password: String, finger: Boolean = false, action: (result: Boolean) -> Unit) {
+    fun onLogin(email: String, password: String, finger: Boolean, action: (result: Boolean) -> Unit) {
         accessHandler.onLogin(email, password, finger) {
             token = it
-            action(it != null)
+            val result = it != null
+            if (result) {
+                val user = User.getUserData()
+                user?.email = email
+                user?.saveUserData()
+            }
+            action(result)
         }
     }
 

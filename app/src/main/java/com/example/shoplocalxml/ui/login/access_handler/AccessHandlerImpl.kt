@@ -2,6 +2,7 @@ package com.example.shoplocalxml.ui.login.access_handler
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
@@ -13,15 +14,9 @@ import java.net.PasswordAuthentication
 class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler {
     override var passwordStorage: PasswordStorage? = PasswordStorageImpl()
     private var fingerPrint: FingerPrint? = null
-    private var email: String? = null
     override fun setActivityFingerPrint(activity: FragmentActivity) {
         fingerPrint = FingerPrintImpl(activity)
         fingerPrint?.passwordStorage = passwordStorage
-        fingerPrint?.onComplete = {password ->
-            password?.let{
-
-            }
-        }
     }
 
     override fun onLogin(
@@ -30,12 +25,21 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
         finger: Boolean,
         action: (token: String?) -> Unit
     ) {
-
         if (finger) {
-            this.email = email
+            fingerPrint?.onComplete = {storagePassword ->
+                storagePassword?.let{
+                    performLogin(email, it, true, action)
+                }
+            }
             fingerPrint?.promptAuthenticate()
-        }
-        val token = "1"
+        } else
+            performLogin(email, password, false, action)
+    }
+
+    private fun performLogin(email: String, password: String, finger: Boolean, action: (token: String?) -> Unit){
+        val token: String? = "1"
+        if (token != null && !finger)
+            passwordStorage?.putPassword(password)
         action(token)
     }
 

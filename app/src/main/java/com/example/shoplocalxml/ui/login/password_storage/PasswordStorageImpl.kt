@@ -79,7 +79,7 @@ class PasswordStorageImpl: PasswordStorage {
         }
     }
 
-    private fun getDecryptCipher(): Cipher? {
+    override fun getDecryptCipher(): Cipher? {
         val keyStore = getKeyStore() ?: return null
         return try {
             val privateKey: PrivateKey = keyStore.getKey(alias, null) as PrivateKey
