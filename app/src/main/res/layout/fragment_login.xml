@@ -123,6 +123,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewAuth" />
 
             <TableLayout
+                android:id="@+id/layoutNumButtons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -222,6 +223,34 @@
                 </TableRow>
 
             </TableLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutNumButtons">
+
+                <Button
+                    android:id="@+id/buttonReg"
+                    style="@style/LoginButton"
+                    android:text="@string/btn_reg" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="|" />
+
+                <Button
+                    android:id="@+id/buttonRestore"
+                    style="@style/LoginButton"
+                    android:text="@string/btn_rest" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </layout>
