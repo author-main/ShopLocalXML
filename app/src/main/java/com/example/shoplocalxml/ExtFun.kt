@@ -106,8 +106,8 @@ fun setDialogStyle(dialog: AlertDialog, noTitle: Boolean = false) {
     }
 }
 
-fun setWidthDialog(dialog: AlertDialog, widthDP: Int){
+/*fun setWidthDialog(dialog: AlertDialog, widthDP: Int){
     val width: Int = widthDP.toPx
     val height = ViewGroup.LayoutParams.WRAP_CONTENT
     dialog.window!!.setLayout(width, height)
-}
+}*/

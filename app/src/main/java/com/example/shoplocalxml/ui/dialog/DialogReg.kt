@@ -13,9 +13,6 @@ import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.databinding.DialogRegBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.setDialogStyle
-import com.example.shoplocalxml.setWidthDialog
-import com.example.shoplocalxml.toDp
-
 
 class DialogReg: DialogFragment() {
     private lateinit var dataBinding: DialogRegBinding
