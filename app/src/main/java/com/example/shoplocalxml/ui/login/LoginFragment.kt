@@ -9,6 +9,7 @@ import android.view.animation.Animation
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
@@ -23,6 +24,7 @@ import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.dialog.DialogProgress
+import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.vibrate
 
 
@@ -33,7 +35,6 @@ import com.example.shoplocalxml.vibrate
  */
 class LoginFragment : Fragment() {
     private lateinit var dataBinding: FragmentLoginBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +82,9 @@ class LoginFragment : Fragment() {
                 dataBinding.editTextTextEmailAddress.text.toString()
             else
                 null
+        }
+        loginViewModel.onRegisterUser = {
+            DialogReg().show(childFragmentManager, null)
         }
         // Inflate the layout for this fragment
         //val root = inflater.inflate(R.layout.fragment_login, container, false)

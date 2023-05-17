@@ -3,17 +3,24 @@ package com.example.shoplocalxml
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
-import android.util.Log
-import android.util.TypedValue
-import androidx.annotation.ArrayRes
-import androidx.annotation.StringRes
-import androidx.core.graphics.toColor
+import android.graphics.Point
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.Display
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import androidx.annotation.ArrayRes
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.toColor
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 
 
@@ -85,3 +92,22 @@ fun vibrate(duration: Long) {
     vibe.vibrate(effect)
 }
 
+fun setDialogStyle(dialog: AlertDialog, noTitle: Boolean = false) {
+    val bgColor = applicationContext.getColor(R.color.PrimaryDark)
+    val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.background_dialog)
+    drawable!!.setTint(bgColor)
+    dialog.window?.let {
+        if (noTitle)
+            it.requestFeature(Window.FEATURE_NO_TITLE);
+        /*val layoutParams = WindowManager.LayoutParams()
+        layoutParams.copyFrom(it.attributes)
+        it.attributes = layoutParams*/
+        it.setBackgroundDrawable(drawable)
+    }
+}
+
+fun setWidthDialog(dialog: AlertDialog, widthDP: Int){
+    val width: Int = widthDP.toPx
+    val height = ViewGroup.LayoutParams.WRAP_CONTENT
+    dialog.window!!.setLayout(width, height)
+}

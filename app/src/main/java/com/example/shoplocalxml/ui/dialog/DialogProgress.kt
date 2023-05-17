@@ -14,11 +14,10 @@ class DialogProgress(context: Context): Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        //setContentView(R.layout.progress_dialog)
+        setContentView(R.layout.progress_dialog)
         setCancelable(false)
         window?.let {
             val layoutParams = WindowManager.LayoutParams()
-            setContentView(R.layout.progress_dialog)
             layoutParams.copyFrom(it.attributes)
             layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
             layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT

@@ -57,6 +57,8 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         else
             textColor.alpha(0.5f)
         setHintTextColor(hintColor)
+        setSingleLine()
+        maxLines = 1
 /*        val attributes =
             intArrayOf(android.R.attr.textColorHint)
         /*val ta = obtainStyledAttributes(context, R.style.EditTextExt, attributes)

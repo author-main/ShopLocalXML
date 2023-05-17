@@ -68,6 +68,41 @@
         <item name="android:layout_marginHorizontal">2dp</item>
     </style>
 
+    <style name="DialogButton" parent="@android:style/Widget.Button">
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/ripple_roundbutton</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingHorizontal">4dp</item>
+        <item name="android:paddingVertical">2dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_marginHorizontal">4dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+
+
+    <style name="TextViewDialog" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/robotocondensed_light</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/EditTextFont</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">8dp</item>
+
+        <!--<item name="android:textSize">23sp</item>-->
+    </style>
+
+    <style name="DialogExt" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>
+    </style>
+
 
 
 </resources>

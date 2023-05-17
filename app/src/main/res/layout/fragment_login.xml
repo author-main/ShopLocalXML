@@ -236,11 +236,12 @@
                 <Button
                     android:id="@+id/buttonReg"
                     style="@style/LoginButton"
+                    android:onClick="@{() -> eventhandler.onClick(12)}"
                     android:text="@string/btn_reg" />
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="|" />
@@ -248,6 +249,7 @@
                 <Button
                     android:id="@+id/buttonRestore"
                     style="@style/LoginButton"
+                    android:onClick="@{() -> eventhandler.onClick(13)}"
                     android:text="@string/btn_rest" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

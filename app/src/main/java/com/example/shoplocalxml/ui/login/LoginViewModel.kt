@@ -12,6 +12,7 @@ import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.ui.dialog.DialogProgress
+import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,8 +22,11 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     var onValidEmail: (() -> String?)? = null
     var openShop: ((open: Boolean) -> Unit)? = null
     var onPerformLogin: () -> Unit = {}
+    var onRegisterUser: (() -> Unit)? = null
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
+    private val KEY_REG         = 12
+    private val KEY_REST        = 13
     private var userPassword    = ""
 
     fun setActivityFingerPrint(activity: FragmentActivity) {
@@ -64,6 +68,15 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                         delay(700)
                         onLogin(typeKey == PasswordSymbol.FINGER_PRINT)
                     }*/
+
+                }
+            }
+        } else {
+            when (index) {
+                KEY_REG -> {
+                    onRegisterUser?.invoke()
+                }
+                KEY_REST -> {
 
                 }
             }
