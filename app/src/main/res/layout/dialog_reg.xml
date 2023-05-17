@@ -23,11 +23,11 @@
         android:layout_marginVertical="4dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
         app:barrierAllowsGoneWidgets="false"
         app:chainUseRtl="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/barrier2" />
+        app:layout_constraintStart_toEndOf="@id/barrier2"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -46,7 +46,6 @@
         android:layout_marginVertical="4dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
         app:barrierAllowsGoneWidgets="false"
         app:barrierDirection="start"
         app:chainUseRtl="false"
@@ -70,7 +69,6 @@
         android:layout_marginVertical="4dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
         app:barrierAllowsGoneWidgets="false"
         app:barrierDirection="start"
         app:chainUseRtl="false"
@@ -94,7 +92,6 @@
         android:layout_marginVertical="4dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
         app:barrierAllowsGoneWidgets="false"
         app:barrierDirection="start"
         app:chainUseRtl="false"
@@ -118,7 +115,6 @@
         android:layout_marginVertical="4dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
         app:barrierAllowsGoneWidgets="false"
         app:chainUseRtl="false"
         app:layout_constraintEnd_toEndOf="parent"
