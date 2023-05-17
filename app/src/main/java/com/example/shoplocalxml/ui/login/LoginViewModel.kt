@@ -7,9 +7,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.Repository
+import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,6 +20,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     var onChangePassword: ((count: Int, type: PasswordSymbol) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     var openShop: ((open: Boolean) -> Unit)? = null
+    var onPerformLogin: () -> Unit = {}
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
     private var userPassword    = ""
@@ -72,16 +75,16 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     private fun onLogin(finger: Boolean){
         fun performOpenShop(value: Boolean){
             viewModelScope.launch {
-                delay(500)
+                delay(300)
                 openShop?.invoke(value)
                 userPassword = ""
             }
         }
         val email = onValidEmail?.invoke()
         if (!email.isNullOrBlank()) {
-            repository.onLogin(email, userPassword, finger) { result ->
-                if (finger)
-                    onChangePassword?.invoke(5, PasswordSymbol.FINGER_PRINT)
+            repository.onLogin(email, userPassword, finger, onPerformLogin) { result ->
+                /*if (finger)
+                    onChangePassword?.invoke(5, PasswordSymbol.FINGER_PRINT)*/
                 performOpenShop(result)
             }
         } else {

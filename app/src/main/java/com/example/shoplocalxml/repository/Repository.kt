@@ -8,6 +8,7 @@ import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl
+import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 
@@ -40,9 +41,9 @@ class Repository {
      * @param action callback передает token пользователя,
      * token == null при неудачной попытке входа в систему
      */
-    fun onLogin(email: String, password: String, finger: Boolean, action: (result: Boolean) -> Unit) {
+    fun onLogin(email: String, password: String, finger: Boolean, performAction: ()-> Unit, action: (result: Boolean) -> Unit) {
         //log("connected ${isConnectedNet()}...")
-        accessHandler.onLogin(email, password, finger) { it ->
+        accessHandler.onLogin(email, password, finger, performAction) { it ->
             token = it
             val result = it != null
             if (result) {

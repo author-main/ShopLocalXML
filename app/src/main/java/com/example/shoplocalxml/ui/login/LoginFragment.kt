@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
@@ -21,6 +22,7 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.vibrate
 
 
@@ -74,6 +76,7 @@ class LoginFragment : Fragment() {
                 textView?.alpha = 0f
                 //textView?.setTextColor(resources.getColor(R.color.colorAccent, null))
             }*/
+
             if (dataBinding.editTextTextEmailAddress.validateValue())
                 dataBinding.editTextTextEmailAddress.text.toString()
             else
@@ -97,6 +100,12 @@ class LoginFragment : Fragment() {
         loginViewModel.getUserEmail()?.let{
             dataBinding.editTextTextEmailAddress.setText(it)
         }
+        loginViewModel.onPerformLogin = {
+            passwordSymbols.forEach{textView ->
+                textView?.alpha = 1f
+            }
+            DialogProgress.show(requireContext())
+        }
         val existPassword = loginViewModel.existPassword()
         val enabledKeyFingerPrint = existPassword && FingerPrint.canAuthenticate()
         dataBinding.buttonKeyFinger.isEnabled = enabledKeyFingerPrint
@@ -108,12 +117,14 @@ class LoginFragment : Fragment() {
         }*/
 
         loginViewModel.openShop = {open ->
+            DialogProgress.dismiss()
             if (!open) {
                 vibrate(400)
                 val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
                 snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
                 snackbarExt.show()
             }
+
             passwordSymbols.forEach{textView ->
                 textView?.alpha = 0f
             }

@@ -30,6 +30,7 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
         email: String,
         password: String,
         finger: Boolean,
+        performAction: () -> Unit,
         action: (token: String?) -> Unit
     ) {
         if (!isConnectedNet()) {
@@ -39,15 +40,16 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
         if (finger) {
             fingerPrint?.onComplete = {storagePassword ->
                 storagePassword?.let{
-                    performLogin(email, it, true, action)
+                    performLogin(email, it, true, performAction, action)
                 }
             }
             fingerPrint?.promptAuthenticate()
         } else
-            performLogin(email, password, false, action)
+            performLogin(email, password, false, performAction, action)
     }
 
-    private fun performLogin(email: String, password: String, finger: Boolean, action: (token: String?) -> Unit){
+    private fun performLogin(email: String, password: String, finger: Boolean, performAction: () -> Unit, action: (token: String?) -> Unit){
+        performAction()
         var token: String? = null
         CoroutineScope(Dispatchers.IO).launch {
             try {
