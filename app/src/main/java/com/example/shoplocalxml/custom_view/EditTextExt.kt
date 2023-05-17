@@ -118,28 +118,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
     }
 
-    /*  private var background: Drawable
-    init {
-        val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
-        paint.color = Color.BLUE
-        paint.style = Paint.Style.FILL_AND_STROKE
-        paint.strokeWidth = 2.toPx.toFloat()
-        val canvas = Canvas(bitmap)
-        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), 8.toPx.toFloat(), 8.toPx.toFloat(), paint)
-        background = BitmapDrawable(resources, bitmap)
-    }*/
-
-   /* override fun setBackgroundColor(value: Int) {
-        super.setBackgroundColor(value)
-        backgroundColor = value
-        setBackground()
-    }
-
-    fun setBorderColor(value: Int) {
-        borderColor = value
-        setBackground()
-    }*/
-
     private fun setRoundBackground(){
         val width  = measuredWidth
         val height = measuredHeight
@@ -164,8 +142,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                 round,
                 paint
             )
-
-
         }
         this.background = BitmapDrawable(resources, bitmap)
     }
@@ -208,8 +184,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         return ColorStateList(states, colors)
     }*/
 
-
-
     private fun getDrawableRight(drawable: Drawable?){
         drawable?.let{icon ->
             drawableRight = icon
@@ -224,17 +198,9 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         end: Drawable?,
         bottom: Drawable?
     ) {
-       /* end?.let{icon ->
-            drawableRight = icon
-            val color = context.getColor(R.color.drawable_tint_color)
-            icon.setTint(color.alpha(0.5f))
-        }*/
         getDrawableRight(end)
-//        this.setCompoundDrawables(start, top, end, bottom)
         super.setCompoundDrawablesRelative(start, top, end, bottom)
     }
-
-    //fun isCorrectValue() = isCorrect
 
     fun validateValue(): Boolean{
         var isCorrect = true
@@ -247,21 +213,14 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
               borderColor = color
           }
         }
-//        log(inputType)
         return isCorrect
     }
-
 
     override fun setCompoundDrawables(
         left: Drawable?, top: Drawable?,
         right: Drawable?, bottom: Drawable?
     ) {
         getDrawableRight(right)
-            /*right?.let{icon ->
-                drawableRight = icon
-                val color = context.getColor(R.color.drawable_tint_color)
-                icon.setTint(color.alpha(0.5f))
-            }*/
         super.setCompoundDrawables(left, top, right, bottom)
     }
 }
