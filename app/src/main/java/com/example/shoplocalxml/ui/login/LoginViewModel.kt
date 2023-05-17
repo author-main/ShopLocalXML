@@ -83,8 +83,6 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         val email = onValidEmail?.invoke()
         if (!email.isNullOrBlank()) {
             repository.onLogin(email, userPassword, finger, onPerformLogin) { result ->
-                /*if (finger)
-                    onChangePassword?.invoke(5, PasswordSymbol.FINGER_PRINT)*/
                 performOpenShop(result)
             }
         } else {

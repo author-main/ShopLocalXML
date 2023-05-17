@@ -38,6 +38,8 @@ class Repository {
      * @param email String email пользователя
      * @param password String пароль пользователя
      * @param finger Boolean, true если вход по отпечатку
+     * @param performAction callback обработка события до начала проверки login,
+     * отображаем DialogProgress, заполняем все символы пароля с использованием FingerPrint
      * @param action callback передает token пользователя,
      * token == null при неудачной попытке входа в систему
      */
