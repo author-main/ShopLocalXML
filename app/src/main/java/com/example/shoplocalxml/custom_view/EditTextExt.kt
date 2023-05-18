@@ -23,6 +23,7 @@ import com.example.shoplocalxml.toPx
 
 @SuppressLint("RestrictedApi")
 class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
+    var onValidValue: ((text: String) -> Boolean)? = null
     private val paint = Paint()
     private var drawableRight: Drawable? = null
     private var roundBackgroundColor = Color.parseColor("#FF393E46")
@@ -205,8 +206,11 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
     fun validateValue(): Boolean{
-        var isCorrect = true
-        when (inputType) {
+        val correct =
+            onValidValue?.let{
+                it(text.toString())
+            } ?: true
+       /* when (inputType) {
           33 -> {
               isCorrect = text?.let {email ->
                   !(email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches())
@@ -214,8 +218,9 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
               val color = if (isCorrect) Color.TRANSPARENT else context.getColor(R.color.EditTextBorderErrorDark)
               borderColor = color
           }
-        }
-        return isCorrect
+        }*/
+        borderColor = if (correct) Color.TRANSPARENT else context.getColor(R.color.EditTextBorderErrorDark)
+        return correct
     }
 
     override fun setCompoundDrawables(

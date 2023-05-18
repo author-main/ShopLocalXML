@@ -1,5 +1,6 @@
 package com.example.shoplocalxml
 
+
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
@@ -16,11 +17,15 @@ import android.view.Display
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.toColor
+import androidx.core.view.marginStart
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 
 
@@ -92,7 +97,7 @@ fun vibrate(duration: Long) {
     vibe.vibrate(effect)
 }
 
-fun setDialogStyle(dialog: AlertDialog, noTitle: Boolean = false) {
+fun setDialogStyle(dialog: AlertDialog, @StringRes title: Int? = null, noTitle: Boolean = false) {
     val bgColor = applicationContext.getColor(R.color.PrimaryDark)
     val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.background_dialog)
     drawable!!.setTint(bgColor)
@@ -103,6 +108,12 @@ fun setDialogStyle(dialog: AlertDialog, noTitle: Boolean = false) {
         layoutParams.copyFrom(it.attributes)
         it.attributes = layoutParams*/
         it.setBackgroundDrawable(drawable)
+    }
+    title?.let{
+        val textView = TextView(dialog.context)
+        textView.setText(it)
+        textView.setPadding(16.toPx, 16.toPx, 0, 0)
+        dialog.setCustomTitle(textView)
     }
 }
 

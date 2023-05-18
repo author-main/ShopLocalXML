@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.login
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,6 +105,10 @@ class LoginFragment : Fragment() {
         loginViewModel.getUserEmail()?.let{
             dataBinding.editTextTextEmailAddress.setText(it)
         }
+        dataBinding.editTextTextEmailAddress.onValidValue = {
+            !(it.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(it).matches())
+        }
+
         loginViewModel.onPerformLogin = {
             passwordSymbols.forEach{textView ->
                 textView?.alpha = 1f

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="eventhandler"
+            name="user"
             type="com.example.shoplocalxml.ui.dialog.DialogReg"/>
     </data>
 
@@ -33,7 +33,7 @@
             app:chainUseRtl="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrier2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
         <TextView
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="phone"
             app:barrierAllowsGoneWidgets="false"
             app:barrierDirection="start"
             app:chainUseRtl="false"
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="text|textEmailAddress"
             app:barrierAllowsGoneWidgets="false"
             app:barrierDirection="start"
             app:chainUseRtl="false"
@@ -116,7 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="number|numberPassword"
+            android:maxLength="5"
             app:barrierAllowsGoneWidgets="false"
             app:chainUseRtl="false"
             app:layout_constraintEnd_toEndOf="parent"
