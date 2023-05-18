@@ -79,8 +79,8 @@ class LoginFragment : Fragment() {
                 //textView?.setTextColor(resources.getColor(R.color.colorAccent, null))
             }*/
 
-            if (dataBinding.editTextTextEmailAddress.validateValue())
-                dataBinding.editTextTextEmailAddress.text.toString()
+            if (dataBinding.editTextEmailAddress.validateValue())
+                dataBinding.editTextEmailAddress.text.toString()
             else
                 null
         }
@@ -103,9 +103,9 @@ class LoginFragment : Fragment() {
         accessHandler.setActivityFingerPrint(requireActivity())*/
         loginViewModel.setActivityFingerPrint(requireActivity())
         loginViewModel.getUserEmail()?.let{
-            dataBinding.editTextTextEmailAddress.setText(it)
+            dataBinding.editTextEmailAddress.setText(it)
         }
-        dataBinding.editTextTextEmailAddress.onValidValue = {
+        dataBinding.editTextEmailAddress.onValidValue = {
             !(it.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(it).matches())
         }
 
@@ -121,7 +121,7 @@ class LoginFragment : Fragment() {
         if (!enabledKeyFingerPrint)
             dataBinding.buttonKeyFinger.alpha = 0.3f
         dataBinding.eventhandler = loginViewModel
-        /*dataBinding.editTextTextEmailAddress.setDrawableOnClick {
+        /*dataBinding.editTextEmailAddress.setDrawableOnClick {
             log("click drawable right...")
         }*/
 

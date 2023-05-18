@@ -50,7 +50,7 @@
                 android:paddingVertical="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress">
+                app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress">
 
                 <LinearLayout
                     android:id="@+id/layoutEmptySymbols"
@@ -107,7 +107,7 @@
             </FrameLayout>
 
             <com.example.shoplocalxml.custom_view.EditTextExt
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/editTextEmailAddress"
                 style="@style/EditTextExt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -27,9 +27,16 @@ class DialogReg: DialogFragment() {
     private lateinit var dataBinding: DialogRegBinding
     private lateinit var dialog: AlertDialog
     private val user: User = User.getInstance()
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dataBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.dialog_reg, null, false)
+
+        dataBinding.editTextPassword.setDrawableOnClick {
+            log("click drawable right...")
+        }
+
+
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder//.setTitle(R.string.title_reg)
             .setView(dataBinding.root)
