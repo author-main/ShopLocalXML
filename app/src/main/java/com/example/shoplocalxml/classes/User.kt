@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName
 data class User (
     @SerializedName("id")           var id: Int?,
     @SerializedName("email")        var email: String?,
-    @SerializedName("firstname")    val firstname: String?,
-    @SerializedName("lastname")     val lastname: String?,
-    @SerializedName("phone")        val phone: String?,
+    @SerializedName("firstname")    var firstname: String?,
+    @SerializedName("lastname")     var lastname: String?,
+    @SerializedName("phone")        var phone: String?,
     @SerializedName("password")     var password: String?,
     @SerializedName("token")        var token: String?
 

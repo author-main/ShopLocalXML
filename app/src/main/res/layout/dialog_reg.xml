@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="user"
+            name="dialog"
             type="com.example.shoplocalxml.ui.dialog.DialogReg"/>
     </data>
 
@@ -17,46 +17,50 @@
             android:id="@+id/textView1"
             style="@style/TextViewDialog"
             android:text="@string/text_family"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextFName"
-            app:layout_constraintEnd_toStartOf="@+id/editTextFName"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextLName"
+            app:layout_constraintEnd_toStartOf="@+id/editTextLName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextFName" />
+            app:layout_constraintTop_toTopOf="@+id/editTextLName" />
 
         <com.example.shoplocalxml.custom_view.EditTextExt
-            android:id="@+id/editTextFName"
+            android:text="@={dialog.user.lastname}"
+            android:id="@+id/editTextLName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="text"
+            android:maxLength="30"
             app:barrierAllowsGoneWidgets="false"
             app:chainUseRtl="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrier2"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/textView2"
             style="@style/TextViewDialog"
             android:text="@string/text_name"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextLName"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextFName"
             app:layout_constraintStart_toStartOf="@+id/textView1"
-            app:layout_constraintTop_toTopOf="@+id/editTextLName" />
+            app:layout_constraintTop_toTopOf="@+id/editTextFName" />
 
         <com.example.shoplocalxml.custom_view.EditTextExt
-            android:id="@+id/editTextLName"
+            android:text="@={dialog.user.firstname}"
+            android:id="@+id/editTextFName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="text"
+            android:maxLength="20"
             app:barrierAllowsGoneWidgets="false"
             app:barrierDirection="start"
             app:chainUseRtl="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrier2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFName" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextLName" />
 
         <TextView
             android:id="@+id/textView3"
@@ -67,18 +71,20 @@
             app:layout_constraintTop_toTopOf="@+id/editTextPhone" />
 
         <com.example.shoplocalxml.custom_view.EditTextExt
+            android:text="@={dialog.user.phone}"
             android:id="@+id/editTextPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="phone"
+            android:maxLength="20"
             app:barrierAllowsGoneWidgets="false"
             app:barrierDirection="start"
             app:chainUseRtl="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barrier2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextLName" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextFName" />
 
         <TextView
             android:id="@+id/textView4"
@@ -89,12 +95,14 @@
             app:layout_constraintTop_toTopOf="@+id/editTextMail" />
 
         <com.example.shoplocalxml.custom_view.EditTextExt
+            android:text="@={dialog.user.email}"
             android:id="@+id/editTextMail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="text|textEmailAddress"
+            android:maxLength="30"
             app:barrierAllowsGoneWidgets="false"
             app:barrierDirection="start"
             app:chainUseRtl="false"
@@ -111,6 +119,7 @@
             app:layout_constraintTop_toTopOf="@+id/editTextPassword" />
 
         <com.example.shoplocalxml.custom_view.EditTextExt
+            android:text="@={dialog.user.password}"
             android:drawableEnd="@drawable/ic_showsym_off"
             android:id="@+id/editTextPassword"
             android:layout_width="0dp"

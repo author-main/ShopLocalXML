@@ -51,7 +51,6 @@ class LoginFragment : Fragment() {
             )
         })
 
-
         loginViewModel.onChangePassword = { count, type ->
             SnackbarExt.hideSnackbar()
             if (type == PasswordSymbol.FINGER_PRINT) {
@@ -74,12 +73,7 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel.onValidEmail = {
-           /* passwordSymbols.forEach{textView ->
-                textView?.alpha = 0f
-                //textView?.setTextColor(resources.getColor(R.color.colorAccent, null))
-            }*/
-
-            if (dataBinding.editTextEmailAddress.validateValue())
+            if (dataBinding.editTextEmailAddress.correctValue)//validateValue())
                 dataBinding.editTextEmailAddress.text.toString()
             else
                 null
