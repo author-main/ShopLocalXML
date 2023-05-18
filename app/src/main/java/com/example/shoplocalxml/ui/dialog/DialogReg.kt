@@ -90,7 +90,7 @@ class DialogReg: DialogFragment() {
         }
         if (verified) {
             dismiss()
-            (parentFragment as OnRegisterListener).onRegisterUser()
+            user.get()?.let { (parentFragment as OnRegisterListener).onRegisterUser(it) }
         }
     }
 }

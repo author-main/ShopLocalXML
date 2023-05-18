@@ -21,6 +21,7 @@ import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
@@ -137,8 +138,8 @@ class LoginFragment : Fragment(), OnRegisterListener {
         return dataBinding.root
     }
 
-    override fun onRegisterUser() {
-        log("register user...")
+    override fun onRegisterUser(user: User) {
+        log("register user ${user.lastname}...")
     }
 
 
