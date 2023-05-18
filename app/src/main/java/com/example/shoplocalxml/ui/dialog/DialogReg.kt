@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.dialog
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Patterns
@@ -12,12 +13,14 @@ import androidx.core.view.allViews
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.DialogRegBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.setDialogStyle
+import com.example.shoplocalxml.ui.login.password_storage.OnRegisterListener
 
 
 class DialogReg: DialogFragment() {
@@ -62,7 +65,6 @@ class DialogReg: DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        //setWidthDialog(dialog, 300)
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
             onClickDialogButton()//DialogInterface.BUTTON_POSITIVE)
         }
@@ -88,7 +90,7 @@ class DialogReg: DialogFragment() {
         }
         if (verified) {
             dismiss()
+            (parentFragment as OnRegisterListener).onRegisterUser()
         }
     }
-
 }

@@ -26,6 +26,7 @@ import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
+import com.example.shoplocalxml.ui.login.password_storage.OnRegisterListener
 import com.example.shoplocalxml.vibrate
 
 
@@ -34,7 +35,7 @@ import com.example.shoplocalxml.vibrate
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), OnRegisterListener {
     private lateinit var dataBinding: FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -135,5 +136,10 @@ class LoginFragment : Fragment() {
 
         return dataBinding.root
     }
+
+    override fun onRegisterUser() {
+        log("register user...")
+    }
+
 
 }
