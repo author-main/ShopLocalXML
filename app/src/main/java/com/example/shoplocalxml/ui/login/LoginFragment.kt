@@ -117,9 +117,6 @@ class LoginFragment : Fragment(), OnRegisterListener {
         if (!enabledKeyFingerPrint)
             dataBinding.buttonKeyFinger.alpha = 0.3f
         dataBinding.eventhandler = loginViewModel
-        /*dataBinding.editTextEmailAddress.setDrawableOnClick {
-            log("click drawable right...")
-        }*/
 
         loginViewModel.openShop = {open ->
             DialogProgress.dismiss()
