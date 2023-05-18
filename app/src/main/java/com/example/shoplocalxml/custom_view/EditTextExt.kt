@@ -156,6 +156,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        var drawableClick = false
         event?.let {
             if (it.action == MotionEvent.ACTION_DOWN) {
                 performClick()
@@ -169,26 +170,20 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                         this.right   = measuredWidth - 8.toPx
                         this.bottom  = measuredHeight - compoundPaddingBottom
                     }
-                   /*if (drawableOnClick != null && placeBounds.contains(x, y)) {
-                        drawableOnClick?.let{onClick ->*/
                     if (drawableEnd != null && placeBounds.contains(x, y)) {
+                        drawableClick = true
+                            event.action = MotionEvent.ACTION_CANCEL
                             if (drawableAction != null) {
                                 checked = !checked
                                 val drawable = if (checked) drawableAction else drawableEnd
                                 changeDrawableEnd(drawable)
                             }
-
-                                //setCompoundDrawablesRelative(null, null, drawableAction, null)
-                            //onClick()
                             drawableOnClick?.invoke()
-
-                        event.action = MotionEvent.ACTION_CANCEL
                     }
                 }
             }
         }
-
-        return super.onTouchEvent(event)
+        return if (drawableClick) false else super.onTouchEvent(event)
     }
 
     private fun changeDrawableEnd(drawable: Drawable?){
@@ -217,10 +212,12 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
     private fun setTransformationMethod(reset: Boolean = false){
+        val index = selectionStart
         transformationMethod = if (reset)
             HideReturnsTransformationMethod.getInstance()
         else
             PasswordTransformationMethod.getInstance()
+        setSelection(index)
     }
 
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
