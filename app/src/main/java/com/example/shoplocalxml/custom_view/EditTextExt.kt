@@ -9,25 +9,27 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
-import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.toPx
 import java.util.stream.IntStream
 
 
 @SuppressLint("RestrictedApi")
 class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
+    private val INPUTTYPE_PASSWORD = 18
     var onValidValue: ((text: String) -> Boolean)? = null
     private var drawableEnd: Drawable? = null
+    var checked = false
     var drawableAction: Drawable? = null
-        set(value) = setDrawableAction(value)
     private val paint = Paint()
     private var drawableRight: Drawable? = null
     private var roundBackgroundColor = Color.parseColor("#FF393E46")
@@ -73,8 +75,15 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         val a = context.obtainStyledAttributes(attrs, intArrayOf(0), 0, com.example.shoplocalxml.R.style.EditTextExt)
         a.recycle()*/
 
-        if (inputType == 18) {
-            transformationMethod = PasswordTransformationMethodExt()
+        context.obtainStyledAttributes(attrs, R.styleable.EditTextExt).let {
+            val reference = it.getResourceId(R.styleable.EditTextExt_drawableAction, -1)
+            setDrawableAction(reference)
+            it.recycle()
+        }
+
+        if (inputType == INPUTTYPE_PASSWORD) {
+            setTransformationMethod()
+            //transformationMethod = PasswordTransformationMethod.getInstance()
         }
       /*  if (inputType == 18) {
             transformationMethod = object : PasswordTransformationMethod() {
@@ -127,8 +136,12 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
     @JvmName("setDrawableAction_")
-    private fun setDrawableAction(value: Drawable?) {
-        drawableAction = value
+    private fun setDrawableAction(value: Int) {
+        if (value != -1) {
+            drawableAction = AppCompatResources.getDrawable(context, value)
+            val color = context.getColor(R.color.drawable_tint_color).alpha(0.5f)
+            drawableAction?.setTint(color)
+        }
     }
 
     fun setDrawableOnClick(action: () -> Unit){
@@ -155,12 +168,19 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                         this.right   = measuredWidth - 8.toPx
                         this.bottom  = measuredHeight - compoundPaddingBottom
                     }
-                    if (drawableOnClick != null && placeBounds.contains(x, y)) {
-                        drawableOnClick?.let{onClick ->
-                            if (drawableAction != null)
-                                setCompoundDrawablesRelative(null, null, drawableAction, null)
-                            onClick()
-                        }
+                   /*if (drawableOnClick != null && placeBounds.contains(x, y)) {
+                        drawableOnClick?.let{onClick ->*/
+                    if (drawableEnd != null && placeBounds.contains(x, y)) {
+                            if (drawableAction != null) {
+                                checked = !checked
+                                val drawable = if (checked) drawableAction else drawableEnd
+                                changeDrawableEnd(drawable)
+                            }
+
+                                //setCompoundDrawablesRelative(null, null, drawableAction, null)
+                            //onClick()
+                            drawableOnClick?.invoke()
+
                         event.action = MotionEvent.ACTION_CANCEL
                     }
                 }
@@ -170,6 +190,24 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         return super.onTouchEvent(event)
     }
 
+    private fun changeDrawableEnd(drawable: Drawable?){
+        setCompoundDrawablesRelativeWithIntrinsicBounds(
+            null,
+            null,
+            drawable,
+            null
+        )
+        if (drawableAction != null) {
+            if (inputType == INPUTTYPE_PASSWORD) {
+                if (checked)
+                    setTransformationMethod(reset = true)
+                else
+                    setTransformationMethod()
+            }
+        }
+    }
+
+
     override fun onEditorAction(actionCode: Int) {
         if (actionCode == EditorInfo.IME_ACTION_DONE) {
             clearFocus()
@@ -177,9 +215,24 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         super.onEditorAction(actionCode)
     }
 
+    private fun setTransformationMethod(reset: Boolean = false){
+        transformationMethod = if (reset)
+            HideReturnsTransformationMethod.getInstance()
+        else
+            PasswordTransformationMethod.getInstance()
+    }
+
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
-        if (!focused)
+        if (!focused) {
             validateValue()
+          /*  if (drawableAction != null)
+                if (checked) {
+                    changeDrawableEnd(drawableEnd)
+                    if (inputType == INPUTTYPE_PASSWORD) {
+                        transformationMethod = PasswordTransformationMethodExt()
+                    }
+                }*/
+        }
         else
             borderColor = Color.TRANSPARENT
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
@@ -365,7 +418,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
  </selector>
  */
 
-class PasswordTransformationMethodExt(private val char: Char? = null): PasswordTransformationMethod(){
+/*class PasswordTransformationMethodExt(private val char: Char? = null): PasswordTransformationMethod(){
     private class PasswordCharSequence(source: CharSequence, private val char: Char?) : CharSequence {
         private var mSource: CharSequence = source
         override val length: Int
@@ -392,4 +445,4 @@ class PasswordTransformationMethodExt(private val char: Char? = null): PasswordT
     override fun getTransformation(source: CharSequence?, view: View?): CharSequence {
         return PasswordCharSequence(source!!, char)
     }
-}
+}*/

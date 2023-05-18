@@ -32,9 +32,9 @@ class DialogReg: DialogFragment() {
         dataBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.dialog_reg, null, false)
 
-        dataBinding.editTextPassword.setDrawableOnClick {
+        /*dataBinding.editTextPassword.setDrawableOnClick {
             log("click drawable right...")
-        }
+        }*/
 
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
