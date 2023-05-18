@@ -23,9 +23,7 @@ import com.example.shoplocalxml.setDialogStyle
 class DialogReg: DialogFragment() {
     private lateinit var dataBinding: DialogRegBinding
     private lateinit var dialog: AlertDialog
-    //private val user: User = User.getInstance()
     val user: ObservableField<User> = ObservableField<User>()
-    //var lastname: String = ""
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dataBinding =
@@ -36,34 +34,24 @@ class DialogReg: DialogFragment() {
         }
         user.set(userData)
         dataBinding.dialog = this
-
-        /*dataBinding.editTextPassword.setDrawableOnClick {
-            log("click drawable right...")
-        }*/
-
         dataBinding.editTextPassword.onValidValue = {password ->
             password.length == 5
         }
-
         dataBinding.editTextLName.onValidValue = {lname ->
             lname.isNotBlank()
         }
-
         dataBinding.editTextFName.onValidValue = {fname ->
             fname.isNotBlank()
         }
-
         dataBinding.editTextMail.onValidValue = {email ->
             !(email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches())
         }
-
         dataBinding.editTextPhone.onValidValue = {phone ->
             val regExp = "^(8|\\+7)\\d{10}".toRegex()
             regExp.matches(phone)
         }
-
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        builder//.setTitle(R.string.title_reg)
+        builder
             .setView(dataBinding.root)
             .setNegativeButton(R.string.button_cancel, null)
             .setPositiveButton(R.string.btn_reg, null)
@@ -71,10 +59,6 @@ class DialogReg: DialogFragment() {
         setDialogStyle(dialog, title = R.string.title_reg)
         return dialog
     }
-
-  /*  fun onClick(view: View) {
-
-    }*/
 
     override fun onStart() {
         super.onStart()
@@ -84,14 +68,7 @@ class DialogReg: DialogFragment() {
         }
     }
 
-
-
-
     private fun onClickDialogButton(){//button: Int) {
-        /*if (button == DialogInterface.BUTTON_POSITIVE) {
-            log("button ok...")
-        }*/
-
         val view = dataBinding.root.findFocus()
         view?.let{focusedView ->
             if (focusedView is EditText) {
@@ -102,17 +79,14 @@ class DialogReg: DialogFragment() {
                 }
             }
         }
-
         var verified = true
         dataBinding.root.allViews.forEach { v ->
             if (v is EditTextExt) {
-                if (!(v as EditTextExt).correctValue)
+                if (!(v as EditTextExt).validateValue())
                     verified = false
             }
         }
-
         if (verified) {
-            log("register ok...")
             dismiss()
         }
     }

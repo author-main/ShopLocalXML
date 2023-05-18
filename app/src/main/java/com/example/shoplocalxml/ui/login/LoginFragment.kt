@@ -73,7 +73,7 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel.onValidEmail = {
-            if (dataBinding.editTextEmailAddress.correctValue)//validateValue())
+            if (dataBinding.editTextEmailAddress.validateValue())
                 dataBinding.editTextEmailAddress.text.toString()
             else
                 null

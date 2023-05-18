@@ -26,7 +26,6 @@ import java.util.stream.IntStream
 
 @SuppressLint("RestrictedApi")
 class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
-    var correctValue: Boolean = true
     private val INPUTTYPE_PASSWORD = 18
     var onValidValue: ((text: String) -> Boolean)? = null
     private var drawableEnd: Drawable? = null
@@ -314,7 +313,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         super.setCompoundDrawablesRelative(start, top, end, bottom)
     }
 
-    private fun validateValue(): Boolean{
+    fun validateValue(): Boolean{
         val correct =
             onValidValue?.let{
                 it(text.toString())
@@ -330,7 +329,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
           }
         }*/
         borderColor = if (correct) Color.TRANSPARENT else context.getColor(R.color.EditTextBorderErrorDark)
-        correctValue = correct
         return correct
     }
 
