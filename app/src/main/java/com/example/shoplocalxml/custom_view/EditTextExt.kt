@@ -19,6 +19,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import java.util.stream.IntStream
 
@@ -225,13 +226,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         if (!focused) {
             validateValue()
-          /*  if (drawableAction != null)
-                if (checked) {
-                    changeDrawableEnd(drawableEnd)
-                    if (inputType == INPUTTYPE_PASSWORD) {
-                        transformationMethod = PasswordTransformationMethodExt()
-                    }
-                }*/
         }
         else
             borderColor = Color.TRANSPARENT
