@@ -6,6 +6,7 @@ enum class PasswordSymbol {
     BACKSPACE
 }
 enum class TypeRequest {
+    USER_LOGIN,
     USER_REGISTER,
     USER_RESTORE
 }

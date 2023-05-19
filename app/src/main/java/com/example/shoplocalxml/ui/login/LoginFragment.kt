@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -35,11 +36,12 @@ import com.example.shoplocalxml.vibrate
 class LoginFragment : Fragment(), OnUserListener {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var dataBinding: FragmentLoginBinding
+    private val passwordSymbols = arrayOfNulls<TextView>(5)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val passwordSymbols = arrayOfNulls<TextView>(5)
+        //val passwordSymbols = arrayOfNulls<TextView>(5)
         /*val loginViewModel =
             ViewModelProvider(this)[LoginViewModel::class.java]*/
 
@@ -85,8 +87,6 @@ class LoginFragment : Fragment(), OnUserListener {
         loginViewModel.onRegisterUser = {
             DialogReg().show(childFragmentManager, null)
         }
-        // Inflate the layout for this fragment
-        //val root = inflater.inflate(R.layout.fragment_login, container, false)
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
         passwordSymbols[0] = dataBinding.textViewSym1f
         passwordSymbols[1] = dataBinding.textViewSym2f
@@ -96,9 +96,6 @@ class LoginFragment : Fragment(), OnUserListener {
         passwordSymbols.forEach {
             it?.alpha = 0f
         }
-
-        /*val accessHandler: AccessHandler = AccessHandlerImpl()
-        accessHandler.setActivityFingerPrint(requireActivity())*/
         loginViewModel.setActivityFingerPrint(requireActivity())
         loginViewModel.getUserEmail()?.let{
             dataBinding.editTextEmailAddress.setText(it)
@@ -119,20 +116,6 @@ class LoginFragment : Fragment(), OnUserListener {
         if (!enabledKeyFingerPrint)
             dataBinding.buttonKeyFinger.alpha = 0.3f
         dataBinding.eventhandler = loginViewModel
-
-        loginViewModel.openShop = {open ->
-            DialogProgress.hide()
-            if (!open) {
-                vibrate(400)
-                val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
-                snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
-                snackbarExt.show()
-            }
-
-            passwordSymbols.forEach{textView ->
-                textView?.alpha = 0f
-            }
-        }
         return dataBinding.root
     }
 
@@ -147,6 +130,21 @@ class LoginFragment : Fragment(), OnUserListener {
 
     private fun<T> requestProcessed(data: T?, type: TypeRequest, result: Boolean) {
         when (type) {
+            TypeRequest.USER_LOGIN -> {
+                DialogProgress.hide()
+                if (result) {
+
+                } else {
+                    vibrate(400)
+                    val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
+                    snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
+                    snackbarExt.show()
+                }
+                dataBinding.textViewSym1f
+                passwordSymbols.forEach{textView ->
+                    textView?.alpha = 0f
+                }
+            }
             TypeRequest.USER_REGISTER -> {
                 if (result) {
                     val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.text_notifyreg))

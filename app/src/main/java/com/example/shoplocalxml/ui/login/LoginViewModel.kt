@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 class LoginViewModel(private val repository: Repository) : ViewModel() {
     var onChangePassword: ((count: Int, type: PasswordSymbol) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
-    var openShop: ((open: Boolean) -> Unit)? = null
     var onPerformLogin: () -> Unit = {}
     var onRegisterUser: (() -> Unit)? = null
     var onRequestProcessed: ((data: Any?, typeRequest: TypeRequest, result: Boolean)-> Unit)? = null
@@ -101,7 +100,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         fun performOpenShop(value: Boolean){
             viewModelScope.launch {
                 delay(300)
-                openShop?.invoke(value)
+                onRequestProcessed?.invoke(null, TypeRequest.USER_LOGIN, value)
                 userPassword = ""
             }
         }
