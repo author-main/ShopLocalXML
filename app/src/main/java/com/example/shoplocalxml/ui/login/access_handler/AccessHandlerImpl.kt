@@ -95,8 +95,19 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
         }
     }
 
-    override fun onRestore(email: String, password: String, action: (result: Boolean) -> Unit) {
-        TODO("Not yet implemented")
+    override fun onRestore(user: User, action: (result: Boolean) -> Unit) {
+        var result = false
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = databaseApi.restoreUser(user)
+                result = response.body()?.id?.let{
+                    it > 0
+                } ?: false
+            } catch (_: Exception) {
+            } finally {
+                action(result)
+            }
+        }
     }
 
 }

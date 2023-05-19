@@ -10,5 +10,5 @@ interface AccessHandler {
     fun onLogin(email: String, password: String, finger: Boolean = false, performAction: () -> Unit, action: (token: String?) -> Unit)
     //fun onRegister(vararg userdata: String, action: (result: Boolean) -> Unit)
     fun onRegister(user: User, action: (result: Boolean) -> Unit)
-    fun onRestore(email: String, password: String, action: (result: Boolean) -> Unit)
+    fun onRestore(user: User, action: (result: Boolean) -> Unit)
 }

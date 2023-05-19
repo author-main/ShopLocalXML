@@ -80,13 +80,12 @@ class Repository {
 
     /**
      * Запрос пользователя на восстановление пароля
-     * @param email String email пользователя
-     * @param password String пароль пользователя
+     * @param user данные пользователя (см. [User])
      * @param action callback передает результат отправки данных,
      * true - данные успешно переданы
      */
-    fun onRestore(email: String, password: String, action: ((result: Boolean) -> Unit)) {
-        accessHandler.onRestore(email, password) {
+    fun onRestore(user:User, action: ((result: Boolean) -> Unit)) {
+        accessHandler.onRestore(user) {
             action(it)
         }
     }

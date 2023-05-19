@@ -24,6 +24,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     var onValidEmail: (() -> String?)? = null
     var onPerformLogin: () -> Unit = {}
     var onRegisterUser: (() -> Unit)? = null
+    var onRestoreUser: (() -> Unit)? = null
     var onRequestProcessed: ((data: Any?, typeRequest: TypeRequest, result: Boolean)-> Unit)? = null
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
@@ -80,7 +81,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                     onRegisterUser?.invoke()
                 }
                 KEY_REST -> {
-
+                    onRestoreUser?.invoke()
                 }
             }
         }
@@ -93,6 +94,12 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
          /*   if (it)
                 log("register ok...")*/
             onRequestProcessed?.invoke(user, TypeRequest.USER_REGISTER, it)
+        }
+    }
+
+    fun performRestoreUser(user: User){
+        repository.onRestore(user) {
+            onRequestProcessed?.invoke(user, TypeRequest.USER_RESTORE, it)
         }
     }
 

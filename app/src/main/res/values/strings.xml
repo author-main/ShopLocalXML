@@ -26,7 +26,6 @@
     <string name="text_email">EMail</string>
     <string name="text_password">Пароль</string>
     <string name="text_newpassword">Новый\nпароль</string>
-    <string name="message_restore_email">Вам отправлено письмо\nдля подтверждения изменения\nданных</string>
     <string name="message_login_error">Ошибка проверки данных клиента.\nВ доступе отказано</string>
     <string name="text_bestseller">Бестселлер</string>
     <string name="text_action">Акция</string>
@@ -119,6 +118,10 @@
     <string name="text_subjectshare">LocalShop. Этот товар Вам понравится</string>
     <string name="text_notifyreg">Вы успешно зарегистрировались.\nДобро пожаловать в наш магазин!</string>
     <string name="text_notifyreg_error">Не удалось зарегистрировать\nпользователя</string>
+    <string name="text_notifyrestore">Вам отправлено письмо для подтверждения\nизменения данных</string>
+    <string name="text_notifyrestore_error">Запрос на восстановление доступа\nне обработан</string>
+
+
     <string name="eCharPassword">○</string>
     <string name="fCharPassword">●</string>
     <!-- TODO: Remove or change this placeholder text -->

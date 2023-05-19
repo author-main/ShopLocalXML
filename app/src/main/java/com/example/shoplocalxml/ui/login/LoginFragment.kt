@@ -1,5 +1,7 @@
 package com.example.shoplocalxml.ui.login
 
+import android.R.attr.fragment
+import android.R.attr.value
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -8,23 +10,22 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
-import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
-import com.example.shoplocalxml.PasswordSymbol
-import com.example.shoplocalxml.databinding.FragmentLoginBinding
-import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
+import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
+import com.example.shoplocalxml.ui.dialog.DialogRestore
+import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.vibrate
 
 
@@ -41,6 +42,7 @@ class LoginFragment : Fragment(), OnUserListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
         //val passwordSymbols = arrayOfNulls<TextView>(5)
         /*val loginViewModel =
             ViewModelProvider(this)[LoginViewModel::class.java]*/
@@ -87,7 +89,16 @@ class LoginFragment : Fragment(), OnUserListener {
         loginViewModel.onRegisterUser = {
             DialogReg().show(childFragmentManager, null)
         }
-        dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
+        loginViewModel.onRestoreUser = {
+            val dialogRestore = DialogRestore()
+            val email = dataBinding.editTextEmailAddress.text.toString()
+            if (email.isNotBlank()) {
+                val bundle = Bundle()
+                bundle.putString("email", email)
+                dialogRestore.arguments = bundle
+            }
+            dialogRestore.show(childFragmentManager, null)
+        }
         passwordSymbols[0] = dataBinding.textViewSym1f
         passwordSymbols[1] = dataBinding.textViewSym2f
         passwordSymbols[2] = dataBinding.textViewSym3f
@@ -125,7 +136,8 @@ class LoginFragment : Fragment(), OnUserListener {
     }
 
     override fun onRestoreUser(user: User) {
-        log("restore user ${user.lastname}...")
+        DialogProgress.show(requireContext())
+        loginViewModel.performRestoreUser(user)
     }
 
     private fun<T> requestProcessed(data: T?, type: TypeRequest, result: Boolean) {
@@ -161,8 +173,19 @@ class LoginFragment : Fragment(), OnUserListener {
                 }
             }
             TypeRequest.USER_RESTORE -> {
-                if (result)
-                    log("restore ok...")
+                if (result) {
+                    val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.text_notifyrestore))
+                    snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
+                    snackbarExt.show()
+                    val user = data as User
+                    dataBinding.editTextEmailAddress.setText(user.email)
+                } else {
+                    vibrate(400)
+                    val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.text_notifyrestore_error))
+                    snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
+                    snackbarExt.show()
+                }
+
             }
         }
         DialogProgress.hide()

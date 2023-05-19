@@ -38,4 +38,8 @@ class DatabaseApiImpl {
         return queryUser(QUERY_REGUSER, user)
     }
 
+    suspend fun restoreUser(user: User): Response<User> {
+        return queryUser(QUERY_RESTOREUSER, user)
+    }
+
 }
