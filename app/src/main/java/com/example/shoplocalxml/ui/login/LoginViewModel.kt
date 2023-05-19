@@ -66,14 +66,8 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
             if (changed) {
                 val fingerPrint = typeKey == PasswordSymbol.FINGER_PRINT
                 if (!fingerPrint) onChangePassword?.invoke(userPassword.length, typeKey)
-                if (userPassword.length == 5 || fingerPrint) {
+                if (userPassword.length == 5 || fingerPrint)
                     onLogin(fingerPrint)
-                    /*viewModelScope.launch {
-                        delay(700)
-                        onLogin(typeKey == PasswordSymbol.FINGER_PRINT)
-                    }*/
-
-                }
             }
         } else {
             when (index) {
