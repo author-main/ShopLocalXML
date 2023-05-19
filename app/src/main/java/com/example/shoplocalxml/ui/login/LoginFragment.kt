@@ -43,16 +43,6 @@ class LoginFragment : Fragment(), OnUserListener {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
-        //val passwordSymbols = arrayOfNulls<TextView>(5)
-        /*val loginViewModel =
-            ViewModelProvider(this)[LoginViewModel::class.java]*/
-
-        /*val loginViewModel: LoginViewModel by viewModels(factoryProducer = {
-            FactoryViewModel(
-                this,
-                repository
-            )
-        })*/
 
         loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
 
