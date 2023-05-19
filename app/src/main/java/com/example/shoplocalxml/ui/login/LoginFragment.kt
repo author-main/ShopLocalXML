@@ -143,7 +143,7 @@ class LoginFragment : Fragment(), OnUserListener {
     private fun<T> requestProcessed(data: T?, type: TypeRequest, result: Boolean) {
         when (type) {
             TypeRequest.USER_LOGIN -> {
-                DialogProgress.hide()
+                //DialogProgress.hide()
                 if (result) {
 
                 } else {
