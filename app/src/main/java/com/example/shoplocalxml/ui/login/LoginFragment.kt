@@ -52,9 +52,10 @@ class LoginFragment : Fragment(), OnUserListener {
         loginViewModel.onChangePassword = { count, type ->
             SnackbarExt.hideSnackbar()
             if (type == PasswordSymbol.FINGER_PRINT) {
-                passwordSymbols.forEach {
+                fillPasswordSym()
+                /*passwordSymbols.forEach {
                     it?.alpha = 1f
-                }
+                }*/
             } else {
                 passwordSymbols.forEachIndexed { index, textView ->
                         if (type == PasswordSymbol.NUMBER) {
@@ -94,9 +95,12 @@ class LoginFragment : Fragment(), OnUserListener {
         passwordSymbols[2] = dataBinding.textViewSym3f
         passwordSymbols[3] = dataBinding.textViewSym4f
         passwordSymbols[4] = dataBinding.textViewSym5f
-        passwordSymbols.forEach {
+
+        fillPasswordSym(clear = true)
+        /*passwordSymbols.forEach {
             it?.alpha = 0f
-        }
+        }*/
+
         loginViewModel.setActivityFingerPrint(requireActivity())
         loginViewModel.getUserEmail()?.let{
             dataBinding.editTextEmailAddress.setText(it)
@@ -106,9 +110,11 @@ class LoginFragment : Fragment(), OnUserListener {
         }
 
         loginViewModel.onPerformLogin = {
-            passwordSymbols.forEach{textView ->
+            fillPasswordSym()
+            /*passwordSymbols.forEach{textView ->
                 textView?.alpha = 1f
-            }
+            }*/
+
             DialogProgress.show(requireContext())
         }
         val existPassword = loginViewModel.existPassword()
@@ -118,6 +124,13 @@ class LoginFragment : Fragment(), OnUserListener {
             dataBinding.buttonKeyFinger.alpha = 0.3f
         dataBinding.eventhandler = loginViewModel
         return dataBinding.root
+    }
+
+    private fun fillPasswordSym(clear: Boolean = false){
+        val value = if (clear) 0f else 1f
+        passwordSymbols.forEach{textView ->
+            textView?.alpha = value
+        }
     }
 
     override fun onRegisterUser(user: User) {
@@ -131,6 +144,7 @@ class LoginFragment : Fragment(), OnUserListener {
     }
 
     private fun<T> requestProcessed(data: T?, type: TypeRequest, result: Boolean) {
+        fillPasswordSym(clear = true)
         when (type) {
             TypeRequest.USER_LOGIN -> {
                 //DialogProgress.hide()
@@ -142,10 +156,10 @@ class LoginFragment : Fragment(), OnUserListener {
                     snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
                     snackbarExt.show()
                 }
-                dataBinding.textViewSym1f
-                passwordSymbols.forEach{textView ->
+
+                /*passwordSymbols.forEach{textView ->
                     textView?.alpha = 0f
-                }
+                }*/
             }
             TypeRequest.USER_REGISTER -> {
                 if (result) {
