@@ -10,24 +10,20 @@ import android.view.animation.Animation
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
-import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
-import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
-import com.example.shoplocalxml.ui.login.password_storage.OnRegisterListener
 import com.example.shoplocalxml.vibrate
 
 
@@ -36,7 +32,8 @@ import com.example.shoplocalxml.vibrate
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment(), OnRegisterListener {
+class LoginFragment : Fragment(), OnUserListener {
+    private lateinit var loginViewModel: LoginViewModel
     private lateinit var dataBinding: FragmentLoginBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,13 +43,18 @@ class LoginFragment : Fragment(), OnRegisterListener {
         /*val loginViewModel =
             ViewModelProvider(this)[LoginViewModel::class.java]*/
 
-        val loginViewModel: LoginViewModel by viewModels(factoryProducer = {
+        /*val loginViewModel: LoginViewModel by viewModels(factoryProducer = {
             FactoryViewModel(
                 this,
                 repository
             )
-        })
+        })*/
 
+        loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
+
+        loginViewModel.onRequestProcessed = {data, typeRequest, result ->
+            requestProcessed(data, typeRequest, result)
+        }
         loginViewModel.onChangePassword = { count, type ->
             SnackbarExt.hideSnackbar()
             if (type == PasswordSymbol.FINGER_PRINT) {
@@ -119,7 +121,7 @@ class LoginFragment : Fragment(), OnRegisterListener {
         dataBinding.eventhandler = loginViewModel
 
         loginViewModel.openShop = {open ->
-            DialogProgress.dismiss()
+            DialogProgress.hide()
             if (!open) {
                 vibrate(400)
                 val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
@@ -131,13 +133,40 @@ class LoginFragment : Fragment(), OnRegisterListener {
                 textView?.alpha = 0f
             }
         }
-
         return dataBinding.root
     }
 
     override fun onRegisterUser(user: User) {
-        log("register user ${user.lastname}...")
+        DialogProgress.show(requireContext())
+        loginViewModel.performRegisterUser(user)
     }
 
+    override fun onRestoreUser(user: User) {
+        log("restore user ${user.lastname}...")
+    }
 
+    private fun<T> requestProcessed(data: T?, type: TypeRequest, result: Boolean) {
+        when (type) {
+            TypeRequest.USER_REGISTER -> {
+                if (result) {
+                    val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.text_notifyreg))
+                    snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
+                    snackbarExt.show()
+                    val user = data as User
+                    dataBinding.editTextEmailAddress.setText(user.email)
+                    user.saveUserData()
+                } else {
+                    vibrate(400)
+                    val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.text_notifyreg_error))
+                    snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
+                    snackbarExt.show()
+                }
+            }
+            TypeRequest.USER_RESTORE -> {
+                if (result)
+                    log("restore ok...")
+            }
+        }
+        DialogProgress.hide()
+    }
 }

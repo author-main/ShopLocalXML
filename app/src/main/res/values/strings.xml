@@ -117,7 +117,8 @@
     <string name="text_delete_usermessages">Сообщение удалено</string>
     <string name="text_share">Поделиться</string>
     <string name="text_subjectshare">LocalShop. Этот товар Вам понравится</string>
-    <string name="text_notifyreg">Вы успешно зарегистрировались</string>
+    <string name="text_notifyreg">Вы успешно зарегистрировались.\nДобро пожаловать в наш магазин!</string>
+    <string name="text_notifyreg_error">Не удалось зарегистрировать\nпользователя</string>
     <string name="eCharPassword">○</string>
     <string name="fCharPassword">●</string>
     <!-- TODO: Remove or change this placeholder text -->

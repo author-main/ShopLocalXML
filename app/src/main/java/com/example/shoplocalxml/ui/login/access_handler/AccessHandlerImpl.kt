@@ -68,16 +68,31 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
                             passwordStorage?.putPassword(password)
                     }
                 }
-            } catch(e:Exception){
-                log(e.message)
+            } catch(_:Exception){
+                //log(e.message)
             } finally {
                 action(token)
             }
         }
     }
 
-    override fun onRegister(vararg userdata: String, action: (result: Boolean) -> Unit) {
+    /*override fun onRegister(vararg userdata: String, action: (result: Boolean) -> Unit) {
         TODO("Not yet implemented")
+    }*/
+
+    override fun onRegister(user: User, action: (result: Boolean) -> Unit) {
+        var result = false
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = databaseApi.registerUser(user)
+                result = response.body()?.id?.let{
+                    it > 0
+                } ?: false
+            } catch (_: Exception) {
+            } finally {
+                action(result)
+            }
+        }
     }
 
     override fun onRestore(email: String, password: String, action: (result: Boolean) -> Unit) {

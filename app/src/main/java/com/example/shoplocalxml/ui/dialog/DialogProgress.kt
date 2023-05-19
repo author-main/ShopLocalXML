@@ -36,7 +36,7 @@ class DialogProgress(context: Context): Dialog(context) {
         fun show(context: Context) {
             getInstance(context)?.show()
         }
-        fun dismiss(){
+        fun hide(){
             instance?.let{
                 it.dismiss()
                 instance = null

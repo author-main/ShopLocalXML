@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.PasswordSymbol
+import com.example.shoplocalxml.TypeRequest
+import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.ui.dialog.DialogProgress
@@ -23,11 +25,13 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     var openShop: ((open: Boolean) -> Unit)? = null
     var onPerformLogin: () -> Unit = {}
     var onRegisterUser: (() -> Unit)? = null
+    var onRequestProcessed: ((data: Any?, typeRequest: TypeRequest, result: Boolean)-> Unit)? = null
     private val KEY_FINGER      = 10
     private val KEY_BACKSPACE   = 11
     private val KEY_REG         = 12
     private val KEY_REST        = 13
     private var userPassword    = ""
+
 
     fun setActivityFingerPrint(activity: FragmentActivity) {
         repository.setActivityFingerPrint(activity)
@@ -84,6 +88,14 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun getUserEmail(): String? = repository.shopUser?.email
+
+    fun performRegisterUser(user: User){
+        repository.onRegister(user) {
+         /*   if (it)
+                log("register ok...")*/
+            onRequestProcessed?.invoke(user, TypeRequest.USER_REGISTER, it)
+        }
+    }
 
     private fun onLogin(finger: Boolean){
         fun performOpenShop(value: Boolean){

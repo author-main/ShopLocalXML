@@ -230,31 +230,34 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
     private fun setRoundBackground(){
-        val width  = measuredWidth
+        /*val width  = measuredWidth
         val height = measuredHeight
-        val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
-        paint.color = roundBackgroundColor
-        paint.style = Paint.Style.FILL
-        paint.isAntiAlias = true
-        val round = 12.toPx.toFloat()
-        val canvas = Canvas(bitmap)
-        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), round, round, paint)
-        if (borderColor != Color.TRANSPARENT) {
-            paint.style = Paint.Style.STROKE
-            val strokeWidth = 1.toPx.toFloat()+0.5f
-            paint.strokeWidth = strokeWidth
-            paint.color = borderColor
-            canvas.drawRoundRect(
-                strokeWidth,
-                strokeWidth,
-                width.toFloat() - strokeWidth,
-                height.toFloat() - strokeWidth,
-                round,
-                round,
-                paint
-            )
-        }
-        this.background = BitmapDrawable(resources, bitmap)
+        log("width = $width, height = $height")*/
+      //  if (width>0 && height>0) {
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            paint.color = roundBackgroundColor
+            paint.style = Paint.Style.FILL
+            paint.isAntiAlias = true
+            val round = 12.toPx.toFloat()
+            val canvas = Canvas(bitmap)
+            canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), round, round, paint)
+            if (borderColor != Color.TRANSPARENT) {
+                paint.style = Paint.Style.STROKE
+                val strokeWidth = 1.toPx.toFloat() + 0.5f
+                paint.strokeWidth = strokeWidth
+                paint.color = borderColor
+                canvas.drawRoundRect(
+                    strokeWidth,
+                    strokeWidth,
+                    width.toFloat() - strokeWidth,
+                    height.toFloat() - strokeWidth,
+                    round,
+                    round,
+                    paint
+                )
+            }
+            this.background = BitmapDrawable(resources, bitmap)
+    //    }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

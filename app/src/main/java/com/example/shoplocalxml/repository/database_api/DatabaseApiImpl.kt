@@ -33,4 +33,9 @@ class DatabaseApiImpl {
         user.password   = password
         return queryUser(QUERY_LOGINUSER, user)
     }
+
+    suspend fun registerUser(user: User): Response<User> {
+        return queryUser(QUERY_REGUSER, user)
+    }
+
 }

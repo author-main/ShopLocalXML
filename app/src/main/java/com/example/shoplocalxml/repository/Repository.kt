@@ -62,12 +62,18 @@ class Repository {
 
     /**
      * Запрос пользователя на регистрацию в системе
-     * @param userdata строковый массив сведений о пользователе (см.[User])
+     * @param user данные пользователя (см.[User])
      * @param action callback передает результат отправки данных,
      * true - данные успешно переданы
      */
-    fun onRegister(vararg userdata: String, action: ((result: Boolean) -> Unit)) {
+    /*fun onRegister(vararg userdata: String, action: ((result: Boolean) -> Unit)) {
         accessHandler.onRegister(*userdata) {
+            action(it)
+        }
+    }*/
+
+    fun onRegister(user: User, action: ((result: Boolean) -> Unit)) {
+        accessHandler.onRegister(user) {
             action(it)
         }
     }

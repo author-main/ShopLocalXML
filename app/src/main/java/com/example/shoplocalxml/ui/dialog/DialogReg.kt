@@ -1,7 +1,6 @@
 package com.example.shoplocalxml.ui.dialog
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Patterns
@@ -13,14 +12,12 @@ import androidx.core.view.allViews
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.DialogRegBinding
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.setDialogStyle
-import com.example.shoplocalxml.ui.login.password_storage.OnRegisterListener
+import com.example.shoplocalxml.ui.login.OnUserListener
 
 
 class DialogReg: DialogFragment() {
@@ -32,10 +29,7 @@ class DialogReg: DialogFragment() {
         dataBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.dialog_reg, null, false)
 
-        val userData = User.getInstance().apply {
-            lastname = "Мышанский"
-        }
-        user.set(userData)
+        user.set(User.getInstance())
         dataBinding.dialog = this
         dataBinding.editTextPassword.onValidValue = {password ->
             password.length == 5
@@ -90,7 +84,7 @@ class DialogReg: DialogFragment() {
         }
         if (verified) {
             dismiss()
-            user.get()?.let { (parentFragment as OnRegisterListener).onRegisterUser(it) }
+            user.get()?.let { (parentFragment as OnUserListener).onRegisterUser(it) }
         }
     }
 }
