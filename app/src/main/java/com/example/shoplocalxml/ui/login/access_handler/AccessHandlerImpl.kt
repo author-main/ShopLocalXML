@@ -57,13 +57,13 @@ class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler
                 response.body()?.let {dbUser ->
                     token = dbUser.token
                     if (!token.isNullOrBlank()) {
-                        val savedUser = User.getUserData()
-                        if (savedUser == null) {
+                        /*val savedUser = User.getUserData()
+                        if (savedUser == null) {*/
                             dbUser.id = null
                             dbUser.token = null
                             dbUser.password = null
                             dbUser.saveUserData()
-                        }
+                        //}
                         if (!finger)
                             passwordStorage?.putPassword(password)
                     }

@@ -47,7 +47,6 @@ class Repository {
         //log("connected ${isConnectedNet()}...")
         accessHandler.onLogin(email, password, finger, performAction) { it ->
             token = it
-            log("token = $token")
             val result = it != null
             if (result) {
                 val user = User.getUserData()
