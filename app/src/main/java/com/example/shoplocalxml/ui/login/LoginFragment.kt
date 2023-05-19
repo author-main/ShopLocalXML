@@ -139,10 +139,10 @@ class LoginFragment : Fragment(), OnUserListener {
                     val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
                     snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
                     snackbarExt.show()
-                    dataBinding.textViewSym1f
-                    passwordSymbols.forEach{textView ->
-                        textView?.alpha = 0f
-                    }
+                }
+                dataBinding.textViewSym1f
+                passwordSymbols.forEach{textView ->
+                    textView?.alpha = 0f
                 }
             }
             TypeRequest.USER_REGISTER -> {
