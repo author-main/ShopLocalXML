@@ -1,10 +1,7 @@
 package com.example.shoplocalxml
 
-import android.content.Context
 import android.graphics.Rect
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
@@ -13,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -116,9 +112,18 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
 
     override fun openShop() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        navController.navigateUp()
+        navController.popBackStack(R.id.nav_login, true)
         navController.navigate(R.id.nav_home)
         setActionBar()
+        navController.graph.setStartDestination(R.id.nav_home)
+        /*val fragmentHome: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_home)
+        fragmentHome?.let{
+            val trans: FragmentTransaction = supportFragmentManager.beginTransaction()
+            trans.remove(it)
+            trans.commit()
+            supportFragmentManager.popBackStack()
+        }*/
+
      }
 
 }
