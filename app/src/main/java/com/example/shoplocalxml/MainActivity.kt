@@ -113,9 +113,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
     override fun openShop() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         navController.popBackStack(R.id.nav_login, true)
+        navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.nav_home)
         setActionBar()
-        navController.graph.setStartDestination(R.id.nav_home)
+
         /*val fragmentHome: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_home)
         fragmentHome?.let{
             val trans: FragmentTransaction = supportFragmentManager.beginTransaction()
