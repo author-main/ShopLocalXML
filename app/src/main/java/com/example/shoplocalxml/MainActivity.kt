@@ -2,15 +2,19 @@ package com.example.shoplocalxml
 
 import android.content.Context
 import android.graphics.Rect
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -33,27 +37,55 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //binding.drawerLayout.visibility = View.GONE
 
-        setSupportActionBar(binding.appBarMain.toolbar)
+        /*setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-        val drawerLayout: DrawerLayout = binding.drawerLayout
+        val drawerLayout: DrawerLayout = binding.drawerLayout*/
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        /*appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+            ), drawerLayout
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)*/
+        navView.setupWithNavController(navController)
+        binding.appBarMain.fab.visibility = View.GONE
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
+
+    private fun setActionBar(){
+        setSupportActionBar(binding.appBarMain.toolbar)
+        binding.appBarMain.fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+
+        val drawerLayout: DrawerLayout = binding.drawerLayout
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
             ), drawerLayout
         )
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        /*navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if (destination.id == R.id.nav_home) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            } else
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        }*/
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        binding.appBarMain.fab.visibility = View.VISIBLE
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -83,6 +115,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
     }
 
     override fun openShop() {
-        log("Welcome to ShopLocal...")
-    }
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController.navigateUp()
+        navController.navigate(R.id.nav_home)
+        setActionBar()
+     }
+
 }
