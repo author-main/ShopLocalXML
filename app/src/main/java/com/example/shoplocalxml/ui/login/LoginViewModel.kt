@@ -80,8 +80,6 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     fun performRegisterUser(user: User){
         repository.onRegister(user) {
-         /*   if (it)
-                log("register ok...")*/
             onRequestProcessed?.invoke(user, TypeRequest.USER_REGISTER, it)
         }
     }
