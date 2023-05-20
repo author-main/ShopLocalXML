@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.OnOpenShopListener
 //import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.TypeRequest
@@ -148,9 +149,13 @@ class LoginFragment : Fragment(), OnUserListener {
         fillPasswordSym(clear = true)
         when (type) {
             TypeRequest.USER_LOGIN -> {
-                //DialogProgress.hide()
                 if (result) {
-
+                    activity?.let{
+                        if (it is OnOpenShopListener) {
+                            DialogProgress.hide()
+                            (it as OnOpenShopListener).openShop()
+                        }
+                    }
                 } else {
                     vibrate(400)
                     val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
