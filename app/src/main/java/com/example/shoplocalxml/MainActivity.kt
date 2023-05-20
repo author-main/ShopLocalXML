@@ -116,15 +116,6 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.nav_home)
         setActionBar()
-
-        /*val fragmentHome: Fragment? = supportFragmentManager.findFragmentById(R.id.nav_home)
-        fragmentHome?.let{
-            val trans: FragmentTransaction = supportFragmentManager.beginTransaction()
-            trans.remove(it)
-            trans.commit()
-            supportFragmentManager.popBackStack()
-        }*/
-
      }
 
 }
