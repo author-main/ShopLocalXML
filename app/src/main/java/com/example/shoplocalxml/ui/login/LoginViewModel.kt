@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.PasswordSymbol
+//import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.log
@@ -20,18 +20,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
-    var onChangePassword: ((count: Int, type: PasswordSymbol) -> Unit)? = null
+    var onChangePassword: ((count: Int, kei: Int) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     var onPerformLogin: () -> Unit = {}
     var onRegisterUser: (() -> Unit)? = null
     var onRestoreUser: (() -> Unit)? = null
     var onRequestProcessed: ((data: Any?, typeRequest: TypeRequest, result: Boolean)-> Unit)? = null
-    private val KEY_FINGER      = 10
-    private val KEY_BACKSPACE   = 11
-    private val KEY_REG         = 12
-    private val KEY_REST        = 13
     private var userPassword    = ""
-
 
     fun setActivityFingerPrint(activity: FragmentActivity) {
         repository.setActivityFingerPrint(activity)
@@ -41,16 +36,16 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     fun onClick(index: Int){
         if (index in 0..11) {
-            var typeKey = PasswordSymbol.NUMBER
+            val key = index
             var changed = false
             when (index) {
                 KEY_FINGER -> {
                     changed = true
-                    typeKey = PasswordSymbol.FINGER_PRINT
+               //     key = PasswordSymbol.FINGER_PRINT
                     //userPassword = "*****"
                 }
                 KEY_BACKSPACE -> {
-                    typeKey = PasswordSymbol.BACKSPACE
+                    //typeKey = PasswordSymbol.BACKSPACE
                     if (userPassword.isNotBlank()) {
                         changed = true
                         userPassword = userPassword.substring(0, userPassword.length - 1)
@@ -64,8 +59,8 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                 }
             }
             if (changed) {
-                val fingerPrint = typeKey == PasswordSymbol.FINGER_PRINT
-                if (!fingerPrint) onChangePassword?.invoke(userPassword.length, typeKey)
+                val fingerPrint = key == KEY_FINGER
+                if (!fingerPrint) onChangePassword?.invoke(userPassword.length, key)
                 if (userPassword.length == 5 || fingerPrint)
                     onLogin(fingerPrint)
             }
@@ -116,4 +111,11 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         }
 
     }
+    companion object {
+        const val KEY_FINGER      = 10
+        const val KEY_BACKSPACE   = 11
+        const val KEY_REG         = 12
+        const val KEY_REST        = 13
+    }
+
 }

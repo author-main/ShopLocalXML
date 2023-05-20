@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
-import com.example.shoplocalxml.PasswordSymbol
+//import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
@@ -25,6 +25,7 @@ import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
+import com.example.shoplocalxml.ui.login.LoginViewModel.Companion.KEY_FINGER
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.vibrate
 
@@ -49,16 +50,16 @@ class LoginFragment : Fragment(), OnUserListener {
         loginViewModel.onRequestProcessed = {data, typeRequest, result ->
             requestProcessed(data, typeRequest, result)
         }
-        loginViewModel.onChangePassword = { count, type ->
+        loginViewModel.onChangePassword = { count, key ->
             SnackbarExt.hideSnackbar()
-            if (type == PasswordSymbol.FINGER_PRINT) {
+            if (key == KEY_FINGER) {
                 fillPasswordSym()
                 /*passwordSymbols.forEach {
                     it?.alpha = 1f
                 }*/
             } else {
                 passwordSymbols.forEachIndexed { index, textView ->
-                        if (type == PasswordSymbol.NUMBER) {
+                        if (key in 0..9) {
                             if (index == count - 1) {
                                 val animation: Animation = AlphaAnimation(0f, 1f)
                                 animation.duration = 300
