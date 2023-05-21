@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
         binding.appBarMain.fab.visibility = View.GONE
     }
 
