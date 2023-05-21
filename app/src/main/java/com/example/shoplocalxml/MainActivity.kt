@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         }
 
         val drawerLayout: DrawerLayout = binding.drawerLayout*/
-        val navView: NavigationView = binding.navView
+        //val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         /*appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)*/
-        navView.setupWithNavController(navController)
+        //navView.setupWithNavController(navController)
         binding.appBarMain.fab.visibility = View.GONE
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
@@ -89,10 +89,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+/*    override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
+    }*/
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
@@ -116,6 +116,6 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.nav_home)
         setActionBar()
-     }
+    }
 
 }
