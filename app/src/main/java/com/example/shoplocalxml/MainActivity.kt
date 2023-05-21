@@ -2,7 +2,6 @@ package com.example.shoplocalxml
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -11,14 +10,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
+import com.example.shoplocalxml.ui.login.LoginFragment
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -74,6 +73,14 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
 
     override fun openShop() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+       /* val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main);
+        val fragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+        fragment?.let{
+            val transaction = navHostFragment.childFragmentManager.beginTransaction()
+                transaction.remove(it as LoginFragment)
+                val result = transaction.commit()
+            log("remove fragment $result...")
+        }*/
         navController.popBackStack(R.id.nav_login, true)
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.nav_home)

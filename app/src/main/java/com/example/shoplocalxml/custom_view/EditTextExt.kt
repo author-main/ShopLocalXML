@@ -233,7 +233,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         /*val width  = measuredWidth
         val height = measuredHeight
         log("width = $width, height = $height")*/
-      //  if (width>0 && height>0) {
+        if (width>0 && height>0) {
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             paint.color = roundBackgroundColor
             paint.style = Paint.Style.FILL
@@ -257,7 +257,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                 )
             }
             this.background = BitmapDrawable(resources, bitmap)
-    //    }
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
