@@ -110,10 +110,10 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     }
 
-    /*override fun onCleared() {
+    override fun onCleared() {
         super.onCleared()
         log("loginviewmodel cleared...")
-    }*/
+    }
 
     companion object {
         const val KEY_FINGER      = 10

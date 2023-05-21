@@ -80,9 +80,15 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
                 val result = transaction.commit()
             log("remove fragment $result...")
         }*/
+        /*
+        вместо
         navController.popBackStack(R.id.nav_login, true)
+        для анимации используем в action
+            app:popUpTo="@+id/nav_login"
+            app:popUpToInclusive="true"
+         */
         navController.graph.setStartDestination(R.id.nav_home)
-        navController.navigate(R.id.nav_home)
+        navController.navigate(R.id.action_nav_login_to_nav_home)
         setActionBar()
     }
 }
