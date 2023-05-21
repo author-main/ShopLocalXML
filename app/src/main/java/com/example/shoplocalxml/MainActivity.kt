@@ -28,32 +28,11 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode())
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //binding.drawerLayout.visibility = View.GONE
-
-        /*setSupportActionBar(binding.appBarMain.toolbar)
-
-        binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
-        val drawerLayout: DrawerLayout = binding.drawerLayout*/
-        //val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        /*appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)*/
-        //navView.setupWithNavController(navController)
         binding.appBarMain.fab.visibility = View.GONE
-        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
 
@@ -71,28 +50,11 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
             ), drawerLayout
         )
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        /*navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.nav_home) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            } else
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-        }*/
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.appBarMain.fab.visibility = View.VISIBLE
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-/*    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }*/
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
@@ -117,5 +79,4 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         navController.navigate(R.id.nav_home)
         setActionBar()
     }
-
 }
