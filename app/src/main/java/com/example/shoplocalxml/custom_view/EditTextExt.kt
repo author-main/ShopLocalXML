@@ -64,7 +64,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             if (idDrawableTint != -1)
                 context.getColor(idDrawableTint)
             else {
-                context.getColor(R.color.drawable_tint_color).alpha(0.5f)
+                context.getColor(R.color.drawable_tint_color).alpha(0.8f)
             }
 
         //log(tintDrawable)
