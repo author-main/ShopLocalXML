@@ -45,8 +45,10 @@
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:minHeight="0dp"
-                    android:paddingVertical="0dp"
-                    android:textSize="13sp" />
+                    android:paddingVertical="4dp"
+                    android:textSize="13sp"
+                    app:roundRadius="16dp"
+                    />
             </LinearLayout>
 
 

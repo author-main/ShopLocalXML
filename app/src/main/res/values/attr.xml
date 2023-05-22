@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="EditTextExt">
+        <attr name="roundRadius" format="dimension" />
         <attr name="drawableAction" format="reference" />
     </declare-styleable>
 </resources>

@@ -20,6 +20,7 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
+import kotlin.math.round
 
 
 @SuppressLint("RestrictedApi")
@@ -32,6 +33,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     var drawableAction: Drawable? = null
     private val paint = Paint()
 //    private var drawableRight: Drawable? = null
+    private var roundRadius = 0f
     private var roundBackgroundColor = Color.parseColor("#FF393E46")
         set(value){
             field = value
@@ -57,6 +59,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
      /*   val color = context.getColor(R.color.drawable_tint_color).alpha(0.5f)
         setTint(color)*/
+
 
 
         val idDrawableTint = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "drawableTint", -1)
@@ -97,6 +100,16 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             setDrawableAction(reference)
             it.recycle()
         }
+
+
+        context.obtainStyledAttributes(attrs, R.styleable.EditTextExt).let {
+            val defaultValue = 12.toPx.toFloat()
+            roundRadius = it.getDimension(R.styleable.EditTextExt_roundRadius, defaultValue)
+//            log("roundRadius = $roundRadius")
+            setRoundBackground()
+            it.recycle()
+        }
+
 
         if (inputType == INPUTTYPE_PASSWORD) {
             setTransformationMethod()
@@ -251,9 +264,9 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             paint.color = roundBackgroundColor
             paint.style = Paint.Style.FILL
             paint.isAntiAlias = true
-            val round = 12.toPx.toFloat()
+            //val round = roundRadius.toPx.toFloat()//12.toPx.toFloat()
             val canvas = Canvas(bitmap)
-            canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), round, round, paint)
+            canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), roundRadius, roundRadius, paint)
             if (borderColor != Color.TRANSPARENT) {
                 paint.style = Paint.Style.STROKE
                 val strokeWidth = 1.toPx.toFloat() + 0.5f
@@ -264,8 +277,8 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                     strokeWidth,
                     width.toFloat() - strokeWidth,
                     height.toFloat() - strokeWidth,
-                    round,
-                    round,
+                    roundRadius,
+                    roundRadius,
                     paint
                 )
             }
