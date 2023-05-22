@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationSet
-import android.view.animation.BounceInterpolator
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
@@ -16,12 +14,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
-import com.example.shoplocalxml.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 
 class HomeFragment : Fragment() {
@@ -47,6 +43,7 @@ class HomeFragment : Fragment() {
             ViewModelProvider(this)[HomeViewModel::class.java]
 
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        dataBinding.eventhandler = homeViewModel
 
        /* _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -56,11 +53,6 @@ class HomeFragment : Fragment() {
             textView.text = it
         }*/
         return dataBinding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-       // _binding = null
     }
 
     private fun showUnreadMessage(count: Int) {
@@ -99,7 +91,7 @@ class HomeFragment : Fragment() {
                 animScale1.fillAfter = true
 
                 layoutMessageCount.alpha = 1f
-                imageMessageCount.alpha = 1f
+                imageMessageCount.alpha  = 1f
 
                 CoroutineScope(Dispatchers.Main).launch {
                     imageMessageCount.startAnimation(animScale)

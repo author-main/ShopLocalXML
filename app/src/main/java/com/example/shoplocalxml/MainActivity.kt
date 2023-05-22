@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
@@ -57,6 +58,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         val animate = AnimationUtils.loadAnimation(this,
             R.anim.slide_in_top)
         binding.appBarMain.toolbar.visibility  = View.VISIBLE
+        val buttonMessage = binding.appBarMain.buttonMessage.buttonMessage
+        buttonMessage.setOnClickListener {
+            showUserMessages()
+        }
         binding.appBarMain.toolbar.animation = animate
         binding.appBarMain.toolbar.animate()
     }
@@ -98,5 +103,9 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.action_nav_login_to_nav_home)
         setActionBar()
+    }
+
+    fun showUserMessages() {
+        log("show user messages...")
     }
 }
