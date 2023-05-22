@@ -105,7 +105,17 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         setActionBar()
     }
 
-    fun showUserMessages() {
+    private fun showUserMessages() {
         log("show user messages...")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main);
+        val fragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+        fragment?.let{
+            if (it !is LoginFragment)
+                setActionBar()
+        }
     }
 }
