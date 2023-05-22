@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/buttonMessage"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_gravity="center"
+    android:layout_marginStart="4dp">
+
+    <FrameLayout
+        android:id="@+id/layoutMessageCount"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="1">
+
+        <ImageView
+            android:id="@+id/imageMessageCount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:alpha="0"
+            app:srcCompat="@drawable/ic_circle" />
+
+        <TextView
+            android:id="@+id/textMessageCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:alpha="0"
+            android:text="10"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:tint="@color/EditTextFont"
+        app:srcCompat="@drawable/ic_message" />
+
+</FrameLayout>

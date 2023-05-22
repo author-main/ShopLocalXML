@@ -37,7 +37,6 @@ import com.example.shoplocalxml.vibrate
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment(), OnUserListener {
-    val name = "LoginFragment"
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var dataBinding: FragmentLoginBinding
     private val passwordSymbols = arrayOfNulls<TextView>(5)

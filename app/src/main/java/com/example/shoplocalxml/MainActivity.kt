@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -50,10 +51,14 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         )
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.appBarMain.toolbar.visibility  = View.VISIBLE
         binding.appBarMain.fab.visibility = View.VISIBLE
+
         binding.appBarMain.toolbar.navigationIcon = null
-//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        val animate = AnimationUtils.loadAnimation(this,
+            R.anim.slide_in_top)
+        binding.appBarMain.toolbar.visibility  = View.VISIBLE
+        binding.appBarMain.toolbar.animation = animate
+        binding.appBarMain.toolbar.animate()
     }
 
 

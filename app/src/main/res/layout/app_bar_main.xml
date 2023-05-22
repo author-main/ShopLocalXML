@@ -9,6 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/PrimaryDark"
         android:theme="@style/Theme.ShopLocalXML.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -16,13 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.ShopLocalXML.PopupOverlay"
-            tools:visibility="visible"
-            android:contentInsetLeft="0dp"
             android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
-            >
+            app:popupTheme="@style/Theme.ShopLocalXML.PopupOverlay"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/layoutToolbar"
@@ -47,8 +47,11 @@
                     android:minHeight="0dp"
                     android:paddingVertical="4dp"
                     android:textSize="13sp"
-                    app:roundRadius="16dp"
-                    />
+                    app:roundRadius="16dp" />
+
+                <include
+                    android:id="@+id/buttonMessage"
+                    layout="@layout/message_button" />
             </LinearLayout>
 
 
