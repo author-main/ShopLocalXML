@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
+import com.example.shoplocalxml.toPx
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -85,7 +86,8 @@ class HomeFragment : Fragment() {
 
                 val animScale1 = ScaleAnimation(
                     1F, 0.56F, 1F, 0.56F,
-                    button.width.toFloat(), 0f
+                    32.toPx.toFloat(), 0f
+                    //button.width.toFloat(), 0f
                 )
                 animScale1.duration = 300
                 animScale1.fillAfter = true
