@@ -17,7 +17,39 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.ShopLocalXML.PopupOverlay"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/layoutToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp">
+
+                <com.example.shoplocalxml.custom_view.EditTextExt
+                    android:id="@+id/editTextText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawableEnd="@drawable/ic_microphone"
+                    android:ems="10"
+                    android:hint="45654"
+                    android:inputType="text"
+                    android:minHeight="0dp"
+                    android:paddingVertical="0dp"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+
 
     </com.google.android.material.appbar.AppBarLayout>
 

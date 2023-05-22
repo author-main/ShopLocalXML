@@ -13,7 +13,6 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
@@ -21,18 +20,18 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
-import java.util.stream.IntStream
 
 
 @SuppressLint("RestrictedApi")
 class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
+    private var tintDrawable = -1
     private val INPUTTYPE_PASSWORD = 18
     var onValidValue: ((text: String) -> Boolean)? = null
     private var drawableEnd: Drawable? = null
     var checked = false
     var drawableAction: Drawable? = null
     private val paint = Paint()
-    private var drawableRight: Drawable? = null
+//    private var drawableRight: Drawable? = null
     private var roundBackgroundColor = Color.parseColor("#FF393E46")
         set(value){
             field = value
@@ -44,7 +43,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             setRoundBackground()
         }
     private var textColor       = Color.parseColor("#FFBEBEBE")
-    private var hintColor       = 0
     /*private var drawableRightColor = Color.parseColor("#FFBEBEBE")
         set (value) {
             field = value
@@ -56,16 +54,34 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
 
     init {
+
+     /*   val color = context.getColor(R.color.drawable_tint_color).alpha(0.5f)
+        setTint(color)*/
+
+
+        val idDrawableTint = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "drawableTint", -1)
+        tintDrawable =
+            if (idDrawableTint != -1)
+                context.getColor(idDrawableTint)
+            else {
+                context.getColor(R.color.drawable_tint_color).alpha(0.5f)
+            }
+
+        //log(tintDrawable)
+        val drawableStart = compoundDrawablesRelative[0]
         drawableEnd = compoundDrawablesRelative[2]
-        if (drawableEnd != null)
-            setCompoundDrawablesRelative(null, null, drawableEnd, null)
-        textSize = 16f
+        setTintDrawable(drawableStart)
+        setTintDrawable(drawableEnd)
+
+        //drawableRight = drawableEnd
+        //textSize = 16f
         setTextColor(textColor)
-        val sHintColor = attrs.getAttributeValue("http://schemas.android.com/apk/res/android", "textColorHint")
-        hintColor = if (sHintColor != null)
-            Color.parseColor(sHintColor)
-        else
-            textColor.alpha(0.5f)
+        val idResource = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "textColorHint", -1)
+        val hintColor =
+            if (idResource != -1)
+                context.getColor(idResource)
+            else
+                textColor.alpha(0.5f)
         setHintTextColor(hintColor)
         setSingleLine()
         maxLines = 1
@@ -132,16 +148,13 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
 
-    fun changePasswordChar(char: Char) {
 
-    }
 
     @JvmName("setDrawableAction_")
     private fun setDrawableAction(value: Int) {
         if (value != -1) {
             drawableAction = AppCompatResources.getDrawable(context, value)
-            val color = context.getColor(R.color.drawable_tint_color).alpha(0.5f)
-            drawableAction?.setTint(color)
+            setTintDrawable(drawableAction)
         }
     }
 
@@ -160,7 +173,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         event?.let {
             if (it.action == MotionEvent.ACTION_DOWN) {
                 performClick()
-                drawableRight?.let{icon ->
+                drawableEnd?.let{icon ->
                     val bounds = icon.bounds;
                     val x = event.x.toInt()
                     val y = event.y.toInt()
@@ -298,12 +311,15 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         return ColorStateList(states, colors)
     }*/
 
-    private fun getDrawableRight(drawable: Drawable?){
-        drawable?.let{icon ->
-            drawableRight = icon
+   /* private fun getDrawableRight(drawable: Drawable?): Drawable? {
+     /*   drawable?.let {
             val color = context.getColor(R.color.drawable_tint_color).alpha(0.5f)
-            icon.setTint(color)
-        }
+            it.setTint(color)
+        }*/
+        return drawable
+    }*/
+   private fun setTintDrawable(icon: Drawable?){
+        icon?.setTint(tintDrawable)
     }
 
     override fun setCompoundDrawablesRelative(
@@ -312,7 +328,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         end: Drawable?,
         bottom: Drawable?
     ) {
-        getDrawableRight(end)
+        //getDrawableRight(end)
         super.setCompoundDrawablesRelative(start, top, end, bottom)
     }
 
@@ -335,13 +351,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         return correct
     }
 
-    override fun setCompoundDrawables(
-        left: Drawable?, top: Drawable?,
-        right: Drawable?, bottom: Drawable?
-    ) {
-        getDrawableRight(right)
-        super.setCompoundDrawables(left, top, right, bottom)
-    }
+
 }
 
 /*

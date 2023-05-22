@@ -29,8 +29,9 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding.appBarMain.toolbar.visibility  = View.GONE
         binding.appBarMain.fab.visibility = View.GONE
+        setContentView(binding.root)
     }
 
 
@@ -49,7 +50,9 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         )
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.appBarMain.toolbar.visibility  = View.VISIBLE
         binding.appBarMain.fab.visibility = View.VISIBLE
+        binding.appBarMain.toolbar.navigationIcon = null
 //        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
