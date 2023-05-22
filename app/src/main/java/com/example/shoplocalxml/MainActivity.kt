@@ -64,6 +64,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
         }
         binding.appBarMain.toolbar.animation = animate
         binding.appBarMain.toolbar.animate()
+
+        //val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+
     }
 
 
