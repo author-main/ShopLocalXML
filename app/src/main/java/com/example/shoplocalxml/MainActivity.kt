@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
@@ -17,6 +18,7 @@ import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
 import com.example.shoplocalxml.ui.login.LoginFragment
@@ -27,9 +29,17 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+   private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+        FactoryViewModel(
+            this,
+            repository
+        )
+    })
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.appBarMain.toolbar.visibility  = View.GONE
         binding.appBarMain.fab.visibility = View.GONE

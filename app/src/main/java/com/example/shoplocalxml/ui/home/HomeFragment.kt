@@ -11,8 +11,10 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.toPx
 import kotlinx.coroutines.CoroutineScope
@@ -23,6 +25,7 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private var countMessages = 7
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var dataBinding: FragmentHomeBinding
     //private var _binding: FragmentHomeBinding? = null
 
@@ -44,7 +47,7 @@ class HomeFragment : Fragment() {
             ViewModelProvider(this)[HomeViewModel::class.java]
 
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
-        dataBinding.eventhandler = homeViewModel
+        //dataBinding.eventhandler = sharedViewModel
 
        /* _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
