@@ -31,7 +31,7 @@ class Repository {
      * accessHandler отвечает за обработку запросов пользователя
      * onLogin, onRestore, onRegister
      */
-    private val accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
+    private var accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
 
     /**
      * Запрос пользователя на вход в систему
