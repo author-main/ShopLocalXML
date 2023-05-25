@@ -18,6 +18,7 @@ class SearchAdapter(private val items: MutableList<SearchItem>, private val onCl
 
     private var filtered: Boolean = false
 
+    @JvmName("setSearchQuery_")
     private fun setSearchQuery(value: String?) {
         filtered = value?.isNotBlank() ?: false
         searchQuery = if (filtered)
