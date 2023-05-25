@@ -50,7 +50,7 @@
                     app:roundRadius="16dp" />
 
                 <include
-                    android:id="@+id/buttonMessage"
+                    android:id="@+id/includeButtonMessage"
                     layout="@layout/message_button" />
             </LinearLayout>
 
