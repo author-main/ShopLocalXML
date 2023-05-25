@@ -6,6 +6,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 
@@ -14,11 +15,25 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
     private val layoutHistorySearch =  LayoutInflater.from(parent.context)
         .inflate(R.layout.history_search_panel, parent, false) as LinearLayout
 
-    fun show(){
+    private lateinit var adapter: SearchAdapter
+
+    fun setSearchQuery(value: String){
+
+    }
+
+    fun show(items: List<String>){
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
+            adapter.clearHistory()
             onHistorySearchHistoryListener.clearHistory()
             hide()
         }
+
+        val manager = LinearLayoutManager(layoutHistorySearch.context)
+        adapter = SearchAdapter(items) {query, delete ->
+
+        }
+
+
         val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_top)
         parent.addView(layoutHistorySearch)
         layoutHistorySearch.startAnimation(animation)

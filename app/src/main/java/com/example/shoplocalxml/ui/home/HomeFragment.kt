@@ -74,7 +74,17 @@ class HomeFragment : Fragment() {
                     deleteSearchHistoryItem(value)
                 }
             })
-            searchHistrotyPanel.show()
+            val items = mutableListOf<String>()
+            items.add("Samsung")
+            items.add("NVidia")
+            items.add("AMD")
+            items.add("Intel")
+            items.add("AOC")
+            items.add("Corsair")
+            items.add("Kingstone")
+            items.add("Xiaomi")
+
+            searchHistrotyPanel.show(items)
         }
         return dataBinding.root
     }

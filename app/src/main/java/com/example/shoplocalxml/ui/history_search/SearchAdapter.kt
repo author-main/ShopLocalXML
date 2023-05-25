@@ -10,7 +10,7 @@ import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
 
-class SearchAdapter(private val items: MutableList<String>, private val onClickItem: (query: String) -> Unit): RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
+class SearchAdapter(private val items: List<String>, private val onClickItem: (query: String, delete: Boolean) -> Unit): RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
 
     var searchQuery: String = EMPTY_STRING
         set(value) {
@@ -54,16 +54,14 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
         holder.deleteButton.visibility = visibleDeleteButton
         if (!filtered)
             holder.deleteButton.setOnClickListener {
+                onClickItem(item, true)
                 items.remove(item)
                 showItems.remove(item)
                 notifyItemRemoved(position)
             }
 
         holder.textItem.setOnClickListener {
-            if (!filtered) {
-                onClickItem(item)
-                //setSearchQuery(item)
-            }
+            onClickItem(item, false)
         }
 
     }
