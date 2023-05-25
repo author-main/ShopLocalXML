@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 
-class SearchAdapter(private val items: MutableList<SearchItem>, private val onClickListener: OnSearchItemClickListener): RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
+class SearchAdapter(private val items: MutableList<String>, private val onClickItem: (query: String) -> Unit): RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
 
     var searchQuery: String? = null
         set(value) {
@@ -17,39 +17,58 @@ class SearchAdapter(private val items: MutableList<SearchItem>, private val onCl
         }
 
     private var filtered: Boolean = false
+    private val showItems = items.toMutableList()
 
     @JvmName("setSearchQuery_")
     private fun setSearchQuery(value: String?) {
-        filtered = value?.isNotBlank() ?: false
-        searchQuery = if (filtered)
-            value
-        else
-            null
+        value?.let {query ->
+            filtered = query.isNotBlank() ?: false
+            searchQuery = if (filtered) {
+                showItems.clear()
+                showItems.addAll(items.filter {
+                    it.contains(query, true)
+                })
+                query
+            } else {
+                showItems.clear()
+                showItems.addAll(items)
+                null
+            }
+        }
     }
 
     fun clearHistory(){
-        if (items.isNotEmpty()) {
-            val count = items.count() - 1
+        if (showItems.isNotEmpty()) {
+            val count = showItems.size - 1
             items.clear()
+            showItems.clear()
             notifyItemRangeRemoved(0, count)
         }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        if (!item.deleted) {
-            holder.textItem.text = item.query
-            val visibleDeleteButton = if (filtered) View.GONE else View.VISIBLE
-            holder.deleteButton.visibility = visibleDeleteButton
-            if (!filtered)
-                holder.deleteButton.setOnClickListener {
-                    onClickListener.onDeleteItem(item.query)
-                }
+        val item = showItems[position]
+        holder.textItem.text = item
+        val visibleDeleteButton = if (filtered) View.GONE else View.VISIBLE
+        holder.deleteButton.visibility = visibleDeleteButton
+        if (!filtered)
+            holder.deleteButton.setOnClickListener {
+                items.remove(item)
+                showItems.remove(item)
+                notifyItemRemoved(position)
+            }
+
+        holder.textItem.setOnClickListener {
+            if (!filtered) {
+                onClickItem(item)
+                //setSearchQuery(item)
+            }
         }
+
     }
 
     override fun getItemCount(): Int {
-        return items.count { item -> !item.deleted }
+        return showItems.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
