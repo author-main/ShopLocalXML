@@ -32,7 +32,7 @@
                 android:paddingHorizontal="8dp">
 
                 <com.example.shoplocalxml.custom_view.EditTextExt
-                    android:id="@+id/editTextText"
+                    android:id="@+id/editTextSearchQuery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="0dp"

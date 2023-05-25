@@ -16,6 +16,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
@@ -153,7 +154,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun clickSearchHistoryItem(value: String){
-
+        (activity?.findViewById<EditTextExt>(R.id.editTextSearchQuery))?.setText(value)
     }
 
     private fun deleteSearchHistoryItem(value: String){

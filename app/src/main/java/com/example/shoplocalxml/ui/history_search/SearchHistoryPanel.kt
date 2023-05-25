@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 
@@ -17,8 +18,9 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
 
     private lateinit var adapter: SearchAdapter
 
-    fun setSearchQuery(value: String){
 
+    fun setSearchQuery(value: String){
+        adapter.searchQuery = value
     }
 
     fun show(items: List<String>){
@@ -29,11 +31,15 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
         }
 
         val manager = LinearLayoutManager(layoutHistorySearch.context)
-        adapter = SearchAdapter(items) {query, delete ->
-
+        adapter = SearchAdapter(items.toMutableList()) {query, delete ->
+            if (delete)
+                onHistorySearchHistoryListener.deleteItem(query)
+            else
+                onHistorySearchHistoryListener.clickItem(query)
         }
-
-
+        val recyclerView: RecyclerView = layoutHistorySearch.findViewById(R.id.recyclerViewSearch)
+        recyclerView.layoutManager = manager
+        recyclerView.adapter = adapter
         val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_top)
         parent.addView(layoutHistorySearch)
         layoutHistorySearch.startAnimation(animation)
