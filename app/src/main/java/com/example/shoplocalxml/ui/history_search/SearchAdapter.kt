@@ -7,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
 
 class SearchAdapter(private val items: MutableList<String>, private val onClickItem: (query: String) -> Unit): RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
 
-    var searchQuery: String? = null
+    var searchQuery: String = EMPTY_STRING
         set(value) {
             setSearchQuery(value)
         }
@@ -20,21 +21,21 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
     private val showItems = items.toMutableList()
 
     @JvmName("setSearchQuery_")
-    private fun setSearchQuery(value: String?) {
-        value?.let {query ->
-            filtered = query.isNotBlank() ?: false
+    private fun setSearchQuery(value: String) {
+
+            filtered = value.isNotBlank() ?: false
             searchQuery = if (filtered) {
                 showItems.clear()
                 showItems.addAll(items.filter {
-                    it.contains(query, true)
+                    it.contains(value, true)
                 })
-                query
+                value
             } else {
                 showItems.clear()
                 showItems.addAll(items)
-                null
+                EMPTY_STRING
             }
-        }
+
     }
 
     fun clearHistory(){
