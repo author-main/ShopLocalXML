@@ -17,13 +17,25 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
     fun show(){
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
             onHistorySearchHistoryListener.clearHistory()
-            val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_right)
-            layoutHistorySearch.startAnimation(animation)
-            parent.removeView(layoutHistorySearch)
+            hide()
         }
         val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_top)
         parent.addView(layoutHistorySearch)
         layoutHistorySearch.startAnimation(animation)
+    }
 
+    private fun hide(){
+        val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_right)
+        layoutHistorySearch.startAnimation(animation)
+        parent.removeView(layoutHistorySearch)
+    }
+
+    private fun clickItem(value: String) {
+        onHistorySearchHistoryListener.clickItem(value)
+        hide()
+    }
+
+    private fun deleteItem(value: String) {
+        onHistorySearchHistoryListener.deleteItem(value)
     }
 }
