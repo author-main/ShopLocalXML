@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.home
 
 import android.animation.ValueAnimator.REVERSE
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.toPx
+import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -56,7 +58,15 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }*/
+        dataBinding.buttonTask.setOnClickListener {
+            val searchHistrotyPanel = SearchHistoryPanel(dataBinding.layoutRoot)
+            searchHistrotyPanel.show()
+        }
         return dataBinding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
     }
 
     private fun showUnreadMessage(count: Int) {
