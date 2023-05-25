@@ -36,7 +36,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     private val INPUTTYPE_PASSWORD = 18
     var onValidValue: ((text: String) -> Boolean)? = null
     private var drawableEnd: Drawable? = null
-    var checked = false
+    private var checked = false
     private var drawableAction: Drawable? = null
     private val paint = Paint()
 //    private var drawableRight: Drawable? = null
@@ -210,12 +210,17 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                     if (drawableEnd != null && placeBounds.contains(x, y)) {
                         drawableClick = true
                             event.action = MotionEvent.ACTION_CANCEL
-                            if (drawableAction != null) {
-                                checked = !checked
-                                val drawable = if (checked) drawableAction else drawableEnd
-                                changeDrawableEnd(drawable)
+                            if (displayCleaningIcon()) {
+                                if (isFocused)
+                                    text?.clear()
+                            } else {
+                                if (drawableAction != null) {
+                                    checked = !checked
+                                    val drawable = if (checked) drawableAction else drawableEnd
+                                    changeDrawableEnd(drawable)
+                                }
+                                drawableOnClick?.invoke()
                             }
-                            drawableOnClick?.invoke()
                     }
                 }
             }
