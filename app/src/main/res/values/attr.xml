@@ -4,5 +4,6 @@
         <attr name="roundRadius" format="dimension" />
         <attr name="drawableAction" format="reference" />
         <attr name="showClearIcon" format="boolean" />
+        <attr name="lossFocusOutside" format="boolean" />
     </declare-styleable>
 </resources>

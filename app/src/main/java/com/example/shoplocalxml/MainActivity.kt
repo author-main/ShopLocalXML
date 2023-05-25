@@ -103,12 +103,14 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         if (ev?.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus;
             if ( v is EditTextExt) {
-                val outRect = Rect()
-                v.getGlobalVisibleRect(outRect)
-                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
-                    v.clearFocus()
-                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                if (v.lossFocusOutside) {
+                    val outRect = Rect()
+                    v.getGlobalVisibleRect(outRect)
+                    if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                        v.clearFocus()
+                        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                    }
                 }
             }
         }

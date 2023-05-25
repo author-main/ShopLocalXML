@@ -109,6 +109,7 @@
             <com.example.shoplocalxml.custom_view.EditTextExt
                 android:id="@+id/editTextEmailAddress"
                 style="@style/EditTextExt"
+                app:lossFocusOutside="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"

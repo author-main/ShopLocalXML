@@ -26,6 +26,7 @@ import kotlin.math.round
 
 @SuppressLint("RestrictedApi")
 class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
+    var lossFocusOutside = false
     private var showClearIcon: Boolean = false
         set(value) {
             field = value
@@ -110,6 +111,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             roundRadius = it.getDimension(R.styleable.EditTextExt_roundRadius, defaultValue)
             setRoundBackground()
             showClearIcon = it.getBoolean(R.styleable.EditTextExt_showClearIcon, false)
+            lossFocusOutside  = it.getBoolean(R.styleable.EditTextExt_lossFocusOutside, false)
             it.recycle()
         }
 
@@ -271,7 +273,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
         if (displayCleaningIcon()) {
             if (focused) {
-
+                changeDrawableEnd(drawableClear)
             } else {
 
             }
