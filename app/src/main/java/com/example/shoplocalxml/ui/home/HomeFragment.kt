@@ -17,7 +17,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
+import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,7 +61,19 @@ class HomeFragment : Fragment() {
             textView.text = it
         }*/
         dataBinding.buttonTask.setOnClickListener {
-            val searchHistrotyPanel = SearchHistoryPanel(dataBinding.layoutRoot)
+            val searchHistrotyPanel = SearchHistoryPanel(dataBinding.layoutRoot, object: OnSearchHistoryListener{
+                override fun clearHistory() {
+                    clearSearchHistory()
+                }
+
+                override fun clickItem(value: String) {
+                    clickSearchHistoryItem(value)
+                }
+
+                override fun deleteItem(value: String) {
+                    deleteSearchHistoryItem(value)
+                }
+            })
             searchHistrotyPanel.show()
         }
         return dataBinding.root
@@ -122,4 +136,18 @@ class HomeFragment : Fragment() {
         }
 
     }
+
+
+    private fun clearSearchHistory(){
+
+    }
+
+    private fun clickSearchHistoryItem(value: String){
+
+    }
+
+    private fun deleteSearchHistoryItem(value: String){
+
+    }
+
 }
