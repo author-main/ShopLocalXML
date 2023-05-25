@@ -17,17 +17,16 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
 
     var searchQuery: String = EMPTY_STRING
         set(value) {
-            setSearchQuery(value)
+            field = setSearchQuery(value)
         }
 
     private var filtered: Boolean = false
     private val showItems = items.toMutableList()
 
     @JvmName("setSearchQuery_")
-    private fun setSearchQuery(value: String) {
-
+    private fun setSearchQuery(value: String): String {
             filtered = value.isNotBlank() ?: false
-            searchQuery = if (filtered) {
+            return if (filtered) {
                 showItems.clear()
                 showItems.addAll(items.filter {
                     it.contains(value, true)

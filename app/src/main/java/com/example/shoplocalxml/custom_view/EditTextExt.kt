@@ -16,6 +16,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
+import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.log
@@ -25,12 +26,18 @@ import kotlin.math.round
 
 @SuppressLint("RestrictedApi")
 class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(context, attrs) {
+    private var showClearIcon: Boolean = false
+        set(value) {
+            field = value
+            setClearIcon(value)
+        }
+    private var drawableClear: Drawable? = null
     private var tintDrawable = -1
     private val INPUTTYPE_PASSWORD = 18
     var onValidValue: ((text: String) -> Boolean)? = null
     private var drawableEnd: Drawable? = null
     var checked = false
-    var drawableAction: Drawable? = null
+    private var drawableAction: Drawable? = null
     private val paint = Paint()
 //    private var drawableRight: Drawable? = null
     private var roundRadius = 0f
@@ -98,17 +105,21 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         context.obtainStyledAttributes(attrs, R.styleable.EditTextExt).let {
             val reference = it.getResourceId(R.styleable.EditTextExt_drawableAction, -1)
             setDrawableAction(reference)
-            it.recycle()
-        }
 
-
-        context.obtainStyledAttributes(attrs, R.styleable.EditTextExt).let {
             val defaultValue = 12.toPx.toFloat()
             roundRadius = it.getDimension(R.styleable.EditTextExt_roundRadius, defaultValue)
-//            log("roundRadius = $roundRadius")
             setRoundBackground()
+            showClearIcon = it.getBoolean(R.styleable.EditTextExt_showClearIcon, false)
             it.recycle()
         }
+
+
+     /*  context.obtainStyledAttributes(attrs, R.styleable.EditTextExt).let {
+            val defaultValue = 12.toPx.toFloat()
+            roundRadius = it.getDimension(R.styleable.EditTextExt_roundRadius, defaultValue)
+            setRoundBackground()
+            it.recycle()
+        }*/
 
 
         if (inputType == INPUTTYPE_PASSWORD) {
@@ -362,6 +373,15 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         }*/
         borderColor = if (correct) Color.TRANSPARENT else context.getColor(R.color.EditTextBorderErrorDark)
         return correct
+    }
+
+    private fun setClearIcon(value: Boolean) {
+        drawableClear = if (value) {
+                            val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_close)
+                            setTintDrawable(drawable)
+                            drawable
+                        }
+                        else null
     }
 
 

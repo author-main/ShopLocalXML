@@ -3,5 +3,6 @@
     <declare-styleable name="EditTextExt">
         <attr name="roundRadius" format="dimension" />
         <attr name="drawableAction" format="reference" />
+        <attr name="showClearIcon" format="boolean" />
     </declare-styleable>
 </resources>
