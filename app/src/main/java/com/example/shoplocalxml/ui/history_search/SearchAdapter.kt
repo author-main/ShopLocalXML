@@ -27,6 +27,14 @@ class SearchAdapter(private val items: MutableList<SearchItem>, private val onCl
             null
     }
 
+    fun clearHistory(){
+        if (items.isNotEmpty()) {
+            val count = items.count() - 1
+            items.clear()
+            notifyItemRangeRemoved(0, count)
+        }
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         if (!item.deleted) {
@@ -50,7 +58,7 @@ class SearchAdapter(private val items: MutableList<SearchItem>, private val onCl
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val deleteButton = view.findViewById<ImageView>(R.id.buttonDeleteSearchQuery)
-        val textItem = view.findViewById<TextView>(R.id.textSearchQuery)
+        val deleteButton: ImageView = view.findViewById(R.id.buttonDeleteSearchQuery)
+        val textItem: TextView = view.findViewById(R.id.textSearchQuery)
     }
 }
