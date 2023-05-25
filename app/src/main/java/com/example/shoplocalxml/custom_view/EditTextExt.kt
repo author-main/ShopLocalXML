@@ -263,7 +263,23 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         }
         else
             borderColor = Color.TRANSPARENT
+
+        if (displayCleaningIcon()) {
+            if (focused) {
+
+            } else {
+
+            }
+        }
+
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
+    }
+
+    private fun displayCleaningIcon(): Boolean {
+        var result = false
+        if (showClearIcon)
+            result = text?.isNotEmpty() ?: false
+        return result
     }
 
     private fun setRoundBackground(){
