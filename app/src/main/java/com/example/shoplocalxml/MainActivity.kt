@@ -206,15 +206,15 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
     }
 
 
-    override fun clearHistory() {
+    override fun clearSearchHistory() {
 
     }
 
-    override fun clickItem(value: String) {
+    override fun clickSearchHistoryItem(value: String) {
         binding.appBarMain.editTextSearchQuery.setText(value)
     }
 
-    override fun deleteItem(value: String) {
+    override fun deleteSearchHistoryItem(value: String) {
 
     }
 

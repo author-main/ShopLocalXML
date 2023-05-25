@@ -57,7 +57,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
         holder.deleteButton.visibility = visibleDeleteButton
         if (!filtered)
             holder.deleteButton.setOnClickListener {
-                log("item $item")
+                //log("item $item")
                 onClickItem(item, true)
                 items.remove(item)
                 showItems.remove(item)

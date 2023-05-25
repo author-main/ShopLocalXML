@@ -26,16 +26,16 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
     fun show(items: List<String>){
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
             adapter.clearHistory()
-            onHistorySearchHistoryListener.clearHistory()
+            onHistorySearchHistoryListener.clearSearchHistory()
             hide()
         }
 
         val manager = LinearLayoutManager(layoutHistorySearch.context)
         adapter = SearchAdapter(items.toMutableList()) {query, delete ->
             if (delete)
-                onHistorySearchHistoryListener.deleteItem(query)
+                onHistorySearchHistoryListener.deleteSearchHistoryItem(query)
             else
-                onHistorySearchHistoryListener.clickItem(query)
+                onHistorySearchHistoryListener.clickSearchHistoryItem(query)
         }
         val recyclerView: RecyclerView = layoutHistorySearch.findViewById(R.id.recyclerViewSearch)
         recyclerView.layoutManager = manager
@@ -51,12 +51,5 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
         parent.removeView(layoutHistorySearch)
     }
 
-    private fun clickItem(value: String) {
-        onHistorySearchHistoryListener.clickItem(value)
-        hide()
-    }
 
-    private fun deleteItem(value: String) {
-        onHistorySearchHistoryListener.deleteItem(value)
-    }
 }
