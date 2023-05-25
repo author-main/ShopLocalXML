@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
             if (destination.id == R.id.nav_home)
                 showUnreadMessage(22)
         }
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.appBarMain.fab.visibility = View.VISIBLE
 
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         setActionBar()
     }
 
-     override fun onStart() {
+    override fun onStart() {
         super.onStart()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         val destination = navController.findDestination(R.id.nav_login)

@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
     ): View {
         val homeViewModel =
             ViewModelProvider(this)[HomeViewModel::class.java]
-        dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
+         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
          dataBinding.buttonTask.setOnClickListener {
             val searchHistrotyPanel = SearchHistoryPanel(dataBinding.layoutRoot, activity as OnSearchHistoryListener)
             val items = mutableListOf<String>()
