@@ -97,10 +97,11 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         binding.appBarMain.editTextSearchQuery.setOnEditorActionListener { v, actionId, _ ->
             var result = false
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                log((v as EditTextExt).text.toString())
+                //log((v as EditTextExt).text.toString())
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
                 result = true
+                // выполнить поиск
             }
             result
         }
