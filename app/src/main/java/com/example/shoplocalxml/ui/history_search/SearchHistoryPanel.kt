@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.log
 
 
 class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySearchHistoryListener: OnSearchHistoryListener) {
@@ -34,8 +35,9 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
         adapter = SearchAdapter(items.toMutableList()) {query, delete ->
             if (delete)
                 onHistorySearchHistoryListener.deleteSearchHistoryItem(query)
-            else
+            else {
                 onHistorySearchHistoryListener.clickSearchHistoryItem(query)
+            }
         }
         val recyclerView: RecyclerView = layoutHistorySearch.findViewById(R.id.recyclerViewSearch)
         recyclerView.layoutManager = manager

@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.Nullable
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.EMPTY_STRING
@@ -23,28 +26,40 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
     private var filtered: Boolean = false
     private val showItems = items.toMutableList()
 
+
+
+    //val differ = AsyncListDiffer(this, DiffCallback())
+
+
     @JvmName("setSearchQuery_")
     private fun setSearchQuery(value: String): String {
             filtered = value.isNotBlank() ?: false
-            return if (filtered) {
-                showItems.clear()
-                showItems.addAll(items.filter {
+            val query = if (filtered) {
+
+                swapData(items.filter {
                     it.contains(value, true)
                 })
+                /*showItems.clear()
+                showItems.addAll(items.filter {
+                    it.contains(value, true)
+                })*/
+
                 value
             } else {
-                showItems.clear()
-                showItems.addAll(items)
+                swapData(items)
+                /*showItems.clear()
+                showItems.addAll(items)*/
                 EMPTY_STRING
             }
-
+            return query
     }
 
     fun clearHistory(){
         if (showItems.isNotEmpty()) {
             val count = showItems.size - 1
             items.clear()
-            showItems.clear()
+            //showItems.clear()
+            swapData(listOf())
             notifyItemRangeRemoved(0, count)
         }
     }
@@ -60,15 +75,29 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
                 //log("item $item")
                 onClickItem(item, true)
                 items.remove(item)
-                showItems.remove(item)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, itemCount)
+
+                //showItems.remove(item)
+                swapData(items)
+
+                /*notifyItemRemoved(position)
+                notifyItemRangeChanged(position, itemCount)*/
             }
 
         holder.layoutItem.setOnClickListener {
             onClickItem(item, false)
+            //notifyItemRangeRemoved(0, itemCount)
+            setSearchQuery(item)
+            //notifyItemRangeChanged(0, itemCount)
         }
 
+    }
+
+    private fun swapData(newData: List<String>){
+        val diffCallback = SearchHistoryDiffCallback(showItems, newData)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        showItems.clear()
+        showItems.addAll(newData)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int {
@@ -85,4 +114,53 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
         val textItem: TextView = view.findViewById(R.id.textSearchQuery)
         val layoutItem: LinearLayout  = view.findViewById(R.id.layerHistorySearch)
     }
+
+
+    class SearchHistoryDiffCallback(private val oldList: List<String>, private val newList: List<String>) : DiffUtil.Callback() {
+
+        override fun getOldListSize(): Int = oldList.size
+
+        override fun getNewListSize(): Int = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] === newList[newItemPosition]
+        }
+
+        override fun areContentsTheSame(oldPosition: Int, newPosition: Int): Boolean {
+            return oldList[oldPosition] == newList[newPosition]
+        }
+
+        override fun getChangePayload(oldPosition: Int, newPosition: Int): Any? {
+            return super.getChangePayload(oldPosition, newPosition)
+        }
+    }
+
+
+
 }
+
+
+
+/*class RatingDiffCallback(private val oldList: List<Rating>, private val newList: List<Rating>) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].rateIndex === newList.get(newItemPosition).rateIndex
+    }
+
+    override fun areContentsTheSame(oldPosition: Int, newPosition: Int): Boolean {
+        val (_, value, name) = oldList[oldPosition]
+        val (_, value1, name1) = newList[newPosition]
+
+        return name == name1 && value == value1
+    }
+
+    @Nullable
+    override fun getChangePayload(oldPosition: Int, newPosition: Int): Any? {
+        return super.getChangePayload(oldPosition, newPosition)
+    }
+}*/
+
