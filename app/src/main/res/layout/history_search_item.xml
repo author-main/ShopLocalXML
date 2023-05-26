@@ -20,7 +20,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/EditTextFont"
-        android:textSize="12sp" />
+        android:textSize="13sp" />
 
     <ImageView
         android:id="@+id/buttonDeleteSearchQuery"

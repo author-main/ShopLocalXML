@@ -75,11 +75,11 @@ class HomeFragment : Fragment(), OnBackPressed {
             var result = false
             val query = (v as EditTextExt).text.toString()
             if (query.isNotBlank()) {
-                val imm = applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                hideKeyboard()
                 result = true
+                dataBinding.buttonBack.visibility = View.GONE
                 hideSearchHistoryPanel()
-    //            searchProducts(query)
+                searchProducts(query)
             }
             result
         }
@@ -123,6 +123,9 @@ class HomeFragment : Fragment(), OnBackPressed {
             }
         }*/
 
+        dataBinding.buttonBack.setOnClickListener {
+            performBack()
+        }
         return dataBinding.root
     }
 
@@ -145,6 +148,7 @@ class HomeFragment : Fragment(), OnBackPressed {
                 })
             searchHistoryPanel?.show(items)
         }
+        dataBinding.buttonBack.visibility = View.VISIBLE
     }
 
     private fun hideSearchHistoryPanel() {
@@ -208,9 +212,25 @@ class HomeFragment : Fragment(), OnBackPressed {
     }
 
     override fun backPressed() {
+        performBack()
+    }
+
+    private fun performBack(){
         if (searchHistoryPanel != null) {
             searchHistoryPanel?.hide()
             searchHistoryPanel = null
+            dataBinding.buttonBack.visibility = View.GONE
         }
+        hideKeyboard()
+    }
+
+    private fun hideKeyboard(){
+        dataBinding.editTextSearchQuery.clearFocus()
+        val imm = applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(dataBinding.editTextSearchQuery.windowToken, 0)
+    }
+
+    private fun searchProducts(query: String){
+
     }
 }
