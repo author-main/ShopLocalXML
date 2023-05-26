@@ -51,8 +51,6 @@ class HomeFragment : Fragment() {
     ): View {
        /* val homeViewModel =
             ViewModelProvider(this)[HomeViewModel::class.java]*/
-        /*sharedViewModel =
-            ViewModelProvider(requireActivity())[SharedViewModel::class.java]*/
          dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
          dataBinding.buttonTask.setOnClickListener {
             searchHistoryPanel = SearchHistoryPanel(dataBinding.layoutRoot, activity as OnSearchHistoryListener)

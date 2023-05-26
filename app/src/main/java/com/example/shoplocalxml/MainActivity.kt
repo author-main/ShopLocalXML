@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
 
     }
 
-    fun getEditTextSearchQuery() = binding.appBarMain.editTextSearchQuery
+    //fun getEditTextSearchQuery() = binding.appBarMain.editTextSearchQuery
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
