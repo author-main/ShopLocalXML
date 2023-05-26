@@ -282,9 +282,10 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
 
     override fun onEditorAction(actionCode: Int) {
-        if (actionCode == EditorInfo.IME_ACTION_DONE) {
+        /*if (actionCode == EditorInfo.IME_ACTION_DONE) {
             clearFocus()
-        }
+        }*/
+        clearFocus()
         super.onEditorAction(actionCode)
     }
 

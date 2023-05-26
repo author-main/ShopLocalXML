@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -93,6 +94,24 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         binding.appBarMain.editTextSearchQuery.doAfterTextChanged {
             sharedViewModel.setQuerySearch(it.toString())
         }
+        binding.appBarMain.editTextSearchQuery.setOnEditorActionListener { v, actionId, _ ->
+            var result = false
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                log((v as EditTextExt).text.toString())
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                result = true
+            }
+            result
+        }
+        binding.appBarMain.editTextSearchQuery.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                // show SearchPanel
+            }
+        }
+
+
+
         binding.appBarMain.toolbar.animation = animate
         binding.appBarMain.toolbar.animate()
 
