@@ -32,9 +32,9 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
 
     fun show(items: List<String>){
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
-            adapter.clearHistory()
+            //adapter.clearHistory()
             onHistorySearchHistoryListener.clearSearchHistory()
-            hide()
+            //hide()
         }
 
         val manager = LinearLayoutManager(layoutHistorySearch.context)

@@ -54,7 +54,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
             return query
     }
 
-    fun clearHistory(){
+    /*fun clearHistory(){
         if (showItems.isNotEmpty()) {
             val count = showItems.size - 1
             items.clear()
@@ -62,7 +62,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
             swapData(listOf())
             notifyItemRangeRemoved(0, count)
         }
-    }
+    }*/
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

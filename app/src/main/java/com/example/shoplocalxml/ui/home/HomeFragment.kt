@@ -135,6 +135,7 @@ class HomeFragment : Fragment(), OnBackPressed {
             searchHistoryPanel =
                 SearchHistoryPanel(dataBinding.layoutRoot, object: OnSearchHistoryListener{
                     override fun clearSearchHistory() {
+                        dataBinding.buttonBack.visibility = View.GONE
                         hideSearchHistoryPanel()
                     }
 
