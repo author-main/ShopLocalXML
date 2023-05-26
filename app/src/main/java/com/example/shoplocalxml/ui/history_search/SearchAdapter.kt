@@ -23,7 +23,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
             field = setSearchQuery(value)
         }
 
-    private var filtered: Boolean = false
+    var filtered: Boolean = false
     private val showItems = items.toMutableList()
 
 
@@ -43,7 +43,6 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
                 showItems.addAll(items.filter {
                     it.contains(value, true)
                 })*/
-
                 value
             } else {
                 swapData(items)
