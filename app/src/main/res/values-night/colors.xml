@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF9100</color>
     <color name="colorBrend">#FF679BE9</color>
     <color name="colorDiscount">#FFF30F46</color>
+    <color name="PrimaryDark">#FF222831</color>
+    <color name="BackgroundDark">#ff181E26</color>
     <color name="black_overlay">#66000000</color>
     <color name="colorDivider">#30ffffff</color>
 </resources>

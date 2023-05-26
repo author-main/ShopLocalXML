@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="PrimaryDark">#FF222831</color>
+    <color name="BackgroundDark">#ff181E26</color>
     <color name="EditTextBackgroundDark">#FF393E46</color>
     <color name="EditTextFont">#BEBEBE</color>
     <color name="EditTextBorderErrorDark">#FFA10046</color>
