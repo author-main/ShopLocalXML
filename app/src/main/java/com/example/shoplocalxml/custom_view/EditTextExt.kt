@@ -229,21 +229,22 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         var drawableClick = false
-        event?.let {
-            if (it.action == MotionEvent.ACTION_DOWN) {
-                performClick()
-                drawableEnd?.let{icon ->
-                    val bounds = icon.bounds;
-                    val x = event.x.toInt()
-                    val y = event.y.toInt()
-                    val placeBounds = Rect().apply {
-                        this.left    = measuredWidth - compoundPaddingRight
-                        this.top     = compoundPaddingTop
-                        this.right   = measuredWidth - 8.toPx
-                        this.bottom  = measuredHeight - compoundPaddingBottom
-                    }
-                    if (drawableEnd != null && placeBounds.contains(x, y)) {
-                        drawableClick = true
+        if (drawableOnClick != null) {
+            event?.let {
+                if (it.action == MotionEvent.ACTION_DOWN) {
+                    //performClick()
+                    drawableEnd?.let { icon ->
+                        val bounds = icon.bounds;
+                        val x = event.x.toInt()
+                        val y = event.y.toInt()
+                        val placeBounds = Rect().apply {
+                            this.left = measuredWidth - compoundPaddingRight
+                            this.top = compoundPaddingTop
+                            this.right = measuredWidth - 8.toPx
+                            this.bottom = measuredHeight - compoundPaddingBottom
+                        }
+                        if (drawableEnd != null && placeBounds.contains(x, y)) {
+                            drawableClick = true
                             event.action = MotionEvent.ACTION_CANCEL
                             if (displayCleaningIcon()) {
                                 if (isFocused)
@@ -256,11 +257,15 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                                 }
                                 drawableOnClick?.invoke()
                             }
+                        }
                     }
                 }
             }
         }
-        return if (drawableClick) false else super.onTouchEvent(event)
+        return if (drawableClick) false else {
+            performClick()
+            super.onTouchEvent(event)
+        }
     }
 
     private fun changeDrawableEnd(drawable: Drawable?){

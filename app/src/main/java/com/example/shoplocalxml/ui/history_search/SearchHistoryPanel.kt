@@ -53,7 +53,7 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
         layoutHistorySearch.startAnimation(animation)
     }
 
-    private fun hide(){
+    fun hide(){
         val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_right)
         layoutHistorySearch.startAnimation(animation)
         parent.removeView(layoutHistorySearch)

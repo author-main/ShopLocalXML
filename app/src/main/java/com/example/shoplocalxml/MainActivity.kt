@@ -1,46 +1,23 @@
 package com.example.shoplocalxml
 
-import android.animation.ValueAnimator
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.AnimationUtils
-import android.view.animation.ScaleAnimation
-import android.view.animation.TranslateAnimation
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-import androidx.core.widget.doAfterTextChanged
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
-import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
-import com.example.shoplocalxml.ui.login.LoginFragment
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryListener {
-    private lateinit var appBarConfiguration: AppBarConfiguration
+class MainActivity : AppCompatActivity(), OnOpenShopListener {
+    //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
@@ -55,13 +32,15 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.appBarMain.toolbar.visibility  = View.GONE
         binding.appBarMain.fab.visibility = View.GONE
+       /* binding.appBarMain.toolbar.visibility  = View.GONE
+        binding.appBarMain.fab.visibility = View.GONE*/
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         setContentView(binding.root)
     }
 
 
-    private fun setActionBar(){
+   /* private fun setActionBar(){
         setSupportActionBar(binding.appBarMain.toolbar)
         binding.appBarMain.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -76,8 +55,17 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         )
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.nav_home)
+            if (destination.id == R.id.nav_home) {
+
+
+                /*val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+                val fragment = navHostFragment?.childFragmentManager?.findFragmentById(R.id.nav_login)
+                navHostFragment?.childFragmentManager?.fragments?.forEach {
+                    if (it is HomeFragment)
+                        setOnSearchHistoryPanelListener(it as OnSearchHistoryPanelListener)
+                }*/
                 showUnreadMessage(22)
+            }
         }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -97,17 +85,25 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         binding.appBarMain.editTextSearchQuery.setOnEditorActionListener { v, actionId, _ ->
             var result = false
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                //log((v as EditTextExt).text.toString())
-                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, 0)
-                result = true
-                // выполнить поиск
+                val query = (v as EditTextExt).text.toString()
+                if (query.isNotBlank()) {
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                    result = true
+                    hideSearchHistoryPanel()
+                    searchProducts(query)
+                }
             }
             result
         }
         binding.appBarMain.editTextSearchQuery.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
-                // show SearchPanel
+                val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+                navHostFragment?.childFragmentManager?.fragments?.forEach {
+                    if (it is HomeFragment)
+                        setOnSearchHistoryPanelListener(it as OnSearchHistoryPanelListener)
+                }
+                showSearchHistoryPanel()
             }
         }
 
@@ -119,7 +115,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         //val navController = findNavController(R.id.nav_host_fragment_content_main)
 
 
-    }
+    }*/
 
     //fun getEditTextSearchQuery() = binding.appBarMain.editTextSearchQuery
 
@@ -160,10 +156,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
          */
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.action_nav_login_to_nav_home)
-        setActionBar()
+      //  setActionBar()
     }
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         val destination = navController.findDestination(R.id.nav_login)
@@ -171,10 +167,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
             if (navController.currentDestination != it)
                 setActionBar()
         }
-    }
+    }*/
 
 
-    private fun showUnreadMessage(count: Int) {
+    /*  private fun showUnreadMessage(count: Int) {
         if (count > 0) {
            /* val buttonMessage = binding.appBarMain.includeButtonMessage.buttonMessage
                 //activity?.findViewById<FrameLayout>(R.id.buttonMessage)
@@ -227,22 +223,19 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
             //}
         }
 
+    }*/
+
+    private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+            val fragment = navHostFragment?.childFragmentManager?.primaryNavigationFragment
+            fragment?.let{
+                if (it is OnBackPressed) {
+                    (it as OnBackPressed).backPressed()
+                }
+            }
+        }
     }
 
 
-    override fun clearSearchHistory() {
-
-    }
-
-    override fun clickSearchHistoryItem(value: String) {
-        binding.appBarMain.editTextSearchQuery.setText(value)
-    }
-
-    override fun deleteSearchHistoryItem(value: String) {
-
-    }
-
-    private fun showUserMessages() {
-        log("show user messages...")
-    }
 }
