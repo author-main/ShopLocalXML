@@ -9,6 +9,9 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.VectorDrawable
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
@@ -16,12 +19,12 @@ import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.graphics.drawable.toBitmap
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
-import kotlin.math.round
 
 
 @SuppressLint("RestrictedApi")
@@ -32,13 +35,14 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             field = value
             setClearIcon(value)
         }
+    private var drawableEnd: Drawable? = null
+    private var drawableAction: Drawable? = null
     private var drawableClear: Drawable? = null
     private var tintDrawable = -1
     private val INPUTTYPE_PASSWORD = 18
     var onValidValue: ((text: String) -> Boolean)? = null
-    private var drawableEnd: Drawable? = null
+
     private var checked = false
-    private var drawableAction: Drawable? = null
     private val paint = Paint()
 //    private var drawableRight: Drawable? = null
     private var roundRadius = 0f
@@ -113,7 +117,36 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             showClearIcon = it.getBoolean(R.styleable.EditTextExt_showClearIcon, false)
             lossFocusOutside  = it.getBoolean(R.styleable.EditTextExt_lossFocusOutside, false)
             it.recycle()
+
+            addTextChangedListener(object: TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    if (drawableClear != null && isFocused) {
+                        val empty = text?.toString()?.isEmpty() ?: true
+                        changeDrawableEnd(
+                            if (!empty)
+                                drawableClear
+                            else
+                                getDrawableEnd()
+                        )
+                    }
+                }
+            })
         }
+
+
 
 
      /*  context.obtainStyledAttributes(attrs, R.styleable.EditTextExt).let {
@@ -275,6 +308,10 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             if (focused) {
                 changeDrawableEnd(drawableClear)
             } else {
+                if (drawableAction != null && checked)
+                        changeDrawableEnd(drawableAction)
+                    else
+                        changeDrawableEnd(drawableEnd)
 
             }
         }
@@ -339,7 +376,9 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         setRoundBackground()
     }
 
-   /* private fun getColorState(): ColorStateList{
+
+
+    /* private fun getColorState(): ColorStateList{
         val states = arrayOf(
             intArrayOf(android.R.attr.defaultValue) // enabled
             /*intArrayOf(android.R.attr.state_enabled), // enabled
@@ -399,13 +438,21 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
     private fun setClearIcon(value: Boolean) {
-        drawableClear = if (value) {
-                            val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_close)
-                            setTintDrawable(drawable)
-                            drawable
-                        }
-                        else null
+        if (value) {
+            val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_close)
+            setTintDrawable(drawable)
+            drawableClear = drawable?.toBitmap()?.let{ bitmap ->
+                val bitmapResized = Bitmap.createScaledBitmap(bitmap, 16.toPx, 16.toPx, false)
+                BitmapDrawable(resources, bitmapResized)
+            }
+        }
     }
+
+    private fun getDrawableEnd(): Drawable? =
+        if (drawableAction != null && checked)
+            drawableAction
+        else
+            drawableEnd
 
 
 }
