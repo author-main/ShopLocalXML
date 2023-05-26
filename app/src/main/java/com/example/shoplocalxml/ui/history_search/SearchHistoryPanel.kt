@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.history_search
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -22,6 +23,11 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
 
     fun setSearchQuery(value: String){
         adapter.searchQuery = value
+        val header = layoutHistorySearch.findViewById<LinearLayout>(R.id.layerSearchButtons)
+        if (value.isEmpty())
+            header.visibility = View.VISIBLE
+        else
+            header.visibility = View.GONE
     }
 
     fun show(items: List<String>){

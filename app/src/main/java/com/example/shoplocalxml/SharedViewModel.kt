@@ -1,7 +1,21 @@
 package com.example.shoplocalxml
 
+import androidx.annotation.EmptySuper
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoplocalxml.repository.Repository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.count
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
+
+    private val _querySearch = MutableLiveData<String>(EMPTY_STRING)
+    val querySearch: LiveData<String> = _querySearch
+    fun setQuerySearch(value: String){
+        _querySearch.value = value
+    }
+
 }

@@ -50,6 +50,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
                 showItems.addAll(items)*/
                 EMPTY_STRING
             }
+            notifyItemRangeChanged(0, itemCount)
             return query
     }
 
@@ -72,11 +73,12 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
         if (!filtered)
             holder.deleteButton.setOnClickListener {
                 //log("item $item")
-                onClickItem(item, true)
                 items.remove(item)
 
                 //showItems.remove(item)
                 swapData(items)
+
+                onClickItem(item, true)
 
                 /*notifyItemRemoved(position)
                 notifyItemRangeChanged(position, itemCount)*/
@@ -90,6 +92,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
         }
 
     }
+
 
     private fun swapData(newData: List<String>){
         val diffCallback = SearchHistoryDiffCallback(showItems, newData)

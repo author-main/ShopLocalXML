@@ -16,6 +16,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.core.widget.doAfterTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-   private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+    private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
@@ -88,6 +89,9 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSearchHistoryLis
         val buttonMessage = binding.appBarMain.includeButtonMessage.buttonMessage
         buttonMessage.setOnClickListener {
             showUserMessages()
+        }
+        binding.appBarMain.editTextSearchQuery.doAfterTextChanged {
+            sharedViewModel.setQuerySearch(it.toString())
         }
         binding.appBarMain.toolbar.animation = animate
         binding.appBarMain.toolbar.animate()
