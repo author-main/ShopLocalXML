@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoplocalxml.log
+import java.lang.Exception
 import java.util.Stack
 
 class HomeViewModel : ViewModel() {
@@ -12,7 +13,16 @@ class HomeViewModel : ViewModel() {
     }
     private val _modeSearchProduct = MutableLiveData<HomeMode>(HomeMode.MAIN)
     val modeSearchProduct: LiveData<HomeMode> = _modeSearchProduct
-    fun setModeSearchProduct(value: HomeMode) {
+    fun popStackMode(): HomeMode{
+        try {
+            stackMode.pop()
+            _modeSearchProduct.value = stackMode.lastElement()
+        } catch(_: Exception){
+            _modeSearchProduct.value = HomeMode.NULL
+        }
+        return _modeSearchProduct.value!!
+    }
+    fun pushStackMode(value: HomeMode) {
         _modeSearchProduct.value = value
         if (value == HomeMode.SEARCH_RESULT) {
             stackMode.remove(HomeMode.SEARCH_QUERY)
@@ -20,30 +30,15 @@ class HomeViewModel : ViewModel() {
             stackMode.push(HomeMode.SEARCH_RESULT)
         } else
             stackMode.push(value)
-
-    /*    val stackEntity = stackMode.find { it == value }
-        stackEntity?.let {
-            if (it == HomeMode.SEARCH_QUERY) {
-                stackMode.remove(HomeMode.SEARCH_QUERY)
-                stackMode.push(HomeMode.SEARCH_QUERY)
-            }
-            if (it == HomeMode.SEARCH_RESULT) {
-                stackMode.remove(HomeMode.SEARCH_QUERY)
-                stackMode.remove(HomeMode.SEARCH_RESULT)
-                stackMode.push(HomeMode.SEARCH_RESULT)
-            }
-
-        } ?: run {
-            stackMode.push(value)
-        }*/
-        log(stackMode)
+        //log(stackMode)
     }
 
     companion object {
         enum class HomeMode {
             MAIN,
             SEARCH_QUERY,
-            SEARCH_RESULT
+            SEARCH_RESULT,
+            NULL
         }
     }
 }

@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.count
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
 
-    private val _querySearch = MutableLiveData<String>(EMPTY_STRING)
+   /* private val _querySearch = MutableLiveData<String>(EMPTY_STRING)
     val querySearch: LiveData<String> = _querySearch
     fun setQuerySearch(value: String){
         _querySearch.value = value
-    }
+    }*/
 
     fun getSearchHistoryItems(): List<String> =
         repository.getSearchHistoryItems()

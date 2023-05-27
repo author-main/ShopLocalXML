@@ -65,20 +65,26 @@ class HomeFragment : Fragment(), OnBackPressed {
             items.add("Xiaomi")
             searchHistoryPanel?.show(items)
         }*/
-        sharedViewModel.querySearch.observe(viewLifecycleOwner) {
+        /*sharedViewModel.querySearch.observe(viewLifecycleOwner) {
             searchHistoryPanel?.setSearchQuery(it)
-        }
+        }*/
 
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
-            val visible = if (it in HomeViewModel.Companion.HomeMode.SEARCH_QUERY..HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
-                View.VISIBLE else View.GONE
-            dataBinding.buttonBack.visibility = visible
+            if (it == HomeViewModel.Companion.HomeMode.NULL) {
+                log("exit app...")
+                //выйти из приложения
+            } else {
+                val visible = if (it != HomeViewModel.Companion.HomeMode.MAIN)
+                    View.VISIBLE else View.GONE
+                dataBinding.buttonBack.visibility = visible
+            }
         }
 
 
 
         dataBinding.editTextSearchQuery.doAfterTextChanged {
-            sharedViewModel.setQuerySearch(it.toString())
+            //sharedViewModel.setQuerySearch(it.toString())
+            searchHistoryPanel?.setSearchQuery(it.toString())
         }
 
         dataBinding.editTextSearchQuery.setOnEditorActionListener { v, _, _ ->
@@ -111,7 +117,7 @@ class HomeFragment : Fragment(), OnBackPressed {
                 items.add("Corsair")
                 items.add("Kingstone")
                 items.add("Xiaomi")*/
-                homeViewModel.setModeSearchProduct(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
+                homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
                 val items = sharedViewModel.getSearchHistoryItems()
                 showSearchHistoryPanel(items, (it as EditTextExt).text.toString())
                 /*val query = (it as EditTextExt).text.toString()
@@ -235,10 +241,11 @@ class HomeFragment : Fragment(), OnBackPressed {
     }
 
     private fun performBack(){
-        if (!isNotShowSearchPanel()) {
+        if (isNotShowSearchPanel())
             dataBinding.editTextSearchQuery.text?.clear()
+        else
             hideSearchHistoryPanel()
-        }
+        homeViewModel.popStackMode()
         hideKeyboard()
     }
 
@@ -249,7 +256,7 @@ class HomeFragment : Fragment(), OnBackPressed {
     }
 
     private fun searchProducts(query: String){
-        homeViewModel.setModeSearchProduct(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+        homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
     }
 
     private fun isNotShowSearchPanel() = searchHistoryPanel == null
