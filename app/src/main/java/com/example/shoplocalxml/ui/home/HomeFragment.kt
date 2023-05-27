@@ -90,19 +90,21 @@ class HomeFragment : Fragment(), OnBackPressed {
         }
 
         dataBinding.editTextSearchQuery.setOnClickListener {
-            val items = mutableListOf<String>()
-            items.add("Samsung")
-            items.add("NVidia")
-            items.add("AMD")
-            items.add("Intel")
-            items.add("AOC")
-            items.add("Corsair")
-            items.add("Kingstone")
-            items.add("Xiaomi")
-            showSearchHistoryPanel(items)
-            val query = (it as EditTextExt).text.toString()
-            if (query.isNotBlank())
-                searchHistoryPanel?.setSearchQuery(query)
+            if (isNotShowSearchPanel()) {
+                val items = mutableListOf<String>()
+                items.add("Samsung")
+                items.add("NVidia")
+                items.add("AMD")
+                items.add("Intel")
+                items.add("AOC")
+                items.add("Corsair")
+                items.add("Kingstone")
+                items.add("Xiaomi")
+                showSearchHistoryPanel(items, (it as EditTextExt).text.toString())
+                /*val query = (it as EditTextExt).text.toString()
+                if (query.isNotBlank())
+                    searchHistoryPanel?.setSearchQuery(query)*/
+            }
         }
         /*dataBinding.editTextSearchQuery.setOnFocusChangeListener { v, hasFocus ->
             log("focus changed...")
@@ -130,8 +132,8 @@ class HomeFragment : Fragment(), OnBackPressed {
     }
 
 
-    private fun showSearchHistoryPanel(items: List<String>) {
-        if (searchHistoryPanel == null) {
+    private fun showSearchHistoryPanel(items: List<String>, start: String) {
+        if (isNotShowSearchPanel()) {
             searchHistoryPanel =
                 SearchHistoryPanel(dataBinding.layoutRoot, object: OnSearchHistoryListener{
                     override fun clearSearchHistory() {
@@ -147,7 +149,7 @@ class HomeFragment : Fragment(), OnBackPressed {
 
                     }
                 })
-            searchHistoryPanel?.show(items)
+            searchHistoryPanel?.show(items, start)
         }
         dataBinding.buttonBack.visibility = View.VISIBLE
     }
@@ -234,4 +236,6 @@ class HomeFragment : Fragment(), OnBackPressed {
     private fun searchProducts(query: String){
 
     }
+
+    private fun isNotShowSearchPanel() = searchHistoryPanel == null
 }

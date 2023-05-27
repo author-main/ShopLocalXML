@@ -30,7 +30,7 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
             header.visibility = View.GONE
     }
 
-    fun show(items: List<String>){
+    fun show(items: List<String>, start: String){
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
             //adapter.clearHistory()
             onHistorySearchHistoryListener.clearSearchHistory()
@@ -45,6 +45,7 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
                 onHistorySearchHistoryListener.clickSearchHistoryItem(query)
             }
         }
+        adapter.searchQuery = start
         val recyclerView: RecyclerView = layoutHistorySearch.findViewById(R.id.recyclerViewSearch)
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
