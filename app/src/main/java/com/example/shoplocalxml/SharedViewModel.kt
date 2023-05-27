@@ -18,4 +18,23 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         _querySearch.value = value
     }
 
+    fun getSearchHistoryItems(): List<String> =
+        repository.getSearchHistoryItems()
+
+    fun addSearchHistoryItem(value: String) {
+        repository.addSearchHistoryItem(value)
+    }
+
+    fun deleteSearchHistoryItem(value: String) {
+        repository.deleteSearchHistoryItem(value)
+    }
+
+    fun saveSearchHistory() {
+        repository.saveSearchHistory()
+    }
+
+    fun clearSearchHistory() {
+        repository.clearSearchHistory()
+    }
+
 }

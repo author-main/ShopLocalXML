@@ -9,6 +9,7 @@ import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl
 import com.example.shoplocalxml.ui.dialog.DialogProgress
+import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 
@@ -111,4 +112,25 @@ class Repository {
     fun existPassword(): Boolean {
         return accessHandler.passwordStorage?.existPassword() ?: false
     }
+
+    fun getSearchHistoryItems(): List<String> =
+        SearchQueryStorage.getInstance().getQueries()
+
+
+    fun addSearchHistoryItem(value: String) {
+        SearchQueryStorage.getInstance().put(value)
+    }
+
+    fun deleteSearchHistoryItem(value: String) {
+        SearchQueryStorage.getInstance().remove(value)
+    }
+
+    fun saveSearchHistory() {
+        SearchQueryStorage.getInstance().saveQueries()
+    }
+
+    fun clearSearchHistory() {
+        SearchQueryStorage.getInstance().removeAllQueries()
+    }
+
 }
