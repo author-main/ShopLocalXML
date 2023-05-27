@@ -59,42 +59,20 @@ class HomeFragment : Fragment(), OnBackPressed {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-         homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
-         /*sharedViewModel =
-             (requireActivity() as MainActivity).sharedViewModel*/
-         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
-/*         dataBinding.buttonTask.setOnClickListener {
-            searchHistoryPanel = SearchHistoryPanel(dataBinding.layoutRoot, activity as OnSearchHistoryListener)
-            val items = mutableListOf<String>()
-            items.add("Samsung")
-            items.add("NVidia")
-            items.add("AMD")
-            items.add("Intel")
-            items.add("AOC")
-            items.add("Corsair")
-            items.add("Kingstone")
-            items.add("Xiaomi")
-            searchHistoryPanel?.show(items)
-        }*/
-        /*sharedViewModel.querySearch.observe(viewLifecycleOwner) {
-            searchHistoryPanel?.setSearchQuery(it)
-        }*/
-
+        homeViewModel =
+           ViewModelProvider(this)[HomeViewModel::class.java]
+        dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
-            if (it == HomeViewModel.Companion.HomeMode.NULL) {
-                sharedViewModel.closeApp()
-            } else {
-                val visible = if (it != HomeViewModel.Companion.HomeMode.MAIN)
-                    View.VISIBLE else View.GONE
-                dataBinding.buttonBack.visibility = visible
-            }
+           if (it == HomeViewModel.Companion.HomeMode.NULL) {
+               sharedViewModel.closeApp()
+           } else {
+               val visible = if (it != HomeViewModel.Companion.HomeMode.MAIN)
+                   View.VISIBLE else View.GONE
+               dataBinding.buttonBack.visibility = visible
+           }
         }
 
-
-
         dataBinding.editTextSearchQuery.doAfterTextChanged {
-            //sharedViewModel.setQuerySearch(it.toString())
             searchHistoryPanel?.setSearchQuery(it.toString())
         }
 
@@ -119,41 +97,11 @@ class HomeFragment : Fragment(), OnBackPressed {
 
         dataBinding.editTextSearchQuery.setOnClickListener {
             if (isNotShowSearchPanel()) {
-                /*val items = mutableListOf<String>()
-                items.add("Samsung")
-                items.add("NVidia")
-                items.add("AMD")
-                items.add("Intel")
-                items.add("AOC")
-                items.add("Corsair")
-                items.add("Kingstone")
-                items.add("Xiaomi")*/
                 homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
                 val items = sharedViewModel.getSearchHistoryItems()
                 showSearchHistoryPanel(items, (it as EditTextExt).text.toString())
-                /*val query = (it as EditTextExt).text.toString()
-                if (query.isNotBlank())
-                    searchHistoryPanel?.setSearchQuery(query)*/
             }
         }
-        /*dataBinding.editTextSearchQuery.setOnFocusChangeListener { v, hasFocus ->
-            log("focus changed...")
-            if (hasFocus) {
-                val items = mutableListOf<String>()
-                items.add("Samsung")
-                items.add("NVidia")
-                items.add("AMD")
-                items.add("Intel")
-                items.add("AOC")
-                items.add("Corsair")
-                items.add("Kingstone")
-                items.add("Xiaomi")
-                showSearchHistoryPanel(items)
-                val query = (v as EditTextExt).text.toString()
-                if (query.isNotBlank())
-                    searchHistoryPanel?.setSearchQuery(query)
-            }
-        }*/
 
         dataBinding.buttonBack.setOnClickListener {
             performBack()
