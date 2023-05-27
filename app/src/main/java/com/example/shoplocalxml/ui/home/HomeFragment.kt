@@ -219,7 +219,8 @@ class HomeFragment : Fragment(), OnBackPressed {
     }
 
     private fun performBack(){
-        if (searchHistoryPanel != null) {
+        if (!isNotShowSearchPanel()) {
+            dataBinding.editTextSearchQuery.text?.clear()
             searchHistoryPanel?.hide()
             searchHistoryPanel = null
             dataBinding.buttonBack.visibility = View.GONE
