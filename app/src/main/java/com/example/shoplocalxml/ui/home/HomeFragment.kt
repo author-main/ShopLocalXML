@@ -84,7 +84,6 @@ class HomeFragment : Fragment(), OnBackPressed {
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
             if (it == HomeViewModel.Companion.HomeMode.NULL) {
                 sharedViewModel.closeApp()
-                //выйти из приложения
             } else {
                 val visible = if (it != HomeViewModel.Companion.HomeMode.MAIN)
                     View.VISIBLE else View.GONE
