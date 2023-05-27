@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.custom_view.EditTextExt
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+    val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
@@ -36,6 +37,9 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
        /* binding.appBarMain.toolbar.visibility  = View.GONE
         binding.appBarMain.fab.visibility = View.GONE*/
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        sharedViewModel.setOnCloseApp {
+            this.finish()
+        }
         setContentView(binding.root)
     }
 

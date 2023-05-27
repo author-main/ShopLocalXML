@@ -13,19 +13,25 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.repository.Repository
+import com.example.shoplocalxml.sharedViewModel
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorageInterface
+import com.example.shoplocalxml.ui.login.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -34,16 +40,20 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed {
     private lateinit var homeViewModel: HomeViewModel
-    private val sharedViewModel: SharedViewModel by activityViewModels(
-        factoryProducer = {
-            FactoryViewModel(
-                this,
-                AppShopLocal.repository
-            )
-        }
-    )
+    //private lateinit var sharedViewModel: SharedViewModel
+    /*by activityViewModels(
+                factoryProducer = {
+                    FactoryViewModel(
+                        requireActivity() as MainActivity,
+                        AppShopLocal.repository
+                    )
+                }
+             )*/
     private var searchHistoryPanel: SearchHistoryPanel? = null
     private lateinit var dataBinding: FragmentHomeBinding
+    /*val Fragment.sharedViewModel: SharedViewModel
+        get() = (activity as MainActivity).sharedViewModel*/
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,6 +61,8 @@ class HomeFragment : Fragment(), OnBackPressed {
     ): View {
          homeViewModel =
             ViewModelProvider(this)[HomeViewModel::class.java]
+         /*sharedViewModel =
+             (requireActivity() as MainActivity).sharedViewModel*/
          dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
 /*         dataBinding.buttonTask.setOnClickListener {
             searchHistoryPanel = SearchHistoryPanel(dataBinding.layoutRoot, activity as OnSearchHistoryListener)
@@ -71,7 +83,7 @@ class HomeFragment : Fragment(), OnBackPressed {
 
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
             if (it == HomeViewModel.Companion.HomeMode.NULL) {
-                log("exit app...")
+                sharedViewModel.closeApp()
                 //выйти из приложения
             } else {
                 val visible = if (it != HomeViewModel.Companion.HomeMode.MAIN)

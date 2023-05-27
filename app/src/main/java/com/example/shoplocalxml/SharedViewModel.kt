@@ -18,6 +18,16 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         _querySearch.value = value
     }*/
 
+
+    private var onCloseApp: (() -> Unit)? = null
+    fun setOnCloseApp(value:() -> Unit ) {
+        onCloseApp = value
+    }
+    fun closeApp(){
+        onCloseApp?.invoke()
+    }
+
+
     fun getSearchHistoryItems(): List<String> =
         repository.getSearchHistoryItems()
 
