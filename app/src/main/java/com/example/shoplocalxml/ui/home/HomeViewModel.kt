@@ -14,17 +14,16 @@ class HomeViewModel : ViewModel() {
     val modeSearchProduct: LiveData<HomeMode> = _modeSearchProduct
     fun setModeSearchProduct(value: HomeMode) {
         _modeSearchProduct.value = value
-        log("last = ${stackMode.lastElement()}")
+        //log("last = ${stackMode.lastElement()}")
         val stackEntity = stackMode.find { it == value }
         stackEntity?.let {
-            /*if (it == HomeMode.SEARCH_QUERY) {
-
-            }*/
+            if (it == HomeMode.SEARCH_QUERY) {
+                stackMode.remove(HomeMode.SEARCH_QUERY)
+                stackMode.push(HomeMode.SEARCH_QUERY)
+            }
         } ?: run {
-
+            stackMode.push(value)
         }
-        stackMode.push(value)
-
         log(stackMode)
     }
 
