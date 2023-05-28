@@ -24,6 +24,7 @@ import androidx.core.graphics.drawable.toBitmap
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.alpha
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 
 
@@ -53,8 +54,10 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         }
     private var borderColor     = Color.TRANSPARENT
         set(value){
-            field = value
-            setRoundBackground()
+            if (field != value) {
+                field = value
+                setRoundBackground()
+            }
         }
     private var textColor       = Color.parseColor("#FFBEBEBE")
     /*private var drawableRightColor = Color.parseColor("#FFBEBEBE")
@@ -246,8 +249,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                         if (drawableEnd != null && placeBounds.contains(x, y)) {
                             drawableClick = true
                             event.action = MotionEvent.ACTION_CANCEL
-                            if (displayCleaningIcon()) {
-                                if (isFocused)
+                            if (displayCleaningIcon() && isFocused) {
                                     text?.clear()
                             } else {
                                 if (drawableAction != null) {
@@ -459,7 +461,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             drawableAction
         else
             drawableEnd
-
 
 }
 

@@ -23,13 +23,16 @@ class HomeViewModel : ViewModel() {
         return _modeSearchProduct.value!!
     }
     fun pushStackMode(value: HomeMode) {
+        if (value == _modeSearchProduct.value)
+            return
         _modeSearchProduct.value = value
         if (value == HomeMode.SEARCH_RESULT) {
             stackMode.remove(HomeMode.SEARCH_QUERY)
             stackMode.remove(HomeMode.SEARCH_RESULT)
             stackMode.push(HomeMode.SEARCH_RESULT)
-        } else
+        } else {
             stackMode.push(value)
+        }
         //log(stackMode)
     }
 

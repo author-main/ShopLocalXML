@@ -2,13 +2,16 @@ package com.example.shoplocalxml.ui.home
 
 import android.animation.ValueAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.FOCUSABLE
 import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,9 +20,12 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
+import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
+import com.example.shoplocalxml.OnSpeechRecognizer
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
@@ -70,6 +76,10 @@ class HomeFragment : Fragment(), OnBackPressed {
                    View.VISIBLE else View.GONE
                dataBinding.buttonBack.visibility = visible
            }
+            /*if (it == HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+                dataBinding.editTextSearchQuery.borderColor = applicationContext.getColor(R.color.colorBrend)
+            else
+                dataBinding.editTextSearchQuery.borderColor = Color.TRANSPARENT*/
         }
 
         dataBinding.editTextSearchQuery.doAfterTextChanged {
@@ -91,29 +101,36 @@ class HomeFragment : Fragment(), OnBackPressed {
         }
 
 
-        dataBinding.editTextSearchQuery.setDrawableOnClick {
-            log("microphone click...")
-        }
-
         dataBinding.editTextSearchQuery.setOnClickListener {
-            if (isNotShowSearchPanel()) {
-                homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
-                val items = sharedViewModel.getSearchHistoryItems()
-                showSearchHistoryPanel(items, (it as EditTextExt).text.toString())
-            }
+            showSearchHistoryPanel(dataBinding.editTextSearchQuery.text.toString())
         }
 
         dataBinding.buttonBack.setOnClickListener {
             performBack()
         }
+        dataBinding.editTextSearchQuery.setDrawableOnClick {
+            sharedViewModel.actionRecognizer = {
+                showSearchHistoryPanel(start = it)
+                with(dataBinding.editTextSearchQuery) {
+                    setText(it)
+                    requestFocus()
+                    setSelection(it.length)
+                }
+            }
+            (activity as OnSpeechRecognizer).recognize()
+        }
         return dataBinding.root
     }
 
 
-    private fun showSearchHistoryPanel(items: List<String>, start: String) {
+    private fun showSearchHistoryPanel(start: String) {
+        homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
         if (isNotShowSearchPanel()) {
+            val items = sharedViewModel.getSearchHistoryItems()
+            if (items.isEmpty())
+                return
             searchHistoryPanel =
-                SearchHistoryPanel(dataBinding.layoutRoot, object: OnSearchHistoryListener{
+                SearchHistoryPanel(dataBinding.layoutRoot, object : OnSearchHistoryListener {
                     override fun clearSearchHistory() {
                         sharedViewModel.clearSearchHistory()
                         //dataBinding.buttonBack.visibility = View.GONE
@@ -130,13 +147,15 @@ class HomeFragment : Fragment(), OnBackPressed {
                     }
                 })
             searchHistoryPanel?.show(items, start)
-        }
-        //dataBinding.buttonBack.visibility = View.VISIBLE
+        } else
+            searchHistoryPanel?.update(start)
     }
 
     private fun hideSearchHistoryPanel() {
-        sharedViewModel.saveSearchHistory()
-        searchHistoryPanel?.hide()
+        searchHistoryPanel?.let {
+            sharedViewModel.saveSearchHistory()
+            it.hide()
+        }
         searchHistoryPanel = null
     }
 
@@ -200,11 +219,13 @@ class HomeFragment : Fragment(), OnBackPressed {
     }
 
     private fun performBack(){
-        if (isNotShowSearchPanel())
+/*        if (isNotShowSearchPanel())
             dataBinding.editTextSearchQuery.text?.clear()
-        else
-            hideSearchHistoryPanel()
-        homeViewModel.popStackMode()
+        else*/
+        hideSearchHistoryPanel()
+        if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN)
+            dataBinding.editTextSearchQuery.text?.clear()
+
         hideKeyboard()
     }
 

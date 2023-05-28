@@ -1,11 +1,16 @@
 package com.example.shoplocalxml
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -14,10 +19,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.custom_view.EditTextExt
+import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
+import java.util.Locale
 
 
-class MainActivity : AppCompatActivity(), OnOpenShopListener {
+class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer {
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -242,4 +249,35 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener {
     }
 
 
+
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.let{ data ->
+                (data.extras?.getStringArrayList(RecognizerIntent.EXTRA_RESULTS)).let { matches ->
+                    val value = matches?.get(0)
+                    if (!value.isNullOrEmpty()) {
+                        sharedViewModel.actionRecognizer?.invoke(value)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun recognize() {
+        if (SpeechRecognizer.isRecognitionAvailable(applicationContext)) {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            intent.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH
+            )
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getStringResource(R.string.prompt_speechrecognizer))
+            resultLauncher.launch(intent)
+        } else {
+            vibrate(400)
+            val snackbarExt = SnackbarExt(binding.root, getStringResource(R.string.message_login_error))
+            snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
+            snackbarExt.show()
+        }
+
+    }
 }

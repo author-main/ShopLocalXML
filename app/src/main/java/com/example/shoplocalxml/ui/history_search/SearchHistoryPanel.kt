@@ -30,6 +30,10 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
             header.visibility = View.GONE
     }
 
+    fun update(query: String) {
+        adapter.searchQuery = query
+    }
+
     fun show(items: List<String>, start: String){
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
             //adapter.clearHistory()
