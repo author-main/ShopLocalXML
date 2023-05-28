@@ -44,7 +44,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class HomeFragment : Fragment(), OnBackPressed {
+class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     private lateinit var homeViewModel: HomeViewModel
     //private lateinit var sharedViewModel: SharedViewModel
     /*by activityViewModels(
@@ -109,10 +109,8 @@ class HomeFragment : Fragment(), OnBackPressed {
             performBack()
         }
         dataBinding.editTextSearchQuery.setDrawableOnClick {
-            sharedViewModel.actionRecognizer = {
-                performRecognize(it)
-            }
-            (activity as OnSpeechRecognizer).recognize()
+            if (activity is OnSpeechRecognizer)
+                (activity as OnSpeechRecognizer).recognize()
         }
         return dataBinding.root
     }
@@ -223,9 +221,6 @@ class HomeFragment : Fragment(), OnBackPressed {
     }
 
     private fun performBack(){
-/*        if (isNotShowSearchPanel())
-            dataBinding.editTextSearchQuery.text?.clear()
-        else*/
         hideSearchHistoryPanel()
         if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN)
             dataBinding.editTextSearchQuery.text?.clear()
@@ -245,5 +240,7 @@ class HomeFragment : Fragment(), OnBackPressed {
 
     private fun isNotShowSearchPanel() = searchHistoryPanel == null
 
-
+    override fun recognize(value: String) {
+        performRecognize(value)
+    }
 }

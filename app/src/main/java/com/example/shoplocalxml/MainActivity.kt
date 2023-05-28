@@ -256,8 +256,13 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer
                 (data.extras?.getStringArrayList(RecognizerIntent.EXTRA_RESULTS)).let { matches ->
                     val value = matches?.get(0)
                     if (!value.isNullOrEmpty()) {
-                        sharedViewModel.actionRecognizer?.invoke(value)
+                        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+                        navHost?.childFragmentManager?.primaryNavigationFragment?.let{fragment ->
+                            if (fragment is OnSpeechRecognizer)
+                                (fragment as OnSpeechRecognizer).recognize(value)
+                        }
                     }
+
                 }
             }
         }
@@ -265,7 +270,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer
 
 
 
-    override fun recognize() {
+    override fun recognize(value: String) {
 
         if (SpeechRecognizer.isRecognitionAvailable(applicationContext)) {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)

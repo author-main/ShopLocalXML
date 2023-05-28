@@ -17,7 +17,6 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     fun setQuerySearch(value: String){
         _querySearch.value = value
     }*/
-    var actionRecognizer: ((value: String) -> Unit)? = null
 
     private var onCloseApp: (() -> Unit)? = null
     fun setOnCloseApp(value:() -> Unit ) {
