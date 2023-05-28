@@ -240,7 +240,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
     private fun isNotShowSearchPanel() = searchHistoryPanel == null
 
-    override fun recognize(value: String) {
-        performRecognize(value)
+    override fun recognize(value: String?) {
+        performRecognize(value!!)
     }
 }

@@ -270,7 +270,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer
 
 
 
-    override fun recognize(value: String) {
+    override fun recognize(value: String?) {
 
         if (SpeechRecognizer.isRecognitionAvailable(applicationContext)) {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
