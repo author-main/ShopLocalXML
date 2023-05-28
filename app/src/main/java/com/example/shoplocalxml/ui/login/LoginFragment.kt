@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnOpenShopListener
 //import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.R
@@ -23,6 +24,7 @@ import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.sharedViewModel
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
@@ -36,7 +38,7 @@ import com.example.shoplocalxml.vibrate
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment(), OnUserListener {
+class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var dataBinding: FragmentLoginBinding
     private val passwordSymbols = arrayOfNulls<TextView>(5)
@@ -200,5 +202,9 @@ class LoginFragment : Fragment(), OnUserListener {
             }
         }
         DialogProgress.hide()
+    }
+
+    override fun backPressed() {
+        sharedViewModel.closeApp()
     }
 }
