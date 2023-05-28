@@ -110,18 +110,22 @@ class HomeFragment : Fragment(), OnBackPressed {
         }
         dataBinding.editTextSearchQuery.setDrawableOnClick {
             sharedViewModel.actionRecognizer = {
-                showSearchHistoryPanel(start = it)
-                with(dataBinding.editTextSearchQuery) {
-                    setText(it)
-                    requestFocus()
-                    setSelection(it.length)
-                }
+                performRecognize(it)
             }
             (activity as OnSpeechRecognizer).recognize()
         }
         return dataBinding.root
     }
 
+
+    private fun performRecognize(value: String){
+        showSearchHistoryPanel(start = value)
+        with(dataBinding.editTextSearchQuery) {
+            setText(value)
+            requestFocus()
+            setSelection(value.length)
+        }
+    }
 
     private fun showSearchHistoryPanel(start: String) {
         homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
