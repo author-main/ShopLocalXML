@@ -14,7 +14,10 @@ import com.example.shoplocalxml.log
 class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
     private var stateDrawable: StateListDrawable? = null
     private var mChecked = false
-
+    private var onChecked: ((checked: Boolean) -> Unit)? = null
+    fun setOnCheckedListener(value: (checked: Boolean) -> Unit){
+        onChecked = value
+    }
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val drawable = attrs?.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", -1)
@@ -39,6 +42,7 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
                     intArrayOf(-android.R.attr.state_checked)
                 setImageDrawable(stateListDrawable.current)
             }
+        onChecked?.invoke(isChecked)
     }
     override fun isChecked(): Boolean {
         return mChecked

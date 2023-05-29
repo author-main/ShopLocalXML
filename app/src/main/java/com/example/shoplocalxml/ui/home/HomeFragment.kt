@@ -112,6 +112,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             if (activity is OnSpeechRecognizer)
                 (activity as OnSpeechRecognizer).recognize()
         }
+
         return dataBinding.root
     }
 
