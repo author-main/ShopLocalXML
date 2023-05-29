@@ -9,18 +9,17 @@ import android.widget.Checkable
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.log
 
 class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
-    private var stateDrawable: Drawable? = null
+    private var stateDrawable: StateListDrawable? = null
     private var mChecked = false
 
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val drawable = attrs?.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", -1)
         drawable?.let{
-            stateDrawable = AppCompatResources.getDrawable(applicationContext, it)
+            stateDrawable = AppCompatResources.getDrawable(applicationContext, it) as StateListDrawable
         }
         setOnClickListener(this)
     }
@@ -33,24 +32,19 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
 
     override fun toggle() {
         isChecked = !mChecked
-        if (stateDrawable is StateListDrawable) {
             (stateDrawable as? StateListDrawable)?.let{stateListDrawable->
                 stateListDrawable.state = if (isChecked)
-                    intArrayOf(android.R.attr.state_checked)
+                    intArrayOf(android.R.attr.state_checkable)
                 else
-                    intArrayOf(-android.R.attr.state_checked)
+                    intArrayOf(-android.R.attr.state_checkable)
                 setImageDrawable(stateListDrawable.current)
             }
-        }
-
-
     }
     override fun isChecked(): Boolean {
         return mChecked
     }
 
     override fun setChecked(checked: Boolean) {
-        log("checked = $checked...")
         if (mChecked == checked) return
         mChecked = checked
         refreshDrawableState()
