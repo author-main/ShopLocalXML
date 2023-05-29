@@ -34,9 +34,9 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         isChecked = !mChecked
             (stateDrawable as? StateListDrawable)?.let{stateListDrawable->
                 stateListDrawable.state = if (isChecked)
-                    intArrayOf(android.R.attr.state_checkable)
+                    intArrayOf(android.R.attr.state_checked)
                 else
-                    intArrayOf(-android.R.attr.state_checkable)
+                    intArrayOf(-android.R.attr.state_checked)
                 setImageDrawable(stateListDrawable.current)
             }
     }
