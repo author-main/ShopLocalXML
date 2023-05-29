@@ -32,7 +32,7 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
 
     override fun toggle() {
         isChecked = !mChecked
-            (stateDrawable as? StateListDrawable)?.let{stateListDrawable->
+            stateDrawable?.let{stateListDrawable->
                 stateListDrawable.state = if (isChecked)
                     intArrayOf(android.R.attr.state_checked)
                 else
