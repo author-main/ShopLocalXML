@@ -42,7 +42,6 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
                     intArrayOf(-android.R.attr.state_checked)
                 setImageDrawable(stateListDrawable.current)
             }
-        onChecked?.invoke(isChecked)
     }
     override fun isChecked(): Boolean {
         return mChecked
@@ -52,6 +51,7 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         if (mChecked == checked) return
         mChecked = checked
         refreshDrawableState()
+        onChecked?.invoke(mChecked)
     }
 
     override fun onClick(v: View?) {
