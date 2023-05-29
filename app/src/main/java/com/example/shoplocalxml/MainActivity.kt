@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
@@ -51,22 +52,24 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer
             this.finish()
         }
 
-      /*  val appBarConfiguration = AppBarConfiguration(
+        /*val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_login, R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_cart, R.id.nav_profile
             )
         )*/
-
         setContentView(binding.root)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         navController.addOnDestinationChangedListener { _, _, _ ->
             //log(navController.currentDestination?.id)
-
+            log("change destination...")
             navController.currentDestination?.let{destination ->
+
                 if (destination.id == R.id.nav_login)
-                    findViewById<BottomNavigationView>(R.id.bottomNavigation).visibility = View.GONE
+                    //findViewById<BottomNavigationView>(R.id.bottomNavigation)
+                    bottomNavigationView.visibility = View.GONE
                 else {
-                    val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+                    //val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
                     if (bottomNavigationView.visibility == View.GONE) {
                         bottomNavigationView.animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_right)
                         bottomNavigationView.visibility = View.VISIBLE
@@ -74,7 +77,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer
                     }
                 }
             }
-
+            bottomNavigationView.setupWithNavController(navController)
           /*  val bottomNavigation = findViewById<BottomNavigationView>(R.id.nav_login)
             val isLoginDestination = appBarConfiguration.topLevelDestinations.contains(R.id.nav_home)*/
          /*   bottomNavigation.visibility =
