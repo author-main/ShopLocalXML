@@ -70,6 +70,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
 
+            <com.example.shoplocalxml.custom_view.CheckableImageView
+                android:id="@+id/imageView2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/favorite_checkable" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
