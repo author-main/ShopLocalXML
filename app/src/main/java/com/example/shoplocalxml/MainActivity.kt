@@ -21,6 +21,7 @@ import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 
 
@@ -167,6 +168,8 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer
          */
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.action_nav_login_to_nav_home)
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigation.visibility = View.VISIBLE
       //  setActionBar()
     }
 

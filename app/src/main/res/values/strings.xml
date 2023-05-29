@@ -29,12 +29,12 @@
     <string name="message_login_error">Ошибка проверки данных клиента.\nВ доступе отказано</string>
     <string name="text_bestseller">Бестселлер</string>
     <string name="text_action">Акция</string>
-    <string-array name="bottom_navigation_items">
-        <item>Главная</item>
-        <item>Каталог</item>
-        <item>Корзина</item>
-        <item>Профиль</item>
-    </string-array>
+
+    <string name="bottom_navigation_home">Главная</string>
+    <string name="bottom_navigation_catalog">Каталог</string>
+    <string name="bottom_navigation_cart">Корзина</string>
+    <string name="bottom_navigation_profile">Профиль</string>
+
     <string-array name="bottomsheet_product_items">
         <item>Добавить в корзину</item>
         <item>Все товары данного бренда</item>
