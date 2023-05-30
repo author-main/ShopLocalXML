@@ -6,4 +6,8 @@
         <attr name="showClearIcon" format="boolean" />
         <attr name="lossFocusOutside" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="CheckableImageView">
+        <attr name="tintCheckedDrawable"   format="color" />
+        <attr name="tintUncheckedDrawable" format="color" />
+    </declare-styleable>
 </resources>

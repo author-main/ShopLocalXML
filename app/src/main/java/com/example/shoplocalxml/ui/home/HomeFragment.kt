@@ -113,6 +113,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                 (activity as OnSpeechRecognizer).recognize()
         }
 
+        dataBinding.imageView2.isChecked = true
         dataBinding.imageView2.setOnCheckedListener {
             log(it)
 
