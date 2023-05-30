@@ -36,7 +36,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     fun onClick(index: Int){
         if (index in 0..11) {
-            val key = index
+            //val key = index
             var changed = false
             when (index) {
                 KEY_FINGER -> {
@@ -59,8 +59,8 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
                 }
             }
             if (changed) {
-                val fingerPrint = key == KEY_FINGER
-                if (!fingerPrint) onChangePassword?.invoke(userPassword.length, key)
+                val fingerPrint = index == KEY_FINGER
+                if (!fingerPrint) onChangePassword?.invoke(userPassword.length, index)
                 if (userPassword.length == 5 || fingerPrint)
                     onLogin(fingerPrint)
             }
