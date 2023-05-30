@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.product_card.ProductCard"/>
+    </data>
+
+<androidx.cardview.widget.CardView
     android:layout_width="150dp"
     android:layout_height="150dp"
     app:cardBackgroundColor="@color/white"
@@ -19,8 +29,7 @@
         android:layout_gravity="end"
         android:layout_margin="8dp"
         android:src="@drawable/favorite_checkable"
-        app:tintCheckedDrawable="@color/EditTextBorderErrorDark"
-        app:tintUncheckedDrawable="@color/purple_200" />
+        app:tintCheckedDrawable="@color/colorDiscount"/>
 
     <TextView
         android:id="@+id/textDiscount"
@@ -47,3 +56,4 @@
         android:scaleType="centerInside"
         app:srcCompat="@drawable/ic_more" />
 </androidx.cardview.widget.CardView>
+</layout>

@@ -24,6 +24,7 @@ import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
+import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
@@ -113,12 +114,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                 (activity as OnSpeechRecognizer).recognize()
         }
 
-        dataBinding.imageView2.isChecked = true
+        /*dataBinding.imageView2.isChecked = true
         dataBinding.imageView2.setOnCheckedListener {
             log(it)
 
-        }
+        }*/
 
+        //dataBinding.cardProduct.discount = 0
         return dataBinding.root
     }
 
@@ -133,11 +135,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     }
 
     private fun showSearchHistoryPanel(start: String) {
+        (activity as OnBottomNavigationListener).setVisibilityBottomNavigation(false)
         homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
         if (isNotShowSearchPanel()) {
             val items = sharedViewModel.getSearchHistoryItems()
-            if (items.isEmpty())
-                return
+       /*     if (items.isEmpty())
+                return*/
             searchHistoryPanel =
                 SearchHistoryPanel(dataBinding.layoutRoot, object : OnSearchHistoryListener {
                     override fun clearSearchHistory() {
@@ -161,6 +164,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     }
 
     private fun hideSearchHistoryPanel() {
+        (activity as OnBottomNavigationListener).setVisibilityBottomNavigation(true)
         searchHistoryPanel?.let {
             sharedViewModel.saveSearchHistory()
             it.hide()

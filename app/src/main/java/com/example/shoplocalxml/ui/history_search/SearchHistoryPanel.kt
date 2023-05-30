@@ -1,5 +1,6 @@
 package com.example.shoplocalxml.ui.history_search
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
     }
 
     fun show(items: List<String>, start: String){
+        layoutHistorySearch.elevation = 10f
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
             //adapter.clearHistory()
             onHistorySearchHistoryListener.clearSearchHistory()

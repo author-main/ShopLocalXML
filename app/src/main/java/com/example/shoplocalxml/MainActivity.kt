@@ -28,7 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 
 
-class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer {
+class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -325,5 +325,11 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnSpeechRecognizer
             snackbarExt.show()
         }
 
+    }
+
+    override fun setVisibilityBottomNavigation(value: Boolean) {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        if (value) bottomNavigationView.visibility = View.VISIBLE
+        else bottomNavigationView.visibility = View.GONE
     }
 }
