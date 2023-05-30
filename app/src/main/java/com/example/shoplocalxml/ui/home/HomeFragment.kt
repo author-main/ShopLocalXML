@@ -164,12 +164,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     }
 
     private fun hideSearchHistoryPanel() {
-        (activity as OnBottomNavigationListener).setVisibilityBottomNavigation(true)
         searchHistoryPanel?.let {
             sharedViewModel.saveSearchHistory()
             it.hide()
         }
         searchHistoryPanel = null
+        (activity as OnBottomNavigationListener).setVisibilityBottomNavigation(true)
     }
 
     override fun onStart() {
