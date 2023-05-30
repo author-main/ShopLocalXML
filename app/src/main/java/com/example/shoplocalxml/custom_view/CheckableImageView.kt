@@ -28,11 +28,13 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         drawable?.let{
             stateDrawable = AppCompatResources.getDrawable(applicationContext, it) as StateListDrawable
             stateDrawable?.let{stateListDrawable->
+                val savedState = stateListDrawable.state
                 stateListDrawable.state = intArrayOf(android.R.attr.state_checked)
                 checkedDrawable = stateListDrawable.current
                 stateListDrawable.state = intArrayOf(-android.R.attr.state_checked)
                 uncheckedDrawable = stateListDrawable.current
-//                setImageDrawable(stateListDrawable.current)
+                stateListDrawable.state = savedState
+
             }
 
         }
@@ -44,8 +46,6 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
                 checkedDrawable?.setTint(tintChecked)
             if (tintUnchecked != -1)
                 uncheckedDrawable?.setTint(tintUnchecked)
-            //setTintCheckedDrawable(tintChecked)
-            //setTintUncheckedDrawable(tintUnchecked)
             recycle()
         }
         setOnClickListener(this)
@@ -56,24 +56,6 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         if (isChecked) mergeDrawableStates(drawableState, CHECKED_STATE_SET)
         return drawableState
     }
-
-   /* private fun setTintCheckedDrawable(idColor: Int?){
-        idColor?.let{
-            if (it != -1) {
-                val color = applicationContext.getColor(it)
-                checkedDrawable?.setTint(color)
-            }
-        }
-    }
-
-    private fun setTintUncheckedDrawable(idColor: Int?){
-        idColor?.let{
-            if (it != -1) {
-                val color = applicationContext.getColor(it)
-                uncheckedDrawable?.setTint(color)
-            }
-        }
-    }*/
 
     override fun toggle() {
         isChecked = !mChecked
