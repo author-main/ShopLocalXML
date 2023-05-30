@@ -61,15 +61,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         navController.addOnDestinationChangedListener { _, _, _ ->
-            //log(navController.currentDestination?.id)
-            log("change destination...")
             navController.currentDestination?.let{destination ->
-
                 if (destination.id == R.id.nav_login)
-                    //findViewById<BottomNavigationView>(R.id.bottomNavigation)
                     bottomNavigationView.visibility = View.GONE
                 else {
-                    //val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
                     if (bottomNavigationView.visibility == View.GONE) {
                         bottomNavigationView.animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_right)
                         bottomNavigationView.visibility = View.VISIBLE
@@ -78,11 +73,6 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
                 }
             }
             bottomNavigationView.setupWithNavController(navController)
-          /*  val bottomNavigation = findViewById<BottomNavigationView>(R.id.nav_login)
-            val isLoginDestination = appBarConfiguration.topLevelDestinations.contains(R.id.nav_home)*/
-         /*   bottomNavigation.visibility =
-                if (appBarConfiguration.topLevelDestinations.contains(R.id.nav_login)) View.GONE else View.VISIBLE*/
-            //log("is login $isLoginDestination")
         }
     }
 
