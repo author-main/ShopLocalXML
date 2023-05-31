@@ -3,6 +3,7 @@ package com.example.shoplocalxml
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Point
 import android.net.ConnectivityManager
@@ -27,6 +28,12 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.toColor
 import androidx.core.view.marginStart
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import java.io.FileOutputStream
+import java.math.BigInteger
+import java.net.HttpURLConnection
+import java.net.URL
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 
 val Int.toDp: Int
@@ -54,6 +61,7 @@ fun Int.alpha(value: Float): Int {
         val blue  = color.blue()
         return Color.argb(value, red, green, blue)
 }
+
 
 fun getStringArrayResource(@ArrayRes id: Int): Array<String> =
     AppShopLocal.applicationContext.resources.getStringArray(id)
@@ -116,6 +124,66 @@ fun setDialogStyle(dialog: AlertDialog, @StringRes title: Int? = null, noTitle: 
         dialog.setCustomTitle(textView)
     }
 }
+
+
+fun md5(value: String): String {
+    try {
+        val md = MessageDigest.getInstance("MD5")
+        val messageDigest = md.digest(value.toByteArray())
+        var hashtext = BigInteger(1, messageDigest).toString(16)
+        while (hashtext.length < HASH_LENGTH)
+            hashtext = "0$hashtext"
+        return hashtext
+    } catch (e: NoSuchAlgorithmException) {
+        throw RuntimeException(e)
+    }
+}
+
+
+fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {
+    var timeStamp = timestamp
+    val bufferSize = 32768
+    val fileName = fileNameFromPath(url)
+    val fileHash = md5(fileName)
+    val filenameCache = getCacheDirectory() + fileHash
+    val filenameTemp  = "$filenameCache.$EXT_TEMPFILE"
+    var bitmap: Bitmap? = null
+    var success = false
+    val conn = URL(url).openConnection() as HttpURLConnection
+    try {
+        conn.connect()
+        if (conn.responseCode == HttpURLConnection.HTTP_OK) {
+            conn.requestMethod = "HEAD"
+            val fileTime = conn.lastModified
+            if (timestamp != fileTime) {
+                timeStamp = fileTime
+                conn.requestMethod = "GET"
+                val inputStream = conn.inputStream
+                val outputStream = FileOutputStream(filenameTemp)
+                val buffer = ByteArray(bufferSize)
+                var count: Int
+                while (inputStream.read(buffer).also { count = it } > 0) {
+                    outputStream.write(buffer, 0, count)
+                }
+                inputStream.close()
+                outputStream.flush()
+                outputStream.close()
+                renameFile(filenameTemp, filenameCache)
+                bitmap = loadBitmap(filenameCache, reduce)
+                success = true
+            }
+        }
+    } catch (_: Exception) {
+    } finally {
+        conn.disconnect()
+    }
+    if (!success)
+        bitmap = loadBitmap(filenameCache, reduce)
+    return bitmap to timeStamp
+}
+
+
+
 
 /*fun setWidthDialog(dialog: AlertDialog, widthDP: Int){
     val width: Int = widthDP.toPx

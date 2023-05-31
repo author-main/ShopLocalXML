@@ -93,22 +93,6 @@ fun getCacheDirectory(): String =
 fun getTempDirectory(): String =
     AppShopLocal.applicationContext.applicationInfo.dataDir + "/temp/"
 
-fun md5(link: String): String {
-    try {
-        val md = MessageDigest.getInstance("MD5")
-        val messageDigest = md.digest(link.toByteArray())
-        var hashtext = BigInteger(1, messageDigest).toString(16)
-        /*try {
-            hashtext = "0".repeat(HASH_LENGTH - hashtext.length) + hashtext
-        } catch (_: IllegalArgumentException) {}*/
-        while (hashtext.length < HASH_LENGTH)
-            hashtext = "0$hashtext"
-        return hashtext
-    } catch (e: NoSuchAlgorithmException) {
-        throw RuntimeException(e)
-    }
-}
-
 fun loadBitmap(filename: String, reduce: Boolean = false): Bitmap?{
     if (!File(filename).exists())
         return null
@@ -125,7 +109,6 @@ fun loadBitmap(filename: String, reduce: Boolean = false): Bitmap?{
         }
         option.inPreferredConfig = Bitmap.Config.ARGB_8888
         val bitmap = BitmapFactory.decodeFile(filename, option)
-        //log("loadedBitmapWidth = ${bitmap.width}")
         bitmap
     } catch(_:Exception){
         null

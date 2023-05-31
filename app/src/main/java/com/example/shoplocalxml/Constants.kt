@@ -1,5 +1,6 @@
 package com.example.shoplocalxml
 
+import android.graphics.Bitmap
 import androidx.fragment.app.Fragment
 
 enum class TypeRequest {
@@ -10,7 +11,9 @@ enum class TypeRequest {
 const val KEY_PASSWORD      = "password"
 const val EMPTY_STRING      = ""
 const val FILE_PREFERENCES  = "settings"
+const val EXT_TEMPFILE = "tmp"
 const val SERVER_URL        = "http://192.168.0.10"
 //const val SERVER_URL = "http://faceshot.ru"
 val Fragment.sharedViewModel: SharedViewModel
     get() = (this.activity as MainActivity).sharedViewModel
+
