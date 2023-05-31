@@ -34,7 +34,6 @@ class ImageDownloadManager private constructor() {
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
             taskList.remove(url)
             oncomplete(bitmap, timestamp)
-
             val indexTaskQueue = findTaskQueue(url)
             if (indexTaskQueue != -1) {
                 //log("add task from queue...")
