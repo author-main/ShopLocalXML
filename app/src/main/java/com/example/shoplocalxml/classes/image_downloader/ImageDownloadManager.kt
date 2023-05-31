@@ -1,6 +1,10 @@
 package com.example.shoplocalxml.classes.image_downloader
 
 import android.graphics.Bitmap
+import com.example.shoplocalxml.EXT_TEMPFILE
+import com.example.shoplocalxml.deleteFile
+import com.example.shoplocalxml.getCacheDirectory
+import com.example.shoplocalxml.md5
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
@@ -21,8 +25,10 @@ class ImageDownloadManager {
         val iterator = taskList.iterator()
         while (iterator.hasNext()){
             val task = iterator.next()
+            val filenameTemp =  getCacheDirectory() + md5(task.key) + EXT_TEMPFILE
             task.value.cancel(true)
             iterator.remove()
+            deleteFile(filenameTemp)
         }
         executor.shutdown()
     }
@@ -37,6 +43,10 @@ class ImageDownloadManager {
 
         fun download(url: String, reduce: Boolean = false, oncomplete: (Bitmap?, Long)->Unit) {
             getInstance().download(url, reduce, oncomplete)
+        }
+
+        fun cancelAll() {
+            getInstance().cancelAll()
         }
 
 

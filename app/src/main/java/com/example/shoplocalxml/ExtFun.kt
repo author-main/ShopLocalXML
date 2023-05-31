@@ -143,10 +143,11 @@ fun md5(value: String): String {
 fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {
     var timeStamp = timestamp
     val bufferSize = 32768
-    val fileName = fileNameFromPath(url)
-    val fileHash = md5(fileName)
+    /*val fileName = fileNameFromPath(url)
+    val fileHash = md5(fileName)*/
+    val fileHash = md5(url)
     val filenameCache = getCacheDirectory() + fileHash
-    val filenameTemp  = "$filenameCache.$EXT_TEMPFILE"
+    val filenameTemp  = "$filenameCache$EXT_TEMPFILE"
     var bitmap: Bitmap? = null
     var success = false
 
