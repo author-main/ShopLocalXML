@@ -78,15 +78,6 @@ class ImageDownloadManager private constructor() {
             ImageDownloadManager()
         }
 
-        /*private lateinit var instance: ImageDownloadManager
-        private fun getInstance(): ImageDownloadManager =
-            if (this::instance.isInitialized)
-                instance
-            else {
-                log ("recreate...")
-                ImageDownloadManager()
-            }*/
-
         fun download(url: String, reduce: Boolean = false, oncomplete: (Bitmap?, Long)->Unit) {
             instance.download(url, reduce, oncomplete)
         }
@@ -94,7 +85,5 @@ class ImageDownloadManager private constructor() {
         fun cancelAll() {
             instance.cancelAll()
         }
-
-
     }
 }
