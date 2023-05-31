@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
 import com.example.shoplocalxml.log
 import java.lang.Exception
@@ -40,13 +41,31 @@ class HomeViewModel : ViewModel() {
     }
 
     fun downloadImage(){
-        val task = ImageDownloaderImpl("file.txt", true, 0L) { bitmap, timestamp ->
-                if (bitmap == null)
-                    log("dont download...")
+        val imageDownloader = ImageDownloadManager()
+        ImageDownloadManager.download("file.txt", true, ) { bitmap, timestamp ->
+            if (bitmap == null)
+                log("dont download...")
         }
-        val executorService =
-            Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
-        executorService.submit(task)
+
+        ImageDownloadManager.download("file.txt", true, ) { bitmap, timestamp ->
+            if (bitmap == null)
+                log("dont download...")
+        }
+
+        ImageDownloadManager.download("file.txt", true, ) { bitmap, timestamp ->
+            if (bitmap == null)
+                log("dont download...")
+        }
+
+        ImageDownloadManager.download("file.txt", true, ) { bitmap, timestamp ->
+            if (bitmap == null)
+                log("dont download...")
+        }
+
+        ImageDownloadManager.download("file.txt", true, ) { bitmap, timestamp ->
+            if (bitmap == null)
+                log("dont download...")
+        }
     }
 
     companion object {
