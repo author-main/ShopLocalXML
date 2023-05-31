@@ -30,14 +30,14 @@ class ImageDownloadManager private constructor() {
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?, Long)->Unit){
         val cacheTimestamp = 0L
 
-        log ("start download $url...")
+       // log ("start download $url...")
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
-            //taskList.remove(url)
+            taskList.remove(url)
             oncomplete(bitmap, timestamp)
 
             val indexTaskQueue = findTaskQueue(url)
             if (indexTaskQueue != -1) {
-                log("add task from queue...")
+                //log("add task from queue...")
                 val queueTask = queue[indexTaskQueue].second
                 taskList[url] = executor.submit(queueTask)
                 queue.removeAt(indexTaskQueue)
@@ -46,18 +46,18 @@ class ImageDownloadManager private constructor() {
         }
 
         if (taskList.containsKey(url)) {
-            log("add queue...")
+            //log("add queue...")
             queue.add(url to task)
         }
         else {
-            log("add task...")
             taskList[url] = executor.submit(task)
+           /* log("add task...")
             var map = ""
             val iterator = taskList.iterator()
             while (iterator.hasNext()) {
                 map = "$map, ${iterator.next().key}"
             }
-            log("map = $map")
+            log("map = $map")*/
         }
     }
     private fun cancelAll(){
