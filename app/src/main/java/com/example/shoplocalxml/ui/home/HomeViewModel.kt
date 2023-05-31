@@ -41,7 +41,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun downloadImage(){
-        val imageDownloader = ImageDownloadManager()
+        //val imageDownloader = ImageDownloadManager()
         ImageDownloadManager.download("file.txt", true, ) { bitmap, timestamp ->
             if (bitmap == null)
                 log("dont download...")

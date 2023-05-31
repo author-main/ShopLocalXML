@@ -10,7 +10,7 @@ import java.util.Queue
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-class ImageDownloadManager {
+class ImageDownloadManager private constructor() {
     private val executor =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
     private val taskList: HashMap<String, Future<*>> = hashMapOf() // * "звездная проекция, когда мы ничего не знаем о типе"
@@ -74,8 +74,12 @@ class ImageDownloadManager {
     }
 
     companion object {
-        private val instance = ImageDownloadManager()
-        /*private fun getInstance(): ImageDownloadManager =
+        private val instance:ImageDownloadManager by lazy {
+            ImageDownloadManager()
+        }
+
+        /*private lateinit var instance: ImageDownloadManager
+        private fun getInstance(): ImageDownloadManager =
             if (this::instance.isInitialized)
                 instance
             else {
