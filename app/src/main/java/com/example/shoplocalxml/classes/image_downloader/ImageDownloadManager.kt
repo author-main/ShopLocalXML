@@ -14,10 +14,12 @@ class ImageDownloadManager {
     private val taskList: HashMap<String, Future<*>> = hashMapOf() // * "звездная проекция, когда мы ничего не знаем о типе"
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?, Long)->Unit){
         val cacheTimestamp = 0L
+
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
             taskList.remove(url)
             oncomplete(bitmap, timestamp)
         }
+
         if (!taskList.containsKey(url))
             taskList[url] = executor.submit(task)
     }
