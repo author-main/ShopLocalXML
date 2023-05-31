@@ -121,6 +121,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         }*/
 
         //dataBinding.cardProduct.discount = 0
+        homeViewModel.downloadImage()
         return dataBinding.root
     }
 

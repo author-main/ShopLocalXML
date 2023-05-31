@@ -149,8 +149,9 @@ fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, 
     val filenameTemp  = "$filenameCache.$EXT_TEMPFILE"
     var bitmap: Bitmap? = null
     var success = false
-    val conn = URL(url).openConnection() as HttpURLConnection
+
     try {
+        val conn = URL(url).openConnection() as HttpURLConnection
         conn.connect()
         if (conn.responseCode == HttpURLConnection.HTTP_OK) {
             conn.requestMethod = "HEAD"
@@ -170,12 +171,11 @@ fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, 
                 outputStream.close()
                 renameFile(filenameTemp, filenameCache)
                 bitmap = loadBitmap(filenameCache, reduce)
+                conn.disconnect()
                 success = true
             }
         }
     } catch (_: Exception) {
-    } finally {
-        conn.disconnect()
     }
     if (!success)
         bitmap = loadBitmap(filenameCache, reduce)
