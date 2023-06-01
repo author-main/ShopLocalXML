@@ -147,7 +147,7 @@ fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, 
     val fileHash = md5(fileName)*/
     val fileHash = md5(url)
     val filenameCache = getCacheDirectory() + fileHash
-    val filenameTemp  = "$filenameCache$EXT_TEMPFILE"
+    val filenameTemp  = "$filenameCache$.EXT_TEMPFILE"
     var bitmap: Bitmap? = null
     var success = false
 
@@ -170,8 +170,8 @@ fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, 
                 inputStream.close()
                 outputStream.flush()
                 outputStream.close()
+                bitmap = loadBitmap(filenameTemp, reduce)
                 renameFile(filenameTemp, filenameCache)
-                bitmap = loadBitmap(filenameCache, reduce)
                 conn.disconnect()
                 success = true
             }

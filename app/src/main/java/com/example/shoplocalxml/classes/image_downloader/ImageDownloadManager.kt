@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.classes.image_downloader
 
 import android.graphics.Bitmap
+import com.example.shoplocalxml.CACHE_DIR
 import com.example.shoplocalxml.EXT_TEMPFILE
 import com.example.shoplocalxml.deleteFile
 import com.example.shoplocalxml.getCacheDirectory
@@ -11,6 +12,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 class ImageDownloadManager private constructor() {
+    private var processClearTask = false
     private val executor =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
     private val taskList: HashMap<String, Future<*>> = hashMapOf() // * "звездная проекция, когда мы ничего не знаем о типе"
@@ -60,16 +62,19 @@ class ImageDownloadManager private constructor() {
         }
     }
     private fun cancelAll(){
+        if (processClearTask) return
+        processClearTask = true
         queue.clear()
         val iterator = taskList.iterator()
         while (iterator.hasNext()){
             val task = iterator.next()
-            val filenameTemp =  getCacheDirectory() + md5(task.key) + EXT_TEMPFILE
+            val filenameTemp =  "$CACHE_DIR${md5(task.key)}.$EXT_TEMPFILE"
             task.value.cancel(true)
             iterator.remove()
             deleteFile(filenameTemp)
         }
         executor.shutdown()
+        processClearTask = false
     }
 
     companion object {

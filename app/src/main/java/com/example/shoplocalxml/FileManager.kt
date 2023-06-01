@@ -14,12 +14,6 @@ import kotlin.math.roundToInt
 val CART_IMAGE_SIZE = 150.toPx
 const val HASH_LENGTH = 32
 const val DISK_CACHESIZE  = 50 * 1024 * 1024  // 50Мб
-const val EXT_CACHETEMPFILE = "t"
-enum class StateEntry(val value: String){
-    CLEAN   ("CLEAN "), // файл кэша свободен
-    DIRTY   ("DIRTY "), // файл кэша занят, чтение/запись
-    REMOVE  ("REMOVE")  // удалить сведения, файл из кэша
-}
 
 val CACHE_DIR = getCacheDirectory()
 
