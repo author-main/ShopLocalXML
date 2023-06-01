@@ -47,7 +47,6 @@ class ImageDownloadManager private constructor() {
             cacheDrive.put(hash, timestamp)
             val indexTaskQueue = findTaskQueue(url)
             if (indexTaskQueue != -1) {
-                //log("add task from queue...")
                 val queueTask = queue[indexTaskQueue].second
                 taskList[url] = executor.submit(queueTask)
                 queue.removeAt(indexTaskQueue)
