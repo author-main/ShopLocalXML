@@ -51,14 +51,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     private lateinit var homeViewModel: HomeViewModel
 
 
-   /* private val sharedViewModel: SharedViewModel by activityViewModels(
+  /*  private val sharedViewModel: SharedViewModel by activityViewModels(
                 factoryProducer = {
                     FactoryViewModel(
                         requireActivity(),
                         AppShopLocal.repository
                     )
                 }
-             )*/
+        )*/
     private var searchHistoryPanel: SearchHistoryPanel? = null
     private lateinit var dataBinding: FragmentHomeBinding
     /*val Fragment.sharedViewModel: SharedViewModel
