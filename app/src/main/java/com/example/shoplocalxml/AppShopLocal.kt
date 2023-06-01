@@ -3,6 +3,7 @@ package com.example.shoplocalxml
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.Fragment
 import com.example.shoplocalxml.repository.Repository
 
 class AppShopLocal: Application() {
@@ -22,7 +23,6 @@ class AppShopLocal: Application() {
             get() = instance.applicationContext
     }
 }
-
 
 /*
 app:boxBackgroundColor="@android:color/transparent"

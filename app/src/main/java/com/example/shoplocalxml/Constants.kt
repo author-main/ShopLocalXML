@@ -3,6 +3,8 @@ package com.example.shoplocalxml
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
 
 enum class TypeRequest {
     USER_LOGIN,
@@ -21,3 +23,4 @@ const val SERVER_URL        = "http://192.168.0.10"
 val Fragment.sharedViewModel: SharedViewModel
     get() = (this.activity as MainActivity).sharedViewModel
 
+    //get() = ViewModelProvider(this.requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
