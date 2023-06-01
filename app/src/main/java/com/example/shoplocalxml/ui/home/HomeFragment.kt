@@ -122,33 +122,15 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         }*/
 
         //dataBinding.cardProduct.discount = 0
+
         sharedViewModel.run {
             val errorMessage = "download error..."
             downloadImage("file.txt", true, ) { bitmap ->
                 if (bitmap == null)
                     log(errorMessage)
             }
-
-            downloadImage("file.txt", true, ) { bitmap ->
-                if (bitmap == null)
-                    log(errorMessage)
-            }
-
-            downloadImage("file.txt", true, ) { bitmap ->
-                if (bitmap == null)
-                    log(errorMessage)
-            }
-
-            downloadImage("file.txt", true, ) { bitmap ->
-                if (bitmap == null)
-                    log(errorMessage)
-            }
-
-            downloadImage("file.txt", true, ) { bitmap ->
-                if (bitmap == null)
-                    log(errorMessage)
-            }
         }
+
         return dataBinding.root
     }
 
