@@ -78,33 +78,43 @@ class ImageCacheJournal {
         deleteFiles(CACHE_DIR)
     }
 
+    @Synchronized
     fun put(hash: String, timestamp: Long) {
         val filesize = getFileSize(getFilename(hash))
         if (filesize > 0) {
-            var calcCacheSize = cacheSize + filesize
-            if (calcCacheSize > MAX_CACHESIZE) {
-                val iterator = hashMap.iterator()
-                var reduceCacheSize = calcCacheSize
-                while (iterator.hasNext()) {
-                    val item = iterator.next()
-                    reduceCacheSize -= item.value.size
-                    deleteFile(getFilename(item.key))
-                    iterator.remove()
-                    if (reduceCacheSize < MAX_CACHESIZE) {
-                        calcCacheSize = reduceCacheSize
-                        break
+            var perform = true
+            hashMap[hash]?.let{
+                if (it.timestamp != timestamp) {
+                    cacheSize -= it.size
+                    hashMap.remove(hash)
+                } else
+                    perform = false
+            }
+            if (perform) {
+                var calcCacheSize = cacheSize + filesize
+                if (calcCacheSize > MAX_CACHESIZE) {
+                    val iterator = hashMap.iterator()
+                    var reduceCacheSize = calcCacheSize
+                    while (iterator.hasNext()) {
+                        val item = iterator.next()
+                        reduceCacheSize -= item.value.size
+                        deleteFile(getFilename(item.key))
+                        iterator.remove()
+                        if (reduceCacheSize < MAX_CACHESIZE) {
+                            calcCacheSize = reduceCacheSize
+                            break
+                        }
                     }
                 }
+                cacheSize = calcCacheSize
+                hashMap[hash] = ImageCacheItem(timestamp, filesize)
+                saveJournalItems()
             }
-            cacheSize = calcCacheSize
-            hashMap[hash] = ImageCacheItem(timestamp, filesize)
-            saveJournalItems()
         }
     }
 
     private fun getFilename(value: String)  = "$CACHE_DIR$value"
 
-    @Synchronized
     private fun saveJournalItems(){
         val fileText = StringBuffer()
         hashMap.forEach{item ->
@@ -134,6 +144,6 @@ class ImageCacheJournal {
     }
 
     fun find(hash: String) =
-        hashMap[hash] != null
+        hashMap[hash]?.timestamp ?: 0L
 
 }

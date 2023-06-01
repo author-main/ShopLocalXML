@@ -12,6 +12,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 class ImageDownloadManager private constructor() {
+    private val journal = ImageCacheJournal()
     private var processClearTask = false
     private val executor =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
@@ -30,12 +31,13 @@ class ImageDownloadManager private constructor() {
         return indexFoundTask
     }
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?, Long)->Unit){
-        val cacheTimestamp = 0L
-
-       // log ("start download $url...")
+        val hash = md5(url)
+        val cacheTimestamp = journal.find(hash)
+        log ("timestamp =  $cacheTimestamp")
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
             taskList.remove(url)
             oncomplete(bitmap, timestamp)
+            journal.put(hash, timestamp)
             val indexTaskQueue = findTaskQueue(url)
             if (indexTaskQueue != -1) {
                 //log("add task from queue...")
