@@ -10,8 +10,8 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 class ImageDownloadManager private constructor() {
-    private val cacheDrive: ImageCacheDrive = ImageCacheDriveImpl()
-    private val cacheMemory: ImageCacheMemory = ImageCacheMemoryImpl()
+    private val cacheDrive  : ImageCacheDrive   = ImageCacheDriveImpl (MAX_DRIVE_CACHESIZE)
+    private val cacheMemory : ImageCacheMemory  = ImageCacheMemoryImpl(MAX_MEMORY_CACHESIZE)
     private var processClearTask = false
     private val executor =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
@@ -32,13 +32,14 @@ class ImageDownloadManager private constructor() {
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
         val hash = md5(url)
         cacheMemory.get(hash)?.let{bitmap ->
+            log("load from cache memory...")
             oncomplete(bitmap)
             return
         }
         val cacheTimestamp = cacheDrive.find(hash)
-        log ("timestamp =  $cacheTimestamp")
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
             taskList.remove(url)
+            log("load from cache drive...")
             oncomplete(bitmap)
             bitmap?.let{
                 cacheMemory.put(hash, it)
@@ -54,20 +55,10 @@ class ImageDownloadManager private constructor() {
 
         }
 
-        if (taskList.containsKey(url)) {
-            //log("add queue...")
+        if (taskList.containsKey(url))
             queue.add(url to task)
-        }
-        else {
+        else
             taskList[url] = executor.submit(task)
-           /* log("add task...")
-            var map = ""
-            val iterator = taskList.iterator()
-            while (iterator.hasNext()) {
-                map = "$map, ${iterator.next().key}"
-            }
-            log("map = $map")*/
-        }
     }
     private fun cancelAll(){
         if (processClearTask) return
@@ -86,6 +77,8 @@ class ImageDownloadManager private constructor() {
     }
 
     companion object {
+        const val MAX_DRIVE_CACHESIZE  = 128
+        const val MAX_MEMORY_CACHESIZE = 32
         private val instance:ImageDownloadManager by lazy {
             ImageDownloadManager()
         }

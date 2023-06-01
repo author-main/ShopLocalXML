@@ -3,8 +3,8 @@ package com.example.shoplocalxml.classes.image_downloader
 import android.graphics.Bitmap
 import android.util.LruCache
 
-class ImageCacheMemoryImpl: ImageCacheMemory {
-    private val MAX_CACHESIZE = 32 * 1024 * 1024
+class ImageCacheMemoryImpl(override val maxCacheSize: Int): ImageCacheMemory {
+    private val MAX_CACHESIZE = maxCacheSize * 1024 * 1024
     private val cache = object: LruCache<String, Bitmap>(MAX_CACHESIZE){
         override fun sizeOf(hash: String, value: Bitmap): Int {
             return value.byteCount / 1024

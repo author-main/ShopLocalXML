@@ -15,12 +15,12 @@ import java.io.IOException
 
 data class ImageCacheItem (var timestamp: Long, var size: Long)
 
-class ImageCacheDriveImpl: ImageCacheDrive {
+class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
     private val fileJournal         = File(CACHE_DIR + "imgcache.lst")
     private val fileJournalTemp     = File(CACHE_DIR + "imgcache.tmp")
     private val fileJournalBackup   = File(CACHE_DIR + "imgcache.bck")
     private var cacheSize = 0L
-    private val MAX_CACHESIZE = 128 * 1024 * 1024 // 128Mb максимальный размер кэша на устройстве
+    private val MAX_CACHESIZE = maxCacheSize * 1024 * 1024 // 128Mb максимальный размер кэша на устройстве
     private val hashMap = LinkedHashMap<String, ImageCacheItem>(0, 0.75f, true)
 
     init {
