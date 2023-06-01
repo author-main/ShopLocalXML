@@ -49,6 +49,8 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     private lateinit var homeViewModel: HomeViewModel
+
+
     //private lateinit var sharedViewModel: SharedViewModel
     /*by activityViewModels(
                 factoryProducer = {
@@ -71,6 +73,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]
         //sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
+
+        /*val viewModel: SharedViewModel by activityViewModels {
+            FactoryViewModel(requireActivity(), repository, savedInstanceState)
+        }*/
 
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
