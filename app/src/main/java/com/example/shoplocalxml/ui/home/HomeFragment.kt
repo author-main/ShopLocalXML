@@ -51,11 +51,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     private lateinit var homeViewModel: HomeViewModel
 
 
-    //private lateinit var sharedViewModel: SharedViewModel
-    /*by activityViewModels(
+   /* private val sharedViewModel: SharedViewModel by activityViewModels(
                 factoryProducer = {
                     FactoryViewModel(
-                        requireActivity() as MainActivity,
+                        requireActivity(),
                         AppShopLocal.repository
                     )
                 }
@@ -72,7 +71,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     ): View {
         homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]
-        //sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
+
+        //val sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
 
         /*val viewModel: SharedViewModel by activityViewModels {
             FactoryViewModel(requireActivity(), repository, savedInstanceState)
