@@ -125,14 +125,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
         //dataBinding.cardProduct.
 
-        sharedViewModel.run {
+       /* sharedViewModel.run {
             val errorMessage = "download error..."
             downloadImage("file.txt", true, ) { bitmap ->
                 if (bitmap == null)
                     log(errorMessage)
             }
-        }
-
+        }*/
         return dataBinding.root
     }
 
@@ -187,6 +186,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     override fun onStart() {
         super.onStart()
         showUnreadMessage(27)
+        sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
     }
 
     private fun showUnreadMessage(count: Int) {

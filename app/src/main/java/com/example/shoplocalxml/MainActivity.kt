@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -32,16 +33,20 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+
+
+
+    lateinit var sharedViewModel: SharedViewModel/* by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
         )
-    })
+    })*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        sharedViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.appBarMain.fab.visibility = View.GONE
@@ -318,6 +323,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
     }
 
     override fun setVisibilityBottomNavigation(value: Boolean) {
+//        sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         if (value) bottomNavigationView.visibility = View.VISIBLE
         else bottomNavigationView.visibility = View.GONE

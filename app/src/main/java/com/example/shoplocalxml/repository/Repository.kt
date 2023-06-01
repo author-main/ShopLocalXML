@@ -2,6 +2,7 @@ package com.example.shoplocalxml.repository
 
 import android.graphics.Bitmap
 import androidx.fragment.app.FragmentActivity
+import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.isConnectedNet
@@ -138,5 +139,8 @@ class Repository {
     fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
         ImageDownloadManager.download(url, reduce, oncomplete)
     }
+
+    suspend fun getProducts(page: Int, order: String): List<Product>? =
+        databaseHandler.getProducts(token!!, page, order)
 
 }

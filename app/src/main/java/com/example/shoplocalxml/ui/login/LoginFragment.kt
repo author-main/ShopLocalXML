@@ -118,7 +118,6 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
             /*passwordSymbols.forEach{textView ->
                 textView?.alpha = 1f
             }*/
-
             DialogProgress.show(requireContext())
         }
         val existPassword = loginViewModel.existPassword()

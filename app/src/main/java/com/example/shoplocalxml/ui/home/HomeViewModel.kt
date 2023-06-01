@@ -4,9 +4,11 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
 import com.example.shoplocalxml.log
+import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.util.Stack
 import java.util.concurrent.Executors
@@ -37,7 +39,6 @@ class HomeViewModel : ViewModel() {
         } else {
             stackMode.push(value)
         }
-        //log(stackMode)
     }
 
 
