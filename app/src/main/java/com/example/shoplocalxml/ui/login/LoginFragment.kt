@@ -18,6 +18,7 @@ import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnOpenShopListener
 //import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
@@ -40,6 +41,7 @@ import com.example.shoplocalxml.vibrate
  */
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     private lateinit var loginViewModel: LoginViewModel
+    //private lateinit var sharedViewModel: SharedViewModel
     private lateinit var dataBinding: FragmentLoginBinding
     private val passwordSymbols = arrayOfNulls<TextView>(5)
     override fun onCreateView(
@@ -49,6 +51,7 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
 
         loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
+       // sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
 
         loginViewModel.onRequestProcessed = {data, typeRequest, result ->
             requestProcessed(data, typeRequest, result)

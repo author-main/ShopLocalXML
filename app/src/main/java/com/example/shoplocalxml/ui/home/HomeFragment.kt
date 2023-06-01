@@ -70,6 +70,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     ): View {
         homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]
+        //sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
+
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
            if (it == HomeViewModel.Companion.HomeMode.NULL) {
