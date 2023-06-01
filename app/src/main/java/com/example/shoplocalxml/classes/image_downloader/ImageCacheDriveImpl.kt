@@ -15,7 +15,7 @@ import java.io.IOException
 
 data class ImageCacheItem (var timestamp: Long, var size: Long)
 
-class ImageCacheJournal {
+class ImageCacheDriveImpl: ImageCacheDrive {
     private val fileJournal         = File(CACHE_DIR + "imgcache.lst")
     private val fileJournalTemp     = File(CACHE_DIR + "imgcache.tmp")
     private val fileJournalBackup   = File(CACHE_DIR + "imgcache.bck")
@@ -78,7 +78,7 @@ class ImageCacheJournal {
     }
 
     @Synchronized
-    fun put(hash: String, timestamp: Long) {
+    override fun put(hash: String, timestamp: Long) {
         val filesize = getFileSize(getFilename(hash))
         if (filesize > 0) {
             hashMap[hash]?.let{
@@ -146,7 +146,7 @@ class ImageCacheJournal {
         return size
     }
 
-    fun find(hash: String) =
+    override fun find(hash: String) =
         hashMap[hash]?.timestamp ?: 0L
 
 }

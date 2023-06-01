@@ -4,15 +4,14 @@ import android.graphics.Bitmap
 import com.example.shoplocalxml.CACHE_DIR
 import com.example.shoplocalxml.EXT_TEMPFILE
 import com.example.shoplocalxml.deleteFile
-import com.example.shoplocalxml.getCacheDirectory
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
-import java.util.Queue
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 class ImageDownloadManager private constructor() {
-    private val journal = ImageCacheJournal()
+    private val cacheDrive: ImageCacheDrive = ImageCacheDriveImpl()
+    private val cacheMemory: ImageCacheMemory = ImageCacheMemoryImpl()
     private var processClearTask = false
     private val executor =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
@@ -30,14 +29,21 @@ class ImageDownloadManager private constructor() {
         }
         return indexFoundTask
     }
-    private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?, Long)->Unit){
+    private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
         val hash = md5(url)
-        val cacheTimestamp = journal.find(hash)
+        cacheMemory.get(hash)?.let{bitmap ->
+            oncomplete(bitmap)
+            return
+        }
+        val cacheTimestamp = cacheDrive.find(hash)
         log ("timestamp =  $cacheTimestamp")
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
             taskList.remove(url)
-            oncomplete(bitmap, timestamp)
-            journal.put(hash, timestamp)
+            oncomplete(bitmap)
+            bitmap?.let{
+                cacheMemory.put(hash, it)
+            }
+            cacheDrive.put(hash, timestamp)
             val indexTaskQueue = findTaskQueue(url)
             if (indexTaskQueue != -1) {
                 //log("add task from queue...")
@@ -84,7 +90,7 @@ class ImageDownloadManager private constructor() {
             ImageDownloadManager()
         }
 
-        fun download(url: String, reduce: Boolean = false, oncomplete: (Bitmap?, Long)->Unit) {
+        fun download(url: String, reduce: Boolean = false, oncomplete: (Bitmap?)->Unit) {
             instance.download(url, reduce, oncomplete)
         }
 
