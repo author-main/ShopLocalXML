@@ -23,4 +23,4 @@ const val SERVER_URL        = "http://192.168.0.10"
 val Fragment.sharedViewModel: SharedViewModel
     get() = (this.activity as MainActivity).sharedViewModel
 
-    //get() = ViewModelProvider(this.requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
+    //get() = ViewModelProvider(this.requireActivity(), FactoryViewModel(this.requireActivity(), repository))[SharedViewModel::class.java]*/
