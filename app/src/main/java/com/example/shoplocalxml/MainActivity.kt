@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
 
 
-    lateinit var sharedViewModel: SharedViewModel/* by viewModels(factoryProducer = {
+    lateinit var sharedViewModel: SharedViewModel /*by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
