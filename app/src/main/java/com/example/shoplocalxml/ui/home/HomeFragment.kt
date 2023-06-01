@@ -121,7 +121,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
         }*/
 
-        //dataBinding.cardProduct.discount = 0
+        //
+
+        //dataBinding.cardProduct.
 
         sharedViewModel.run {
             val errorMessage = "download error..."
