@@ -13,12 +13,6 @@ import kotlinx.coroutines.flow.count
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
 
-   /* private val _querySearch = MutableLiveData<String>(EMPTY_STRING)
-    val querySearch: LiveData<String> = _querySearch
-    fun setQuerySearch(value: String){
-        _querySearch.value = value
-    }*/
-
     private var onCloseApp: (() -> Unit)? = null
     fun setOnCloseApp(value:() -> Unit ) {
         onCloseApp = value
