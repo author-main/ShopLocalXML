@@ -20,7 +20,7 @@ class ImageCacheJournal {
     private val fileJournalTemp     = File(CACHE_DIR + "imgcache.tmp")
     private val fileJournalBackup   = File(CACHE_DIR + "imgcache.bck")
     private var cacheSize = 0L
-    private val MAX_CACHESIZE = 32 * 1024 * 1024
+    private val MAX_CACHESIZE = 128 * 1024 * 1024 // 128Mb максимальный размер кэша на устройстве
     private val hashMap = LinkedHashMap<String, ImageCacheItem>(0, 0.75f, true)
 
     init {
@@ -82,32 +82,36 @@ class ImageCacheJournal {
     fun put(hash: String, timestamp: Long) {
         val filesize = getFileSize(getFilename(hash))
         if (filesize > 0) {
-            var perform = true
             hashMap[hash]?.let{
                 if (it.timestamp != timestamp) {
                     cacheSize -= it.size
                     hashMap.remove(hash)
                 } else
-                    perform = false
+                    return
             }
-            if (perform) {
-                var calcCacheSize = cacheSize + filesize
-                if (calcCacheSize > MAX_CACHESIZE) {
-                    val iterator = hashMap.iterator()
-                    var reduceCacheSize = calcCacheSize
-                    while (iterator.hasNext()) {
-                        val item = iterator.next()
-                        reduceCacheSize -= item.value.size
-                        deleteFile(getFilename(item.key))
-                        iterator.remove()
-                        if (reduceCacheSize < MAX_CACHESIZE) {
-                            calcCacheSize = reduceCacheSize
-                            break
-                        }
+            var calcCacheSize = cacheSize + filesize
+            if (calcCacheSize > MAX_CACHESIZE) {
+                val iterator = hashMap.iterator()
+                var reduceCacheSize = calcCacheSize
+                while (iterator.hasNext()) {
+                    val item = iterator.next()
+                    reduceCacheSize -= item.value.size
+                    deleteFile(getFilename(item.key))
+                    iterator.remove()
+                    if (reduceCacheSize < MAX_CACHESIZE) {
+                        calcCacheSize = reduceCacheSize
+                        break
                     }
                 }
-                cacheSize = calcCacheSize
-                hashMap[hash] = ImageCacheItem(timestamp, filesize)
+            }
+            cacheSize = calcCacheSize
+            hashMap[hash] = ImageCacheItem(timestamp, filesize)
+            saveJournalItems()
+        } else {
+            hashMap[hash]?.let{
+                cacheSize -= it.size
+                hashMap.remove(hash)
+                deleteFile(getFilename(hash))
                 saveJournalItems()
             }
         }
