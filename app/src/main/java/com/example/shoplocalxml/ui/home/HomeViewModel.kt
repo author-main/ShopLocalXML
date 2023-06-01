@@ -40,33 +40,6 @@ class HomeViewModel : ViewModel() {
         //log(stackMode)
     }
 
-    fun downloadImage(){
-        //val imageDownloader = ImageDownloadManager()
-        ImageDownloadManager.download("file.txt", true, ) { bitmap ->
-            if (bitmap == null)
-                log("dont download...")
-        }
-
-        ImageDownloadManager.download("file.txt", true, ) { bitmap ->
-            if (bitmap == null)
-                log("dont download...")
-        }
-
-        ImageDownloadManager.download("file.txt", true, ) { bitmap ->
-            if (bitmap == null)
-                log("dont download...")
-        }
-
-        ImageDownloadManager.download("file.txt", true, ) { bitmap ->
-            if (bitmap == null)
-                log("dont download...")
-        }
-
-        ImageDownloadManager.download("file.txt", true, ) { bitmap ->
-            if (bitmap == null)
-                log("dont download...")
-        }
-    }
 
     companion object {
         enum class HomeMode {

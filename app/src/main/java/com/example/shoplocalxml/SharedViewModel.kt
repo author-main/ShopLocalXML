@@ -1,5 +1,6 @@
 package com.example.shoplocalxml
 
+import android.graphics.Bitmap
 import androidx.annotation.EmptySuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -44,6 +45,10 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
 
     fun clearSearchHistory() {
         repository.clearSearchHistory()
+    }
+
+    fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
+        repository.downloadImage(url, reduce, oncomplete)
     }
 
 }

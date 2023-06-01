@@ -28,6 +28,7 @@ import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.log
@@ -121,7 +122,33 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         }*/
 
         //dataBinding.cardProduct.discount = 0
-        homeViewModel.downloadImage()
+        sharedViewModel.run {
+            val errorMessage = "download error..."
+            downloadImage("file.txt", true, ) { bitmap ->
+                if (bitmap == null)
+                    log(errorMessage)
+            }
+
+            downloadImage("file.txt", true, ) { bitmap ->
+                if (bitmap == null)
+                    log(errorMessage)
+            }
+
+            downloadImage("file.txt", true, ) { bitmap ->
+                if (bitmap == null)
+                    log(errorMessage)
+            }
+
+            downloadImage("file.txt", true, ) { bitmap ->
+                if (bitmap == null)
+                    log(errorMessage)
+            }
+
+            downloadImage("file.txt", true, ) { bitmap ->
+                if (bitmap == null)
+                    log(errorMessage)
+            }
+        }
         return dataBinding.root
     }
 

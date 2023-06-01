@@ -1,7 +1,9 @@
 package com.example.shoplocalxml.repository
 
+import android.graphics.Bitmap
 import androidx.fragment.app.FragmentActivity
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.isConnectedNet
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
@@ -131,6 +133,10 @@ class Repository {
 
     fun clearSearchHistory() {
         SearchQueryStorage.getInstance().removeAllQueries()
+    }
+
+    fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
+        ImageDownloadManager.download(url, reduce, oncomplete)
     }
 
 }
