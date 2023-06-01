@@ -29,6 +29,7 @@ class ImageCacheJournal {
 
     private fun getJournalItems() {
         hashMap.clear()
+        deleteFiles(CACHE_DIR, EXT_TEMPFILE)
         if (!fileExists(fileJournal)) {
             if (fileExists(fileJournalBackup))
                 renameFile(fileJournalBackup, fileJournal)
@@ -37,8 +38,6 @@ class ImageCacheJournal {
             deleteCacheFiles()
             return
         }
-
-        deleteFiles(CACHE_DIR, EXT_TEMPFILE)
         val fileText = StringBuffer()
         try {
             BufferedReader(FileReader(fileJournal)).use {
