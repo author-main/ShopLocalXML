@@ -62,7 +62,8 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
             }
         }*/
         log("попытка чтения списка продуктов...")
-        viewModelScope.launch() {
+        CoroutineScope(Dispatchers.IO).launch {
+        //viewModelScope.launch {
             repository.getProducts(page, order)?.let { products ->
                 log(products)
             }
