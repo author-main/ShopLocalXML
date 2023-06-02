@@ -1,6 +1,5 @@
 package com.example.shoplocalxml.ui.login
 
-//import com.example.shoplocalxml.PasswordSymbol
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -43,35 +42,6 @@ import com.example.shoplocalxml.vibrate
  */
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     private lateinit var loginViewModel: LoginViewModel
-    /*private val sharedViewModel: SharedViewModel by navGraphViewModels(R.id.nav_login){
-        FactoryViewModel(requireActivity(), repository)
-    }*/
-    //private lateinit var sharedViewModel: SharedViewModel
-
-    /*private val sharedViewModel: SharedViewModel by activityViewModels {
-        FactoryViewModel(requireActivity(), repository)
-    }*/
-
-
-    /*private val sharedViewModel = run {
-        val factory = FactoryViewModel(requireActivity(), repository)
-        ViewModelProvider(this, factory)[SharedViewModel::class.java]
-    }*/
-
-    /*private val sharedViewModel: SharedViewModel by activityViewModels(
-        factoryProducer = {
-            FactoryViewModel(
-                requireActivity(),
-                AppShopLocal.repository
-            )
-        }
-    )*/
-
-    /*private val sharedViewModel: SharedViewModel by activityViewModels<SharedViewModel> {
-        FactoryViewModel(requireActivity(), repository)
-    }*/
-
-
     private lateinit var dataBinding: FragmentLoginBinding
     private val passwordSymbols = arrayOfNulls<TextView>(5)
     override fun onCreateView(
@@ -79,25 +49,7 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        //loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
         loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
-
-
-/*        sharedViewModel = run {
-            val factory = FactoryViewModel(this, repository)
-            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
-        }*/
-
-
-        //sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
-
-        /*sharedViewModel = run {
-            val factory = FactoryViewModel(requireActivity(), repository, savedInstanceState)
-            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
-        }*/
-
-
         loginViewModel.onRequestProcessed = {data, typeRequest, result ->
             requestProcessed(data, typeRequest, result)
         }
@@ -105,9 +57,6 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
             SnackbarExt.hideSnackbar()
             if (key == KEY_FINGER) {
                 fillPasswordSym()
-                /*passwordSymbols.forEach {
-                    it?.alpha = 1f
-                }*/
             } else {
                 passwordSymbols.forEachIndexed { index, textView ->
                         if (key in 0..9) {
@@ -163,9 +112,6 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
 
         loginViewModel.onPerformLogin = {
             fillPasswordSym()
-            /*passwordSymbols.forEach{textView ->
-                textView?.alpha = 1f
-            }*/
             DialogProgress.show(requireContext())
         }
         val existPassword = loginViewModel.existPassword()

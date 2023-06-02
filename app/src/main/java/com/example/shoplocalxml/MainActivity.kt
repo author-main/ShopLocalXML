@@ -34,63 +34,18 @@ import java.util.Locale
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
-    /*private val sharedViewModel: SharedViewModel by viewModels(
-        factoryProducer = {
-            FactoryViewModel(
-                this,
-                AppShopLocal.repository
-            )
-        }
-    )*/
-
-    //lateinit var sharedViewModel: SharedViewModel
-
-    /*lateinit var sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
-        FactoryViewModel(
-            this,
-            repository
-        )
-    })*/
-
     val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
         )
     })
-    //private lateinit var sharedViewModel: SharedViewModel
-
-/*    private val sharedViewModel = run {
-        val factory = FactoryViewModel(this, repository)
-        ViewModelProvider(this, factory)[SharedViewModel::class.java]
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-        //sharedViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]
-        //sharedViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]
-        /*sharedViewModel =
-            ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
-
-
-
-        /*  sharedViewModel = run {
-              val factory = FactoryViewModel(this, repository, savedInstanceState)
-              ViewModelProvider(this, factory)[SharedViewModel::class.java]
-          }*/
-
-        /*sharedViewModel = run {
-            val factory = FactoryViewModel(this, repository)
-            ViewModelProvider(this, factory)[SharedViewModel::class.java]
-        }*/
-
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.appBarMain.fab.visibility = View.GONE
-       /* binding.appBarMain.toolbar.visibility  = View.GONE
-        binding.appBarMain.fab.visibility = View.GONE*/
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         sharedViewModel.setOnCloseApp {
             this.finish()

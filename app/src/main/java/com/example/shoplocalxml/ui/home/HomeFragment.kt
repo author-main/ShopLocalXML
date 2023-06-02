@@ -51,37 +51,8 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     private lateinit var homeViewModel: HomeViewModel
-    /*val sharedViewModel: SharedViewModel by navGraphViewModels(R.id.nav_home){
-        FactoryViewModel(requireActivity(), repository)
-    }*/
-    //private lateinit var sharedViewModel: SharedViewModel
-
-
-    /*private val sharedViewModel: SharedViewModel by activityViewModels(
-                factoryProducer = {
-                    FactoryViewModel(
-                        requireActivity(),
-                        AppShopLocal.repository
-                    )
-                }
-        )*/
-
-
-    /*private val sharedViewModel: SharedViewModel by activityViewModels {
-        FactoryViewModel(requireActivity(), repository)
-    }*/
-
-
-    /*private val sharedViewModel = run {
-        val factory = FactoryViewModel(requireActivity(), repository)
-        ViewModelProvider(this, factory)[SharedViewModel::class.java]
-    }*/
-
-
     private var searchHistoryPanel: SearchHistoryPanel? = null
     private lateinit var dataBinding: FragmentHomeBinding
-    /*val Fragment.sharedViewModel: SharedViewModel
-        get() = (activity as MainActivity).sharedViewModel*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,26 +61,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     ): View {
         homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]
-
-        /*sharedViewModel = run {
-            val factory = FactoryViewModel(this, repository)
-            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
-        }*/
-
-       /* sharedViewModel =
-            ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
-
-        /*sharedViewModel = run {
-            val factory = FactoryViewModel(requireActivity(), repository, savedInstanceState)
-            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
-        }*/
-
-        //val sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
-
-        /*val viewModel: SharedViewModel by activityViewModels {
-            FactoryViewModel(requireActivity(), repository, savedInstanceState)
-        }*/
-
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
            if (it == HomeViewModel.Companion.HomeMode.NULL) {

@@ -10,6 +10,10 @@ import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
@@ -21,12 +25,12 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
-
     private var onCloseApp: (() -> Unit)? = null
-    fun setOnCloseApp(value:() -> Unit ) {
+    fun setOnCloseApp(value: () -> Unit) {
         onCloseApp = value
     }
-    fun closeApp(){
+
+    fun closeApp() {
         onCloseApp?.invoke()
     }
 
@@ -50,7 +54,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         repository.clearSearchHistory()
     }
 
-    fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
+    fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit) {
         repository.downloadImage(url, reduce, oncomplete)
     }
 
