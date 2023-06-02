@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.navGraphViewModels
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
@@ -27,6 +28,7 @@ import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
@@ -49,6 +51,9 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     private lateinit var homeViewModel: HomeViewModel
+    /*val sharedViewModel: SharedViewModel by navGraphViewModels(R.id.nav_home){
+        FactoryViewModel(requireActivity(), repository)
+    }*/
     //private lateinit var sharedViewModel: SharedViewModel
 
 

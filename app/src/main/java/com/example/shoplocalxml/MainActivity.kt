@@ -26,6 +26,7 @@ import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
+import com.example.shoplocalxml.ui.login.LoginViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
             repository
         )
     })
+    //private lateinit var sharedViewModel: SharedViewModel
 
 /*    private val sharedViewModel = run {
         val factory = FactoryViewModel(this, repository)
@@ -67,6 +69,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        //sharedViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]
         //sharedViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]
         /*sharedViewModel =
             ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/

@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navGraphViewModels
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
@@ -42,6 +43,9 @@ import com.example.shoplocalxml.vibrate
  */
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     private lateinit var loginViewModel: LoginViewModel
+    /*private val sharedViewModel: SharedViewModel by navGraphViewModels(R.id.nav_login){
+        FactoryViewModel(requireActivity(), repository)
+    }*/
     //private lateinit var sharedViewModel: SharedViewModel
 
     /*private val sharedViewModel: SharedViewModel by activityViewModels {
@@ -76,7 +80,9 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
+        //loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
+        loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
+
 
 /*        sharedViewModel = run {
             val factory = FactoryViewModel(this, repository)
