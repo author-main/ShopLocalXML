@@ -30,7 +30,7 @@ class FactoryViewModel(
             SharedViewModel::class.java ->
                 SharedViewModel(repository) as T
             else ->
-                throw IllegalArgumentException("wrong ViewModel")
+                throw IllegalArgumentException()
                     //super.create(modelClass)
         }
     }

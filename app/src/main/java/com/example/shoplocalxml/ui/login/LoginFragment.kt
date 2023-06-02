@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +27,7 @@ import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.getStringResource
-import com.example.shoplocalxml.sharedViewModel
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
@@ -41,6 +42,14 @@ import com.example.shoplocalxml.vibrate
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
+
+    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+        FactoryViewModel(
+            requireActivity(),
+            repository
+        )
+    })
+
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var dataBinding: FragmentLoginBinding
     private val passwordSymbols = arrayOfNulls<TextView>(5)
