@@ -6,7 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.shoplocalxml.repository.Repository
-import com.example.shoplocalxml.ui.login.LoginFragment
 import com.example.shoplocalxml.ui.login.LoginViewModel
 
 class FactoryViewModel(
@@ -21,13 +20,16 @@ class FactoryViewModel(
         modelClass: Class<T>,
         handle: SavedStateHandle
     ): T {
+
         return when (modelClass) {
             LoginViewModel::class.java  ->
                 LoginViewModel(repository) as T
-            SharedViewModel::class.java ->
+            SharedViewModel::class.java -> {
                 SharedViewModel(repository) as T
+            }
             else ->
-                super.create(modelClass)
+                throw IllegalArgumentException("wrong ViewModel")
+                    //super.create(modelClass)
         }
     }
 }

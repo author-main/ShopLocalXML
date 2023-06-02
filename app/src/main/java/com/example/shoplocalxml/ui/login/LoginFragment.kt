@@ -1,7 +1,6 @@
 package com.example.shoplocalxml.ui.login
 
-import android.R.attr.fragment
-import android.R.attr.value
+//import com.example.shoplocalxml.PasswordSymbol
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -11,12 +10,15 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoplocalxml.AppShopLocal
+import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnOpenShopListener
-//import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.TypeRequest
@@ -24,8 +26,6 @@ import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.getStringResource
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.sharedViewModel
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
@@ -42,6 +42,31 @@ import com.example.shoplocalxml.vibrate
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     private lateinit var loginViewModel: LoginViewModel
     //private lateinit var sharedViewModel: SharedViewModel
+
+    /*private val sharedViewModel: SharedViewModel by activityViewModels {
+        FactoryViewModel(requireActivity(), repository)
+    }*/
+
+
+    /*private val sharedViewModel = run {
+        val factory = FactoryViewModel(requireActivity(), repository)
+        ViewModelProvider(this, factory)[SharedViewModel::class.java]
+    }*/
+
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(
+        factoryProducer = {
+            FactoryViewModel(
+                requireActivity(),
+                AppShopLocal.repository
+            )
+        }
+    )*/
+
+    private val sharedViewModel: SharedViewModel by activityViewModels<SharedViewModel> {
+        FactoryViewModel(requireActivity(), repository)
+    }
+
+
     private lateinit var dataBinding: FragmentLoginBinding
     private val passwordSymbols = arrayOfNulls<TextView>(5)
     override fun onCreateView(
@@ -51,7 +76,20 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
 
         loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
-       // sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
+
+/*        sharedViewModel = run {
+            val factory = FactoryViewModel(this, repository)
+            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
+        }*/
+
+
+        //sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
+
+        /*sharedViewModel = run {
+            val factory = FactoryViewModel(requireActivity(), repository, savedInstanceState)
+            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
+        }*/
+
 
         loginViewModel.onRequestProcessed = {data, typeRequest, result ->
             requestProcessed(data, typeRequest, result)

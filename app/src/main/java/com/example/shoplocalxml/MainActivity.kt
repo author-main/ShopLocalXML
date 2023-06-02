@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -33,20 +34,55 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    /*private val sharedViewModel: SharedViewModel by viewModels(
+        factoryProducer = {
+            FactoryViewModel(
+                this,
+                AppShopLocal.repository
+            )
+        }
+    )*/
 
+    //lateinit var sharedViewModel: SharedViewModel
 
-
-    lateinit var sharedViewModel: SharedViewModel /*by viewModels(factoryProducer = {
+    /*lateinit var sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
         )
     })*/
 
+    val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+        FactoryViewModel(
+            this,
+            repository
+        )
+    })
+
+/*    private val sharedViewModel = run {
+        val factory = FactoryViewModel(this, repository)
+        ViewModelProvider(this, factory)[SharedViewModel::class.java]
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-        sharedViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]
+        //sharedViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]
+        /*sharedViewModel =
+            ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
+
+
+
+        /*  sharedViewModel = run {
+              val factory = FactoryViewModel(this, repository, savedInstanceState)
+              ViewModelProvider(this, factory)[SharedViewModel::class.java]
+          }*/
+
+        /*sharedViewModel = run {
+            val factory = FactoryViewModel(this, repository)
+            ViewModelProvider(this, factory)[SharedViewModel::class.java]
+        }*/
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.appBarMain.fab.visibility = View.GONE

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -26,14 +27,12 @@ import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.Repository
-import com.example.shoplocalxml.sharedViewModel
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -49,9 +48,10 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     private lateinit var homeViewModel: HomeViewModel
+    //private lateinit var sharedViewModel: SharedViewModel
 
 
-  /*  private val sharedViewModel: SharedViewModel by activityViewModels(
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(
                 factoryProducer = {
                     FactoryViewModel(
                         requireActivity(),
@@ -59,6 +59,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                     )
                 }
         )*/
+
+
+    private val sharedViewModel: SharedViewModel by activityViewModels {
+        FactoryViewModel(requireActivity(), repository)
+    }
+
+
+    /*private val sharedViewModel = run {
+        val factory = FactoryViewModel(requireActivity(), repository)
+        ViewModelProvider(this, factory)[SharedViewModel::class.java]
+    }*/
+
+
     private var searchHistoryPanel: SearchHistoryPanel? = null
     private lateinit var dataBinding: FragmentHomeBinding
     /*val Fragment.sharedViewModel: SharedViewModel
@@ -71,6 +84,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     ): View {
         homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]
+
+        /*sharedViewModel = run {
+            val factory = FactoryViewModel(this, repository)
+            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
+        }*/
+
+       /* sharedViewModel =
+            ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
+
+        /*sharedViewModel = run {
+            val factory = FactoryViewModel(requireActivity(), repository, savedInstanceState)
+            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
+        }*/
 
         //val sharedViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[SharedViewModel::class.java]
 
