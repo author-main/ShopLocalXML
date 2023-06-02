@@ -17,8 +17,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -28,29 +30,41 @@ import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
 import com.example.shoplocalxml.ui.login.LoginViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+    lateinit var sharedViewModel: SharedViewModel/* by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
         )
-    })
+    })*/
 
     //lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       /* sharedViewModel = run {
-            val factory = FactoryViewModel(this, repository, savedInstanceState)
+        sharedViewModel = run {
+            val factory = FactoryViewModel(this, repository)
+            ViewModelProvider(this, factory)[SharedViewModel::class.java]
+        }
+
+        /*sharedViewModel = run {
+            val factory = FactoryViewModel(this, repository)
             ViewModelProvider(this, factory)[SharedViewModel::class.java]
         }*/
 
+        lifecycleScope.launch {
+            sharedViewModel.text.collect {
+                log("collect $it")
+            }
+        }
 
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -165,6 +179,8 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     //fun getEditTextSearchQuery() = binding.appBarMain.editTextSearchQuery
 
+
+
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus;
@@ -202,6 +218,8 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
          */
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.action_nav_login_to_nav_home)
+
+
         /*val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNavigation.visibility = View.VISIBLE*/
       //  setActionBar()
@@ -333,3 +351,6 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
         else bottomNavigationView.visibility = View.GONE
     }
 }
+
+val Fragment.sharedViewModel: SharedViewModel
+    get() = (this.activity as MainActivity).sharedViewModel

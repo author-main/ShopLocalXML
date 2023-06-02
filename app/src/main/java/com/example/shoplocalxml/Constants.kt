@@ -18,9 +18,5 @@ val EMPTY_BITMAP            = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888).
 }
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
-const val SERVER_URL        = "http://192.168.1.10"
+const val SERVER_URL        = "http://192.168.0.10"
 //const val SERVER_URL = "http://faceshot.ru"
-/*val Fragment.sharedViewModel: SharedViewModel
-    get() = (this.activity as MainActivity).sharedViewModel*/
-
-    //get() = ViewModelProvider(this.requireActivity(), FactoryViewModel(this.requireActivity(), repository))[SharedViewModel::class.java]*/

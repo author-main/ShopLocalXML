@@ -8,16 +8,11 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.navGraphViewModels
-import com.example.shoplocalxml.AppShopLocal
-import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
-import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnOpenShopListener
 import com.example.shoplocalxml.R
@@ -27,7 +22,7 @@ import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.getStringResource
-import com.example.shoplocalxml.log
+import com.example.shoplocalxml.sharedViewModel
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
@@ -42,15 +37,13 @@ import com.example.shoplocalxml.vibrate
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
-
-    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+    //private lateinit var sharedViewModel: SharedViewModel
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
-            requireActivity(),
+            this,
             repository
         )
-    })
-
-    //lateinit var sharedViewModel: SharedViewModel
+    })*/
 
 
     private lateinit var loginViewModel: LoginViewModel
@@ -61,10 +54,12 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
-        loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
+        //loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
+        loginViewModel = ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
 
-        /*sharedViewModel = run {
-            val factory = FactoryViewModel(requireActivity(), repository)
+      /*  sharedViewModel = run {
+            //val factory = FactoryViewModel(this, repository)
+            val factory = FactoryViewModel(this, repository)
             ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
         }*/
 
