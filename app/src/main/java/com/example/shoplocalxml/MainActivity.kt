@@ -34,20 +34,30 @@ import java.util.Locale
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+    /*private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
         )
-    })
+    })*/
+
+    lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedViewModel = run {
+            val factory = FactoryViewModel(this, repository, savedInstanceState)
+            ViewModelProvider(this, factory)[SharedViewModel::class.java]
+        }
+
+
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.appBarMain.fab.visibility = View.GONE
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         sharedViewModel.setOnCloseApp {
+          //  log("id = ${sharedViewModel.idViewModel}")
             this.finish()
         }
 

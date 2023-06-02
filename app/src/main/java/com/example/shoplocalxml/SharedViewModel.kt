@@ -67,4 +67,8 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        log("clear sharedViewModel....")
+    }
 }

@@ -50,12 +50,18 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
-    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             requireActivity(),
             repository
         )
-    })
+    })*/
+
+
+    lateinit var sharedViewModel: SharedViewModel /* = run {
+        val factory = FactoryViewModel(requireActivity(), repository)
+        ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
+    } ?: throw Exception("Invalid Activity")*/
 
     private lateinit var homeViewModel: HomeViewModel
     private var searchHistoryPanel: SearchHistoryPanel? = null
@@ -68,6 +74,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     ): View {
         homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]
+
+        sharedViewModel = run {
+            val factory = FactoryViewModel(requireActivity(), repository)
+            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
+        }
+
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
            if (it == HomeViewModel.Companion.HomeMode.NULL) {
@@ -134,6 +146,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                 sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
             }
         })
+
+        //sharedViewModel.idViewModel = 20
 
         return dataBinding.root
     }

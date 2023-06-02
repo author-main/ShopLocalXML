@@ -43,12 +43,15 @@ import com.example.shoplocalxml.vibrate
  */
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
 
-    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             requireActivity(),
             repository
         )
-    })
+    })*/
+
+    lateinit var sharedViewModel: SharedViewModel
+
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var dataBinding: FragmentLoginBinding
@@ -59,6 +62,13 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
         loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
+
+        sharedViewModel = run {
+            val factory = FactoryViewModel(requireActivity(), repository)
+            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
+        }
+
+
         loginViewModel.onRequestProcessed = {data, typeRequest, result ->
             requestProcessed(data, typeRequest, result)
         }
