@@ -35,7 +35,6 @@ import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.Repository
-import com.example.shoplocalxml.sharedViewModel
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -52,18 +51,17 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
    // private lateinit var sharedViewModel: SharedViewModel
-    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
         )
-    })*/
+    })
 
 
-    /*lateinit var sharedViewModel: SharedViewModel  = run {
-        val factory = FactoryViewModel(requireActivity(), repository)
-        ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
-    } ?: throw Exception("Invalid Activity")*/
+    /*private val sharedViewModel: SharedViewModel =
+        ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity(), repository))[SharedViewModel::class.java]*/
+
 
     private lateinit var homeViewModel: HomeViewModel
     private var searchHistoryPanel: SearchHistoryPanel? = null

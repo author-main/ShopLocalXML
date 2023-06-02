@@ -66,10 +66,10 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
     fun getProducts(page: Int, order: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-        //viewModelScope.launch(Dispatchers.IO) {
+        //CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getProducts(page, order)?.let { products ->
-                //log(products)
+                log(products)
                 setText("загружено...")
             }
         }
@@ -77,6 +77,5 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        log("shared viewmodel cleared...")
     }
 }

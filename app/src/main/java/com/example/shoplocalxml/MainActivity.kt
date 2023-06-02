@@ -38,22 +38,22 @@ import java.util.Locale
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
     //private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    lateinit var sharedViewModel: SharedViewModel/* by viewModels(factoryProducer = {
+    private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
             repository
         )
-    })*/
+    })
 
     //lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedViewModel = run {
-            val factory = FactoryViewModel(this, repository)
+       /* sharedViewModel = run {
+            val factory = FactoryViewModel(repository)
             ViewModelProvider(this, factory)[SharedViewModel::class.java]
-        }
+        }*/
 
         /*sharedViewModel = run {
             val factory = FactoryViewModel(this, repository)
@@ -351,6 +351,3 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
         else bottomNavigationView.visibility = View.GONE
     }
 }
-
-val Fragment.sharedViewModel: SharedViewModel
-    get() = (this.activity as MainActivity).sharedViewModel
