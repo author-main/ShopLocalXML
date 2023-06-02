@@ -26,6 +26,7 @@ import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentLoginBinding
 import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.sharedViewModel
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
@@ -62,9 +63,9 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         }
     )*/
 
-    private val sharedViewModel: SharedViewModel by activityViewModels<SharedViewModel> {
+    /*private val sharedViewModel: SharedViewModel by activityViewModels<SharedViewModel> {
         FactoryViewModel(requireActivity(), repository)
-    }
+    }*/
 
 
     private lateinit var dataBinding: FragmentLoginBinding
