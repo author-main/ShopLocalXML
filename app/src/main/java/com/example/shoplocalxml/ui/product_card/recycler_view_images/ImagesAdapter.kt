@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -23,10 +24,10 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     private var images: List<ImageItem> = listOf()
     private var onClickItem: ((index: Int) -> Unit)? = null
 
+    @Synchronized
     fun updateImage(hash: String, value: Bitmap?){
         for (i in images.indices) {
             if (images[i].hash == hash) {
-                log("update item $i")
                 images[i].image = value
                 notifyItemChanged(i)
                 break
@@ -37,7 +38,8 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     @SuppressLint("NotifyDataSetChanged")
     fun setImages(value: List<ImageItem>){
         images = value
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+        notifyItemRangeChanged(0, images.size)
     }
 
     fun setOnClickItem(value: (index: Int) -> Unit){

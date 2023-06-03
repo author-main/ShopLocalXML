@@ -72,7 +72,6 @@ class ProductCard(context: Context,
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(dataBinding.recyclerViewImages)
         dataBinding.recyclerViewImages.adapter = ImagesAdapter()
-
     }
 
     @JvmName("setDiscount_")

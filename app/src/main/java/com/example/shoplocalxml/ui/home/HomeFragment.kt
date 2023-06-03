@@ -173,7 +173,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                             dataBinding.cardProduct.updateImage(url, bitmap)
                         }
                     }
-                    log("collect $it")
                 }
             }
         }

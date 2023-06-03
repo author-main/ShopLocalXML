@@ -20,7 +20,7 @@
         android:id="@+id/recyclerViewImages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp" />
+        android:padding="16dp" />
 
     <com.example.shoplocalxml.custom_view.CheckableImageView
         android:id="@+id/imageFavorite"
@@ -55,5 +55,6 @@
         android:padding="4dp"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/ic_more" />
+
 </androidx.cardview.widget.CardView>
 </layout>
