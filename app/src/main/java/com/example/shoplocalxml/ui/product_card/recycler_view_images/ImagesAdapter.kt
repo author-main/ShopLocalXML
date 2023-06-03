@@ -26,6 +26,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     fun updateImage(hash: String, value: Bitmap?){
         for (i in images.indices) {
             if (images[i].hash == hash) {
+                log("update item $i")
                 images[i].image = value
                 notifyItemChanged(i)
                 break
