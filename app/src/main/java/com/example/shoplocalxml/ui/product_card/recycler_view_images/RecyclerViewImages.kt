@@ -34,6 +34,7 @@ class RecyclerViewImages(context: Context,
             }
         }
         (adapter as ImagesAdapter).setImages(images)
+            // scrollToPosition(0)
     }
 
     fun updateImage(url: String, value: Bitmap?) {
