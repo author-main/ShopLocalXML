@@ -30,7 +30,7 @@ class RecyclerViewImages(context: Context,
         val images = mutableListOf<ImageItem>()
         value?.let {list ->
             list.forEach {
-                images.add(ImageItem(md5(it), EMPTY_BITMAP))
+                images.add(ImageItem(md5(it), null))//EMPTY_BITMAP))
             }
         }
         (adapter as ImagesAdapter).setImages(images)
