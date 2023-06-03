@@ -17,11 +17,13 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.navGraphViewModels
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
+import com.example.shoplocalxml.DIR_IMAGES
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.MainActivity
@@ -29,11 +31,13 @@ import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
@@ -149,6 +153,31 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         })
 
         //sharedViewModel.idViewModel = 20
+
+
+        lifecycleScope.launch {
+            sharedViewModel.products.collect {
+                if (it.isNotEmpty()) {
+                    val listUrl = mutableListOf<String>()
+                    it[0].linkimages?.let{linkImages_ ->
+                        linkImages_.forEach {url ->
+                            listUrl.add("$SERVER_URL/$DIR_IMAGES/$url")
+                        }
+                    }
+                    val product = it[0].copy(
+                        linkimages = listUrl
+                    )
+                    dataBinding.cardProduct.product = product
+                    product.linkimages?.forEach {url ->
+                        sharedViewModel.downloadImage(url) {bitmap ->
+                            dataBinding.cardProduct.updateImage(url, bitmap)
+                        }
+                    }
+                    log("collect $it")
+                }
+            }
+        }
+
 
         return dataBinding.root
     }

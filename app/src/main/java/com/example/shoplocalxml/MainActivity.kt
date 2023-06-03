@@ -60,12 +60,6 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
             ViewModelProvider(this, factory)[SharedViewModel::class.java]
         }*/
 
-        lifecycleScope.launch {
-            sharedViewModel.text.collect {
-                log("collect $it")
-            }
-        }
-
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.appBarMain.fab.visibility = View.GONE

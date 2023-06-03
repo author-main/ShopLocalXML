@@ -3,10 +3,10 @@ package com.example.shoplocalxml.classes.image_downloader
 import android.graphics.Bitmap
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.EXT_TEMPFILE
-import com.example.shoplocalxml.downloadImage
 import com.example.shoplocalxml.fileNameFromPath
 import com.example.shoplocalxml.getCacheDirectory
 import com.example.shoplocalxml.loadBitmap
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.renameFile
 import java.io.FileOutputStream
@@ -30,5 +30,49 @@ class ImageDownloaderImpl
     override fun run() {
         download()
     }
+
+    private fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {
+        var timeStamp = timestamp
+        val bufferSize = 32768
+        val fileHash = md5(url)
+        val filenameCache = getCacheDirectory() + fileHash
+        val filenameTemp  = "$filenameCache$.EXT_TEMPFILE"
+        var bitmap: Bitmap? = null
+        var success = false
+
+        try {
+            val conn = URL(url).openConnection() as HttpURLConnection
+            conn.connect()
+            if (conn.responseCode == HttpURLConnection.HTTP_OK) {
+                conn.requestMethod = "HEAD"
+                val fileTime = conn.lastModified
+                if (timestamp != fileTime) {
+                    timeStamp = fileTime
+                    conn.requestMethod = "GET"
+                    val inputStream = conn.inputStream
+                    val outputStream = FileOutputStream(filenameTemp)
+                    val buffer = ByteArray(bufferSize)
+                    var count: Int
+                    while (inputStream.read(buffer).also { count = it } > 0) {
+                        outputStream.write(buffer, 0, count)
+                    }
+                    inputStream.close()
+                    outputStream.flush()
+                    outputStream.close()
+                    bitmap = loadBitmap(filenameTemp, reduce)
+                    renameFile(filenameTemp, filenameCache)
+                    conn.disconnect()
+                    success = true
+                }
+            }
+        } catch (e: Exception) {
+            log(e.message)
+        }
+        if (!success)
+            bitmap = loadBitmap(filenameCache, reduce)
+        return bitmap to timeStamp
+    }
+
+
 
 }

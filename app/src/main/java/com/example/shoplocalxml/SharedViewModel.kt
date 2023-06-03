@@ -26,10 +26,10 @@ import retrofit2.http.Query
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
 
-    private val _text = MutableStateFlow<String>(EMPTY_STRING)
-    val text = _text.asStateFlow()
-    private fun setText(value: String) {
-        _text.value = value
+    private val _products = MutableStateFlow<List<Product>>(listOf())
+    val products = _products.asStateFlow()
+    private fun setProducts(value: List<Product>) {
+        _products.value = value
     }
 
     private var onCloseApp: (() -> Unit)? = null
@@ -69,8 +69,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         //CoroutineScope(Dispatchers.IO).launch {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getProducts(page, order)?.let { products ->
-                log(products)
-                setText("загружено...")
+                setProducts(products)
             }
         }
     }

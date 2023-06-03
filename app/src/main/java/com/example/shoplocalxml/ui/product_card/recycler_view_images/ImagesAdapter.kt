@@ -10,10 +10,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.ui.history_search.SearchAdapter
 
-class ImagesAdapter(private val images: HashMap<String, Bitmap?>, private val onClickItem: (index: Int) -> Unit): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
+class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
+
+    private var images: HashMap<String, Bitmap?> = hashMapOf()
+    private var onClickItem: ((index: Int) -> Unit)? = null
 
     fun updateImage(hash: String, value: Bitmap?){
         images[hash] = value
+    }
+
+    fun setImages(value: HashMap<String, Bitmap?>){
+        images = value
+    }
+
+    fun setOnClickItem(value: (index: Int) -> Unit){
+        onClickItem = value
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

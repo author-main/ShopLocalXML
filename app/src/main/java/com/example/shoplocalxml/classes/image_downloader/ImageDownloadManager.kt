@@ -39,7 +39,6 @@ class ImageDownloadManager private constructor() {
         val cacheTimestamp = cacheDrive.find(hash)
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
             taskList.remove(url)
-            log("load from cache drive...")
             oncomplete(bitmap)
             bitmap?.let{
                 cacheMemory.put(hash, it)

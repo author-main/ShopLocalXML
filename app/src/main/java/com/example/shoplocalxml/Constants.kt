@@ -18,5 +18,6 @@ val EMPTY_BITMAP            = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888).
 }
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
-const val SERVER_URL        = "http://192.168.0.10"
+const val SERVER_URL        = "http://192.168.1.10"
+const val DIR_IMAGES        = "images_ls"
 //const val SERVER_URL = "http://faceshot.ru"
