@@ -2,6 +2,7 @@ package com.example.shoplocalxml.ui.product_card.recycler_view_images
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    //@SuppressLint("NotifyDataSetChanged")
     fun setImages(value: List<ImageItem>){
         images = value
 //        notifyDataSetChanged()

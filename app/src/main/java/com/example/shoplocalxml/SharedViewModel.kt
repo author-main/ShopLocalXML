@@ -1,6 +1,8 @@
 package com.example.shoplocalxml
 
 import android.graphics.Bitmap
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.EmptySuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -66,8 +68,8 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
     fun getProducts(page: Int, order: String) {
-        //CoroutineScope(Dispatchers.IO).launch {
-        viewModelScope.launch(Dispatchers.IO) {
+        //CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
             repository.getProducts(page, order)?.let { products ->
                 setProducts(products)
             }

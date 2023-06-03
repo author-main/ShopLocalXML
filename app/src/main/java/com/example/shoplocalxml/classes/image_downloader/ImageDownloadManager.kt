@@ -1,6 +1,8 @@
 package com.example.shoplocalxml.classes.image_downloader
 
 import android.graphics.Bitmap
+import android.os.Handler
+import android.os.Looper
 import com.example.shoplocalxml.CACHE_DIR
 import com.example.shoplocalxml.EXT_TEMPFILE
 import com.example.shoplocalxml.deleteFile
@@ -29,17 +31,25 @@ class ImageDownloadManager private constructor() {
         }
         return indexFoundTask
     }
+
+
+
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
         val hash = md5(url)
+        val handlerUI = Handler(Looper.getMainLooper())
         cacheMemory.get(hash)?.let{bitmap ->
-            log("load from cache memory...")
-            oncomplete(bitmap)
+            //log("load from cache memory...")
+            handlerUI.post {
+                oncomplete(bitmap)
+            }
             return
         }
         val cacheTimestamp = cacheDrive.find(hash)
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
             taskList.remove(url)
-            oncomplete(bitmap)
+            handlerUI.post {
+                oncomplete(bitmap)
+            }
             bitmap?.let{
                 cacheMemory.put(hash, it)
             }

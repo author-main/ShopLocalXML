@@ -4,6 +4,8 @@ import android.animation.ValueAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.FOCUSABLE
@@ -50,6 +52,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
