@@ -13,9 +13,9 @@ enum class TypeRequest {
 }
 const val KEY_PASSWORD      = "password"
 const val EMPTY_STRING      = ""
-/*val EMPTY_BITMAP            = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888).apply {
+val EMPTY_BITMAP            = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888).apply {
     this.eraseColor(Color.TRANSPARENT)
-}*/
+}
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
 const val SERVER_URL        = "http://192.168.0.10"

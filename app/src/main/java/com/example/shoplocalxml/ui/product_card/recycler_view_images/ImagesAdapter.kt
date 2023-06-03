@@ -12,6 +12,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal
+import com.example.shoplocalxml.EMPTY_BITMAP
+import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.history_search.SearchAdapter
@@ -27,9 +29,10 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
     @Synchronized
     fun updateImage(hash: String, value: Bitmap?){
+        val bitmap = value ?: EMPTY_BITMAP
         for (i in images.indices) {
             if (images[i].hash == hash) {
-                images[i].image = value
+                images[i].image = bitmap
                 notifyItemChanged(i)
                 break
             }
@@ -53,6 +56,11 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val progressVisibility = if (images[position].image == null) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
         holder.imageItem.setImageBitmap(images[position].image)
     }
 
