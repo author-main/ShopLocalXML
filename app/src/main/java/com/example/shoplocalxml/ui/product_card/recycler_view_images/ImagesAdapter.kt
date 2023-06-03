@@ -1,26 +1,42 @@
 package com.example.shoplocalxml.ui.product_card.recycler_view_images
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.history_search.SearchAdapter
+
+
+data class ImageItem(var hash: String, var image: Bitmap?){}
+
 
 class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
-    private var images: HashMap<String, Bitmap?> = hashMapOf()
+    private var images: List<ImageItem> = listOf()
     private var onClickItem: ((index: Int) -> Unit)? = null
 
     fun updateImage(hash: String, value: Bitmap?){
-        images[hash] = value
+        for (i in images.indices) {
+            if (images[i].hash == hash) {
+                images[i].image = value
+                notifyItemChanged(i)
+                break
+            }
+        }
     }
 
-    fun setImages(value: HashMap<String, Bitmap?>){
+    @SuppressLint("NotifyDataSetChanged")
+    fun setImages(value: List<ImageItem>){
         images = value
+        notifyDataSetChanged()
     }
 
     fun setOnClickItem(value: (index: Int) -> Unit){
@@ -28,11 +44,12 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        val view: View = LayoutInflater.from(AppShopLocal.applicationContext).inflate(R.layout.product_images_item, parent, false)
+        return ImagesAdapter.ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.imageItem.setImageBitmap(images[position].image)
     }
 
     override fun getItemCount() =
@@ -40,6 +57,6 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+        val imageItem: ImageView = view.findViewById(R.id.imageItem)
     }
 }

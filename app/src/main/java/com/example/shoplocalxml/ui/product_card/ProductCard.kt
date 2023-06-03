@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
-import com.example.shoplocalxml.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.classes.Product
-import com.example.shoplocalxml.custom_view.CheckableImageView
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.ui.product_card.recycler_view_images.RecyclerViewImages
+import com.example.shoplocalxml.ui.product_card.recycler_view_images.ImagesAdapter
 
 
 class ProductCard(context: Context,
@@ -62,6 +62,17 @@ class ProductCard(context: Context,
         dataBinding.imageFavorite.setOnCheckedListener {
             onProductListener?.onChangedFavorite(it)
         }
+
+        val manager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        dataBinding.recyclerViewImages.layoutManager = manager
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(dataBinding.recyclerViewImages)
+        dataBinding.recyclerViewImages.adapter = ImagesAdapter()
+
     }
 
     @JvmName("setDiscount_")

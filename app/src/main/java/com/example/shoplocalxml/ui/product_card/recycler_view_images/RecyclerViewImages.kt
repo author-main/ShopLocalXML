@@ -4,34 +4,40 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.AttributeSet
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.DIR_IMAGES
 import com.example.shoplocalxml.EMPTY_BITMAP
 import com.example.shoplocalxml.EMPTY_STRING
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
+import com.example.shoplocalxml.ui.history_search.SearchAdapter
 
 class RecyclerViewImages(context: Context,
                          attrs: AttributeSet
                         )  : RecyclerView(context, attrs) {
 
-    private val adapter = ImagesAdapter()
+    /*init {
+        layoutManager = LinearLayoutManager(applicationContext)
+        adapter = imagesAdapter
+    }*/
 
-   // private fun getFilenameMD5(value: String) = "$SERVER_URL/$DIR_IMAGES/${md5(value)}"
 
     fun setImages(value: List<String>?) {
-        val images = hashMapOf<String, Bitmap?>()
+        val images = mutableListOf<ImageItem>()
         value?.let {list ->
             list.forEach {
-                images[md5(it)] = EMPTY_BITMAP
+                images.add(ImageItem(md5(it), EMPTY_BITMAP))
             }
         }
-        adapter.setImages(images)
+        (adapter as ImagesAdapter).setImages(images)
     }
 
     fun updateImage(url: String, value: Bitmap?) {
-        adapter.updateImage(md5(url), value)
+        (adapter as ImagesAdapter).updateImage(md5(url), value)
     }
 
 }
