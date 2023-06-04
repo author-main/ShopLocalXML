@@ -1,20 +1,18 @@
 package com.example.shoplocalxml.custom_view
 
+import android.R.attr.angle
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.LinearGradient
 import android.graphics.Paint
-import android.graphics.Shader
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.log
 
 
 class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
@@ -60,6 +58,21 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
     }
 
     private fun getGradientDrawable(){
+
+
+        /*val matrix = Matrix()
+        matrix.postRotate(angle)
+        return Bitmap.createBitmap(
+            source,
+            0,
+            0,
+            source.getWidth(),
+            source.getHeight(),
+            matrix,
+            true
+        )*/
+
+
         if (width * height > 0) {
             val colors: IntArray = intArrayOf(
                 Color.TRANSPARENT,
