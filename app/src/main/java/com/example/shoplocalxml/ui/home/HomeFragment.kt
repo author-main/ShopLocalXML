@@ -157,6 +157,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
         //sharedViewModel.idViewModel = 20
 
+        dataBinding.imageView2.setImageBitmap(null)
+        dataBinding.buttonGradient.setOnClickListener {
+            dataBinding.imageView2.setDefaultDrawable()
+        }
 
         lifecycleScope.launch {
             sharedViewModel.products.collect {
