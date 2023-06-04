@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
@@ -13,10 +14,14 @@ import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.log
+import java.lang.Math.sqrt
 
 
 class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
+    private val matrix = Matrix()
     private val gradientWidht = 50
+    private val delta = kotlin.math.sqrt(gradientWidht * gradientWidht/2f)
     private var animatedValue: Float = 0f
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var animator: ValueAnimator? = null
@@ -35,6 +40,7 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
             addUpdateListener (this@ProgressImageView)
             setFloatValues(-1f, 0f);
         }
+        //matrix.postRotate(45f)
     }
 
 
@@ -45,7 +51,13 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        gradientBitmap?.let{canvas?.drawBitmap(it, animatedValue, 0f, paint)}
+        gradientBitmap?.let{
+            //canvas?.drawBitmap(it, animatedValue, 0f, paint)
+            matrix.reset()
+            matrix.postRotate(45f)
+            matrix.postTranslate(animatedValue, -delta)
+            canvas?.drawBitmap(it, matrix, paint)
+        }
     }
 
     override fun setImageBitmap(bm: Bitmap?) {
@@ -80,13 +92,16 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
                 0xffdadada.toInt(),
                 Color.TRANSPARENT
             )
+
+            val min = minOf(width, height)
+            val gradientHeight = (kotlin.math.sqrt((2 * min * min).toDouble()) + 2 * delta).toInt()
             val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
-            val bitmap = Bitmap.createBitmap(gradientWidht, height, Bitmap.Config.ARGB_8888)
+            val bitmap = Bitmap.createBitmap(gradientWidht,gradientHeight, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
-            gradientDrawable.setBounds(0, 0, gradientWidht, height)
+            gradientDrawable.setBounds(0, 0, gradientWidht, gradientHeight)
             gradientDrawable.draw(canvas)
             gradientBitmap = bitmap
-            animator?.setFloatValues(-50f, width.toFloat());
+            animator?.setFloatValues(-gradientWidht.toFloat(), width * 2f);
         }
 
        // canvas.drawRect(0f, 0f, 100f, 500f, paint)*/
