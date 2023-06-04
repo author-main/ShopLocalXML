@@ -16,6 +16,7 @@ import com.example.shoplocalxml.R
 
 
 class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
+    private val gradientWidht = 50
     private var animatedValue: Float = 0f
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var animator: ValueAnimator? = null
@@ -76,13 +77,13 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
         if (width * height > 0) {
             val colors: IntArray = intArrayOf(
                 Color.TRANSPARENT,
-                Color.GRAY,
+                0xffdadada.toInt(),
                 Color.TRANSPARENT
             )
             val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
-            val bitmap = Bitmap.createBitmap(50, height, Bitmap.Config.ARGB_8888)
+            val bitmap = Bitmap.createBitmap(gradientWidht, height, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
-            gradientDrawable.setBounds(0, 0, 50, height)
+            gradientDrawable.setBounds(0, 0, gradientWidht, height)
             gradientDrawable.draw(canvas)
             gradientBitmap = bitmap
             animator?.setFloatValues(-50f, width.toFloat());
