@@ -76,21 +76,6 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"/>
 
-            <com.example.shoplocalxml.custom_view.ProgressImageView
-                android:id="@+id/imageView2"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="start|top"
-                android:background="@android:color/white"
-                android:scaleType="centerInside" />
-
-            <Button
-                android:id="@+id/buttonGradient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:text="Button" />
-
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

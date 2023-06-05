@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.DIR_IMAGES
+import com.example.shoplocalxml.EMPTY_BITMAP
 import com.example.shoplocalxml.EMPTY_STRING
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
@@ -24,12 +24,17 @@ class RecyclerViewImages(context: Context,
         adapter = imagesAdapter
     }*/
 
+    private var onStateImagesListener: OnStateImagesListener? = null
+    fun setOnStateImagesListener (value: OnStateImagesListener){
+        onStateImagesListener = value
+    }
 
     fun setImages(value: List<String>?) {
+        onStateImagesListener?.download()
         val images = mutableListOf<ImageItem>()
         value?.let {list ->
             list.forEach {
-                images.add(ImageItem(md5(it), null))//EMPTY_BITMAP))
+                images.add(ImageItem(md5(it), image=null))//EMPTY_BITMAP))
             }
         }
         (adapter as ImagesAdapter).setImages(images)
@@ -37,7 +42,8 @@ class RecyclerViewImages(context: Context,
     }
 
     fun updateImage(url: String, value: Bitmap?) {
-        (adapter as ImagesAdapter).updateImage(md5(url), value)
+        if ((adapter as ImagesAdapter).updateImage(md5(url), value))
+            onStateImagesListener?.complete()
     }
 
 }

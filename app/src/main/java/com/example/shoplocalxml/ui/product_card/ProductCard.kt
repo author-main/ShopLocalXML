@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
 import com.example.shoplocalxml.ui.product_card.recycler_view_images.ImagesAdapter
+import com.example.shoplocalxml.ui.product_card.recycler_view_images.OnStateImagesListener
 
 
 class ProductCard(context: Context,
@@ -72,6 +73,15 @@ class ProductCard(context: Context,
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(dataBinding.recyclerViewImages)
         dataBinding.recyclerViewImages.adapter = ImagesAdapter()
+        dataBinding.recyclerViewImages.setOnStateImagesListener(object: OnStateImagesListener{
+            override fun download() {
+                dataBinding.imageViewProgress.startAnimation()
+            }
+
+            override fun complete() {
+                dataBinding.imageViewProgress.stopAnimation()
+            }
+        })
     }
 
     @JvmName("setDiscount_")

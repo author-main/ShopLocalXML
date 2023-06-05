@@ -19,28 +19,32 @@ import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.history_search.SearchAdapter
 
 
-data class ImageItem(var hash: String, var image: Bitmap?){}
 
+data class ImageItem(var hash: String, var image: Bitmap?){}
 
 class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
+    private var countUploaded = 0
     private var images: List<ImageItem> = listOf()
     private var onClickItem: ((index: Int) -> Unit)? = null
 
     @Synchronized
-    fun updateImage(hash: String, value: Bitmap?){
-        val bitmap = value ?: EMPTY_BITMAP
+    fun updateImage(hash: String, value: Bitmap?): Boolean{
+        //val bitmap = value //?: EMPTY_BITMAP
         for (i in images.indices) {
             if (images[i].hash == hash) {
-                images[i].image = bitmap
+                images[i].image = value
                 notifyItemChanged(i)
                 break
             }
         }
+        countUploaded += 1
+        return countUploaded == itemCount
     }
 
     //@SuppressLint("NotifyDataSetChanged")
     fun setImages(value: List<ImageItem>){
+        countUploaded = 0
         images = value
 //        notifyDataSetChanged()
         notifyItemRangeChanged(0, images.size)
@@ -56,12 +60,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val progressVisibility = if (images[position].image == null) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-        holder.imageItem.setImageBitmap(images[position].image)
+        holder.imageItem.setImageBitmap(images[position].image)//, images[position].state)
     }
 
     override fun getItemCount() =
@@ -69,6 +68,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        //val imageItem: ProgressImageView = view.findViewById(R.id.imageItem)
         val imageItem: ImageView = view.findViewById(R.id.imageItem)
     }
 }
