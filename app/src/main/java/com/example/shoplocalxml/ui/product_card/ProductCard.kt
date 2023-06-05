@@ -78,7 +78,7 @@ class ProductCard(context: Context,
                 dataBinding.imageViewProgress.startAnimation()
             }
 
-            override fun complete() {
+            override fun uploaded() {
                 dataBinding.imageViewProgress.stopAnimation()
             }
         })

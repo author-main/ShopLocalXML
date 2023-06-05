@@ -43,7 +43,7 @@ class RecyclerViewImages(context: Context,
 
     fun updateImage(url: String, value: Bitmap?) {
         if ((adapter as ImagesAdapter).updateImage(md5(url), value))
-            onStateImagesListener?.complete()
+            onStateImagesListener?.uploaded()
     }
 
 }
