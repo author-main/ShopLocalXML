@@ -12,7 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal
-import com.example.shoplocalxml.EMPTY_BITMAP
+import com.example.shoplocalxml.DEFAULT_BITMAP
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.log
@@ -20,7 +20,7 @@ import com.example.shoplocalxml.ui.history_search.SearchAdapter
 
 
 
-data class ImageItem(var hash: String, var image: Bitmap?){}
+data class ImageItem(var hash: String, var image: Bitmap?, var default: Boolean = false){}
 
 class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
@@ -33,7 +33,13 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
         //val bitmap = value //?: EMPTY_BITMAP
         for (i in images.indices) {
             if (images[i].hash == hash) {
-                images[i].image = value
+                var default = false
+                val bitmap = value ?: run{
+                    default = true
+                    DEFAULT_BITMAP
+                }
+                images[i].default = default
+                images[i].image = bitmap//DEFAULT_BITMAP
                 notifyItemChanged(i)
                 break
             }
@@ -60,7 +66,16 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.imageItem.setImageBitmap(images[position].image)//, images[position].state)
+        if (images[position].default)
+            holder.imageItem.scaleType = ImageView.ScaleType.CENTER_INSIDE
+        /*else
+            holder.imageItem.scaleType = ImageView.ScaleType.FIT_CENTER*/
+        holder.imageItem.setImageBitmap(images[position].image)
+
+        holder.imageItem.setOnClickListener{
+            onClickItem?.invoke(position)
+        }
+
     }
 
     override fun getItemCount() =
@@ -68,7 +83,6 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //val imageItem: ProgressImageView = view.findViewById(R.id.imageItem)
         val imageItem: ImageView = view.findViewById(R.id.imageItem)
     }
 }

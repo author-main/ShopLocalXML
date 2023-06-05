@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.DIR_IMAGES
-import com.example.shoplocalxml.EMPTY_BITMAP
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.log
@@ -46,4 +45,10 @@ class RecyclerViewImages(context: Context,
             onStateImagesListener?.uploaded()
     }
 
+    override fun setAdapter(adapter: Adapter<*>?) {
+        super.setAdapter(adapter)
+        (adapter as ImagesAdapter).setOnClickItem {
+            onStateImagesListener?.onClick(it)
+        }
+    }
 }

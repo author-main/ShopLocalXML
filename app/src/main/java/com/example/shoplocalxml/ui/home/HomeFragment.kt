@@ -150,8 +150,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         }*/
 
         dataBinding.cardProduct.setOnProductListener(object: OnProductListener{
-            override fun onChangedFavorite(value: Boolean) {
+            override fun onChangedFavorite(id: Int, value: Boolean) {
                 sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
+            }
+
+            override fun onClick(id: Int, index: Int) {
+                log ("product $id, image $index")
+            }
+
+            override fun onShowMenu(id: Int) {
+                log("show menu...")
             }
         })
 
@@ -166,12 +174,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             sharedViewModel.products.collect {
                 if (it.isNotEmpty()) {
                     val listUrl = mutableListOf<String>()
-                    it[0].linkimages?.let{linkImages_ ->
+                    it[1].linkimages?.let{linkImages_ ->
                         linkImages_.forEach {url ->
                             listUrl.add("$SERVER_URL/$DIR_IMAGES/$url")
                         }
                     }
-                    val product = it[0].copy(
+
+                    //listUrl[0] = listUrl[0] + "1"
+
+
+                    val product = it[1].copy(
                         linkimages = listUrl
                     )
                     dataBinding.cardProduct.product = product

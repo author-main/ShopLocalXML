@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_card.recycler_view_images.OnStateImagesListener
 
@@ -25,7 +26,7 @@ class ProductCard(context: Context,
             setDiscount(value)
         }*/
 
-    var product: Product? = null
+    var product = Product()
         set(value) {
             field = value
             setProduct(value)
@@ -60,10 +61,6 @@ class ProductCard(context: Context,
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
-        dataBinding.imageFavorite.setOnCheckedListener {
-            onProductListener?.onChangedFavorite(it)
-        }
-
         val manager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
@@ -81,7 +78,24 @@ class ProductCard(context: Context,
             override fun uploaded() {
                 dataBinding.imageViewProgress.stopAnimation()
             }
+
+            override fun onClick(index: Int) {
+                onProductListener?.onClick(product.id, index)
+            }
         })
+
+
+        dataBinding.imageFavorite.setOnCheckedListener {
+            onProductListener?.onChangedFavorite(product.id, it)
+        }
+
+        dataBinding.buttonMore.setOnClickListener {
+            onProductListener?.onShowMenu(product.id)
+        }
+
+        /*this.setOnClickListener {
+            onProductListener?.onClick(product.id)
+        }*/
     }
 
     @JvmName("setDiscount_")

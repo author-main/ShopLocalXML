@@ -16,7 +16,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.graphics.drawable.toBitmap
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.EMPTY_BITMAP
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx

@@ -2,8 +2,11 @@ package com.example.shoplocalxml
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 
 enum class TypeRequest {
@@ -13,11 +16,15 @@ enum class TypeRequest {
 }
 const val KEY_PASSWORD      = "password"
 const val EMPTY_STRING      = ""
-val EMPTY_BITMAP            = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888).apply {
+/*val EMPTY_BITMAP            = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888).apply {
     this.eraseColor(Color.TRANSPARENT)
-}
+}*/
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
-const val SERVER_URL        = "http://192.168.1.10"
+const val SERVER_URL        = "http://192.168.0.10"
 const val DIR_IMAGES        = "images_ls"
+val DEFAULT_BITMAP: Bitmap? = run{
+    val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_default)
+    drawable?.toBitmap(width = 24.toPx, height = 24.toPx, Bitmap.Config.ARGB_8888)
+}
 //const val SERVER_URL = "http://faceshot.ru"
