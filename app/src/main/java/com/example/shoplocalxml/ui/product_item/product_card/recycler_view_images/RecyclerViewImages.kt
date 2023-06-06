@@ -1,4 +1,4 @@
-package com.example.shoplocalxml.ui.product_card.recycler_view_images
+package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images
 
 import android.content.Context
 import android.graphics.Bitmap

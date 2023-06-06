@@ -47,7 +47,7 @@ import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorageInterface
 import com.example.shoplocalxml.ui.login.LoginViewModel
-import com.example.shoplocalxml.ui.product_card.OnProductListener
+import com.example.shoplocalxml.ui.product_item.product_card.OnProductListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -149,7 +149,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             }
         }*/
 
-        dataBinding.cardProduct.setOnProductListener(object: OnProductListener{
+        dataBinding.cardProduct.setOnProductListener(object: OnProductListener {
             override fun onChangedFavorite(id: Int, value: Boolean) {
                 sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
             }

@@ -70,7 +70,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
 
-            <com.example.shoplocalxml.ui.product_card.ProductCard
+            <com.example.shoplocalxml.ui.product_item.product_card.ProductCard
                 android:id="@+id/cardProduct"
                 android:layout_width="150dp"
                 android:layout_height="150dp"

@@ -1,4 +1,4 @@
-package com.example.shoplocalxml.ui.product_card.recycler_view_images
+package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -62,7 +62,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(AppShopLocal.applicationContext).inflate(R.layout.product_images_item, parent, false)
-        return ImagesAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

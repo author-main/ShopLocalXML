@@ -7,7 +7,7 @@
     <data>
         <variable
             name="eventhandler"
-            type="com.example.shoplocalxml.ui.product_card.ProductCard"/>
+            type="com.example.shoplocalxml.ui.product_item.product_card.ProductCard"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.example.shoplocalxml.ui.product_card.recycler_view_images.RecyclerViewImages
+        <com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.RecyclerViewImages
             android:id="@+id/recyclerViewImages"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

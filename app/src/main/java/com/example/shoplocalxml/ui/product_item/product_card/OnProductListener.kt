@@ -1,4 +1,4 @@
-package com.example.shoplocalxml.ui.product_card
+package com.example.shoplocalxml.ui.product_item.product_card
 
 interface OnProductListener {
     fun onChangedFavorite(id: Int, value: Boolean)
