@@ -16,6 +16,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.toPx
 import kotlin.math.roundToInt
 
 
@@ -24,6 +25,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
     /*private val df = DecimalFormat("#.#").apply {
         roundingMode = RoundingMode.HALF_EVEN
     }*/
+    private val starPadding = 1.toPx
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var bitmapStar: Bitmap? = null
     private var bitmapBackgroundStar: Bitmap? = null
@@ -57,7 +59,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         super.onDraw(canvas)
         canvas?.drawColor(Color.TRANSPARENT)
         val step = bitmapStar?.let {
-            it.width + it.width / 8f
+            (it.width + starPadding).toFloat()
         } ?: 0f
         var posX = paddingStart.toFloat()
         val posY = paddingTop.toFloat()
@@ -105,7 +107,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         val paddingWidth = paddingRight + paddingEnd
         val paddingHeight = paddingTop + paddingBottom
         val heightStars = MeasureSpec.getSize(heightMeasureSpec)
-        val widthStars  = heightStars * 5 + heightStars / 8 * 4
+        val widthStars  = heightStars * 5 + starPadding * 4
         val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_star)
         drawable?.setTint(tintColor)
         bitmapStar = drawable?.toBitmap(heightStars, heightStars, Bitmap.Config.ARGB_8888)
