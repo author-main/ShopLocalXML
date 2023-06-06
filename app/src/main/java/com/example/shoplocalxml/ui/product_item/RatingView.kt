@@ -59,18 +59,19 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         val step = bitmapStar?.let {
             it.width + it.width / 8f
         } ?: 0f
-        var posX = 0f
+        var posX = paddingStart.toFloat()
+        val posY = paddingTop.toFloat()
         val intPart: Int = count.toInt()
         var remains: Float = count - intPart
         var lastPos = 0f
         for (i in 0..4) {
             if (i < intPart)
                 bitmapStar?.let {
-                    canvas?.drawBitmap(it, posX, 0f, paint)
+                    canvas?.drawBitmap(it, posX, posY, paint)
                 }
             else
                 bitmapBackgroundStar?.let {
-                    canvas?.drawBitmap(it, posX, 0f, paint)
+                    canvas?.drawBitmap(it, posX, posY, paint)
                     if (lastPos == 0f)
                         lastPos = posX
                 }
@@ -82,7 +83,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                 remains = (remains * 10.0f).roundToInt() / 10.0f // округляем до одного знака
                 val widthStar = remains * it.width
                 val rect = RectF().apply {
-                    set(lastPos, 0f, lastPos+widthStar, it.height.toFloat())
+                    set(lastPos, posY, lastPos+widthStar, posY + it.height.toFloat())
                 }
                 paint.color = Color.TRANSPARENT
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -101,8 +102,8 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-       /* val paddingWidth = paddingRight + paddingEnd
-        val paddingHeight = paddingTop + paddingEnd*/
+        val paddingWidth = paddingRight + paddingEnd
+        val paddingHeight = paddingTop + paddingBottom
         val heightStars = MeasureSpec.getSize(heightMeasureSpec)
         val widthStars  = heightStars * 5 + heightStars / 8 * 4
         val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_star)
@@ -110,7 +111,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         bitmapStar = drawable?.toBitmap(heightStars, heightStars, Bitmap.Config.ARGB_8888)
         drawable?.setTint(tintBackgroundColor)
         bitmapBackgroundStar = drawable?.toBitmap(heightStars, heightStars, Bitmap.Config.ARGB_8888)
-        setMeasuredDimension(widthStars, heightStars)
+        setMeasuredDimension(widthStars + paddingWidth, heightStars + paddingHeight)
     }
 
     /*val drawable = attrs?.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", -1)
