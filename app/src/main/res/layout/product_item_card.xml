@@ -12,7 +12,15 @@
             android:id="@+id/productCardItemCard"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp" />
+
+        <com.example.shoplocalxml.ui.product_item.RatingView
+            android:id="@+id/ratingView"
+            android:layout_width="wrap_content"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            app:count="3.7"/>
     </LinearLayout>
 
 
