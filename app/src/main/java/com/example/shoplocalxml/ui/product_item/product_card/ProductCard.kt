@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.classes.Product
-import com.example.shoplocalxml.databinding.ProductItemCardBinding
+import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
@@ -32,11 +32,11 @@ class ProductCard(context: Context,
             setProduct(value)
         }
 
-    private lateinit var dataBinding: ProductItemCardBinding
+    private lateinit var dataBinding: ProductCardBinding
     private var onProductListener: OnProductListener? = null
     //private var recyclerViewImages: RecyclerViewImages? = null
     init {
-        inflate(context, com.example.shoplocalxml.R.layout.product_item_card, this)
+        //inflate(context, com.example.shoplocalxml.R.layout.product_card, this)
         setCardBackgroundColor(Color.TRANSPARENT)
     }
 
@@ -60,7 +60,7 @@ class ProductCard(context: Context,
         super.onFinishInflate()
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
-            DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
+            DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_card, this, true)
         val manager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
