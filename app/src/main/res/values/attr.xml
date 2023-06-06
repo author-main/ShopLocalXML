@@ -14,5 +14,7 @@
         <attr name="tintStar" format="color" />
         <attr name="tintBackgroundStar" format="color" />
         <attr name="count" format="float" />
+        <attr name="interval" format="dimension" />
+
     </declare-styleable>
 </resources>

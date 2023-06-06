@@ -1,6 +1,5 @@
 package com.example.shoplocalxml.ui.product_item
 
-import android.R.attr
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -16,6 +15,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import kotlin.math.roundToInt
 
@@ -25,7 +25,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
     /*private val df = DecimalFormat("#.#").apply {
         roundingMode = RoundingMode.HALF_EVEN
     }*/
-    private val starPadding = 1.toPx
+    private var interval = 1.toPx
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var bitmapStar: Bitmap? = null
     private var bitmapBackgroundStar: Bitmap? = null
@@ -45,6 +45,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                 if (attrTintBackgroundColor != -1)
                     tintBackgroundColor = attrTintBackgroundColor
                 count = getFloat(R.styleable.RatingView_count, 1f).coerceIn(1f, 5f)
+                interval = getDimensionPixelSize(R.styleable.RatingView_interval, 1)
                 recycle()
             }
     }
@@ -59,7 +60,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         super.onDraw(canvas)
         canvas?.drawColor(Color.TRANSPARENT)
         val step = bitmapStar?.let {
-            (it.width + starPadding).toFloat()
+            (it.width + interval).toFloat()
         } ?: 0f
         var posX = paddingStart.toFloat()
         val posY = paddingTop.toFloat()
@@ -107,7 +108,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         val paddingWidth = paddingRight + paddingEnd
         val paddingHeight = paddingTop + paddingBottom
         val heightStars = MeasureSpec.getSize(heightMeasureSpec)
-        val widthStars  = heightStars * 5 + starPadding * 4
+        val widthStars  = heightStars * 5 + interval * 4
         val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_star)
         drawable?.setTint(tintColor)
         bitmapStar = drawable?.toBitmap(heightStars, heightStars, Bitmap.Config.ARGB_8888)
