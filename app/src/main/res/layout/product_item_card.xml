@@ -65,7 +65,7 @@
         <com.example.shoplocalxml.ui.product_item.RatingView
             android:id="@+id/ratingView"
             android:layout_width="wrap_content"
-            android:layout_height="16dp"
+            android:layout_height="12dp"
             android:layout_gravity="center"
             app:count="3.7"/>
 
