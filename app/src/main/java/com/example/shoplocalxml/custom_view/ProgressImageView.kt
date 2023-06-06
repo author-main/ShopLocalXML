@@ -3,7 +3,6 @@ package com.example.shoplocalxml.custom_view
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
@@ -11,15 +10,11 @@ import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.animation.DecelerateInterpolator
-import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.graphics.drawable.toBitmap
-import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
-import kotlinx.coroutines.delay
 
 class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
     enum class ImageState {
@@ -32,9 +27,9 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
         drawable?.toBitmap(width = 24.toPx, height = 24.toPx, Bitmap.Config.ARGB_8888)
     }
     private val matrix = Matrix()
-    private val gradientWidht = 40.toPx
-    private val delta = kotlin.math.sqrt(gradientWidht * gradientWidht/2f)
-    private var animatedValue: Float = 0f
+    private val gradientWidth = 40.toPx
+    private val delta = kotlin.math.sqrt(gradientWidth * gradientWidth/2f)
+    private var animatedValue: Float = -gradientWidth.toFloat()
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var animator: ValueAnimator? = null
     private var gradientBitmap: Bitmap? = null
@@ -104,12 +99,12 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
             val min = height//minOf(width, height)
             val gradientHeight = (kotlin.math.sqrt((2 * min * min).toDouble()) + 2 * delta).toInt()
             val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
-            val bitmap = Bitmap.createBitmap(gradientWidht,gradientHeight, Bitmap.Config.ARGB_8888)
+            val bitmap = Bitmap.createBitmap(gradientWidth,gradientHeight, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
-            gradientDrawable.setBounds(0, 0, gradientWidht, gradientHeight)
+            gradientDrawable.setBounds(0, 0, gradientWidth, gradientHeight)
             gradientDrawable.draw(canvas)
             gradientBitmap = bitmap
-            animator?.setFloatValues(-gradientWidht.toFloat(), (width + min).toFloat());
+            animator?.setFloatValues(-gradientWidth.toFloat(), (width + min).toFloat());
         }
     }
 
@@ -125,6 +120,7 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
     private fun stopAnimator(){
         gradientBitmap = null
         animator?.end()
+        animatedValue = -gradientWidth.toFloat()
     }
 }
 

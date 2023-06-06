@@ -17,6 +17,15 @@
         app:cardCornerRadius="16dp">
 
 
+        <com.example.shoplocalxml.ui.product_item.RatingView
+            android:id="@+id/ratingView"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            app:count="3.7"
+            />
+
         <com.example.shoplocalxml.custom_view.AnimatedImage
             android:id="@+id/imageViewProgress"
             android:layout_width="match_parent"

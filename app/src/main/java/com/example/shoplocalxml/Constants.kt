@@ -2,6 +2,7 @@ package com.example.shoplocalxml
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.icu.text.DecimalFormatSymbols
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
@@ -27,4 +28,5 @@ val DEFAULT_BITMAP: Bitmap? = run{
     val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_default)
     drawable?.toBitmap(width = 24.toPx, height = 24.toPx, Bitmap.Config.ARGB_8888)
 }
+val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
 //const val SERVER_URL = "http://faceshot.ru"

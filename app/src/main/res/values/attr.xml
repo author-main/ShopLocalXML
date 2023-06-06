@@ -10,4 +10,9 @@
         <attr name="tintCheckedDrawable"   format="color" />
         <attr name="tintUncheckedDrawable" format="color" />
     </declare-styleable>
+    <declare-styleable name="RatingView">
+        <attr name="tintStar" format="color" />
+        <attr name="tintBackgroundStar" format="color" />
+        <attr name="count" format="float" />
+    </declare-styleable>
 </resources>
