@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <com.example.shoplocalxml.ui.product_item.product_card.ProductCard
-            android:id="@+id/productCardItemCard"
+            android:id="@+id/productCard"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
