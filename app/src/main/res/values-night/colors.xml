@@ -6,8 +6,13 @@
     <color name="colorBrend">#FF679BE9</color>
     <color name="colorDiscount">#FFF30F46</color>
     <color name="PrimaryDark">#FF222831</color>
-    <color name="BackgroundDark">#ff181E26</color>
+    <color name="BackgroundDark">#FF181E26</color>
+    <color name="TextPrice">#FFEEEEEE</color>
+    <color name="BgTextPrice">#FF009646</color>
+    <color name="TextDescription">#FFEEEEEE</color>
+
+
     <color name="black_overlay">#66000000</color>
-    <color name="colorDivider">#30ffffff</color>
+    <color name="colorDivider">#30FFFFFF</color>
 
 </resources>

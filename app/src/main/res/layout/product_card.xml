@@ -6,6 +6,9 @@
 
     <data>
         <variable
+            name="product"
+            type="com.example.shoplocalxml.classes.Product"/>
+        <variable
             name="eventhandler"
             type="com.example.shoplocalxml.ui.product_item.product_card.ProductCard"/>
     </data>
@@ -35,21 +38,18 @@
             android:layout_gravity="end"
             android:layout_margin="8dp"
             android:src="@drawable/favorite_checkable"
+            android:checked="@{product.favorite > 0}"
+            app:onChecked="@{(checked)->eventhandler.onCheckedFavorite(checked)}"
             app:tintCheckedDrawable="@color/colorDiscount"/>
 
         <TextView
             android:id="@+id/textDiscount"
+            style = "@style/TextProduct_Discount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="8dp"
-            android:background="@drawable/roundrect"
-            android:backgroundTint="@color/colorDiscount"
-            android:paddingHorizontal="4dp"
-            android:text="-2%"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="11sp" />
+            android:text='@{"-"+product.discount+"%"}'/>
 
         <ImageView
             android:id="@+id/buttonMore"
@@ -60,7 +60,9 @@
             android:background="@drawable/ic_circle_border"
             android:padding="4dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_more" />
+            app:srcCompat="@drawable/ic_more"
+            android:onClick="@{() -> eventhandler.onClickMoreButton()}"
+            />
 
     </androidx.cardview.widget.CardView>
 </layout>

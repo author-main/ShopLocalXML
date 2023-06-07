@@ -9,19 +9,33 @@ import android.widget.Checkable
 import androidx.annotation.ColorRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.databinding.BindingMethod
+import androidx.databinding.BindingMethods
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
 
+@BindingMethods(BindingMethod(type = CheckableImageView::class, attribute = "app:onChecked", method = "setOnCheckedListener"))
 class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
+    interface OnCheckedListener {
+        fun onChecked(value: Boolean)
+    }
+    private var onCheckedListener: OnCheckedListener? = null
+    fun setOnCheckedListener(value: OnCheckedListener){
+        onCheckedListener = value
+    }
     private var stateDrawable: StateListDrawable? = null
     private var mChecked = false
-    private var onChecked: ((checked: Boolean) -> Unit)? = null
+    //private var onChecked: ((checked: Boolean) -> Unit)? = null
+
     private var checkedDrawable:   Drawable? = null
     private var uncheckedDrawable: Drawable? = null
-    fun setOnCheckedListener(value: (checked: Boolean) -> Unit){
+
+    /*fun setOnCheckedListener(value: (checked: Boolean) -> Unit){
         onChecked = value
-    }
+    }*/
+
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val drawable = attrs?.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", -1)
@@ -72,7 +86,8 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         else
             setImageDrawable(uncheckedDrawable)
         refreshDrawableState()
-        onChecked?.invoke(mChecked)
+        //onChecked?.invoke(mChecked)
+        onCheckedListener?.onChecked(mChecked)
     }
 
     override fun onClick(v: View?) {

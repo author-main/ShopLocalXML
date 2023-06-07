@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="product"
+            type="com.example.shoplocalxml.classes.Product"/>
+    </data>
+<FrameLayout
     android:layout_width="150dp"
     android:layout_height="match_parent">
 
@@ -14,18 +21,37 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp" >
 
+        </com.example.shoplocalxml.ui.product_item.product_card.ProductCard>
+
+
+        <TextView
+            android:id="@+id/textPrice"
+            style="@style/TextProduct_Price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="1 000,00Р"/>
+
+        <TextView
+            android:id="@+id/textPrice_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="1 200.00"
+            android:textSize="12sp" />
 
         <com.example.shoplocalxml.ui.product_item.RatingView
             android:id="@+id/ratingView"
             android:layout_width="wrap_content"
             android:layout_height="12dp"
             android:layout_gravity="center"
-            app:count="3.7"/>
+            app:count="3.7" />
 
 
     </LinearLayout>
 
 
 </FrameLayout>
+</layout>
