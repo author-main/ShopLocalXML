@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
+import com.example.shoplocalxml.ui.product_item.product_card.OnProductListener
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
 
@@ -32,6 +33,7 @@ class ProductItemCard(
     @JvmName("setProduct_")
     private fun setProduct(value: Product){
         dataBinding.product = value
+        dataBinding.product = value
         dataBinding.productCard.product = value
     }
 
@@ -41,6 +43,20 @@ class ProductItemCard(
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
         dataBinding.textPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        dataBinding.productCard.setOnProductListener(object : OnProductListener{
+            override fun onChangedFavorite(id: Int, value: Boolean) {
+
+            }
+
+            override fun onClick(id: Int, index: Int) {
+
+            }
+
+            override fun onShowMenu(id: Int) {
+
+            }
+        })
+        dataBinding.eventhandler = this
 
         //val manager = LinearLayoutManager(context)
         /*dataBinding.recyclerViewImages.layoutManager = manager

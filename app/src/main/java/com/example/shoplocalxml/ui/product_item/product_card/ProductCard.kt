@@ -138,4 +138,8 @@ class ProductCard(context: Context,
     }
 
 
+
+
 }
+
+//app:onChecked="@{(checked)->eventhandler.onCheckedFavorite(checked)}"

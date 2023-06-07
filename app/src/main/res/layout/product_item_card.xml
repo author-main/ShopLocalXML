@@ -6,6 +6,11 @@
         <variable
             name="product"
             type="com.example.shoplocalxml.classes.Product"/>
+
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard"/>
+
     </data>
 
 

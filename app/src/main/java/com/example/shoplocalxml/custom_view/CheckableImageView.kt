@@ -16,7 +16,9 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
 
-@BindingMethods(BindingMethod(type = CheckableImageView::class, attribute = "app:onChecked", method = "setOnCheckedListener"))
+@BindingMethods(BindingMethod(type = CheckableImageView::class, attribute = "app:onChecked", method = "setOnCheckedListener")/*,
+    BindingMethod(type = CheckableImageView::class, attribute = "app:onDragItem", method = "setOnCheckedListener")*/
+    )
 class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
     interface OnCheckedListener {
         fun onChecked(value: Boolean)
