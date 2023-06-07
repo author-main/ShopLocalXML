@@ -54,32 +54,28 @@
                     style="@style/TextProduct_SalePrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="1 000,00Р" />
+                    android:layout_marginBottom="4dp"/>
 
                 <TextView
                     android:id="@+id/textPrice"
                     style="@style/TextProduct_Price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="1 200.00" />
+                    android:layout_marginBottom="4dp" />
 
                 <TextView
                     android:id="@+id/textAction"
                     style="@style/TextProduct_Action"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/text_action" />
+                    android:layout_marginBottom="4dp"/>
 
                 <TextView
                     android:id="@+id/textBrend"
                     style="@style/TextProduct_Brend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="unknown" />
+                    android:layout_marginBottom="4dp"/>
 
                 <com.example.shoplocalxml.ui.product_item.RatingView
                     android:id="@+id/ratingView"
@@ -92,8 +88,7 @@
                     android:id="@+id/textDescription"
                     style="@style/TextProduct_Description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="unknown" />
+                    android:layout_height="wrap_content"/>
 
 
             </LinearLayout>
