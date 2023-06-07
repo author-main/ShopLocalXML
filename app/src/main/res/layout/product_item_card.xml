@@ -7,13 +7,11 @@
             name="product"
             type="com.example.shoplocalxml.classes.Product"/>
     </data>
-<FrameLayout
-    android:layout_width="150dp"
-    android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="150dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.example.shoplocalxml.ui.product_item.product_card.ProductCard
@@ -21,53 +19,86 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp" >
+            android:layout_marginBottom="8dp">
 
         </com.example.shoplocalxml.ui.product_item.product_card.ProductCard>
 
 
-        <TextView
-            android:id="@+id/textSalePrice"
-            style="@style/TextProduct_SalePrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="1 000,00Р"/>
-
-        <TextView
-            android:id="@+id/textPrice"
-            style="@style/TextProduct_Price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="1 200.00"/>
-
-        <TextView
-            android:id="@+id/textAction"
-            style="@style/TextProduct_Action"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/text_action" />
-
-        <TextView
-            android:id="@+id/textBrend"
-            style="@style/TextProduct_Brend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="unknown" />
-
-        <com.example.shoplocalxml.ui.product_item.RatingView
-            android:id="@+id/ratingView"
-            android:layout_width="wrap_content"
-            android:layout_height="12dp"
-            android:layout_gravity="center"
-            app:count="3.7" />
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent">
 
 
+            <ImageView
+                android:id="@+id/buttonCart"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_circle"
+                android:backgroundTint="@color/PrimaryDark"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                android:scaleType="centerInside"
+                android:tint="@color/colorBrend"
+                tools:srcCompat="@drawable/ic_addcart" />
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textSalePrice"
+                    style="@style/TextProduct_SalePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="1 000,00Р" />
+
+                <TextView
+                    android:id="@+id/textPrice"
+                    style="@style/TextProduct_Price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="1 200.00" />
+
+                <TextView
+                    android:id="@+id/textAction"
+                    style="@style/TextProduct_Action"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/text_action" />
+
+                <TextView
+                    android:id="@+id/textBrend"
+                    style="@style/TextProduct_Brend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="unknown" />
+
+                <com.example.shoplocalxml.ui.product_item.RatingView
+                    android:id="@+id/ratingView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    app:count="3.7" />
+
+                <TextView
+                    android:id="@+id/textDescription"
+                    style="@style/TextProduct_Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="unknown" />
+
+
+            </LinearLayout>
+
+
+        </FrameLayout>
     </LinearLayout>
-
-
-</FrameLayout>
 </layout>
