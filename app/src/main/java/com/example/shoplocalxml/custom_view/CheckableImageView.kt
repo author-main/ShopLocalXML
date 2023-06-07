@@ -17,9 +17,15 @@ import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
 
 @BindingMethods(BindingMethod(type = CheckableImageView::class, attribute = "app:onChecked", method = "setOnCheckedListener")/*,
-    BindingMethod(type = CheckableImageView::class, attribute = "app:onDragItem", method = "setOnCheckedListener")*/
+    BindingMethod(type = CheckableImageView::class, attribute = "app:onChecked", method = "setOnChecked")*/
     )
 class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
+
+   /* private var onChecked: ((value: Boolean)->Unit)? = null
+    fun setOnChecked(value: ((value: Boolean)->Unit)?) {
+        onChecked = value
+    }*/
+
     interface OnCheckedListener {
         fun onChecked(value: Boolean)
     }
@@ -88,6 +94,7 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         else
             setImageDrawable(uncheckedDrawable)
         refreshDrawableState()
+        //onChecked?.invoke(mChecked)
         //onChecked?.invoke(mChecked)
         onCheckedListener?.onChecked(mChecked)
     }
