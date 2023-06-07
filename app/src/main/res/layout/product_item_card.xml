@@ -27,7 +27,7 @@
 
 
         <TextView
-            android:id="@+id/textPrice"
+            android:id="@+id/textSalePrice"
             style="@style/TextProduct_Price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:text="1 000,00Р"/>
 
         <TextView
-            android:id="@+id/textPrice_"
+            android:id="@+id/textPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"

@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.product_item.item_card
 
 import android.content.Context
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -39,6 +40,7 @@ class ProductItemCard(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
+        dataBinding.textPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 
         //val manager = LinearLayoutManager(context)
         /*dataBinding.recyclerViewImages.layoutManager = manager

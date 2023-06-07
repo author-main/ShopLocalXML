@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="product"
             type="com.example.shoplocalxml.classes.Product"/>
@@ -49,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="8dp"
+            android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}'
             android:text='@{"-"+product.discount+"%"}'/>
 
         <ImageView

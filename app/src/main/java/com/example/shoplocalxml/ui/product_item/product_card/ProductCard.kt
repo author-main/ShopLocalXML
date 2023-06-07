@@ -100,42 +100,25 @@ class ProductCard(context: Context,
             }
         })
 
-
 /*        dataBinding.imageFavorite.setOnCheckedListener {
             onProductListener?.onChangedFavorite(product.id, it)
-        }*/
+        }
 
-
-        /*dataBinding.imageFavorite.setOnCheckedListener( object: CheckableImageView.OnCheckedListener {
+        dataBinding.imageFavorite.setOnCheckedListener( object: CheckableImageView.OnCheckedListener {
             override fun onChecked(value: Boolean) {
                 onProductListener?.onChangedFavorite(product.id, value)
             }
         }
-        )*/
+        )
 
 
-        /*{
-            onProductListener?.onChangedFavorite(product.id, it)
-        }*/
-
-
-
-      /*  dataBinding.buttonMore.setOnClickListener {
+         dataBinding.buttonMore.setOnClickListener {
             onProductListener?.onShowMenu(product.id)
         }*/
 
-        /*this.setOnClickListener {
-            onProductListener?.onClick(product.id)
-        }*/
     }
-/*
-    fun onCheckedFavorite(value: Boolean) {
-        onProductListener?.onChangedFavorite(product.id, value)
-    }*/
 
-    fun onClickMoreButton(){
-        onProductListener?.onShowMenu(product.id)
-    }
+
 
     @JvmName("setDiscount_")
     private fun setDiscount(value: Int) {
@@ -146,9 +129,12 @@ class ProductCard(context: Context,
     }
 
 
+    fun onClickMoreButton(){
+        onProductListener?.onShowMenu(product.id)
+    }
+
     fun onCheckedFavorite(value: Boolean) {
         onProductListener?.onChangedFavorite(product.id, value)
-        //Toast.makeText(context, "favorite = $value", Toast.LENGTH_SHORT).show()
     }
 
 
