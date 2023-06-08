@@ -3,16 +3,12 @@ package com.example.shoplocalxml.ui.product_item.item_card
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
-import com.example.shoplocalxml.ui.product_item.RatingView
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductListener
 
 
@@ -42,7 +38,8 @@ class ProductItemCard(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
-        dataBinding.textPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        //dataBinding.textPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         dataBinding.productCard.setOnProductListener(object : OnProductListener{
             override fun onChangedFavorite(value: Boolean) {
 

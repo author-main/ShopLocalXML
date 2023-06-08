@@ -59,14 +59,18 @@
                     style="@style/TextProduct_SalePrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="4dp"
+                    android:text = "@{com.example.shoplocalxml.SharedViewModel.getProductSalePrice(product.price, product.discount)}"
+                    />
 
                 <TextView
                     android:id="@+id/textPrice"
                     style="@style/TextProduct_Price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp" />
+                    android:layout_marginBottom="4dp"
+                    android:text = "@{com.example.shoplocalxml.SharedViewModel.getProductPrice(product.price)}"
+                    />
 
                 <TextView
                     android:id="@+id/textAction"

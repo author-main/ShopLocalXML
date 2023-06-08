@@ -113,13 +113,13 @@
         <item name="android:background">@drawable/roundrect_text</item>
         <item name="android:backgroundTint">@color/BgTextPrice</item>
         <item name="android:paddingHorizontal">4dp</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextProduct_Name" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/TextDescription</item>
         <item name="android:fontFamily">@font/robotocondensed_light</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">2</item>
     </style>
@@ -127,17 +127,17 @@
     <style name="TextProduct_Price" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/TextPrice</item>
         <item name="android:alpha">0.3</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TextProduct_Action" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="TextProduct_Brend" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/colorBrend</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="TextProduct_Discount" parent="@android:style/Widget.TextView">
@@ -145,7 +145,7 @@
         <item name="android:background">@drawable/roundrect_text</item>
         <item name="android:backgroundTint">@color/colorDiscount</item>
         <item name="android:paddingHorizontal">4dp</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
 

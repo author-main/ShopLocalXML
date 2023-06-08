@@ -30,10 +30,13 @@ import androidx.core.view.marginStart
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import java.io.FileOutputStream
 import java.math.BigInteger
+import java.math.RoundingMode
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 
 val Int.toDp: Int
@@ -137,6 +140,13 @@ fun md5(value: String): String {
     } catch (e: NoSuchAlgorithmException) {
         throw RuntimeException(e)
     }
+}
+
+fun getFormattedFloat(value: Float): String{
+    val result = value.roundToInt()
+    val dec = DecimalFormat("#,###.00")
+    dec.roundingMode = RoundingMode.HALF_EVEN
+    return dec.format(result) + getStringResource(R.string.currency)
 }
 
 /*fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {

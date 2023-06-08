@@ -91,6 +91,12 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         private var listBrend = listOf<Brend>()
         @JvmStatic fun getProductBrend(id: Int) =
             listBrend.find { it.id == id }?.name ?: EMPTY_STRING
+
+        @JvmStatic fun getProductSalePrice(value: Float, discount: Int) =
+            getFormattedFloat(value - value * discount / 100f)
+
+        @JvmStatic fun getProductPrice(value: Float) =
+            getFormattedFloat(value)
     }
 
 }
