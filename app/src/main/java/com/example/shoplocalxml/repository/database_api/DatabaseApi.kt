@@ -26,7 +26,7 @@ interface DatabaseApi {
     suspend fun getReviewProduct(@Query("id") id: Int): Response<List<Review>>
 
     @GET("/api/get_brands")
-    suspend fun getBrands(): Response<List<Brand>>
+    suspend fun getBrends(): Response<List<Brend>>
 
     @GET("/api/get_categories")
     suspend fun getCategories(): Response<List<Category>>

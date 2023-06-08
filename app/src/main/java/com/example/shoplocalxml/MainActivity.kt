@@ -210,6 +210,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
             app:popUpTo="@+id/nav_login"
             app:popUpToInclusive="true"
          */
+        sharedViewModel.getListBrend()
         navController.graph.setStartDestination(R.id.nav_home)
         navController.navigate(R.id.action_nav_login_to_nav_home)
 

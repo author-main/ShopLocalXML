@@ -2,7 +2,7 @@ package com.example.shoplocalxml.classes
 
 import com.google.gson.annotations.SerializedName
 
-data class Brand(
+data class Brend(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")

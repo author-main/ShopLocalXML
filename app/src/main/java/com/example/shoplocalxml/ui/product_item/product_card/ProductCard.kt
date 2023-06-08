@@ -52,16 +52,13 @@ class ProductCard(context: Context,
     private fun setProduct(value: Product?) {
         dataBinding.product = value
         value?.let { product ->
-            //setDiscount(product.discount)
-            //setFavorite(product.favorite > 0)
             dataBinding.recyclerViewImages.setImages(product.linkimages)
         }
-        //dataBinding.invalidateAll()
     }
 
-    private fun setFavorite(value: Boolean){
+   /* private fun setFavorite(value: Boolean){
         dataBinding.imageFavorite.isChecked = value
-    }
+    }*/
 
     fun updateImage(url: String, bitmap: Bitmap?){
         dataBinding.recyclerViewImages.updateImage(url, bitmap)
@@ -96,7 +93,7 @@ class ProductCard(context: Context,
             }
 
             override fun onClick(index: Int) {
-                onProductListener?.onClick(product.id, index)
+                onProductListener?.onClick(index)
             }
         })
 
@@ -130,11 +127,11 @@ class ProductCard(context: Context,
 
 
     fun onClickMoreButton(){
-        onProductListener?.onShowMenu(product.id)
+        onProductListener?.onShowMenu()
     }
 
     fun onCheckedFavorite(value: Boolean) {
-        onProductListener?.onChangedFavorite(product.id, value)
+        onProductListener?.onChangedFavorite(value)
     }
 
 

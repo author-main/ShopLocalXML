@@ -135,4 +135,8 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         super.onSizeChanged(w, h, oldw, oldh)
         log("resize $w, $h")
     }*/
+    fun setCount(value: Float){
+        count = value
+        invalidate()
+    }
 }

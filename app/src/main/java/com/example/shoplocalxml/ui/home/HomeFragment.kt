@@ -134,6 +134,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                 (activity as OnSpeechRecognizer).recognize()
         }
 
+        dataBinding.buttonUpdateProduct.setOnClickListener {
+            sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
+        }
+
 
 
 
@@ -149,19 +153,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             }
         }*/
 
-        dataBinding.cardProduct.setOnProductListener(object: OnProductListener {
-            override fun onChangedFavorite(id: Int, value: Boolean) {
+     /*   dataBinding.cardProduct.setOnProductListener(object: OnProductListener {
+            override fun onChangedFavorite(value: Boolean) {
                 sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
             }
 
-            override fun onClick(id: Int, index: Int) {
+            override fun onClick(index: Int) {
                 log ("product $id, image $index")
             }
 
-            override fun onShowMenu(id: Int) {
+            override fun onShowMenu() {
                 log("show menu...")
             }
-        })
+        })*/
 
         //sharedViewModel.idViewModel = 20
 
@@ -186,10 +190,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                     val product = it[1].copy(
                         linkimages = listUrl
                     )
-                    dataBinding.cardProduct.product = product
+
+                    dataBinding.productItemCard.product = product
+
                     product.linkimages?.forEach {url ->
                         sharedViewModel.downloadImage(url) {bitmap ->
-                            dataBinding.cardProduct.updateImage(url, bitmap)
+                            dataBinding.productItemCard.updateImage(url, bitmap)
                         }
                     }
                 }

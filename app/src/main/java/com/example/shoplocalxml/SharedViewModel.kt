@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.repository.Repository
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +33,12 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     val products = _products.asStateFlow()
     private fun setProducts(value: List<Product>) {
         _products.value = value
+    }
+
+    fun getListBrend(){
+        viewModelScope.launch(Dispatchers.IO) {
+            listBrend =  repository.getBrends() ?: listOf()
+        }
     }
 
     private var onCloseApp: (() -> Unit)? = null
@@ -79,4 +86,11 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     override fun onCleared() {
         super.onCleared()
     }
+
+    companion object {
+        private var listBrend = listOf<Brend>()
+        @JvmStatic fun getProductBrend(id: Int) =
+            listBrend.find { it.id == id }?.name ?: EMPTY_STRING
+    }
+
 }
