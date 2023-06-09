@@ -42,26 +42,11 @@ class ProductItemCard(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
-        //dataBinding.textPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         dataBinding.buttonCart.setOnClickListener {
             onProductItemListener?.onAddCart(product.id)
             log("add cart...")
         }
-        /*dataBinding.productCard.setOnProductListener(object : OnProductCardListener{
-            override fun onChangedFavorite(value: Boolean) {
-
-            }
-
-            override fun onClick(index: Int) {
-
-            }
-
-            override fun onShowMenu() {
-
-            }
-        })*/
-
 
         dataBinding.productCard.setOnChangedFavorite {
             onProductItemListener?.onChangedFavorite(product.id, it)
