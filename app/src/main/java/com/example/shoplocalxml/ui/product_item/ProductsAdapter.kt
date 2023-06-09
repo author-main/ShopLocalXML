@@ -25,7 +25,6 @@ class ProductsAdapter(private var products: List<Product> = listOf(), private va
     }
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         TODO("Not yet implemented")
     }
@@ -39,7 +38,6 @@ class ProductsAdapter(private var products: List<Product> = listOf(), private va
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         lateinit var item: Product
-        //val imageItem: ImageView = view.findViewById(R.id.imageItem)
         fun bindItem(item: Product){
             this.item = item
         }
