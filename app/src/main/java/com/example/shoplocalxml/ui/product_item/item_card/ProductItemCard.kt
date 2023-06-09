@@ -37,6 +37,11 @@ class ProductItemCard(
         dataBinding.productCard.product = value
     }
 
+    private fun onClickProductItem(index: Int){
+        onProductItemListener?.onClick(product.id, index)
+        log("click index $index...")
+    }
+
     override fun onFinishInflate() {
         super.onFinishInflate()
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -44,21 +49,26 @@ class ProductItemCard(
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
         dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
+        // Обработка события добавления продукта в корзину
         dataBinding.buttonCart. setOnClickListener {
             onProductItemListener?.onAddCart(product.id)
-            log("add cart...")
         }
+        // Обработка события изменения favorite продукта
         dataBinding.productCard.setOnChangedFavorite {
             onProductItemListener?.onChangedFavorite(product.id, it)
             log("favorite $it...")
         }
+        // Обработка события отобразить меню продукта
         dataBinding.productCard.setOnShowMenu {
             onProductItemListener?.onShowMenu(product.id)
             log("show menu...")
         }
+        // Обработка события клик по продукту
         dataBinding.productCard.setOnClick {
-            onProductItemListener?.onClick(product.id, it)
-            log("click index $it...")
+            onClickProductItem(it)
+        }
+        dataBinding.root.setOnClickListener {
+            onClickProductItem(0)
         }
 
         dataBinding.eventhandler = this
