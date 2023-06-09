@@ -43,26 +43,23 @@ class ProductItemCard(
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
         dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-        dataBinding.buttonCart.setOnClickListener {
+
+        dataBinding.buttonCart. setOnClickListener {
             onProductItemListener?.onAddCart(product.id)
             log("add cart...")
         }
-
         dataBinding.productCard.setOnChangedFavorite {
             onProductItemListener?.onChangedFavorite(product.id, it)
             log("favorite $it...")
         }
-
         dataBinding.productCard.setOnShowMenu {
             onProductItemListener?.onShowMenu(product.id)
             log("show menu...")
         }
-
         dataBinding.productCard.setOnClick {
             onProductItemListener?.onClick(product.id, it)
             log("click index $it...")
         }
-
 
         dataBinding.eventhandler = this
 
