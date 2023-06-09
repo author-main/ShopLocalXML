@@ -38,7 +38,11 @@ class ProductsAdapter(private var products: List<Product> = listOf(), private va
         products.size
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        lateinit var item: Product
         //val imageItem: ImageView = view.findViewById(R.id.imageItem)
+        fun bindItem(item: Product){
+            this.item = item
+        }
     }
     companion object {
         enum class ItemViewMode(value: Int) {
