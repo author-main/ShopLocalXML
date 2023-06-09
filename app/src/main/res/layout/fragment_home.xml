@@ -65,6 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/BackgroundDark"
+            android:paddingHorizontal="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,8 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="vertical">
-            </com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard>
+                android:orientation="vertical"></com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard>
 
             <Button
                 android:id="@+id/buttonUpdateProduct"

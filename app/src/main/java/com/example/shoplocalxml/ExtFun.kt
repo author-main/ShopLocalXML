@@ -3,9 +3,7 @@ package com.example.shoplocalxml
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Point
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -14,25 +12,17 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.Display
-import android.view.ViewGroup
+import android.util.Size
 import android.view.Window
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.toColor
-import androidx.core.view.marginStart
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import java.io.FileOutputStream
 import java.math.BigInteger
 import java.math.RoundingMode
-import java.net.HttpURLConnection
-import java.net.URL
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
@@ -193,7 +183,11 @@ fun getFormattedFloat(value: Float): String{
     return bitmap to timeStamp
 }*/
 
-
+fun getDisplaySize(): Size {
+    val width  = Resources.getSystem().displayMetrics.widthPixels
+    val height = Resources.getSystem().displayMetrics.heightPixels
+    return Size(width, height)
+}
 
 
 /*fun setWidthDialog(dialog: AlertDialog, widthDP: Int){

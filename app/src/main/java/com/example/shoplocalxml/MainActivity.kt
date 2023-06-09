@@ -2,10 +2,13 @@ package com.example.shoplocalxml
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.DisplayMetrics
+import android.util.Size
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -49,6 +52,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //val size = getDisplaySize()
 
        /* sharedViewModel = run {
             val factory = FactoryViewModel(repository)
@@ -345,4 +349,5 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
         if (value) bottomNavigationView.visibility = View.VISIBLE
         else bottomNavigationView.visibility = View.GONE
     }
+
 }
