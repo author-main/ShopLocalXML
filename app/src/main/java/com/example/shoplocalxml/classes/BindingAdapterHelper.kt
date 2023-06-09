@@ -6,10 +6,11 @@ import com.example.shoplocalxml.ui.product_item.RatingView
 class BindingAdapterHelper {
     companion object {
         @BindingAdapter("app:count")
-        fun setReviewCountStar(view: RatingView?, count: Float?) {
-            count?.let {
-                view?.setCount(it)
-            }
+        @JvmStatic
+        fun setReviewCountStar(view: RatingView, count: Float) {
+
+                view.setCount(count)
+
 
         }
     }

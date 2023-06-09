@@ -113,7 +113,7 @@
         <item name="android:background">@drawable/roundrect_text</item>
         <item name="android:backgroundTint">@color/BgTextPrice</item>
         <item name="android:paddingHorizontal">4dp</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextProduct_Name" parent="@android:style/Widget.TextView">
@@ -130,7 +130,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextProduct_Action" parent="@android:style/Widget.TextView">
+    <style name="TextProduct_Promotion" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">13sp</item>
     </style>

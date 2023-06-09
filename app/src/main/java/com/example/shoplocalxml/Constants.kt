@@ -22,11 +22,11 @@ const val EMPTY_STRING      = ""
 }*/
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
-const val SERVER_URL        = "http://192.168.0.10"
+const val SERVER_URL        = "http://192.168.1.10"
 const val DIR_IMAGES        = "images_ls"
 val DEFAULT_BITMAP: Bitmap? = run{
     val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_default)
     drawable?.toBitmap(width = 24.toPx, height = 24.toPx, Bitmap.Config.ARGB_8888)
 }
-val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
+    //val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
 //const val SERVER_URL = "http://faceshot.ru"
