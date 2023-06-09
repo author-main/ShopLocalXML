@@ -65,25 +65,16 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/BackgroundDark"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
 
-            <com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard
-                android:id="@+id/productItemCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"></com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard>
-
-            <Button
-                android:id="@+id/buttonUpdateProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|top"
-                android:text="Button" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProductHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

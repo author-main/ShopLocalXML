@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.DIR_IMAGES
@@ -118,9 +119,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                 (activity as OnSpeechRecognizer).recognize()
         }
 
-        dataBinding.buttonUpdateProduct.setOnClickListener {
+
+        dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), 2)
+
+
+     /*   dataBinding.buttonUpdateProduct.setOnClickListener {
             sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
-        }
+        }*/
 
 
 
@@ -161,7 +166,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         lifecycleScope.launch {
             sharedViewModel.products.collect {
                 if (it.isNotEmpty()) {
-                    val listUrl = mutableListOf<String>()
+                 /*   val listUrl = mutableListOf<String>()
                     it[1].linkimages?.let{linkImages_ ->
                         linkImages_.forEach {url ->
                             listUrl.add("$SERVER_URL/$DIR_IMAGES/$url")
@@ -181,7 +186,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                         sharedViewModel.downloadImage(url) {bitmap ->
                             dataBinding.productItemCard.updateImage(url, bitmap)
                         }
-                    }
+                    }*/
                 }
             }
         }
