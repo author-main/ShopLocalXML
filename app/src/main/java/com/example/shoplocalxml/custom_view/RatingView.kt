@@ -1,4 +1,4 @@
-package com.example.shoplocalxml.ui.product_item
+package com.example.shoplocalxml.custom_view
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -15,7 +15,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import kotlin.math.roundToInt
 

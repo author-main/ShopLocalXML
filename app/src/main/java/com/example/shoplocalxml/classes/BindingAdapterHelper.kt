@@ -1,7 +1,7 @@
 package com.example.shoplocalxml.classes
 
 import androidx.databinding.BindingAdapter
-import com.example.shoplocalxml.ui.product_item.RatingView
+import com.example.shoplocalxml.custom_view.RatingView
 
 class BindingAdapterHelper {
     companion object {

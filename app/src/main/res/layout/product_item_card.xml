@@ -93,7 +93,7 @@
                 android:layout_marginBottom="4dp"
                 android:text="@{com.example.shoplocalxml.SharedViewModel.getProductBrend(product.brand)}" />
 
-            <com.example.shoplocalxml.ui.product_item.RatingView
+            <com.example.shoplocalxml.custom_view.RatingView
                 android:id="@+id/ratingView"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
