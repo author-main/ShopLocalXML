@@ -132,9 +132,6 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
             return oldList[oldPosition] == newList[newPosition]
         }
 
-        override fun getChangePayload(oldPosition: Int, newPosition: Int): Any? {
-            return super.getChangePayload(oldPosition, newPosition)
-        }
     }
 
 

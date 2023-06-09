@@ -56,6 +56,7 @@ class ImageDownloaderImpl
                     while (inputStream.read(buffer).also { count = it } > 0) {
                         outputStream.write(buffer, 0, count)
                     }
+
                     inputStream.close()
                     outputStream.flush()
                     outputStream.close()
