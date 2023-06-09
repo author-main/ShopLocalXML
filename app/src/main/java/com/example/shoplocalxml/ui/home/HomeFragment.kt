@@ -322,3 +322,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         performRecognize(value!!)
     }
 }
+
+/*
+recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+app:spanCount="2"
+ */
