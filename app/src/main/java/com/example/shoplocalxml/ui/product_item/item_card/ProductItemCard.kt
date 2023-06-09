@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
-import com.example.shoplocalxml.ui.product_item.product_card.OnProductListener
+import com.example.shoplocalxml.ui.product_item.product_card.OnProductCardListener
 
 
 //        val normal: FontStyle = FontStyle(FONT_WEIGHT_NORMAL, FONT_SLANT_UPRIGHT)
@@ -40,7 +40,7 @@ class ProductItemCard(
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
         //dataBinding.textPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-        dataBinding.productCard.setOnProductListener(object : OnProductListener{
+        /*dataBinding.productCard.setOnProductListener(object : OnProductCardListener{
             override fun onChangedFavorite(value: Boolean) {
 
             }
@@ -52,7 +52,22 @@ class ProductItemCard(
             override fun onShowMenu() {
 
             }
-        })
+        })*/
+
+
+        dataBinding.productCard.setOnChangedFavorite {
+
+        }
+
+        dataBinding.productCard.setOnShowMenu {
+
+        }
+
+        dataBinding.productCard.setOnClick {
+
+        }
+
+
         dataBinding.eventhandler = this
 
         //val manager = LinearLayoutManager(context)

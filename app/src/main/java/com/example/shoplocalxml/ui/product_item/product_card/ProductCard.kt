@@ -3,26 +3,16 @@ package com.example.shoplocalxml.ui.product_item.product_card
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.fonts.FontStyle
-import android.graphics.fonts.FontStyle.FONT_SLANT_UPRIGHT
-import android.graphics.fonts.FontStyle.FONT_WEIGHT_NORMAL
-import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
-import androidx.databinding.BindingMethod
-import androidx.databinding.BindingMethods
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.classes.Product
-import com.example.shoplocalxml.custom_view.CheckableImageView
 import com.example.shoplocalxml.databinding.ProductCardBinding
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
 
@@ -34,6 +24,19 @@ class ProductCard(context: Context,
             setDiscount(value)
         }*/
 
+    private var onChangedFavorite : ((value: Boolean) -> Unit)? = null
+    private var onClick:            ((index: Int)->Unit)? = null
+    private var onShowMenu:         (()->Unit)? = null
+    fun setOnChangedFavorite (action: (value: Boolean) -> Unit){
+        onChangedFavorite = action
+    }
+    fun setOnClick (action: (value: Int) -> Unit){
+        onClick = action
+    }
+    fun setOnShowMenu (action: () -> Unit){
+        onShowMenu = action
+    }
+
     var product = Product()
         set(value) {
             field = value
@@ -41,7 +44,7 @@ class ProductCard(context: Context,
         }
 
     private lateinit var dataBinding: ProductCardBinding
-    private var onProductListener: OnProductListener? = null
+    //private var onProductCardListener: OnProductCardListener? = null
     //private var recyclerViewImages: RecyclerViewImages? = null
     init {
         //inflate(context, com.example.shoplocalxml.R.layout.product_card, this)
@@ -64,9 +67,9 @@ class ProductCard(context: Context,
         dataBinding.recyclerViewImages.updateImage(url, bitmap)
     }
 
-    fun setOnProductListener(value: OnProductListener) {
-        onProductListener = value
-    }
+    /*fun setOnProductListener(value: OnProductCardListener) {
+        onProductCardListener = value
+    }*/
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -93,7 +96,8 @@ class ProductCard(context: Context,
             }
 
             override fun onClick(index: Int) {
-                onProductListener?.onClick(index)
+                onClick?.invoke(index)
+                //onProductCardListener?.onClick(index)
             }
         })
 
@@ -127,11 +131,13 @@ class ProductCard(context: Context,
 
 
     fun onClickMoreButton(){
-        onProductListener?.onShowMenu()
+        onShowMenu?.invoke()
+        //onProductCardListener?.onShowMenu()
     }
 
     fun onCheckedFavorite(value: Boolean) {
-        onProductListener?.onChangedFavorite(value)
+        onChangedFavorite?.invoke(value)
+        //onProductCardListener?.onChangedFavorite(value)
     }
 
 

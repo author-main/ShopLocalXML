@@ -2,57 +2,36 @@ package com.example.shoplocalxml.ui.home
 
 import android.animation.ValueAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.FOCUSABLE
 import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.viewModels
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.navigation.navGraphViewModels
-import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.DIR_IMAGES
-import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FactoryViewModel
-import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.SharedViewModel
-import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.md5
-import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
-import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
-import com.example.shoplocalxml.ui.history_search.SearchQueryStorageInterface
-import com.example.shoplocalxml.ui.login.LoginViewModel
-import com.example.shoplocalxml.ui.product_item.product_card.OnProductListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
