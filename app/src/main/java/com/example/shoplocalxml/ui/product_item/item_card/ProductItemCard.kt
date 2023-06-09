@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 
 
@@ -43,6 +44,10 @@ class ProductItemCard(
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
         //dataBinding.textPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
         dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        dataBinding.buttonCart.setOnClickListener {
+            onProductItemListener?.onAddCart(product.id)
+            log("add cart...")
+        }
         /*dataBinding.productCard.setOnProductListener(object : OnProductCardListener{
             override fun onChangedFavorite(value: Boolean) {
 
@@ -60,14 +65,17 @@ class ProductItemCard(
 
         dataBinding.productCard.setOnChangedFavorite {
             onProductItemListener?.onChangedFavorite(product.id, it)
+            log("favorite $it...")
         }
 
         dataBinding.productCard.setOnShowMenu {
             onProductItemListener?.onShowMenu(product.id)
+            log("show menu...")
         }
 
         dataBinding.productCard.setOnClick {
             onProductItemListener?.onClick(product.id, it)
+            log("click index $it...")
         }
 
 
