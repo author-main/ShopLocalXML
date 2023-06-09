@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
-import com.example.shoplocalxml.ui.product_item.product_card.OnProductCardListener
+import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 
 
 //        val normal: FontStyle = FontStyle(FONT_WEIGHT_NORMAL, FONT_SLANT_UPRIGHT)
@@ -25,7 +25,10 @@ class ProductItemCard(
             setProduct(value)
         }
     private lateinit var dataBinding: ProductItemCardBinding
-
+    private var onProductItemListener: OnProductItemListener? = null
+    fun setOnProductItemListener(value: OnProductItemListener){
+        onProductItemListener = value
+    }
     @JvmName("setProduct_")
     private fun setProduct(value: Product){
         dataBinding.product = value
@@ -56,15 +59,15 @@ class ProductItemCard(
 
 
         dataBinding.productCard.setOnChangedFavorite {
-
+            onProductItemListener?.onChangedFavorite(product.id, it)
         }
 
         dataBinding.productCard.setOnShowMenu {
-
+            onProductItemListener?.onShowMenu(product.id)
         }
 
         dataBinding.productCard.setOnClick {
-
+            onProductItemListener?.onClick(product.id, it)
         }
 
 
