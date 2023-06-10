@@ -17,7 +17,7 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
     private val matrix = Matrix()
     private val gradientWidht = 40.toPx
     private val delta = kotlin.math.sqrt(gradientWidht * gradientWidht/2f)
-    private var animatedValue: Float = 0f
+    private var animatedValue: Float = -gradientWidht.toFloat()
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var animator: ValueAnimator? = null
     private var gradientBitmap: Bitmap? = null
@@ -26,7 +26,7 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
     init {
         animator = ValueAnimator().apply {
-            //startDelay = 150
+            startDelay = 150
             duration = 1200
             interpolator = DecelerateInterpolator()
             repeatCount = ValueAnimator.INFINITE
@@ -88,5 +88,6 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
         visibility = GONE
         gradientBitmap = null
         animator?.end()
+        animatedValue = -gradientWidht.toFloat()
     }
 }

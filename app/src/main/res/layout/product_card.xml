@@ -24,7 +24,8 @@
         <com.example.shoplocalxml.custom_view.AnimatedImage
             android:id="@+id/imageViewProgress"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.RecyclerViewImages
             android:id="@+id/recyclerViewImages"
