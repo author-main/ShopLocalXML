@@ -28,6 +28,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lifecycle.addObserver(ImageDownloadManager.getInstance())
         //val size = getDisplaySize()
 
        /* sharedViewModel = run {
@@ -350,4 +352,13 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
         else bottomNavigationView.visibility = View.GONE
     }
 
+    override fun onStop() {
+        super.onStop()
+        log("activity onstop....")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        log("activity onstart....")
+    }
 }

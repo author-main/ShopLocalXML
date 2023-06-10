@@ -96,11 +96,12 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         refreshDrawableState()
         //onChecked?.invoke(mChecked)
         //onChecked?.invoke(mChecked)
-        onCheckedListener?.onChecked(mChecked)
+        //onCheckedListener?.onChecked(mChecked)
     }
 
     override fun onClick(v: View?) {
         toggle()
+        onCheckedListener?.onChecked(mChecked)
     }
 
     companion object {

@@ -28,6 +28,7 @@ import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getDisplaySize
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toDp
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
@@ -283,6 +284,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     override fun onStart() {
         super.onStart()
         showUnreadMessage(27)
+        //log("fragmenthome start...")
         //sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
     }
 
@@ -363,6 +365,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     override fun recognize(value: String?) {
         performRecognize(value!!)
     }
+
+
+
 }
 
 /*
