@@ -5,13 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="product"
-            type="com.example.shoplocalxml.classes.Product"/>
+            type="com.example.shoplocalxml.classes.Product" />
+
         <variable
             name="eventhandler"
-            type="com.example.shoplocalxml.ui.product_item.product_card.ProductCard"/>
+            type="com.example.shoplocalxml.ui.product_item.product_card.ProductCard" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -39,20 +42,20 @@
             android:layout_height="24dp"
             android:layout_gravity="end"
             android:layout_margin="8dp"
-            android:src="@drawable/favorite_checkable"
             android:checked="@{product.favorite > 0}"
+            android:src="@drawable/favorite_checkable"
             app:onChecked="@{checked -> eventhandler.onCheckedFavorite(checked)}"
-            app:tintCheckedDrawable="@color/colorDiscount"/>
+            app:tintCheckedDrawable="@color/colorDiscount" />
 
         <TextView
             android:id="@+id/textDiscount"
-            style = "@style/TextProduct_Discount"
+            style="@style/TextProduct_Discount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="8dp"
-            android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}'
-            android:text='@{"-"+product.discount+"%"}'/>
+            android:text='@{"-"+product.discount+"%"}'
+            android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}' />
 
         <ImageView
             android:id="@+id/buttonMore"

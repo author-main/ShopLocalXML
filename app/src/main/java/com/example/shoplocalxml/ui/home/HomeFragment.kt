@@ -189,14 +189,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                         }
                     }
                     (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(products)
-                    products.forEach { product ->
+                   /* products.forEach { product ->
                         product.linkimages?.forEach {url ->
                             sharedViewModel.downloadImage(url) {bitmap ->
                                 (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).updateImage(url, bitmap)
                                 //productItemCard.updateImage(url, bitmap)
                             }
                         }
-                    }
+                    }*/
 
     /*                product.linkimages?.forEach {url ->
                         sharedViewModel.downloadImage(url) {bitmap ->
