@@ -2,6 +2,7 @@ package com.example.shoplocalxml.ui.product_item.item_card
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -16,10 +17,7 @@ import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListen
 //        val normal: FontStyle = FontStyle(FONT_WEIGHT_NORMAL, FONT_SLANT_UPRIGHT)
     //         yourTextView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
-class ProductItemCard(
-    context: Context,
-    attrs: AttributeSet
-    ) : FrameLayout(context, attrs) {
+class ProductItemCard : FrameLayout {
     var product = Product()
         set(value) {
             field = value
@@ -27,6 +25,15 @@ class ProductItemCard(
         }
     private lateinit var dataBinding: ProductItemCardBinding
     private var onProductItemListener: OnProductItemListener? = null
+
+    init {
+        getDataBinding()
+    }
+
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+
     fun setOnProductItemListener(value: OnProductItemListener){
         onProductItemListener = value
     }
@@ -42,7 +49,41 @@ class ProductItemCard(
         log("click index $index...")
     }
 
-    override fun onFinishInflate() {
+
+    private fun getDataBinding(){
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        dataBinding =
+            DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
+        dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+        // Обработка события добавления продукта в корзину
+        dataBinding.buttonCart. setOnClickListener {
+            onProductItemListener?.onAddCart(product.id)
+            log("add cart...")
+        }
+        // Обработка события изменения favorite продукта
+        dataBinding.productCard.setOnChangedFavorite {
+            onProductItemListener?.onChangedFavorite(product.id, it)
+            log("favorite $it...")
+        }
+        // Обработка события отобразить меню продукта
+        dataBinding.productCard.setOnShowMenu {
+            onProductItemListener?.onShowMenu(product.id)
+            log("show menu...")
+        }
+        // Обработка события клик по продукту
+        dataBinding.productCard.setOnClick {
+            onClickProductItem(it)
+        }
+        dataBinding.root.setOnClickListener {
+            onClickProductItem(0)
+        }
+
+        dataBinding.eventhandler = this
+    }
+
+
+   /* override fun onFinishInflate() {
         super.onFinishInflate()
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
@@ -105,7 +146,7 @@ class ProductItemCard(
         /*this.setOnClickListener {
             onProductListener?.onClick(product.id)
         }*/
-    }
+    }*/
 
     fun updateImage(url: String, bitmap: Bitmap?){
         dataBinding.productCard.updateImage(url, bitmap)

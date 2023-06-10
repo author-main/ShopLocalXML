@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.classes.image_downloader.DiffCallback
 import com.example.shoplocalxml.log
 
 class SearchAdapter(private val items: MutableList<String>, private val onClickItem: (query: String, delete: Boolean) -> Unit): RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
@@ -95,7 +96,8 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
 
 
     private fun swapData(newData: List<String>){
-        val diffCallback = SearchHistoryDiffCallback(showItems, newData)
+        //val diffCallback = SearchHistoryDiffCallback(showItems, newData)
+        val diffCallback = DiffCallback(showItems, newData)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         showItems.clear()
         showItems.addAll(newData)
@@ -118,7 +120,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
     }
 
 
-    class SearchHistoryDiffCallback(private val oldList: List<String>, private val newList: List<String>) : DiffUtil.Callback() {
+ /*   class SearchHistoryDiffCallback(private val oldList: List<String>, private val newList: List<String>) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldList.size
 
@@ -132,7 +134,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
             return oldList[oldPosition] == newList[newPosition]
         }
 
-    }
+    }*/
 
 
 

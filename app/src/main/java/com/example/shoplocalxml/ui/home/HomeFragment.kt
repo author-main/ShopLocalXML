@@ -24,6 +24,7 @@ import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getDisplaySize
@@ -31,6 +32,7 @@ import com.example.shoplocalxml.toDp
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
+import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -121,6 +123,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
 
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), 2)
+        dataBinding.recyclerViewProductHome.adapter = ProductsAdapter()
 
 
      /*   dataBinding.buttonUpdateProduct.setOnClickListener {
@@ -163,9 +166,35 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             dataBinding.imageView2.setDefaultDrawable()
         }*/
 
+        dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
+            sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
+        }
+
+
         lifecycleScope.launch {
             sharedViewModel.products.collect {
-                if (it.isNotEmpty()) {
+                    val products = mutableListOf<Product>()
+                    it.forEach {product ->
+                        val listUrl = mutableListOf<String>()
+                        product.linkimages?.let {linkimages_ ->
+                            linkimages_.forEach { url ->
+                                listUrl.add("$SERVER_URL/$DIR_IMAGES/$url")
+                            }
+                            products.add(
+                                product.copy(
+                                    linkimages = listUrl
+                                )
+                            )
+                        }
+                    }
+
+                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(products)
+    /*                product.linkimages?.forEach {url ->
+                        sharedViewModel.downloadImage(url) {bitmap ->
+                            dataBinding.productItemCard.updateImage(url, bitmap)
+                        }
+                    }*/
+
                  /*   val listUrl = mutableListOf<String>()
                     it[1].linkimages?.let{linkImages_ ->
                         linkImages_.forEach {url ->
@@ -187,7 +216,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                             dataBinding.productItemCard.updateImage(url, bitmap)
                         }
                     }*/
-                }
+
             }
         }
 

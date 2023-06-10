@@ -3,21 +3,24 @@ package com.example.shoplocalxml.ui.product_item.product_card
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.StateListDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
+import com.example.shoplocalxml.AppShopLocal
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
 
-class ProductCard(context: Context,
-                  attrs: AttributeSet)  : CardView(context, attrs) {
+class ProductCard: CardView {
    /* var discount: Int = 0
         set(value) {
             field = value
@@ -46,10 +49,18 @@ class ProductCard(context: Context,
     private lateinit var dataBinding: ProductCardBinding
     //private var onProductCardListener: OnProductCardListener? = null
     //private var recyclerViewImages: RecyclerViewImages? = null
+
     init {
-        //inflate(context, com.example.shoplocalxml.R.layout.product_card, this)
+        getDataBinding()
         setCardBackgroundColor(Color.TRANSPARENT)
     }
+
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+
+
+
 
     @JvmName("setProduct_")
     private fun setProduct(value: Product?) {
@@ -71,12 +82,14 @@ class ProductCard(context: Context,
         onProductCardListener = value
     }*/
 
-    override fun onFinishInflate() {
-        super.onFinishInflate()
+
+    private fun getDataBinding(){
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_card, this, true)
+        dataBinding.product = product
         dataBinding.eventhandler = this
+
         val manager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
@@ -101,6 +114,42 @@ class ProductCard(context: Context,
             }
         })
 
+
+
+    }
+
+
+    /*override fun onFinishInflate() {
+        super.onFinishInflate()
+/*        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        dataBinding =
+            DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_card, this, true)
+        dataBinding.product = product
+        dataBinding.eventhandler = this
+        val manager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        dataBinding.recyclerViewImages.layoutManager = manager
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(dataBinding.recyclerViewImages)
+        dataBinding.recyclerViewImages.adapter = ImagesAdapter()
+        dataBinding.recyclerViewImages.setOnStateImagesListener(object: OnStateImagesListener {
+            override fun download() {
+                dataBinding.imageViewProgress.startAnimation()
+            }
+
+            override fun uploaded() {
+                dataBinding.imageViewProgress.stopAnimation()
+            }
+
+            override fun onClick(index: Int) {
+                onClick?.invoke(index)
+                //onProductCardListener?.onClick(index)
+            }
+        })*/
+
 /*        dataBinding.imageFavorite.setOnCheckedListener {
             onProductListener?.onChangedFavorite(product.id, it)
         }
@@ -119,7 +168,7 @@ class ProductCard(context: Context,
 
     }
 
-
+*/
 
     @JvmName("setDiscount_")
     private fun setDiscount(value: Int) {
