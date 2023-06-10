@@ -38,9 +38,10 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
     }
 
     override fun onStop(owner: LifecycleOwner) {
+        cancelAll()
         super.onStop(owner)
       //  log("on stop...")
-        //cancelAll()
+
     }
 
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
@@ -81,6 +82,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         if (processClearTask) return
         processClearTask = true
         queue.clear()
+        val shutdownTask = taskList.isNotEmpty()
         val iterator = taskList.iterator()
         while (iterator.hasNext()){
             val task = iterator.next()
@@ -89,7 +91,8 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
             iterator.remove()
             deleteFile(filenameTemp)
         }
-        executor.shutdown()
+        if (shutdownTask)
+            executor.shutdown()
         processClearTask = false
     }
 
