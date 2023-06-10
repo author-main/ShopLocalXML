@@ -40,8 +40,6 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
     override fun onStop(owner: LifecycleOwner) {
         cancelAll()
         super.onStop(owner)
-      //  log("on stop...")
-
     }
 
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
