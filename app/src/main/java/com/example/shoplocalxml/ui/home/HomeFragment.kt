@@ -123,7 +123,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
 
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), 2)
-        dataBinding.recyclerViewProductHome.adapter = ProductsAdapter()
+        dataBinding.recyclerViewProductHome.adapter = ProductsAdapter(context = requireContext())
 
 
      /*   dataBinding.buttonUpdateProduct.setOnClickListener {
@@ -187,8 +187,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                             )
                         }
                     }
-
                     (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(products)
+                    products.forEach { product ->
+                        product.linkimages?.forEach {url ->
+                            sharedViewModel.downloadImage(url) {bitmap ->
+                                (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).updateImage(url, bitmap)
+                                //productItemCard.updateImage(url, bitmap)
+                            }
+                        }
+                    }
+
     /*                product.linkimages?.forEach {url ->
                         sharedViewModel.downloadImage(url) {bitmap ->
                             dataBinding.productItemCard.updateImage(url, bitmap)

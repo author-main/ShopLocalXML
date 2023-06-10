@@ -60,11 +60,10 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="8dp"
             android:background="@drawable/ic_circle_border"
+            android:onClick="@{() -> eventhandler.onClickMoreButton()}"
             android:padding="4dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_more"
-            android:onClick="@{() -> eventhandler.onClickMoreButton()}"
-            />
+            android:src="@drawable/ic_more" />
 
     </androidx.cardview.widget.CardView>
 </layout>

@@ -1,5 +1,7 @@
 package com.example.shoplocalxml.ui.product_item
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,7 +16,12 @@ import com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard
 import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImageItem
 
-class ProductsAdapter(private var products: MutableList<Product> = mutableListOf(), private var viewMode: ItemViewMode = ItemViewMode.CARD): RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
+class ProductsAdapter(val context: Context, private var products: MutableList<Product> = mutableListOf(), private var viewMode: ItemViewMode = ItemViewMode.CARD): RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
+
+
+    fun updateImage(url: String, bitmap: Bitmap?){
+        //dataBinding.productCard.updateImage(url, bitmap)
+    }
 
     private fun notifyItemsChanged(){
         notifyItemRangeChanged(0, products.size)
@@ -33,7 +40,7 @@ class ProductsAdapter(private var products: MutableList<Product> = mutableListOf
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = ProductItemCard(applicationContext)
+        val view = ProductItemCard(context)
         return ViewHolder(view)
     }
 

@@ -37,6 +37,10 @@ class ProductItemCard : FrameLayout {
     fun setOnProductItemListener(value: OnProductItemListener){
         onProductItemListener = value
     }
+
+
+
+
     @JvmName("setProduct_")
     private fun setProduct(value: Product){
         dataBinding.product = value
