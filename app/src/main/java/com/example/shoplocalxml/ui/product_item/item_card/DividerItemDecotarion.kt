@@ -25,7 +25,8 @@ class DividerItemDecoration : ItemDecoration() {
         else
             outRect.right = halfPadding
         parent.adapter?.let{
-            if (position < it.itemCount - 2)
+            val limit = if (evenPosition) it.itemCount-3 else it.itemCount - 2
+            if (position < limit)
                 outRect.bottom = paddingProductCard
         }
     }

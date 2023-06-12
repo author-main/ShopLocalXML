@@ -78,7 +78,7 @@ class ImageDownloaderImpl
         }
         if (!success)
             bitmap = loadBitmap(filenameCache, reduce)
-        for (i in 0..1000000000){}
+        //for (i in 0..1000000000){}
         onComplete(bitmap, timeStamp)
         return bitmap to timeStamp
     }
