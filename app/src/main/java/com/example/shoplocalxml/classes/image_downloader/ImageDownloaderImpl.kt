@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.classes.image_downloader
 
 import android.graphics.Bitmap
+import android.os.Looper
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.EXT_TEMPFILE
 import com.example.shoplocalxml.fileNameFromPath
@@ -13,6 +14,7 @@ import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.Executors
+import java.util.logging.Handler
 
 class ImageDownloaderImpl
     (   private val url: String = EMPTY_STRING,
@@ -21,19 +23,24 @@ class ImageDownloaderImpl
         private val onComplete: (Bitmap?, Long) -> Unit
     ): ImageDownloader {
 
-
     override fun download() {
-        val result = downloadImage(url, reduce, timestamp)
-        onComplete(result.first, result.second)
+        //val result =
+            downloadImage()//url, reduce, timestamp)
+      //  onComplete(result.first, result.second)*/
     }
 
-    override fun run() {
-        download()
-    }
+   /* override fun run() {
+        //download()
+        /*val result = downloadImage()//url, reduce, timestamp)
+        onComplete(result.first, result.second)*/
+        downloadImage()
+    }*/
 
-    private fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {
+//    private fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {
+    private fun downloadImage(): Pair<Bitmap?, Long> {
         var timeStamp = timestamp
         val bufferSize = 32768
+        //log("download $url...")
         val fileHash = md5(url)
         val filenameCache = getCacheDirectory() + fileHash
         val filenameTemp  = "$filenameCache$.EXT_TEMPFILE"
@@ -71,7 +78,8 @@ class ImageDownloaderImpl
         }
         if (!success)
             bitmap = loadBitmap(filenameCache, reduce)
-        //for (i in 0..1000000000){}
+        for (i in 0..1000000000){}
+        onComplete(bitmap, timeStamp)
         return bitmap to timeStamp
     }
 

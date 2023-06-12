@@ -18,23 +18,25 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="16dp">
 
+
+        <com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.RecyclerViewImages
+            android:id="@+id/recyclerViewImages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+        </com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.RecyclerViewImages>
 
         <com.example.shoplocalxml.custom_view.AnimatedImage
             android:id="@+id/imageViewProgress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
-
-        <com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.RecyclerViewImages
-            android:id="@+id/recyclerViewImages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp" />
 
         <com.example.shoplocalxml.custom_view.CheckableImageView
             android:id="@+id/imageFavorite"

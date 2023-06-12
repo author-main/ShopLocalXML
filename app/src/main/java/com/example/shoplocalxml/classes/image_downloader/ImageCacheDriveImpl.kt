@@ -6,6 +6,7 @@ import com.example.shoplocalxml.deleteFile
 import com.example.shoplocalxml.deleteFiles
 import com.example.shoplocalxml.fileExists
 import com.example.shoplocalxml.getFileSize
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.renameFile
 import java.io.BufferedReader
 import java.io.File
@@ -79,6 +80,7 @@ class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
 
     @Synchronized
     override fun put(hash: String, timestamp: Long) {
+        //log("put journal item...")
         val filesize = getFileSize(getFilename(hash))
         if (filesize > 0) {
             hashMap[hash]?.let{
@@ -114,6 +116,7 @@ class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
                 saveJournalItems()
             }
         }
+        //log("put journal item...")
     }
 
     private fun getFilename(value: String)  = "$CACHE_DIR$value"

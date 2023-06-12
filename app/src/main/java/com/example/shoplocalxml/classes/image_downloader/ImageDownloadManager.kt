@@ -24,6 +24,8 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
     private val taskList: HashMap<String, Future<*>> = hashMapOf() // * "звездная проекция, когда мы ничего не знаем о типе"
     private val queue = mutableListOf<Pair<String, ImageDownloader>>()
+    private val handlerUI = Handler(Looper.getMainLooper())
+
     private fun findTaskQueue(url: String): Int{
         var indexFoundTask = -1
         var i = queue.size - 1
@@ -44,7 +46,8 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
         val hash = md5(url)
-        val handlerUI = Handler(Looper.getMainLooper())
+     //   log("task = $url...")
+
         cacheMemory.get(hash)?.let{bitmap ->
             //log("load from cache memory...")
             handlerUI.post {
@@ -73,9 +76,12 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 
         if (taskList.containsKey(url))
             queue.add(url to task)
-        else
+        else {
             taskList[url] = executor.submit(task)
+        }
+
     }
+
     private fun cancelAll(){
         if (processClearTask) return
         processClearTask = true

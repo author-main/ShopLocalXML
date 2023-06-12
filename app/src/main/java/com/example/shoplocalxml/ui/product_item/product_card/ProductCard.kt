@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.databinding.ProductCardBinding
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
 
@@ -67,6 +69,11 @@ class ProductCard: CardView {
         dataBinding.product = value
         value?.let { product ->
             dataBinding.recyclerViewImages.setImages(product.linkimages)
+            /*product.linkimages?.forEach {url ->
+                ImageDownloadManager.download(url) { bitmap ->
+                    (dataBinding.recyclerViewImages.adapter as ImagesAdapter).updateImage(url, bitmap)
+                }
+            }*/
         }
     }
 
@@ -74,9 +81,9 @@ class ProductCard: CardView {
         dataBinding.imageFavorite.isChecked = value
     }*/
 
-    fun updateImage(url: String, bitmap: Bitmap?){
+    /*fun updateImage(url: String, bitmap: Bitmap?){
         dataBinding.recyclerViewImages.updateImage(url, bitmap)
-    }
+    }*/
 
     /*fun setOnProductListener(value: OnProductCardListener) {
         onProductCardListener = value
@@ -105,6 +112,7 @@ class ProductCard: CardView {
             }
 
             override fun uploaded() {
+                //log("images uploaded ${product.id}...")
                 dataBinding.imageViewProgress.stopAnimation()
             }
 

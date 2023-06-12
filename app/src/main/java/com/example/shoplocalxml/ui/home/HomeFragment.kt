@@ -34,6 +34,7 @@ import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
+import com.example.shoplocalxml.ui.product_item.item_card.DividerItemDecoration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -123,7 +124,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         }
 
 
+
+
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), 2)
+        dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
         dataBinding.recyclerViewProductHome.adapter = ProductsAdapter(context = requireContext())
 
 
@@ -174,7 +178,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
         lifecycleScope.launch {
             sharedViewModel.products.collect {
-                    val products = mutableListOf<Product>()
+                   /* val products = mutableListOf<Product>()
                     it.forEach {product ->
                         val listUrl = mutableListOf<String>()
                         product.linkimages?.let {linkimages_ ->
@@ -187,8 +191,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
                                 )
                             )
                         }
-                    }
-                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(products)
+                    }*/
+                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)
                    /* products.forEach { product ->
                         product.linkimages?.forEach {url ->
                             sharedViewModel.downloadImage(url) {bitmap ->

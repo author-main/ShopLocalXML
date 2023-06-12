@@ -8,9 +8,12 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.DIR_IMAGES
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.image_downloader.DiffCallback
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.history_search.SearchAdapter
 import com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard
 import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
@@ -18,18 +21,19 @@ import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_image
 
 class ProductsAdapter(val context: Context, private var products: MutableList<Product> = mutableListOf(), private var viewMode: ItemViewMode = ItemViewMode.CARD): RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
 
-
-    fun updateImage(url: String, bitmap: Bitmap?){
-        //dataBinding.productCard.updateImage(url, bitmap)
-    }
-
     private fun notifyItemsChanged(){
         notifyItemRangeChanged(0, products.size)
     }
 
-
     fun setProducts(list: List<Product>){
-        swapData(list)
+        val productList = list.toMutableList()
+        for( i in list.indices) {
+            list[i].linkimages?.let{linkimages_ ->
+                for (j in linkimages_.indices)
+                    linkimages_[j] = "$SERVER_URL/$DIR_IMAGES/${linkimages_[j]}"
+            }
+        }
+        swapData(productList)
         notifyItemsChanged()
     }
 
@@ -62,10 +66,14 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         products.size
 
     class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        lateinit var item: Product
+         lateinit var item: Product
         fun bindItem(item: Product){
             this.item = item
             (view as ProductItemCard).product = item
+            /*with((view as ProductItemCard)) {
+                this.product = item
+            }*/
+
         }
     }
 

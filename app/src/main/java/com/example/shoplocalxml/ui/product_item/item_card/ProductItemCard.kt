@@ -1,8 +1,8 @@
 package com.example.shoplocalxml.ui.product_item.item_card
 
+import android.R.attr
+import android.R.attr.height
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -10,14 +10,18 @@ import android.widget.FrameLayout
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
+import com.example.shoplocalxml.getDisplaySize
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.toDp
+import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
+import com.example.shoplocalxml.widthProductCard
 
 
 //        val normal: FontStyle = FontStyle(FONT_WEIGHT_NORMAL, FONT_SLANT_UPRIGHT)
     //         yourTextView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 
-class ProductItemCard : FrameLayout {
+class ProductItemCard: FrameLayout {
     var product = Product()
         set(value) {
             field = value
@@ -50,7 +54,7 @@ class ProductItemCard : FrameLayout {
 
     private fun onClickProductItem(index: Int){
         onProductItemListener?.onClick(product.id, index)
-        log("click index $index...")
+        //log("click index $index...")
     }
 
 
@@ -58,12 +62,18 @@ class ProductItemCard : FrameLayout {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
-        dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
+        //val widthCard = (getDisplaySize().width - (paddingProductCard * 3)) / 2
+        val layoutParams = dataBinding.productCard.layoutParams
+        layoutParams.height = widthProductCard
+        layoutParams.width  = widthProductCard
+        dataBinding.productCard.layoutParams = layoutParams
+
+        dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         // Обработка события добавления продукта в корзину
         dataBinding.buttonCart. setOnClickListener {
             onProductItemListener?.onAddCart(product.id)
-            log("add cart...")
+            //log("add cart...")
         }
         // Обработка события изменения favorite продукта
         dataBinding.productCard.setOnChangedFavorite {
@@ -152,9 +162,9 @@ class ProductItemCard : FrameLayout {
         }*/
     }*/
 
-    fun updateImage(url: String, bitmap: Bitmap?){
+    /*fun updateImage(url: String, bitmap: Bitmap?){
         dataBinding.productCard.updateImage(url, bitmap)
-    }
+    }*/
 
 
     /*companion object {

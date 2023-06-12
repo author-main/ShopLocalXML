@@ -64,7 +64,7 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
         if (width * height > 0) {
             val colors: IntArray = intArrayOf(
                 Color.TRANSPARENT,
-                0xffdadada.toInt(),
+                0xaadadada.toInt(),
                 Color.TRANSPARENT
             )
             val min = height//minOf(width, height)

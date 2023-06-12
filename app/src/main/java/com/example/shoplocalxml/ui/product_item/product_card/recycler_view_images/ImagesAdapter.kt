@@ -1,38 +1,42 @@
 package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images
 
-import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.DEFAULT_BITMAP
-import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.ui.history_search.SearchAdapter
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-
-data class ImageItem(var hash: String, var image: Bitmap?, var default: Boolean = false){}
+data class ImageItem(var url: String, var image: Bitmap?, var default: Boolean = false){}
 
 class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
-
+    //private val handlerUI = Handler(Looper.getMainLooper())
     private var countUploaded = 0
-    private var images: List<ImageItem> = listOf()
+    private var images: MutableList<ImageItem> = mutableListOf()
     private var onClickItem: ((index: Int) -> Unit)? = null
+    private var onUploaded: (() -> Unit)? = null
 
-    @Synchronized
-    fun updateImage(hash: String, value: Bitmap?): Boolean{
+    fun setOnUploaded(value: () -> Unit){
+        onUploaded = value
+    }
+
+
+
+  /*  @Synchronized
+    fun updateImage(url: String, value: Bitmap?): Boolean{
         //val bitmap = value //?: EMPTY_BITMAP
         for (i in images.indices) {
-            if (images[i].hash == hash) {
+            if (images[i].url == url) {
                 var default = false
                 val bitmap = value ?: run{
                     default = true
@@ -46,15 +50,41 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
         }
         countUploaded += 1
         return countUploaded == itemCount
+    }*/
+
+    fun setImages(list: List<String>){
+        images.clear()
+        countUploaded = 0
+       // handlerUI.post {
+        CoroutineScope(Dispatchers.Main).launch {
+            for (i in list.indices) {
+                val item = ImageItem(list[i], image = null)
+                images.add(item)
+                ImageDownloadManager.download(item.url) {
+                    item.image = it ?: run {
+                        item.default = true
+                        DEFAULT_BITMAP
+                    }
+                    notifyItemChanged(i)
+                    countUploaded += 1
+                    if (countUploaded == images.size)
+                        onUploaded?.invoke()
+                }
+            }
+        }
+      //  }
     }
 
-    //@SuppressLint("NotifyDataSetChanged")
-    fun setImages(value: List<ImageItem>){
+  /*  fun setImages(value: List<ImageItem>){
         countUploaded = 0
         images = value
-//        notifyDataSetChanged()
         notifyItemRangeChanged(0, images.size)
-    }
+      /*  images.forEach {image ->
+            ImageDownloadManager.download(image.url, reduce = true) {
+                images
+            }
+        }*/
+    }*/
 
     fun setOnClickItem(value: (index: Int) -> Unit){
         onClickItem = value
