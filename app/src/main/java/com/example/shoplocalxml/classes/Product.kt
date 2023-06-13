@@ -29,7 +29,7 @@ data class Product(
     @SerializedName("sold")
     var sold:          Int? = null,
     @SerializedName("linkimages")
-    var linkimages:     MutableList<String>? = null,
+    var linkimages:     List<String>? = null,
    // var imageindex: Int = 0
     ) {
         constructor(): this(
@@ -44,7 +44,7 @@ data class Product(
                 favorite        = 0,
                 brand           = 0,
                 sold            = 0,
-                linkimages      =  mutableListOf<String>()
+                linkimages      =  emptyList<String>()
         )
 
     /**

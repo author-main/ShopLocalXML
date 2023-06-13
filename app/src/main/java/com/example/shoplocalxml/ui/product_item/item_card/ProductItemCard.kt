@@ -47,7 +47,7 @@ class ProductItemCard: FrameLayout {
 
     @JvmName("setProduct_")
     private fun setProduct(value: Product){
-        dataBinding.product = value
+        //log(product.linkimages)
         dataBinding.product = value
         dataBinding.productCard.product = value
     }

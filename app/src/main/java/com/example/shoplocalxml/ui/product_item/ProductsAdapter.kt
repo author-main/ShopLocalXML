@@ -26,13 +26,26 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
     }
 
     fun setProducts(list: List<Product>){
-        val productList = list.toMutableList()
-        for( i in list.indices) {
-            list[i].linkimages?.let{linkimages_ ->
+        val productList = mutableListOf<Product>()
+        for (product in list) {
+            val linkImages = mutableListOf<String>()
+            product.linkimages?.let {linkimages_ ->
+                for (link in linkimages_) {
+                    linkImages.add("$SERVER_URL/$DIR_IMAGES/$link")
+                }
+            }
+            productList.add(product.copy(linkimages = linkImages))
+        }
+        /*for( i in productList.indices) {
+            productList[i].linkimages?.let{linkimages_ ->
+               // log(linkimages_)
+
                 for (j in linkimages_.indices)
                     linkimages_[j] = "$SERVER_URL/$DIR_IMAGES/${linkimages_[j]}"
             }
-        }
+        }*/
+
+
         swapData(productList)
         notifyItemsChanged()
     }
