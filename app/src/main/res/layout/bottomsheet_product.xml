@@ -6,16 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/roundrect_bottomsheet"
-    android:paddingHorizontal="16dp"
     app:behavior_hideable="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <LinearLayout
         android:id="@+id/layoutMenuItemCart"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginVertical="16dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,11 +33,11 @@
         <TextView
             android:id="@+id/textMenuItemCart"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="TextView"
-            android:textAlignment="gravity"
             android:textColor="@color/EditTextFont" />
     </LinearLayout>
 
@@ -44,9 +45,11 @@
     <LinearLayout
         android:id="@+id/layoutMenuItemBrend"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginVertical="16dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutMenuItemCart">
@@ -63,20 +66,22 @@
         <TextView
             android:id="@+id/textMenuItemBrend"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="TextView"
-            android:textAlignment="gravity"
             android:textColor="@color/EditTextFont" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutMenuItemFavorite"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginVertical="16dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutMenuItemBrend">
@@ -93,20 +98,22 @@
         <TextView
             android:id="@+id/textMenuItemFavorite"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="TextView"
-            android:textAlignment="gravity"
             android:textColor="@color/EditTextFont" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutMenuItemProduct"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginVertical="16dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutMenuItemFavorite">
@@ -123,20 +130,22 @@
         <TextView
             android:id="@+id/textMenuItemProduct"
             android:layout_width="match_parent"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="TextView"
-            android:textAlignment="gravity"
             android:textColor="@color/EditTextFont" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutMenuItemCancel"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginVertical="16dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -154,11 +163,11 @@
         <TextView
             android:id="@+id/textMenuItemCancel"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="TextView"
-            android:textAlignment="gravity"
             android:textColor="@color/EditTextFont" />
     </LinearLayout>
 
@@ -166,7 +175,6 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
         android:alpha="0.7"
         android:background="@color/EditTextBackgroundDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -177,7 +185,6 @@
         android:id="@+id/divider1"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
         android:alpha="0.7"
         android:background="@color/EditTextBackgroundDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -188,7 +195,6 @@
         android:id="@+id/divider2"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
         android:alpha="0.7"
         android:background="@color/EditTextBackgroundDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -199,7 +205,6 @@
         android:id="@+id/divider3"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
         android:alpha="0.7"
         android:background="@color/EditTextBackgroundDark"
         app:layout_constraintEnd_toEndOf="parent"
