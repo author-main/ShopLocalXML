@@ -130,7 +130,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), 2)
         dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
         val adapter = ProductsAdapter(context = requireContext())
-        HandlerProductItemCard.viewModel = sharedViewModel
+        HandlerProductItemCard.sharedViewModel = sharedViewModel
         adapter.setOnProductItemListener(object: OnProductItemListener{
             override fun onChangedFavorite(id: Int, value: Boolean) {
                 HandlerProductItemCard.updateProductFavorite(id, value)
