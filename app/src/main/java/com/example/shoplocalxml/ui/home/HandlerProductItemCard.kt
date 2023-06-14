@@ -5,18 +5,15 @@ import com.example.shoplocalxml.log
 
 class HandlerProductItemCard {
     companion object {
-        lateinit var viewModel: SharedViewModel
-        private fun viewModelInitialized() = this::viewModel.isInitialized
-
+        var sharedViewModel: SharedViewModel? = null
         /**
          * Обновление свойства favorite продукта
          * @param id идентификатор продукта
          * @param value значение свойства favorite
          */
         fun updateProductFavorite(id: Int, value: Boolean) {
-            if (!viewModelInitialized())
-                return
-            viewModel.updateProductFavorite(id, value)
+            sharedViewModel?.updateProductFavorite(id, value)
+
         }
         /**
          * Клик по карточке продукта
@@ -24,24 +21,24 @@ class HandlerProductItemCard {
          * @param index индекс изображения продукта в списке
          */
         fun clickProduct(id: Int, index: Int) {
-            if (!viewModelInitialized())
-                return
+            sharedViewModel?.let {viewModel->
+            }
         }
         /**
          * Открыть нижнее меню продукта
          * @param id идентификатор продукта
          */
         fun showProductMenu(id: Int) {
-            if (!viewModelInitialized())
-                return
+            sharedViewModel?.let {viewModel->
+            }
         }
         /**
          * Добавить продукт в корзину
          * @param id идентификатор продукта
          */
         fun addProductCart(id: Int) {
-            if (!viewModelInitialized())
-                return
+            sharedViewModel?.let {viewModel->
+            }
         }
     }
 }
