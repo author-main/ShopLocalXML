@@ -131,20 +131,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
         val adapter = ProductsAdapter(context = requireContext())
         HandlerProductItemCard.sharedViewModel = sharedViewModel
-        adapter.setOnProductItemListener(object: OnProductItemListener{
-            override fun onChangedFavorite(id: Int, value: Boolean) {
-                HandlerProductItemCard.updateProductFavorite(id, value)
-            }
-            override fun onClick(id: Int, index: Int) {
-                HandlerProductItemCard.clickProduct(id, index)
-            }
-            override fun onShowMenu(id: Int) {
-                HandlerProductItemCard.showProductMenu(id)
-            }
-            override fun onAddCart(id: Int) {
-                HandlerProductItemCard.addProductCart(id)
-            }
-        })
+        adapter.setOnProductItemListener(HandlerProductItemCard)
         dataBinding.recyclerViewProductHome.adapter = adapter
 
 
