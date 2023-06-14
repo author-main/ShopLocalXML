@@ -29,12 +29,10 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
     }
 
     fun updateProductFavorite(id: Int, value: Boolean){
-        for (i in products.indices){
-            if (products[i].id == id) {
-                products[i].favorite = if (value) 1 else 0
-                notifyItemChanged(i)
-                break
-            }
+        val index = getProductPositionFromId(id)
+        if (index != -1) {
+            products[index].favorite = if (value) 1 else 0
+            notifyItemChanged(index)
         }
     }
 
@@ -47,10 +45,10 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         notifyItemsChanged()
     }
 
-    fun setViewMode(value: ItemViewMode){
+   /* fun setViewMode(value: ItemViewMode){
         viewMode = value
         notifyItemsChanged()
-    }
+    }*/
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -88,6 +86,9 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
 
         }
     }
+
+    private fun getProductPositionFromId(id: Int) =
+        products.indexOfFirst { it.id == id }
 
     companion object {
         enum class ItemViewMode(value: Int) {
