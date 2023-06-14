@@ -13,7 +13,6 @@ class HandlerProductItemCard {
          */
         fun updateProductFavorite(id: Int, value: Boolean) {
             sharedViewModel?.updateProductFavorite(id, value)
-
         }
         /**
          * Клик по карточке продукта
