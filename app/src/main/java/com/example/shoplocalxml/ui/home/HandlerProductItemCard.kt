@@ -1,18 +1,19 @@
 package com.example.shoplocalxml.ui.home
 
+import android.view.MenuItem
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 
 class HandlerProductItemCard {
-    companion object: OnProductItemListener {
+    companion object {
         var sharedViewModel: SharedViewModel? = null
         /**
          * Обновление свойства favorite продукта
          * @param id идентификатор продукта
          * @param value значение свойства favorite
          */
-        override fun onChangedFavorite(id: Int, value: Boolean) {
+        fun updateProductFavorite(id: Int, value: Boolean) {
             sharedViewModel?.updateProductFavorite(id, value)
         }
         /**
@@ -20,7 +21,7 @@ class HandlerProductItemCard {
          * @param id идентификатор продукта
          * @param index индекс изображения продукта в списке
          */
-        override fun onClick(id: Int, index: Int) {
+        fun clickProduct(id: Int, index: Int) {
             sharedViewModel?.let {viewModel->
             }
         }
@@ -28,14 +29,15 @@ class HandlerProductItemCard {
          * Открыть нижнее меню продукта
          * @param id идентификатор продукта
          */
-        override fun onShowMenu(id: Int) {
+        fun showProductMenu(id: Int, action:(itemMenu: MenuItem)->Unit) {
             sharedViewModel?.let {viewModel->
             }
         }
-        /** Добавить продукт в корзину
-        * @param id идентификатор продукта
-        */
-        override fun onAddCart(id: Int) {
+        /**
+         * Добавить продукт в корзину
+         * @param id идентификатор продукта
+         */
+        fun addProductCart(id: Int) {
             sharedViewModel?.let {viewModel->
             }
         }
