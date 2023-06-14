@@ -17,19 +17,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
-import com.example.shoplocalxml.DIR_IMAGES
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnSpeechRecognizer
-import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.SharedViewModel
-import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
-import com.example.shoplocalxml.getDisplaySize
 import com.example.shoplocalxml.log
-import com.example.shoplocalxml.toDp
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -141,7 +136,18 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             }
 
             override fun onShowMenu(id: Int) {
-                val bottomSheetProductMenu = BottomSheetProductMenu()
+                val bottomSheetProductMenu = BottomSheetProductMenu { itemMenu, idProduct, favorite ->
+                    onClickProductItemMenu(
+                        itemMenu, idProduct, favorite
+                    )
+                }
+                val bundle = Bundle().apply {
+                    putInt("idproduct", id)
+                    sharedViewModel.getProductFromId(id)?.let {
+                        putBoolean("favorite", it.favorite > 0)
+                    }
+                    bottomSheetProductMenu.arguments = this
+                }
                 bottomSheetProductMenu.show(parentFragmentManager, "BOTTOMSHEET_PRODUCT")
             }
 
@@ -393,7 +399,11 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         performRecognize(value!!)
     }
 
-
+    private fun onClickProductItemMenu(
+        itemMenu: BottomSheetProductMenu.Companion.MenuItemProduct, idProduct: Int, favorite: Boolean
+    ){
+        log("$itemMenu $idProduct")
+    }
 
 }
 

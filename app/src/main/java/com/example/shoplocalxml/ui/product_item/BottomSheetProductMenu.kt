@@ -1,16 +1,13 @@
 package com.example.shoplocalxml.ui.product_item
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.FrameLayout
+import androidx.appcompat.content.res.AppCompatResources
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.BottomsheetProductBinding
-import com.example.shoplocalxml.generated.callback.OnClickListener
 import com.example.shoplocalxml.getStringArrayResource
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,10 +16,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class BottomSheetProductMenu: BottomSheetDialogFragment(), View.OnClickListener {
+class BottomSheetProductMenu(
+    private val onProductItemMenuListener: (itemMenu: BottomSheetProductMenu.Companion.MenuItemProduct, idProduct: Int, favorite: Boolean) -> Unit): BottomSheetDialogFragment(), View.OnClickListener {
     //private val dataBinding: BottomsheetProductBinding = DataBindingUtil.inflate(layoutInflater, R.layout.bottomsheet_product, null, false)
     private lateinit var dataBinding: BottomsheetProductBinding
+    private var idProduct: Int = -1
+    private var favorite = false
+    private val itemText = getStringArrayResource(R.array.bottomsheet_product_items)
+    private fun updateFavoriteItem(){
+        dataBinding.textMenuItemFavorite.text   = if (favorite) itemText[5]
+        else itemText[2]
+        dataBinding.imageMenuItemFavorite.setImageResource(if (favorite) R.drawable.ic_favorite
+        else R.drawable.ic_favorite_bs)
+    }
     override fun onClick(v: View?) {
+        if (idProduct == -1) {
+            dismiss()
+            return
+        }
         v?.let{view ->
             var hide = true
             CoroutineScope(Dispatchers.Main).launch {
@@ -30,8 +41,12 @@ class BottomSheetProductMenu: BottomSheetDialogFragment(), View.OnClickListener 
                 MenuItemProduct.values().find {
                     it.value == view.id
                 }?.let{ selectedItemMenu ->
-                    if (selectedItemMenu == MenuItemProduct.ITEM_FAVORITE)
+                    if (selectedItemMenu == MenuItemProduct.ITEM_FAVORITE) {
+                        favorite = !favorite
+                        updateFavoriteItem()
                         hide = false
+                    }
+                    onProductItemMenuListener(selectedItemMenu, idProduct, favorite)
                 }
                 if (hide)
                     dismiss()
@@ -44,11 +59,23 @@ class BottomSheetProductMenu: BottomSheetDialogFragment(), View.OnClickListener 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        arguments?.let{arg ->
+            idProduct = arg.getInt("idproduct")
+            favorite  = arg.getBoolean("favorite")
+        }
         dataBinding = BottomsheetProductBinding.bind(inflater.inflate(R.layout.bottomsheet_product, container))
-        val itemText = getStringArrayResource(R.array.bottomsheet_product_items)
         dataBinding.textMenuItemCart.text       = itemText[0]
         dataBinding.textMenuItemBrend.text      = itemText[1]
-        dataBinding.textMenuItemFavorite.text   = itemText[2]
+
+        updateFavoriteItem()
+        /*dataBinding.textMenuItemFavorite.text   = if (favorite) itemText[5]
+            else itemText[2]
+
+        dataBinding.imageMenuItemFavorite.setImageResource(if (favorite) R.drawable.ic_favorite
+                                                                    else R.drawable.ic_favorite_bs)*/
+
+
+
         dataBinding.textMenuItemProduct.text    = itemText[3]
         dataBinding.textMenuItemCancel.text     = itemText[4]
         dataBinding.layoutMenuItemBrend.setOnClickListener(this)

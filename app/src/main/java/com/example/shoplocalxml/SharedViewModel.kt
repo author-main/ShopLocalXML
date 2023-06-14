@@ -136,4 +136,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
+    fun getProductFromId(id: Int) =
+        _products.value.find { it.id == id }
+
 }
