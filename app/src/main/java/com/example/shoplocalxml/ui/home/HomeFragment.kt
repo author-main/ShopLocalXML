@@ -1,5 +1,6 @@
 package com.example.shoplocalxml.ui.home
 
+import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion.MenuItemProduct
 import android.animation.ValueAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
@@ -400,9 +401,17 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
     }
 
     private fun onClickProductItemMenu(
-        itemMenu: BottomSheetProductMenu.Companion.MenuItemProduct, idProduct: Int, favorite: Boolean
+        itemMenu: MenuItemProduct, idProduct: Int, favorite: Boolean
     ){
-        log("$itemMenu $idProduct")
+        when (itemMenu) {
+            MenuItemProduct.ITEM_FAVORITE -> {
+                sharedViewModel.updateProductFavorite(idProduct, favorite)
+                (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).updateProductFavorite(
+                    idProduct,
+                    favorite
+                )
+            } else -> {}
+        }
     }
 
 }

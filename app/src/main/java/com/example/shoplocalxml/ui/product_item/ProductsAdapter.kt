@@ -28,6 +28,16 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         onProductItemListener = value
     }
 
+    fun updateProductFavorite(id: Int, value: Boolean){
+        for (i in products.indices){
+            if (products[i].id == id) {
+                products[i].favorite = if (value) 1 else 0
+                notifyItemChanged(i)
+                break
+            }
+        }
+    }
+
     private fun notifyItemsChanged(){
         notifyItemRangeChanged(0, products.size)
     }
