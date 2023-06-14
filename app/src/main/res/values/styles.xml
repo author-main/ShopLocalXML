@@ -149,4 +149,16 @@
     </style>
 
 
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalStyle</item>
+        <item name="backgroundColor">?attr/colorPrimaryDark</item>
+    </style>
+
+    <style name="ModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/roundrect_bottomsheet</item>
+    </style>
+
+
+
+
 </resources>

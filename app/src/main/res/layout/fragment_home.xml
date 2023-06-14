@@ -10,73 +10,76 @@
             type="com.example.shoplocalxml.ui.home.HomeViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
 
 
-        <LinearLayout
-            android:id="@+id/layoutToolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.home.HomeFragment">
 
-            <ImageView
-                android:id="@+id/buttonBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="8dp"
-                android:tint="@color/EditTextFont"
-                android:visibility="gone"
-                app:srcCompat="@drawable/ic_arrow_back" />
 
-            <com.example.shoplocalxml.custom_view.EditTextExt
-                android:id="@+id/editTextSearchQuery"
+            <LinearLayout
+                android:id="@+id/layoutToolbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="0dp"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_search"
-                android:drawableEnd="@drawable/ic_microphone"
-                android:drawablePadding="4dp"
-                android:ems="10"
-                android:hint="@string/text_search"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:minHeight="0dp"
-                android:paddingVertical="4dp"
-                android:textSize="13sp"
-                app:roundRadius="16dp"
-                app:showClearIcon="true" />
+                android:orientation="horizontal"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <include
-                android:id="@+id/includeButtonMessage"
-                layout="@layout/message_button" />
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/buttonBack"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:tint="@color/EditTextFont"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_arrow_back" />
 
-        <FrameLayout
-            android:id="@+id/layoutRoot"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/BackgroundDark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
+                <com.example.shoplocalxml.custom_view.EditTextExt
+                    android:id="@+id/editTextSearchQuery"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawableEnd="@drawable/ic_microphone"
+                    android:drawablePadding="4dp"
+                    android:ems="10"
+                    android:hint="@string/text_search"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:minHeight="0dp"
+                    android:paddingVertical="4dp"
+                    android:textSize="13sp"
+                    app:roundRadius="16dp"
+                    app:showClearIcon="true" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewProductHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp" />
-        </FrameLayout>
+                <include
+                    android:id="@+id/includeButtonMessage"
+                    layout="@layout/message_button" />
+            </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <FrameLayout
+                android:id="@+id/layoutRoot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/BackgroundDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutToolbar">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewProductHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp" />
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

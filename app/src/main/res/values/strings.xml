@@ -46,6 +46,7 @@
         <item>Отмена</item>
         <item>Удалить из избранного</item>
     </string-array>
+
     <string name="currency">P</string>
     <string name="text_search">Искать в ShopLocal</string>
     <string name="text_error_speechrecognizer">Система распознавания речи\nне доступна</string>

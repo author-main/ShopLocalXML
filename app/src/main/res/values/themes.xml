@@ -21,6 +21,7 @@
         <item name="windowNoTitle">true</item>
         <!--<item name="android:windowBackground">@android:color/black</item>-->
         <item name="android:windowBackground">@color/PrimaryDark</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
     </style>
     <style name="Theme.ShopLocalXML.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.ShopLocalXML.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

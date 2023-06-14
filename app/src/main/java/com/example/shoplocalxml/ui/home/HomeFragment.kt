@@ -33,6 +33,7 @@ import com.example.shoplocalxml.toDp
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
+import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.item_card.DividerItemDecoration
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
@@ -140,6 +141,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             }
 
             override fun onShowMenu(id: Int) {
+                val bottomSheetProductMenu = BottomSheetProductMenu()
+                bottomSheetProductMenu.show(parentFragmentManager, "BOTTOMSHEET_PRODUCT")
             }
 
             override fun onAddCart(id: Int) {

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheetProductCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/roundrect_bottomsheet"
+    android:paddingHorizontal="16dp"
+    app:behavior_hideable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+        android:id="@+id/layoutMenuItemCart"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageMenuItemCart"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_addcart"
+            app:tint="@color/TextDescription" />
+
+        <TextView
+            android:id="@+id/textMenuItemCart"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textAlignment="gravity"
+            android:textColor="@color/TextDescription" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutMenuItemBrend"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutMenuItemCart">
+
+        <ImageView
+            android:id="@+id/imageMenuItemBrend"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_brend_bs"
+            app:tint="@color/TextDescription" />
+
+        <TextView
+            android:id="@+id/textMenuItemBrend"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textAlignment="gravity"
+            android:textColor="@color/TextDescription" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutMenuItemFavorite"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutMenuItemBrend">
+
+        <ImageView
+            android:id="@+id/imageMenuItemFavorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_favorite_bs"
+            app:tint="@color/TextDescription" />
+
+        <TextView
+            android:id="@+id/textMenuItemFavorite"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textAlignment="gravity"
+            android:textColor="@color/TextDescription" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutMenuItemProduct"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutMenuItemFavorite">
+
+        <ImageView
+            android:id="@+id/imageMenuItemProduct"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_product_bs"
+            app:tint="@color/TextDescription" />
+
+        <TextView
+            android:id="@+id/textMenuItemProduct"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textAlignment="gravity"
+            android:textColor="@color/TextDescription" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutMenuItemCancel"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutMenuItemProduct">
+
+        <ImageView
+            android:id="@+id/imageMenuItemCancel"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            app:srcCompat="@drawable/ic_cancel_bs"
+            app:tint="@color/TextDescription" />
+
+        <TextView
+            android:id="@+id/textMenuItemCancel"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="TextView"
+            android:textAlignment="gravity"
+            android:textColor="@color/TextDescription" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
