@@ -70,17 +70,42 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         repository.clearSearchHistory()
     }
 
-    fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit) {
+    /*fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit) {
         repository.downloadImage(url, reduce, oncomplete)
-    }
+    }*/
 
     fun getProducts(page: Int, order: String) {
         //CoroutineScope(Dispatchers.Main).launch {
         viewModelScope.launch {
             repository.getProducts(page, order)?.let { products ->
-                setProducts(products)
+                setProducts(updateHostLink(products))
             }
         }
+    }
+
+    fun updateProductFavorite(idProduct: Int, value: Boolean){
+        viewModelScope.launch {
+            _products.value.find { it.id == idProduct }?.apply {
+                favorite = if (value) 1 else 0
+            }
+            repository.updateProductFavorite(idProduct, value)
+        }
+    }
+
+    private fun updateHostLink(list: List<Product>): List<Product>{
+        val listProduct = mutableListOf<Product>()
+        for (product in list) {
+            val links = mutableListOf<String>()
+            product.linkimages?.let{linkimages_ ->
+                for (link in linkimages_) {
+                    links.add(
+                        "$SERVER_URL/$DIR_IMAGES/$link"
+                    )
+                }
+            }
+            listProduct.add(product.copy(linkimages = links))
+        }
+        return listProduct
     }
 
     override fun onCleared() {

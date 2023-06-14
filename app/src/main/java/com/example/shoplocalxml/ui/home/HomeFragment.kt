@@ -35,6 +35,7 @@ import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.item_card.DividerItemDecoration
+import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -128,7 +129,27 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), 2)
         dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
-        dataBinding.recyclerViewProductHome.adapter = ProductsAdapter(context = requireContext())
+        val adapter = ProductsAdapter(context = requireContext())
+        HandlerProductItemCard.viewModel = sharedViewModel
+        adapter.setOnProductItemListener(object: OnProductItemListener{
+            override fun onChangedFavorite(id: Int, value: Boolean) {
+                HandlerProductItemCard.updateProductFavorite(id, value)
+            }
+
+            override fun onClick(id: Int, index: Int) {
+                HandlerProductItemCard.clickProduct(id, index)
+            }
+
+            override fun onShowMenu(id: Int) {
+                HandlerProductItemCard.showProductMenu(id)
+            }
+
+            override fun onAddCart(id: Int) {
+                HandlerProductItemCard.addProductCart(id)
+            }
+        })
+        dataBinding.recyclerViewProductHome.adapter = adapter
+
 
 
      /*   dataBinding.buttonUpdateProduct.setOnClickListener {
@@ -178,7 +199,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
         lifecycleScope.launch {
             sharedViewModel.products.collect {
-
+                    log("collect...")
                    /* val products = mutableListOf<Product>()
                     it.forEach {product ->
                         val listUrl = mutableListOf<String>()

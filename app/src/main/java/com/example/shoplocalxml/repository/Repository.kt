@@ -137,12 +137,20 @@ class Repository {
         SearchQueryStorage.getInstance().removeAllQueries()
     }
 
-    fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
+   /* fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
         ImageDownloadManager.download(url, reduce, oncomplete)
-    }
+    }*/
 
     suspend fun getProducts(page: Int, order: String): List<Product>? =
-        databaseHandler.getProducts(token!!, page, order)
+        token?.let {
+            databaseHandler.getProducts(it, page, order)
+        }
+
+    suspend fun updateProductFavorite(idProduct: Int, favorite:Boolean) {
+        token?.let {
+            databaseHandler.updateProductFavorite(it, idProduct, favorite)
+        }
+    }
 
     suspend fun getBrends(): List<Brend>? =
         databaseHandler.getBrends()

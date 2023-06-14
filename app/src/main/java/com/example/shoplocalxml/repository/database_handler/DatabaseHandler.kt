@@ -6,4 +6,5 @@ import com.example.shoplocalxml.classes.Product
 interface DatabaseHandler {
     suspend fun getProducts(token: String, page: Int, order: String): List<Product>?
     suspend fun getBrends(): List<Brend>?
+    suspend fun updateProductFavorite(token: String, idProduct: Int, favorite:Boolean)
 }

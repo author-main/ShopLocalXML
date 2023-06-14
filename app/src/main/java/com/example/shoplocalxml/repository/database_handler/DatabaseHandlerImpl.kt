@@ -20,4 +20,10 @@ class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHan
         withContext(Dispatchers.IO) {
              databaseApi.getBrends().body()
         }
+
+    override suspend fun updateProductFavorite(token: String, idProduct: Int, favorite:Boolean){
+        withContext(Dispatchers.IO) {
+            databaseApi.updateProductFavorite(token, idProduct, favorite)
+        }
+    }
 }

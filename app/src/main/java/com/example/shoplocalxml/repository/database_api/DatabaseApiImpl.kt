@@ -8,6 +8,9 @@ import com.google.gson.GsonBuilder
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 class DatabaseApiImpl {
     private val QUERY_REGUSER     = "reg_user"
@@ -49,4 +52,8 @@ class DatabaseApiImpl {
 
     suspend fun getBrends(): Response<List<Brend>> =
         retrofitInstance.getBrends()
+
+    suspend fun updateProductFavorite(token: String, idProduct: Int, favorite:Boolean){
+        retrofitInstance.updateFavorite(token, idProduct, if (favorite) 1 else 0)
+    }
 }

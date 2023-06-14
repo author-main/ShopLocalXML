@@ -38,7 +38,7 @@ class ProductItemCard: FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
-    fun setOnProductItemListener(value: OnProductItemListener){
+    fun setOnProductItemListener(value: OnProductItemListener?){
         onProductItemListener = value
     }
 
@@ -78,12 +78,12 @@ class ProductItemCard: FrameLayout {
         // Обработка события изменения favorite продукта
         dataBinding.productCard.setOnChangedFavorite {
             onProductItemListener?.onChangedFavorite(product.id, it)
-            log("favorite $it...")
+            //log("favorite $it...")
         }
         // Обработка события отобразить меню продукта
         dataBinding.productCard.setOnShowMenu {
             onProductItemListener?.onShowMenu(product.id)
-            log("show menu...")
+            //log("show menu...")
         }
         // Обработка события клик по продукту
         dataBinding.productCard.setOnClick {

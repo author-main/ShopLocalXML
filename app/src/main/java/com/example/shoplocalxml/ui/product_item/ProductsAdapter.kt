@@ -2,6 +2,7 @@ package com.example.shoplocalxml.ui.product_item
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -16,37 +17,23 @@ import com.example.shoplocalxml.classes.image_downloader.DiffCallback
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.history_search.SearchAdapter
 import com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard
+import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImageItem
 
 class ProductsAdapter(val context: Context, private var products: MutableList<Product> = mutableListOf(), private var viewMode: ItemViewMode = ItemViewMode.CARD): RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
+
+    private var onProductItemListener: OnProductItemListener? = null
+    fun setOnProductItemListener(value: OnProductItemListener){
+        onProductItemListener = value
+    }
 
     private fun notifyItemsChanged(){
         notifyItemRangeChanged(0, products.size)
     }
 
     fun setProducts(list: List<Product>){
-        val productList = mutableListOf<Product>()
-        for (product in list) {
-            val linkImages = mutableListOf<String>()
-            product.linkimages?.let {linkimages_ ->
-                for (link in linkimages_) {
-                    linkImages.add("$SERVER_URL/$DIR_IMAGES/$link")
-                }
-            }
-            productList.add(product.copy(linkimages = linkImages))
-        }
-        /*for( i in productList.indices) {
-            productList[i].linkimages?.let{linkimages_ ->
-               // log(linkimages_)
-
-                for (j in linkimages_.indices)
-                    linkimages_[j] = "$SERVER_URL/$DIR_IMAGES/${linkimages_[j]}"
-            }
-        }*/
-
-
-        swapData(productList)
+        swapData(list)
         notifyItemsChanged()
     }
 
@@ -58,7 +45,7 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = ProductItemCard(context)
-        return ViewHolder(view)
+        return ViewHolder(view, onProductItemListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -78,11 +65,13 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
     override fun getItemCount() =
         products.size
 
-    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val view: View, private val onProductItemListener: OnProductItemListener?) : RecyclerView.ViewHolder(view) {
          lateinit var item: Product
         fun bindItem(item: Product){
             this.item = item
-            (view as ProductItemCard).product = item
+            val itemCard = view as ProductItemCard
+            itemCard.product = item
+            itemCard.setOnProductItemListener(onProductItemListener)
             /*with((view as ProductItemCard)) {
                 this.product = item
             }*/
