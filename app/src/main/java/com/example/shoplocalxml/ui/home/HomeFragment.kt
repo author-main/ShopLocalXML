@@ -135,15 +135,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
             override fun onChangedFavorite(id: Int, value: Boolean) {
                 HandlerProductItemCard.updateProductFavorite(id, value)
             }
-
             override fun onClick(id: Int, index: Int) {
                 HandlerProductItemCard.clickProduct(id, index)
             }
-
             override fun onShowMenu(id: Int) {
                 HandlerProductItemCard.showProductMenu(id)
             }
-
             override fun onAddCart(id: Int) {
                 HandlerProductItemCard.addProductCart(id)
             }
