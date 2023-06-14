@@ -200,7 +200,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
         lifecycleScope.launch {
             sharedViewModel.products.collect {
-                    log("collect...")
+                   // log("collect...")
                    /* val products = mutableListOf<Product>()
                     it.forEach {product ->
                         val listUrl = mutableListOf<String>()

@@ -22,31 +22,16 @@ import kotlinx.coroutines.launch
 class BottomSheetProductMenu: BottomSheetDialogFragment(), View.OnClickListener {
     //private val dataBinding: BottomsheetProductBinding = DataBindingUtil.inflate(layoutInflater, R.layout.bottomsheet_product, null, false)
     private lateinit var dataBinding: BottomsheetProductBinding
-
     override fun onClick(v: View?) {
         v?.let{view ->
             var hide = true
             CoroutineScope(Dispatchers.Main).launch {
                 delay(150)
-                when (view.id) {
-                    R.id.layoutMenuItemCart -> {
-
-                    }
-
-                    R.id.layoutMenuItemBrend -> {
-
-                    }
-
-                    R.id.layoutMenuItemFavorite -> {
+                MenuItemProduct.values().find {
+                    it.value == view.id
+                }?.let{ selectedItemMenu ->
+                    if (selectedItemMenu == MenuItemProduct.ITEM_FAVORITE)
                         hide = false
-                    }
-
-                    R.id.layoutMenuItemProduct -> {
-
-                    }
-                    /*R.id.layoutMenuItemCancel ->{
-                    dismiss()
-                }*/
                 }
                 if (hide)
                     dismiss()
@@ -84,6 +69,15 @@ class BottomSheetProductMenu: BottomSheetDialogFragment(), View.OnClickListener 
             //bottomSheetDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
 
+        }
+    }
+    companion object {
+        enum class MenuItemProduct(val value: Int) {
+            ITEM_CART(R.id.layoutMenuItemCart),
+            ITEM_BREND(R.id.layoutMenuItemBrend),
+            ITEM_FAVORITE(R.id.layoutMenuItemFavorite),
+            ITEM_PRODUCT(R.id.layoutMenuItemProduct),
+            ITEM_CANCEL(R.id.layoutMenuItemCancel)
         }
     }
 }
