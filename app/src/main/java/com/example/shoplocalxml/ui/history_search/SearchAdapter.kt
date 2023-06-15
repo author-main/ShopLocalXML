@@ -36,14 +36,9 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
     private fun setSearchQuery(value: String): String {
             filtered = value.isNotBlank() ?: false
             val query = if (filtered) {
-
                 swapData(items.filter {
                     it.contains(value, true)
                 })
-                /*showItems.clear()
-                showItems.addAll(items.filter {
-                    it.contains(value, true)
-                })*/
                 value
             } else {
                 swapData(items)
