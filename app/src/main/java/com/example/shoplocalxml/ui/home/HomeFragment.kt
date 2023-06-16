@@ -404,13 +404,17 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         itemMenu: MenuItemProduct, idProduct: Int, favorite: Boolean
     ){
         when (itemMenu) {
+            MenuItemProduct.ITEM_CART -> {}
+            MenuItemProduct.ITEM_BREND -> {}
             MenuItemProduct.ITEM_FAVORITE -> {
                 sharedViewModel.updateProductFavorite(idProduct, favorite)
                 (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).updateProductFavorite(
                     idProduct,
                     favorite
                 )
-            } else -> {}
+            }
+            MenuItemProduct.ITEM_PRODUCT -> {}
+            else -> {}
         }
     }
 

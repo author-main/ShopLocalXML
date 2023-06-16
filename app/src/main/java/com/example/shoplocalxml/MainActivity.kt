@@ -354,11 +354,11 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     override fun onStop() {
         super.onStop()
-        log("activity onstop....")
+      //  log("activity onstop....")
     }
 
     override fun onStart() {
         super.onStart()
-        log("activity onstart....")
+       // log("activity onstart....")
     }
 }

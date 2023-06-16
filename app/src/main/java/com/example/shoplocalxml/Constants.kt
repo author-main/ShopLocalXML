@@ -22,6 +22,7 @@ const val EMPTY_STRING      = ""
 }*/
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
+//const val SERVER_URL = "http://faceshot.ru"
 const val SERVER_URL        = "http://192.168.1.10"
 const val DIR_IMAGES        = "images_ls"
 val DEFAULT_BITMAP: Bitmap? = run{
