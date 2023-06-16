@@ -136,6 +136,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val layoutManager = GridLayoutManager(requireContext(), 2)
         dataBinding.recyclerViewProductHome.layoutManager = layoutManager
         dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
+        //dataBinding.recyclerViewProductHome.itemAnimator = null
         dataBinding.recyclerViewProductHome.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 //log("last visible position = ${layoutManager.findLastVisibleItemPosition()}")
@@ -250,7 +251,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                             )
                         }
                     }*/
-                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it, sharedViewModel.portionData)
+                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.portionData)
                    /* products.forEach { product ->
                         product.linkimages?.forEach {url ->
                             sharedViewModel.downloadImage(url) {bitmap ->

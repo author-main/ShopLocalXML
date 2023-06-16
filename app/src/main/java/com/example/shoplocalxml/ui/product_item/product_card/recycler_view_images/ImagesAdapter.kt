@@ -60,20 +60,25 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
             for (i in list.indices) {
                 val item = ImageItem(list[i], image = null)
                 images.add(item)
+
                 ImageDownloadManager.download(item.url) {
                     item.image = it ?: run {
                         item.default = true
                         DEFAULT_BITMAP
                     }
                     notifyItemChanged(i)
+                    //notifyDataSetChanged()
                     countUploaded += 1
-                    if (countUploaded == images.size)
+                    if (countUploaded == images.size) {
+                        notifyDataSetChanged()
                         onUploaded?.invoke()
+                    }
                 }
             }
         }
       //  }
     }
+
 
   /*  fun setImages(value: List<ImageItem>){
         countUploaded = 0
