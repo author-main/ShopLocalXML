@@ -1,12 +1,14 @@
 package com.example.shoplocalxml.ui.home
 
-import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion.MenuItemProduct
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
-import android.view.View.OnScrollChangeListener
 import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
@@ -28,15 +30,17 @@ import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnFabListener
 import com.example.shoplocalxml.OnSpeechRecognizer
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
-import com.example.shoplocalxml.isEven
+import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu
+import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion.MenuItemProduct
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.item_card.DividerItemDecoration
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
@@ -51,7 +55,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
    // private lateinit var sharedViewModel: SharedViewModel
 
     private var orderQuery: String = ""
-
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             this,
@@ -233,6 +236,26 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             sharedViewModel.getProducts(1, orderQuery)
         }
 
+        val wrapper: Context = ContextThemeWrapper(requireContext(), com.example.shoplocalxml.R.style.PopupMenu)
+        val popupMenu = androidx.appcompat.widget.PopupMenu(wrapper, dataBinding.includePanelOrderFilter.buttonSort)
+        val sortItems = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)
+
+
+        for (i in sortItems.indices){
+            val item = popupMenu.menu.add(sortItems[i]).setOnMenuItemClickListener {
+                menuOrderClick(i)
+                true
+            }
+        }
+
+       /* popupMenu.setOnMenuItemClickListener {
+            menuOrderClick(it)
+            true
+        }*/
+
+        dataBinding.includePanelOrderFilter.buttonSort.setOnClickListener {
+            popupMenu.show()
+        }
 
         lifecycleScope.launch {
             sharedViewModel.products.collect {
@@ -463,6 +486,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         (activity as MainActivity).setFabVisibility(false)
     }
 
+    private fun menuOrderClick(index: Int) {
+        val ITEM_PRICE   = 0
+        val ITEM_POPULAR = 1
+        val ITEM_RATING  = 2
+        when (index) {
+            ITEM_PRICE   ->{}
+            ITEM_POPULAR ->{}
+            ITEM_RATING  ->{}
+        }
+    }
 
    /* override fun onStop() {
         (activity as MainActivity).setFabVisibility(false)
