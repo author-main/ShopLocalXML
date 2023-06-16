@@ -54,13 +54,13 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
     fun setImages(list: List<String>){
         images.clear()
+        notifyDataSetChanged()
         countUploaded = 0
        // handlerUI.post {
         CoroutineScope(Dispatchers.Main).launch {
             for (i in list.indices) {
                 val item = ImageItem(list[i], image = null)
                 images.add(item)
-
                 ImageDownloadManager.download(item.url) {
                     item.image = it ?: run {
                         item.default = true
@@ -68,12 +68,11 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
                     }
                     notifyItemChanged(i)
                     countUploaded += 1
-                    if (countUploaded == images.size) {
-                        notifyDataSetChanged()
+                    if (countUploaded == images.size)
                         onUploaded?.invoke()
-                    }
                 }
             }
+
         }
       //  }
     }
