@@ -136,8 +136,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 //log("last visible position = ${layoutManager.findLastVisibleItemPosition()}")
                 super.onScrolled(recyclerView, dx, dy)
                 (activity as MainActivity).setFabVisibility(recyclerView.canScrollVertically(-1))
-
-
             }
         })
 
@@ -434,13 +432,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     override fun onFabClick() {
-        //(activity as MainActivity).setFabVisibility(false)
         dataBinding.recyclerViewProductHome.smoothScrollToPosition(0)
     }
 
     override fun onPause() {
-        (activity as MainActivity).setFabVisibility(false)
+        hideFab()
         super.onPause()
+    }
+
+    private fun hideFab(){
+        (activity as MainActivity).setFabVisibility(false)
     }
 
    /* override fun onStop() {
