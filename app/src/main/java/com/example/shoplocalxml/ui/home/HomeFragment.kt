@@ -437,6 +437,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         //(activity as MainActivity).setFabVisibility(false)
         dataBinding.recyclerViewProductHome.smoothScrollToPosition(0)
     }
+
+    override fun onPause() {
+        (activity as MainActivity).setFabVisibility(false)
+        super.onPause()
+    }
+
+   /* override fun onStop() {
+        (activity as MainActivity).setFabVisibility(false)
+        super.onStop()
+    }*/
 }
 
 /*
