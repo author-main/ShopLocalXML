@@ -6,6 +6,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnScrollChangeListener
 import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
@@ -16,11 +17,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
+import com.example.shoplocalxml.OnFabListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.custom_view.EditTextExt
@@ -39,7 +44,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
+class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener {
 
    // private lateinit var sharedViewModel: SharedViewModel
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
@@ -123,9 +128,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
 
 
 
-
-        dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        dataBinding.recyclerViewProductHome.layoutManager = layoutManager
         dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
+        dataBinding.recyclerViewProductHome.addOnScrollListener(object : OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                //log("last visible position = ${layoutManager.findLastVisibleItemPosition()}")
+                super.onScrolled(recyclerView, dx, dy)
+                (activity as MainActivity).setFabVisibility(recyclerView.canScrollVertically(-1))
+
+
+            }
+        })
+
         val adapter = ProductsAdapter(context = requireContext())
         adapter.setOnProductItemListener(object: OnProductItemListener{
             override fun onChangedFavorite(id: Int, value: Boolean) {
@@ -418,6 +433,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer {
         }
     }
 
+    override fun onFabClick() {
+        //(activity as MainActivity).setFabVisibility(false)
+        dataBinding.recyclerViewProductHome.smoothScrollToPosition(0)
+    }
 }
 
 /*
@@ -426,3 +445,5 @@ recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
 app:spanCount="2"
  */
+
+//<!--android:src="@android:drawable/ic_dialog_email"-->

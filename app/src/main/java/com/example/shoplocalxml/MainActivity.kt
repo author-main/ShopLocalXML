@@ -1,46 +1,43 @@
 package com.example.shoplocalxml
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.util.DisplayMetrics
-import android.util.Size
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.marginBottom
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityMainBinding
-import com.example.shoplocalxml.ui.login.LoginViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Locale
 
 
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
     //private lateinit var appBarConfiguration: AppBarConfiguration
+    private var animatedFabShow = false
+    private var animatedFabHide = false
     private lateinit var binding: ActivityMainBinding
     private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
@@ -68,7 +65,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.appBarMain.fab.visibility = View.GONE
+        //binding.appBarMain.fab.visibility = View.GONE
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         sharedViewModel.setOnCloseApp {
           //  log("id = ${sharedViewModel.idViewModel}")
@@ -96,6 +93,25 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
                 }
             }
             bottomNavigationView.setupWithNavController(navController)
+        }
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        fab.setColorFilter(this.getColor(R.color.EditTextFont))
+      /*  val marginFab = bottomNavigationView.height + 16.toPx
+        val params = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.bottomMargin = marginFab
+        params.marginEnd    = 16.toPx
+        binding.appBarMain.fab.layoutParams = params*/
+
+
+        fab.setOnClickListener {
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+            val fragment = navHostFragment?.childFragmentManager?.primaryNavigationFragment
+            fragment?.let{
+                if (it is OnFabListener) {
+                    (it as OnFabListener).onFabClick()                }
+            }
         }
     }
 
@@ -361,4 +377,58 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
         super.onStart()
        // log("activity onstart....")
     }
+
+
+    fun setFabVisibility(value: Boolean) {
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        fun isFabVisibled() = fab.alpha == 1f
+
+        if (value && isFabVisibled()) return
+        if (!value && !isFabVisibled()) return
+
+        if (value && animatedFabShow) return
+        if (!value && animatedFabHide) return
+
+        val animValueFrom = if (value) 0f else 1f
+        val animValueTo   = if (value) 1f else 0f
+
+
+        val animator =
+            ValueAnimator.ofFloat(animValueFrom, animValueTo)
+       // log("start animation $value, alpha = ${binding.appBarMain.fab.alpha}...")
+        animator.duration = 300
+        animator.addListener(object: AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+                if (value) {
+                    fab.alpha = 0f
+                    fab.visibility = View.VISIBLE
+                    animatedFabShow = true
+                }
+                else
+                    animatedFabHide = true
+
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                animatedFabShow = false
+                animatedFabHide = false
+                if (!value) {
+                    fab.alpha = 0f
+                    fab.visibility = View.GONE
+                }
+            }
+
+            override fun onAnimationCancel(animation: Animator) {
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+            }
+        })
+        animator.addUpdateListener { valueAnimator ->
+            fab.alpha = valueAnimator.animatedValue as Float
+        }
+        animator.start()
+
+    }
+
 }
