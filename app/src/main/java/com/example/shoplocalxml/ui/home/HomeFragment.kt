@@ -236,6 +236,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
         lifecycleScope.launch {
             sharedViewModel.products.collect {
+                val visibility = if (it.size > 0) View.VISIBLE else View.GONE
+                dataBinding.includePanelOrderFilter.panelOrderFilter.visibility = visibility
+
                    // log("collect...")
                    /* val products = mutableListOf<Product>()
                     it.forEach {product ->

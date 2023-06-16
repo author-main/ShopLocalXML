@@ -1,5 +1,6 @@
 package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
@@ -52,6 +53,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
         return countUploaded == itemCount
     }*/
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setImages(list: List<String>){
         images.clear()
         notifyDataSetChanged()
