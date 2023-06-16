@@ -1,37 +1,22 @@
 package com.example.shoplocalxml
 
-import android.graphics.Bitmap
-import android.os.Handler
-import android.os.Looper
-import androidx.annotation.EmptySuper
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.repository.Repository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
-
-    private val _products = MutableStateFlow<List<Product>>(listOf())
+    private var processQuery = false
+    var portionData = 0
+    private val _products = MutableStateFlow<MutableList<Product>>(mutableListOf())
     val products = _products.asStateFlow()
-    private fun setProducts(value: List<Product>) {
+    private fun setProducts(value: MutableList<Product>) {
         _products.value = value
     }
 
@@ -74,11 +59,28 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         repository.downloadImage(url, reduce, oncomplete)
     }*/
 
+    private fun updateDataAfterQuery(list: List<Product>) {
+        _products.update {
+            _products.value.toMutableList().apply { this.addAll(updateHostLink(list)) }
+        }
+    }
+
+
     fun getProducts(page: Int, order: String) {
+        if (processQuery) return
+        if (page <= portionData) return
+        log("portion loaded...")
+        processQuery = true
         //CoroutineScope(Dispatchers.Main).launch {
         viewModelScope.launch {
             repository.getProducts(page, order)?.let { products ->
-                setProducts(updateHostLink(products))
+
+                if (products.isNotEmpty()) {
+                    portionData += 1
+                    updateDataAfterQuery(products)
+                    processQuery = false
+                    //setProducts(updateHostLink(products))
+                }
             }
         }
     }

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
+import com.example.shoplocalxml.DATA_PORTION
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
@@ -30,6 +31,7 @@ import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
+import com.example.shoplocalxml.isEven
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
@@ -47,6 +49,9 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener {
 
    // private lateinit var sharedViewModel: SharedViewModel
+
+    private var orderQuery: String = ""
+
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             this,
@@ -136,6 +141,15 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 //log("last visible position = ${layoutManager.findLastVisibleItemPosition()}")
                 super.onScrolled(recyclerView, dx, dy)
                 (activity as MainActivity).setFabVisibility(recyclerView.canScrollVertically(-1))
+                if (!recyclerView.canScrollVertically(1)) {
+                    val lastVisibilityPosition = layoutManager.findLastVisibleItemPosition()
+                    val nextPortion = lastVisibilityPosition / DATA_PORTION + 1
+                    val nextPortionPosition = nextPortion * DATA_PORTION
+                    val nextRowPosition = lastVisibilityPosition + 1
+                    if (nextRowPosition == nextPortionPosition) {
+                        sharedViewModel.getProducts(nextPortion + 1, homeViewModel.getQueryOrder())
+                    }
+                }
             }
         })
 
@@ -214,7 +228,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
 
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
-            sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
+            val orderQuery = homeViewModel.getQueryOrder()
+            sharedViewModel.getProducts(1, orderQuery)
         }
 
 
@@ -235,7 +250,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                             )
                         }
                     }*/
-                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)
+                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it, sharedViewModel.portionData)
                    /* products.forEach { product ->
                         product.linkimages?.forEach {url ->
                             sharedViewModel.downloadImage(url) {bitmap ->
@@ -443,6 +458,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private fun hideFab(){
         (activity as MainActivity).setFabVisibility(false)
     }
+
 
    /* override fun onStop() {
         (activity as MainActivity).setFabVisibility(false)

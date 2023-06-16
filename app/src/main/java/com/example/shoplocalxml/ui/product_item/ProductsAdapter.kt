@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.DATA_PORTION
 import com.example.shoplocalxml.DIR_IMAGES
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SERVER_URL
@@ -40,9 +41,9 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         notifyItemRangeChanged(0, products.size)
     }
 
-    fun setProducts(list: List<Product>){
+    fun setProducts(list: List<Product>, page: Int){
         swapData(list)
-        notifyItemsChanged()
+        notifyItemRangeChanged((page - 1) * DATA_PORTION, products.size)
     }
 
    /* fun setViewMode(value: ItemViewMode){

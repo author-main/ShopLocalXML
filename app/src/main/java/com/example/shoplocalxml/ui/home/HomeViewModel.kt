@@ -14,6 +14,15 @@ import java.util.Stack
 import java.util.concurrent.Executors
 
 class HomeViewModel : ViewModel() {
+
+    var order: String = ""
+        set(value) {
+            field = value
+            setOrderQuery(value)
+        }
+
+    private var orderQuery: String = ""
+
     private val stackMode = Stack<HomeMode>().apply {
         push(HomeMode.MAIN)
     }
@@ -39,6 +48,15 @@ class HomeViewModel : ViewModel() {
         } else {
             stackMode.push(value)
         }
+    }
+
+    private fun setOrderQuery(value: String) {
+        orderQuery = value
+    }
+
+    fun getQueryOrder(): String {
+        return "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE="
+        //return orderQuery
     }
 
 

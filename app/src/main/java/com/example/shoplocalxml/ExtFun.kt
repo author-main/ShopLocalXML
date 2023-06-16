@@ -189,6 +189,8 @@ fun getDisplaySize(): Size {
     return Size(width, height)
 }
 
+fun isEven(value: Int) = value % 2 == 0
+
 
 /*fun setWidthDialog(dialog: AlertDialog, widthDP: Int){
     val width: Int = widthDP.toPx

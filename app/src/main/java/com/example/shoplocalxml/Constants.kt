@@ -31,6 +31,7 @@ val DEFAULT_BITMAP: Bitmap? = run{
 }
 val paddingProductCard = 12.toPx
 val widthProductCard = (getDisplaySize().width - (paddingProductCard * 3)) / 2
+const val DATA_PORTION = 8
 
 
     //val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
