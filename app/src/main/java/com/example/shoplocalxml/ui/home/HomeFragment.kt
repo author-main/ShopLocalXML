@@ -494,15 +494,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val order = sharedViewModel.sortOrder.order
         val sort  = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sharedViewModel.sortOrder.sort.value]
         dataBinding.includePanelOrderFilter.buttonSort.text = sort
+        val sizeIcon = 24.toPx
         if (order == Order.DESCENDING) {
             val drawable = AppCompatResources.getDrawable(
                 requireContext(),
                 com.example.shoplocalxml.R.drawable.ic_sort
-            )?.toBitmap(24.toPx, 24.toPx, Bitmap.Config.ARGB_8888)
+            )?.toBitmap(sizeIcon, sizeIcon, Bitmap.Config.ARGB_8888)
             drawable?.let { srcBitmap ->
                 val matrix = Matrix()
                 matrix.preScale(1f, -1f)
-                val bitmap = Bitmap.createBitmap(srcBitmap, 0, 0, 24.toPx, 24.toPx, matrix, false)
+                val bitmap = Bitmap.createBitmap(srcBitmap, 0, 0, sizeIcon, sizeIcon, matrix, false)
                 val icon: Drawable = BitmapDrawable(resources, bitmap)
                 dataBinding.includePanelOrderFilter.buttonSort.setCompoundDrawablesWithIntrinsicBounds(
                     icon,
