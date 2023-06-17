@@ -477,6 +477,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     override fun onFabClick() {
+        dataBinding.appbarHome.setExpanded(true, true)
         dataBinding.recyclerViewProductHome.smoothScrollToPosition(0)
     }
 
