@@ -532,10 +532,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             ITEM_POPULAR ->{sharedViewModel.sortOrder.sort = Sort.POPULAR}
             ITEM_RATING  ->{sharedViewModel.sortOrder.sort = Sort.RATING}
         }
-
         if (prev == sharedViewModel.sortOrder.sort)
             sharedViewModel.sortOrder.invertOrder()
-
     }
 
    /* override fun onStop() {
