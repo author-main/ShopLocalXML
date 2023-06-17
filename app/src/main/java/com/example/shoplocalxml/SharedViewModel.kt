@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
+    var sortOrder = SortOrder()
     private var processQuery = false
     var portionData = 0
     private val _products = MutableStateFlow<MutableList<Product>>(mutableListOf())
