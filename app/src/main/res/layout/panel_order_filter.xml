@@ -13,8 +13,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_marginStart="16dp"
+        android:drawableLeft="@drawable/ic_sort"
+        android:drawableTint="@color/EditTextFont"
         android:text="Button"
-        app:icon="@drawable/ic_sort"
         app:iconPadding="0dp"
         app:iconTint="@color/EditTextFont" />
 

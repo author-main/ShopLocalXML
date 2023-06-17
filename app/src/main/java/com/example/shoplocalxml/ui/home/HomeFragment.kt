@@ -3,16 +3,20 @@ package com.example.shoplocalxml.ui.home
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
-import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -30,12 +34,12 @@ import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnFabListener
 import com.example.shoplocalxml.OnSpeechRecognizer
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.classes.sort_filter.Order
+import com.example.shoplocalxml.classes.sort_filter.Sort
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -239,8 +243,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val wrapper: Context = ContextThemeWrapper(requireContext(), com.example.shoplocalxml.R.style.PopupMenu)
         val popupMenu = androidx.appcompat.widget.PopupMenu(wrapper, dataBinding.includePanelOrderFilter.buttonSort)
         val sortItems = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)
-
-
+        setTextButtonOrder()
         for (i in sortItems.indices){
             val item = popupMenu.menu.add(sortItems[i]).setOnMenuItemClickListener {
                 menuOrderClick(i)
@@ -486,15 +489,53 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         (activity as MainActivity).setFabVisibility(false)
     }
 
+    private fun setTextButtonOrder() {
+        val order = sharedViewModel.sortOrder.order
+        val sort  = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sharedViewModel.sortOrder.sort.value]
+        dataBinding.includePanelOrderFilter.buttonSort.text = sort
+        if (order == Order.DESCENDING) {
+            val drawable = AppCompatResources.getDrawable(
+                requireContext(),
+                com.example.shoplocalxml.R.drawable.ic_sort
+            )?.toBitmap(24.toPx, 24.toPx, Bitmap.Config.ARGB_8888)
+            drawable?.let { srcBitmap ->
+                val matrix = Matrix()
+                matrix.preScale(1f, -1f)
+                val bitmap = Bitmap.createBitmap(srcBitmap, 0, 0, 24.toPx, 24.toPx, matrix, false)
+                val icon: Drawable = BitmapDrawable(resources, bitmap)
+                dataBinding.includePanelOrderFilter.buttonSort.setCompoundDrawablesWithIntrinsicBounds(
+                    icon,
+                    null,
+                    null,
+                    null
+                )
+            }
+        } else {
+            dataBinding.includePanelOrderFilter.buttonSort.setCompoundDrawablesWithIntrinsicBounds(
+                AppCompatResources.getDrawable(
+                    requireContext(),
+                    com.example.shoplocalxml.R.drawable.ic_sort
+                ),
+                null,
+                null,
+                null
+            )
+        }
+    }
+
     private fun menuOrderClick(index: Int) {
         val ITEM_PRICE   = 0
         val ITEM_POPULAR = 1
         val ITEM_RATING  = 2
+        val prev = sharedViewModel.sortOrder.sort
         when (index) {
-            ITEM_PRICE   ->{}
-            ITEM_POPULAR ->{}
-            ITEM_RATING  ->{}
+            ITEM_PRICE   ->{sharedViewModel.sortOrder.sort = Sort.PRICE}
+            ITEM_POPULAR ->{sharedViewModel.sortOrder.sort = Sort.POPULAR}
+            ITEM_RATING  ->{sharedViewModel.sortOrder.sort = Sort.RATING}
         }
+        if (prev == sharedViewModel.sortOrder.sort)
+            sharedViewModel.sortOrder.invertOrder()
+        setTextButtonOrder()
     }
 
    /* override fun onStop() {
