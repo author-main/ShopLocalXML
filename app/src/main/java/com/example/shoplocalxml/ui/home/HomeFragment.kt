@@ -243,11 +243,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val wrapper: Context = ContextThemeWrapper(requireContext(), com.example.shoplocalxml.R.style.PopupMenu)
         val popupMenu = androidx.appcompat.widget.PopupMenu(wrapper, dataBinding.includePanelOrderFilter.buttonSort)
         val sortItems = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)
-        setTextButtonOrder(sortItems[sharedViewModel.sortOrder.sort.value])
+        setTextButtonOrder()
         for (i in sortItems.indices){
             val item = popupMenu.menu.add(sortItems[i]).setOnMenuItemClickListener {
                 menuOrderClick(i)
-                setTextButtonOrder(sortItems[i])
                 true
             }
         }
@@ -490,9 +489,11 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         (activity as MainActivity).setFabVisibility(false)
     }
 
-    private fun setTextButtonOrder(value: String) {
-        dataBinding.includePanelOrderFilter.buttonSort.text = value
-        if (sharedViewModel.sortOrder.order == Order.DESCENDING) {
+    private fun setTextButtonOrder() {
+        val order = sharedViewModel.sortOrder.order
+        val sort  = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sharedViewModel.sortOrder.sort.value]
+        dataBinding.includePanelOrderFilter.buttonSort.text = sort
+        if (order == Order.DESCENDING) {
             val drawable = AppCompatResources.getDrawable(
                 requireContext(),
                 com.example.shoplocalxml.R.drawable.ic_sort
@@ -534,6 +535,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
         if (prev == sharedViewModel.sortOrder.sort)
             sharedViewModel.sortOrder.invertOrder()
+        setTextButtonOrder()
     }
 
    /* override fun onStop() {
