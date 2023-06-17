@@ -40,6 +40,7 @@ import com.example.shoplocalxml.classes.sort_filter.Sort
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -146,9 +147,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         //dataBinding.recyclerViewProductHome.itemAnimator = null
         dataBinding.recyclerViewProductHome.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                //log("last visible position = ${layoutManager.findLastVisibleItemPosition()}")
+                val showFab = recyclerView.canScrollVertically(-1) && dy < 0
                 super.onScrolled(recyclerView, dx, dy)
-                (activity as MainActivity).setFabVisibility(recyclerView.canScrollVertically(-1))
+                //(activity as MainActivity).setFabVisibility(canScrollUp)//recyclerView.canScrollVertically(-1))
+                (activity as MainActivity).setFabVisibility(showFab)
                 if (!recyclerView.canScrollVertically(1)) {
                     val lastVisibilityPosition = layoutManager.findLastVisibleItemPosition()
                     val nextPortion = lastVisibilityPosition / DATA_PORTION + 1
