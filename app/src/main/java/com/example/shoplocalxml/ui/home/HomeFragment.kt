@@ -8,6 +8,8 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -268,6 +270,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 val visibility = if (it.size > 0) View.VISIBLE else View.GONE
                 dataBinding.includePanelOrderFilter.panelOrderFilter.visibility = visibility
 
+              /*  Handler(Looper.getMainLooper()).post {
+                    dataBinding.recyclerViewProductHome.invalidateItemDecorations()
+                }*/
+
                    // log("collect...")
                    /* val products = mutableListOf<Product>()
                     it.forEach {product ->
@@ -283,7 +289,11 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                             )
                         }
                     }*/
+
+
+
                     (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.uploadDataAgain)//, sharedViewModel.portionData)
+
                    /* products.forEach { product ->
                         product.linkimages?.forEach {url ->
                             sharedViewModel.downloadImage(url) {bitmap ->
@@ -547,6 +557,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 //        (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).
         sharedViewModel.setSortProduct(sortOrder)
         sharedViewModel.getProducts(1, true)
+        /*Handler(Looper.getMainLooper()).post {
+            dataBinding.recyclerViewProductHome.invalidateItemDecorations()
+        }*/
     }
 
    /* override fun onStop() {

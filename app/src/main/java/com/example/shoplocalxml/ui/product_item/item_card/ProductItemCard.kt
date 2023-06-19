@@ -63,7 +63,6 @@ class ProductItemCard: FrameLayout {
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)
 
-        //val widthCard = (getDisplaySize().width - (paddingProductCard * 3)) / 2
         val layoutParams = dataBinding.productCard.layoutParams
         layoutParams.height = widthProductCard
         layoutParams.width  = widthProductCard
