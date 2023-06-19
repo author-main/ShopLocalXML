@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.paddingProductCard
 import com.example.shoplocalxml.toPx
 
