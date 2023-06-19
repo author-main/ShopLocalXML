@@ -73,12 +73,14 @@ class ImageDownloaderImpl
                     success = true
                 }
             }
-        } catch (e: Exception) {
-            log(e.message)
+        } catch (_: Exception) {
+            //log(e.message)
         }
         if (!success)
             bitmap = loadBitmap(filenameCache, reduce)
         //for (i in 0..1000000000){}
+       /* if (bitmap == null)
+            log("bitmap is null...")*/
         onComplete(bitmap, timeStamp)
         return bitmap to timeStamp
     }
