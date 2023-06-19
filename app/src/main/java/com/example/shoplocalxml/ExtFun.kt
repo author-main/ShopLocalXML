@@ -115,6 +115,7 @@ fun setDialogStyle(dialog: AlertDialog, @StringRes title: Int? = null, noTitle: 
     title?.let{
         val textView = TextView(dialog.context)
         textView.setText(it)
+        //textView.textSize = 13f
         textView.setPadding(16.toPx, 16.toPx, 0, 16.toPx)
         dialog.setCustomTitle(textView)
     }

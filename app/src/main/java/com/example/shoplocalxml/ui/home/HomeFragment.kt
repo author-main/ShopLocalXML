@@ -3,6 +3,7 @@ package com.example.shoplocalxml.ui.home
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
@@ -31,6 +32,7 @@ import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.DATA_PORTION
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.FilterActivity
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
@@ -264,6 +266,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         dataBinding.includePanelOrderFilter.buttonSort.setOnClickListener {
             popupMenu.show()
         }
+
+        dataBinding.includePanelOrderFilter.buttonFilter.setOnClickListener {
+            val intent = Intent(requireContext(), FilterActivity::class.java)
+            activity?.startActivity(intent)
+        }
+
+
+
 
         lifecycleScope.launch {
             sharedViewModel.products.collect {
