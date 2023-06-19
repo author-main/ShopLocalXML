@@ -147,7 +147,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val layoutManager = GridLayoutManager(requireContext(), 2)
         dataBinding.recyclerViewProductHome.layoutManager = layoutManager
         dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
-        //dataBinding.recyclerViewProductHome.itemAnimator = null
+        dataBinding.recyclerViewProductHome.itemAnimator = null
         dataBinding.recyclerViewProductHome.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val showFab = recyclerView.canScrollVertically(-1) && dy < 0
