@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
@@ -23,6 +24,7 @@ import androidx.core.graphics.toColor
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import java.math.BigInteger
 import java.math.RoundingMode
+import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
@@ -190,6 +192,9 @@ fun getDisplaySize(): Size {
 }
 
 fun isEven(value: Int) = value % 2 == 0
+
+fun encodeBase64(value: String): String
+        = Base64.encodeToString(value.toByteArray(charset = Charset.defaultCharset()), Base64.NO_WRAP)
 
 
 /*fun setWidthDialog(dialog: AlertDialog, widthDP: Int){

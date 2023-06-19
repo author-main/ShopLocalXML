@@ -37,6 +37,7 @@ import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.classes.sort_filter.Order
 import com.example.shoplocalxml.classes.sort_filter.Sort
+import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
@@ -157,7 +158,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     val nextPortionPosition = nextPortion * DATA_PORTION
                     val nextRowPosition = lastVisibilityPosition + 1
                     if (nextRowPosition == nextPortionPosition) {
-                        sharedViewModel.getProducts(nextPortion + 1, homeViewModel.getQueryOrder())
+                        sharedViewModel.getProducts(nextPortion + 1)//, sharedViewModel.getQueryOrder())
                     }
                 }
             }
@@ -238,14 +239,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
 
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
-            val orderQuery = homeViewModel.getQueryOrder()
-            sharedViewModel.getProducts(1, orderQuery)
+            //val orderQuery = sharedViewModel.getQueryOrder()
+            sharedViewModel.getProducts(1)//, orderQuery)
         }
 
         val wrapper: Context = ContextThemeWrapper(requireContext(), com.example.shoplocalxml.R.style.PopupMenu)
         val popupMenu = androidx.appcompat.widget.PopupMenu(wrapper, dataBinding.includePanelOrderFilter.buttonSort)
         val sortItems = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)
-        setTextButtonOrder()
+        setTextButtonOrder(sharedViewModel.sortProduct)
         for (i in sortItems.indices){
             val item = popupMenu.menu.add(sortItems[i]).setOnMenuItemClickListener {
                 menuOrderClick(i)
@@ -492,12 +493,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         (activity as MainActivity).setFabVisibility(false)
     }
 
-    private fun setTextButtonOrder() {
-        val order = sharedViewModel.sortOrder.order
-        val sort  = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sharedViewModel.sortOrder.sort.value]
-        dataBinding.includePanelOrderFilter.buttonSort.text = sort
+    private fun setTextButtonOrder(sortOrder: SortOrder) {
+        /*val order = sharedViewModel.sortProduct.order
+        val sort  = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sharedViewModel.sortProduct.sort.value]*/
+        val text = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sortOrder.sort.value]
+
+        dataBinding.includePanelOrderFilter.buttonSort.text = text
         val sizeIcon = 24.toPx
-        if (order == Order.DESCENDING) {
+        if (sortOrder.order == Order.DESCENDING) {
             val drawable = AppCompatResources.getDrawable(
                 requireContext(),
                 com.example.shoplocalxml.R.drawable.ic_sort
@@ -531,15 +534,18 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val ITEM_PRICE   = 0
         val ITEM_POPULAR = 1
         val ITEM_RATING  = 2
-        val prev = sharedViewModel.sortOrder.sort
+        val prev = sharedViewModel.sortProduct
+        val sortOrder = sharedViewModel.sortProduct.copy()
         when (index) {
-            ITEM_PRICE   ->{sharedViewModel.sortOrder.sort = Sort.PRICE}
-            ITEM_POPULAR ->{sharedViewModel.sortOrder.sort = Sort.POPULAR}
-            ITEM_RATING  ->{sharedViewModel.sortOrder.sort = Sort.RATING}
+            ITEM_PRICE   ->{sortOrder.sort = Sort.PRICE}
+            ITEM_POPULAR ->{sortOrder.sort = Sort.POPULAR}
+            ITEM_RATING  ->{sortOrder.sort = Sort.RATING}
         }
-        if (prev == sharedViewModel.sortOrder.sort)
-            sharedViewModel.sortOrder.invertOrder()
-        setTextButtonOrder()
+        if (prev.sort == sortOrder.sort)
+            sortOrder.invertOrder()
+        setTextButtonOrder(sortOrder)
+        sharedViewModel.setSortProduct(sortOrder)
+        sharedViewModel.getProducts(1, true)
     }
 
    /* override fun onStop() {

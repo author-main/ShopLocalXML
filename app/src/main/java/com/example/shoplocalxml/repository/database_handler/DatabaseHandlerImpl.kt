@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHandler {
     override suspend fun getProducts(token: String, page: Int, order: String): List<Product>? =
         withContext(Dispatchers.IO) {
-            databaseApi.getProducts(token, page, order).body()
+            databaseApi.getProducts(token, page, order)?.body()
         }
 
     override suspend fun getBrends(): List<Brend>? =

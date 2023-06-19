@@ -4,6 +4,7 @@ import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.log
 import com.google.gson.GsonBuilder
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -47,8 +48,13 @@ class DatabaseApiImpl {
         return queryUser(QUERY_RESTOREUSER, user)
     }
 
-    suspend fun getProducts(token: String, page: Int, order: String): Response<List<Product>> =
-        retrofitInstance.getProducts(token, page, order)
+    suspend fun getProducts(token: String, page: Int, order: String): Response<List<Product>>? {
+        return try {
+            retrofitInstance.getProducts(token, page, order)
+        } catch (_: Exception){
+            null
+        }
+    }
 
     suspend fun getBrends(): Response<List<Brend>> =
         retrofitInstance.getBrends()

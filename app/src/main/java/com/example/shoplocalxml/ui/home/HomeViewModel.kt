@@ -15,11 +15,11 @@ import java.util.concurrent.Executors
 
 class HomeViewModel : ViewModel() {
 
-    var order: String = ""
+  /*  var order: String = ""
         set(value) {
             field = value
             setOrderQuery(value)
-        }
+        }*/
 
     private var orderQuery: String = ""
 
@@ -50,14 +50,9 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private fun setOrderQuery(value: String) {
+    /*private fun setOrderQuery(value: String) {
         orderQuery = value
-    }
-
-    fun getQueryOrder(): String {
-        return "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE="
-        //return orderQuery
-    }
+    }*/
 
 
     companion object {

@@ -23,7 +23,7 @@ const val EMPTY_STRING      = ""
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
 //const val SERVER_URL = "http://faceshot.ru"
-const val SERVER_URL        = "http://192.168.0.10"
+const val SERVER_URL        = "http://192.168.1.10"
 const val DIR_IMAGES        = "images_ls"
 val DEFAULT_BITMAP: Bitmap? = run{
     val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_default)
@@ -31,6 +31,7 @@ val DEFAULT_BITMAP: Bitmap? = run{
 }
 val paddingProductCard = 12.toPx
 val widthProductCard = (getDisplaySize().width - (paddingProductCard * 3)) / 2
+const val ANY_VALUE = -1
 const val DATA_PORTION = 8
 
 
