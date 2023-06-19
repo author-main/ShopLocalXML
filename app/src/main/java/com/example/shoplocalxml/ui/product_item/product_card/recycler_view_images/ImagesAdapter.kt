@@ -2,6 +2,7 @@ package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_imag
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.media.Image
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -97,27 +98,26 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(AppShopLocal.applicationContext).inflate(R.layout.product_images_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, onClickItem)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (images[position].default)
-            holder.imageItem.scaleType = ImageView.ScaleType.CENTER_INSIDE
-        /*else
-            holder.imageItem.scaleType = ImageView.ScaleType.FIT_CENTER*/
-        holder.imageItem.setImageBitmap(images[position].image)
-
-        holder.imageItem.setOnClickListener{
-            onClickItem?.invoke(position)
-        }
-
+        holder.bindItem(images[position])
     }
 
     override fun getItemCount() =
         images.size
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageItem: ImageView = view.findViewById(R.id.imageItem)
+    class ViewHolder(view: View, private val onClickItem: ((index: Int) -> Unit)?) : RecyclerView.ViewHolder(view) {
+        private val imageItem: ImageView = view.findViewById(R.id.imageItem)
+        fun bindItem(item: ImageItem){
+            if (item.default)
+                imageItem.scaleType = ImageView.ScaleType.CENTER_INSIDE
+            imageItem.setImageBitmap(item.image)
+            imageItem.setOnClickListener{
+                onClickItem?.invoke(adapterPosition)
+            }
+        }
     }
 }

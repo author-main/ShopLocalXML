@@ -205,6 +205,10 @@ class ProductCard: CardView {
         super.onDetachedFromWindow()
         //log("detached")
     }
+
+    fun updateFavorite(value: Boolean){
+        dataBinding.imageFavorite.isChecked = value
+    }
 }
 
 //app:onChecked="@{(checked)->eventhandler.onCheckedFavorite(checked)}"

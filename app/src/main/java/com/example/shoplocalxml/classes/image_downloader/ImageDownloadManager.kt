@@ -44,6 +44,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         super.onStop(owner)
     }
 
+    @Synchronized
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
         val hash = md5(url)
      //   log("task = $url...")
@@ -131,6 +132,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
             instance.cancelAll()
         }
 
+        @Synchronized
         fun existCache(url: String) = instance.existCache(url)
 
         fun getInstance() = instance

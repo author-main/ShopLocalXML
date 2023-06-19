@@ -95,6 +95,10 @@ class ProductItemCard: FrameLayout {
         dataBinding.eventhandler = this
     }
 
+    fun updateFavorite(value: Boolean){
+        dataBinding.productCard.updateFavorite(value)
+    }
+
 
    /* override fun onFinishInflate() {
         super.onFinishInflate()

@@ -173,7 +173,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
 
             override fun onClick(id: Int, index: Int) {
-
+               // log("product $id, index $index")
             }
 
             override fun onShowMenu(id: Int) {

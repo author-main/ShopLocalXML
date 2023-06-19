@@ -33,7 +33,7 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         val index = getProductPositionFromId(id)
         if (index != -1) {
             products[index].favorite = if (value) 1 else 0
-            notifyItemChanged(index)
+            notifyItemChanged(index, value)
         }
     }
 
@@ -70,6 +70,13 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         holder.bindItem(products[position])
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        //super.onBindViewHolder(holder, position, payloads)
+        if (payloads.size > 0) {
+            holder.updateFavoriteItem(payloads[0] as Boolean)
+        } else
+            onBindViewHolder(holder, position)
+    }
 
     private fun swapData(newData: List<Product>){
         val diffCallback = DiffCallback(products, newData)
@@ -84,9 +91,9 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         products.size
 
     class ViewHolder(private val view: View, private val onProductItemListener: OnProductItemListener?) : RecyclerView.ViewHolder(view) {
-         lateinit var item: Product
+        //lateinit var item: Product
         fun bindItem(item: Product){
-            this.item = item
+          //  this.item = item
             val itemCard = view as ProductItemCard
             itemCard.product = item
             itemCard.setOnProductItemListener(onProductItemListener)
@@ -95,6 +102,12 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
             }*/
 
         }
+
+        fun updateFavoriteItem(value: Boolean) {
+            //log("favorite ${item.favorite}")
+            (view as ProductItemCard).updateFavorite(value)
+        }
+
     }
 
     private fun getProductPositionFromId(id: Int) =
