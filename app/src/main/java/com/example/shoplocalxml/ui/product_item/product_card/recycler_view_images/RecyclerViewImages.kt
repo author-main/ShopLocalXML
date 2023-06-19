@@ -35,8 +35,19 @@ class RecyclerViewImages(context: Context,
 
     fun setImages(value: List<String>?) {
         value?.let{
-            onStateImagesListener?.download()
+            var existCache = false
+            for (url in it) {
+                if (ImageDownloadManager.existCache(url)) {
+                        //log("in cache...")
+                        existCache = true
+                        break
+                    }
+            }
+            //ImageDownloadManager.existCache(url: String)
             (adapter as ImagesAdapter).setImages(it)
+            if (!existCache)
+                onStateImagesListener?.download()
+
         }
 
       /*  val images = mutableListOf<ImageItem>()

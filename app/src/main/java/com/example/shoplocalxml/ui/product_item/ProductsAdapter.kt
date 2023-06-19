@@ -41,13 +41,18 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         notifyItemRangeChanged(0, products.size)
     }
 
-    fun setProducts(list: List<Product>){//}, page: Int){
-        val portions = (list.size - 1)/ DATA_PORTION
-        val startPosition = portions * DATA_PORTION
-        val count = list.size - startPosition
+    fun setProducts(list: List<Product>){//, uploadAgain: Boolean = false) {
         swapData(list)
-        //notifyItemChanged(startPosition)
-        notifyItemRangeChanged(startPosition, count)
+        /*if (uploadAgain) {
+            swapData(list)
+            notifyItemsChanged()
+        } else {
+            val portions = (list.size - 1) / DATA_PORTION
+            val startPosition = portions * DATA_PORTION
+            val count = list.size - startPosition
+            swapData(list)
+            notifyItemRangeChanged(startPosition, count)
+        }*/
     }
 
    /* fun setViewMode(value: ItemViewMode){

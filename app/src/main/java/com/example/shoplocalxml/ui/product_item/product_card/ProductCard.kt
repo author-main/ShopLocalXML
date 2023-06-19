@@ -21,6 +21,7 @@ import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
+import com.example.shoplocalxml.widthProductCard
 
 class ProductCard: CardView {
    /* var discount: Int = 0
@@ -69,6 +70,7 @@ class ProductCard: CardView {
         dataBinding.product = value
         value?.let { product ->
             dataBinding.recyclerViewImages.setImages(product.linkimages)
+            //log(product.linkimages)
             /*product.linkimages?.forEach {url ->
                 ImageDownloadManager.download(url) { bitmap ->
                     (dataBinding.recyclerViewImages.adapter as ImagesAdapter).updateImage(url, bitmap)
@@ -197,9 +199,12 @@ class ProductCard: CardView {
         //onProductCardListener?.onChangedFavorite(value)
     }
 
-
-
-
+    override fun onDetachedFromWindow() {
+        dataBinding.imageViewProgress.stopAnimation()
+        dataBinding.imageViewProgress.visibility = View.GONE
+        super.onDetachedFromWindow()
+        //log("detached")
+    }
 }
 
 //app:onChecked="@{(checked)->eventhandler.onCheckedFavorite(checked)}"

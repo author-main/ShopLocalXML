@@ -143,7 +143,6 @@ class Repository {
 
     suspend fun getProducts(page: Int, order: String): List<Product>? =
         token?.let {
-            log ("token $token order $order")
             databaseHandler.getProducts(it, page, order)
         }
 

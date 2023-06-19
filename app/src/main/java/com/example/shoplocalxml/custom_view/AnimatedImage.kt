@@ -26,7 +26,7 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
     init {
         animator = ValueAnimator().apply {
-            startDelay = 150
+            //startDelay = 50
             duration = 1200
             interpolator = DecelerateInterpolator()
             repeatCount = ValueAnimator.INFINITE

@@ -105,6 +105,12 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         cancelAll()
     }*/
 
+    private fun existCache(url: String): Boolean{
+        val hash = md5(url)
+        val existCacheMemory =  cacheMemory.get(hash) != null
+        val existCacheDrive  =  cacheDrive.find(hash) != 0L
+        return existCacheMemory || existCacheDrive
+    }
 
 
     companion object {
@@ -124,6 +130,8 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         fun cancelAll() {
             instance.cancelAll()
         }
+
+        fun existCache(url: String) = instance.existCache(url)
 
         fun getInstance() = instance
 

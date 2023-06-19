@@ -283,7 +283,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                             )
                         }
                     }*/
-                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.portionData)
+                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.uploadDataAgain)//, sharedViewModel.portionData)
                    /* products.forEach { product ->
                         product.linkimages?.forEach {url ->
                             sharedViewModel.downloadImage(url) {bitmap ->
@@ -544,6 +544,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         if (prev.sort == sortOrder.sort)
             sortOrder.invertOrder()
         setTextButtonOrder(sortOrder)
+//        (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).
         sharedViewModel.setSortProduct(sortOrder)
         sharedViewModel.getProducts(1, true)
     }

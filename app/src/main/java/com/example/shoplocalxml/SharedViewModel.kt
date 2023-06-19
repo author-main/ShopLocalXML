@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.Order
 import com.example.shoplocalxml.classes.sort_filter.Sort
@@ -18,6 +20,7 @@ import kotlinx.coroutines.launch
 class SharedViewModel(private val repository: Repository): ViewModel() {
     var sortProduct        = SortOrder()
     var filterProduct      = Filter().apply { discount = 0 }
+//    var uploadDataAgain: Boolean = false
     private var queryOrder = getQueryOrder()
     private var processQuery = false
     var portionData = 0
@@ -67,12 +70,15 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }*/
 
     private fun updateDataAfterQuery(list: List<Product>, uploadAgain: Boolean) {
-            if (uploadAgain)
-                _products.value = list.toMutableList()
+            val updateList = updateHostLink(list)
+            if (uploadAgain) {
+                ImageDownloadManager.cancelAll()
+                _products.value = updateList.toMutableList()
+            }
             else {
                 val newList =
                     _products.value.toMutableList().apply {
-                        addAll(updateHostLink(list))
+                        addAll(updateList)
                     }
                 _products.value = newList
             }
@@ -85,8 +91,12 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
 
 
     fun getProducts(page: Int, uploadAgain: Boolean  = false){//}, order: String) {
+//        uploadDataAgain = uploadAgain
+        if (uploadAgain) {
+            portionData = 0
+            processQuery = false
+        }
         if (processQuery) return
-        if (uploadAgain) portionData = 0
         if (page <= portionData) return
         processQuery = true
         //CoroutineScope(Dispatchers.Main).launch {
@@ -95,9 +105,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
                 if (products.isNotEmpty()) {
                     portionData += 1
                     updateDataAfterQuery(products, uploadAgain)
-                    processQuery = false
                     //setProducts(updateHostLink(products))
                 }
+                processQuery = false
             }
         }
     }
