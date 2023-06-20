@@ -23,7 +23,6 @@ class FilterActivity : AppCompatActivity() {
     lateinit var dataBinding: ActivityFilterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val iconCheckBox = getCheckboxIcon()
         dataBinding = ActivityFilterBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
