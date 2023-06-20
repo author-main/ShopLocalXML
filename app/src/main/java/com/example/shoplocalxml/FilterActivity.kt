@@ -29,7 +29,6 @@ class FilterActivity : AppCompatActivity() {
         dataBinding.buttonBackFilter.setOnClickListener {
             finish()
         }
-//        dataBinding.checkBoxFavorite.buttonDrawable = iconCheckBox
         supportActionBar?.hide()
        /* onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
