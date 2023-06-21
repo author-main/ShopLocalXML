@@ -1,4 +1,4 @@
-package com.example.shoplocalxml
+package com.example.shoplocalxml.ui.filter
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

@@ -9,8 +9,6 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +30,7 @@ import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.DATA_PORTION
 import com.example.shoplocalxml.FactoryViewModel
-import com.example.shoplocalxml.FilterActivity
+import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
@@ -45,7 +43,6 @@ import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel

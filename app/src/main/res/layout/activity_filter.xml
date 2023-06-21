@@ -5,13 +5,13 @@
     <data>
         <variable
             name="eventhandler"
-            type="com.example.shoplocalxml.FilterActivity"/>
+            type="com.example.shoplocalxml.ui.filter.FilterActivity"/>
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BackgroundDark"
-    tools:context=".FilterActivity">
+    tools:context=".ui.filter.FilterActivity">
 
     <FrameLayout
         android:id="@+id/layoutFilterToolbar"
