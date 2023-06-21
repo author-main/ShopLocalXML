@@ -21,9 +21,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
 import com.example.shoplocalxml.databinding.ActivityMainBinding
+import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 
 class FilterActivity : AppCompatActivity() {
@@ -41,6 +43,17 @@ class FilterActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
         val adapter = ExpandableAdapter()
+        val brands = SharedViewModel.getBrands()
+        val categories = SharedViewModel.getCategories()
+        adapter.addGroupItem(0, getStringResource(R.string.text_category), 50)
+        brands.forEach {
+            adapter.addChildItem(0, it.id.toLong(), it.name, 10, false)
+        }
+
+        adapter.addGroupItem(1, getStringResource(R.string.text_brend), 30)
+        categories.forEach {
+            adapter.addChildItem(1, it.id.toLong(), it.name, 10, false)
+        }
         dataBinding.expListViewFilter.setAdapter(adapter)
 
        /* sharedViewModel =

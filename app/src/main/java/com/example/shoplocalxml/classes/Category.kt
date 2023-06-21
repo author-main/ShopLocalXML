@@ -9,6 +9,8 @@ data class Category(
     @SerializedName("name")
     val name: String,
     @SerializedName("link_img")
-    val link_img: String
+    val link_img: String,
+    @SerializedName("count")
+    val count: Int
 )
 
