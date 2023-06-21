@@ -56,7 +56,7 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
     }
 
     override fun getChildId(groupPosition: Int, childPosition: Int): Long {
-        return childItems[groupItems[groupPosition].id]?.get(childPosition)?.id ?: -1L
+        return childPosition.toLong()//childItems[groupItems[groupPosition].id]?.get(childPosition)?.id ?: -1L
     }
 
     override fun hasStableIds(): Boolean {
@@ -106,17 +106,6 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
                 it.nameChildItem        = convertview.findViewById<TextView>(R.id.textChildItemName)
                 it.countChildItem       = convertview.findViewById<TextView>(R.id.textChildItemCount)
                 it.selectedChildItem    = convertview.findViewById<CheckBox>(R.id.checkboxChildItem)
-                it.selectedChildItem?.setOnClickListener { view ->
-                    val value = (view as CheckBox).isChecked
-                    childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value
-                    log("click checkbox $groupPosition, $childPosition")
-                }
-                it.layoutChildItemRoot?.setOnClickListener {view ->
-                    val value = !it.selectedChildItem!!.isChecked
-                    it.selectedChildItem!!.isChecked = value
-                    childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value
-                    log("click layout $groupPosition, $childPosition")
-                }
             }
             convertview.setTag(R.layout.child_item, childViewHolder);
         } else
@@ -128,6 +117,22 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
                     it.nameChildItem?.text = childItem.name
                     it.countChildItem?.text = childItem.count.toString()
                     it.selectedChildItem?.isChecked = childItem.selected
+
+
+                    it.selectedChildItem?.setOnClickListener { view ->
+                        val value = (view as CheckBox).isChecked
+                        childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value
+                        //log("click checkbox $groupPosition, $childPosition")
+                    }
+                    it.layoutChildItemRoot?.setOnClickListener {view ->
+                        val value = !it.selectedChildItem!!.isChecked
+                        it.selectedChildItem!!.isChecked = value
+                        childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value
+                        //log("click layout $groupPosition, $childPosition")
+                    }
+
+
+
                 }
             }
         }
