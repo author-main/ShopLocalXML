@@ -33,7 +33,6 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
             childItems[groupid] = ArrayList()
 
         childItems[groupid]?.add(ChildItem(id, name, count, selected))
-        log(childItems[groupid])
     }
 
     override fun getGroupCount(): Int {
@@ -110,13 +109,13 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
                 it.selectedChildItem?.setOnClickListener { view ->
                     val value = (view as CheckBox).isChecked
                     childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value
-                    //log("click checkbox")
+                    log("click checkbox $groupPosition, $childPosition")
                 }
                 it.layoutChildItemRoot?.setOnClickListener {view ->
                     val value = !it.selectedChildItem!!.isChecked
                     it.selectedChildItem!!.isChecked = value
                     childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value
-                    //log("click layout")
+                    log("click layout $groupPosition, $childPosition")
                 }
             }
             convertview.setTag(R.layout.child_item, childViewHolder);
