@@ -267,17 +267,18 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
 
         dataBinding.includePanelOrderFilter.buttonFilter.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                sharedViewModel.getListBrend()
-                sharedViewModel.getListCategory()
-                val gson = Gson()
-                val brandsJson     = gson.toJson(SharedViewModel.getBrands())
-                val categoriesJson = gson.toJson(SharedViewModel.getCategories())
-                val intent = Intent(requireContext(), FilterActivity::class.java)
-                intent.putExtra("brands", brandsJson)
-                intent.putExtra("categories", categoriesJson)
-                activity?.startActivity(intent)
-            }
+
+                sharedViewModel.getFilterData {
+                    if (it) {
+                        val gson = Gson()
+                        val brandsJson = gson.toJson(SharedViewModel.getBrands())
+                        val categoriesJson = gson.toJson(SharedViewModel.getCategories())
+                        val intent = Intent(requireContext(), FilterActivity::class.java)
+                        intent.putExtra("brands", brandsJson)
+                        intent.putExtra("categories", categoriesJson)
+                        activity?.startActivity(intent)
+                    }
+                }
         }
 
 

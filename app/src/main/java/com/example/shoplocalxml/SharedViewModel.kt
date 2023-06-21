@@ -44,6 +44,17 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
+
+    fun getFilterData(action: (value: Boolean) -> Unit){
+        viewModelScope.launch(Dispatchers.IO) {
+            listBrend =  repository.getBrends() ?: listOf()
+            listCategory =  repository.getCategories() ?: listOf()
+            val success = !(listBrend.isEmpty() || listCategory.isEmpty())
+            action(success)
+        }
+    }
+
+
     private var onCloseApp: (() -> Unit)? = null
     fun setOnCloseApp(value: () -> Unit) {
         onCloseApp = value

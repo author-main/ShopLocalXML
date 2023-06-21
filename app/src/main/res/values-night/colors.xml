@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF9100</color>
     <color name="colorBrend">#FF679BE9</color>
     <color name="colorDiscount">#FFF30F46</color>
-    <color name="PrimaryDark">#FF222831</color>
+    <color name="PrimaryDark">#222831</color>
     <color name="BackgroundDark">#FF181E26</color>
     <color name="TextPrice">#FFEEEEEE</color>
     <color name="BgTextPrice">#FF009646</color>

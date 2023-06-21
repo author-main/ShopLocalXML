@@ -1,12 +1,15 @@
 package com.example.shoplocalxml.ui.filter
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.ID_BRAND
+import com.example.shoplocalxml.ID_CATEGORY
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
-import com.example.shoplocalxml.log
+import com.example.shoplocalxml.getStringResource
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -20,15 +23,6 @@ class FilterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        var typeToken = object : TypeToken<List<Brend>>() {}.type
-        //val logs = gson.fromJson<List<JsonLong>>(br, myType)
-
-
-        val gson = Gson()
-        val dataBrans      = intent.getStringExtra("brands")
-        val dataCategories = intent.getStringExtra("categories")
-
-
         dataBinding = ActivityFilterBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
@@ -36,24 +30,20 @@ class FilterActivity : AppCompatActivity() {
             finish()
         }
         supportActionBar?.hide()
-        val adapter = ExpandableAdapter()
-       /* val brands = SharedViewModel.getBrands()
-        val categories = SharedViewModel.getCategories()*/
-     /*   adapter.addGroupItem(ID_BRAND, getStringResource(R.string.text_category), 50)
-        brands.forEach {
-            adapter.addChildItem(ID_BRAND, it.id.toLong(), it.name, 10, false)
-        }
 
-        adapter.addGroupItem(ID_CATEGORY, getStringResource(R.string.text_brend), 30)
-        categories.forEach {
-            adapter.addChildItem(ID_CATEGORY, it.id.toLong(), it.name, 10, false)
-        }*/
-        dataBinding.expListViewFilter.setAdapter(adapter)
+        dataBinding.expListViewFilter.setAdapter(
+            getExpandableAdapter()
+        )
+
+
+        /*val colors = intArrayOf(0, 0xff0000, 0) // red for the example
+        dataBinding.expListViewFilter.setChildDivider(GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors))
+        dataBinding.expListViewFilter.divider = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors)*/
+
 
        /* sharedViewModel =
             ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
 
-        log(SharedViewModel.getCategories())
        /* onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 finish()
@@ -86,4 +76,24 @@ class FilterActivity : AppCompatActivity() {
         stateDrawable.clearColorFilter()
         return stateDrawable
     }*/
+
+    private fun getExpandableAdapter(): ExpandableAdapter {
+        var typeToken = object : TypeToken<List<Brend>>() {}.type
+        val gson    = Gson()
+        var data    = intent.getStringExtra("brands")
+        val brands  = gson.fromJson<List<Brend>>(data, typeToken)
+        typeToken   = object : TypeToken<List<Category>>() {}.type
+        data        = intent.getStringExtra("categories")
+        val categories = gson.fromJson<List<Category>>(data, typeToken)
+        val adapter = ExpandableAdapter()
+        adapter.addGroupItem(ID_CATEGORY, getStringResource(R.string.text_category), categories[ID_CATEGORY.toInt()].count)
+        categories.forEach {
+            adapter.addChildItem(ID_CATEGORY, it.id.toLong(), it.name, it.count, false)
+        }
+        adapter.addGroupItem(ID_BRAND, getStringResource(R.string.text_brend), categories[ID_BRAND.toInt()].count)
+        brands.forEach {
+            adapter.addChildItem(ID_BRAND, it.id.toLong(), it.name, it.count, false)
+        }
+        return adapter
+    }
 }
