@@ -265,8 +265,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
 
         dataBinding.includePanelOrderFilter.buttonFilter.setOnClickListener {
-            val intent = Intent(requireContext(), FilterActivity::class.java)
-            activity?.startActivity(intent)
+            CoroutineScope(Dispatchers.IO).launch {
+                sharedViewModel.getListBrend()
+                sharedViewModel.getListCategory()
+                val intent = Intent(requireContext(), FilterActivity::class.java)
+                activity?.startActivity(intent)
+            }
         }
 
 

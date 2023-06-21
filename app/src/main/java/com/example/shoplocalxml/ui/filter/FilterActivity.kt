@@ -16,11 +16,21 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import com.example.shoplocalxml.AppShopLocal
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
+import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
 import com.example.shoplocalxml.databinding.ActivityMainBinding
+import com.example.shoplocalxml.log
 
 class FilterActivity : AppCompatActivity() {
-    lateinit var dataBinding: ActivityFilterBinding
+    //private lateinit var sharedViewModel: SharedViewModel
+    /*private var lateinit sharedViewModel: SharedViewModel =
+        ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
+    private lateinit var dataBinding: ActivityFilterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = ActivityFilterBinding.inflate(layoutInflater)
@@ -30,6 +40,13 @@ class FilterActivity : AppCompatActivity() {
             finish()
         }
         supportActionBar?.hide()
+        val adapter = ExpandableAdapter()
+        dataBinding.expListViewFilter.setAdapter(adapter)
+
+       /* sharedViewModel =
+            ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
+
+        log(SharedViewModel.getCategories())
        /* onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 finish()

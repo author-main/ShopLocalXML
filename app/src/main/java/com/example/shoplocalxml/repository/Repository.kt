@@ -3,6 +3,7 @@ package com.example.shoplocalxml.repository
 import android.graphics.Bitmap
 import androidx.fragment.app.FragmentActivity
 import com.example.shoplocalxml.classes.Brend
+import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
@@ -154,5 +155,8 @@ class Repository {
 
     suspend fun getBrends(): List<Brend>? =
         databaseHandler.getBrends()
+
+    suspend fun getCategories(): List<Category>? =
+        databaseHandler.getCategories()
 
 }

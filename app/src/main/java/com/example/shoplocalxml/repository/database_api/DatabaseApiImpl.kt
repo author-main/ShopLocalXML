@@ -2,6 +2,7 @@ package com.example.shoplocalxml.repository.database_api
 
 import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.classes.Brend
+import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.log
@@ -58,6 +59,9 @@ class DatabaseApiImpl {
 
     suspend fun getBrends(): Response<List<Brend>> =
         retrofitInstance.getBrends()
+
+    suspend fun getCategories(): Response<List<Category>> =
+        retrofitInstance.getCategories()
 
     suspend fun updateProductFavorite(token: String, idProduct: Int, favorite:Boolean){
         retrofitInstance.updateFavorite(token, idProduct, if (favorite) 1 else 0)

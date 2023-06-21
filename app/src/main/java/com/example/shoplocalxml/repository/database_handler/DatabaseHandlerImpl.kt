@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.repository.database_handler
 
 import com.example.shoplocalxml.classes.Brend
+import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.database_api.DatabaseApi
@@ -26,4 +27,9 @@ class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHan
             databaseApi.updateProductFavorite(token, idProduct, favorite)
         }
     }
+
+    override suspend fun getCategories(): List<Category>? =
+        withContext(Dispatchers.IO) {
+            databaseApi.getCategories().body()
+        }
 }

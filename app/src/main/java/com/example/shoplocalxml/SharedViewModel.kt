@@ -3,6 +3,7 @@ package com.example.shoplocalxml
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.classes.Brend
+import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
@@ -23,7 +24,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
 //    var uploadDataAgain: Boolean = false
     private var queryOrder = getQueryOrder()
     private var processQuery = false
-    var portionData = 0
+    private var portionData = 0
     private val _products = MutableStateFlow<MutableList<Product>>(mutableListOf())
     val products = _products.asStateFlow()
     private fun setProducts(value: MutableList<Product>) {
@@ -33,6 +34,12 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     fun getListBrend(){
         viewModelScope.launch(Dispatchers.IO) {
             listBrend =  repository.getBrends() ?: listOf()
+        }
+    }
+
+    fun getListCategory(){
+        viewModelScope.launch(Dispatchers.IO) {
+            listCategory =  repository.getCategories() ?: listOf()
         }
     }
 
@@ -142,7 +149,10 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
     companion object {
-        private var listBrend = listOf<Brend>()
+        private var listBrend    = listOf<Brend>()
+        private var listCategory = listOf<Category>()
+        fun getCategories() = listCategory
+        fun getBrands() = listBrend
         @JvmStatic fun getProductBrend(id: Int) =
             listBrend.find { it.id == id }?.name ?: EMPTY_STRING
 
