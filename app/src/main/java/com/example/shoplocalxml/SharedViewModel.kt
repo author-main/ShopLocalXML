@@ -29,6 +29,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     val products = _products.asStateFlow()
     private fun setProducts(value: MutableList<Product>) {
         _products.value = value
+
     }
 
     fun getListBrend(){
@@ -152,7 +153,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         private var listBrend    = listOf<Brend>()
         private var listCategory = listOf<Category>()
         fun getCategories() = listCategory
-        fun getBrands() = listBrend
+        fun getBrands()     = listBrend
         @JvmStatic fun getProductBrend(id: Int) =
             listBrend.find { it.id == id }?.name ?: EMPTY_STRING
 

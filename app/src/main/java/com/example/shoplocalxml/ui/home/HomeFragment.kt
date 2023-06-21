@@ -30,7 +30,6 @@ import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.DATA_PORTION
 import com.example.shoplocalxml.FactoryViewModel
-import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
@@ -44,6 +43,7 @@ import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.toPx
+import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu
@@ -51,10 +51,12 @@ import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.item_card.DividerItemDecoration
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener {
@@ -268,7 +270,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             CoroutineScope(Dispatchers.IO).launch {
                 sharedViewModel.getListBrend()
                 sharedViewModel.getListCategory()
+                val gson = Gson()
+                val brandsJson     = gson.toJson(SharedViewModel.getBrands())
+                val categoriesJson = gson.toJson(SharedViewModel.getCategories())
                 val intent = Intent(requireContext(), FilterActivity::class.java)
+                intent.putExtra("brands", brandsJson)
+                intent.putExtra("categories", categoriesJson)
                 activity?.startActivity(intent)
             }
         }

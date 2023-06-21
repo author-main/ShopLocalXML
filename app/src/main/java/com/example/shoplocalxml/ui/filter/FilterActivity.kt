@@ -1,34 +1,15 @@
 package com.example.shoplocalxml.ui.filter
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PointF
-import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.StateListDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Size
-import android.util.StateSet
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.drawable.toDrawable
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.shoplocalxml.AppShopLocal
-import com.example.shoplocalxml.AppShopLocal.Companion.repository
-import com.example.shoplocalxml.FactoryViewModel
-import com.example.shoplocalxml.ID_BRAND
-import com.example.shoplocalxml.ID_CATEGORY
-import com.example.shoplocalxml.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.classes.Brend
+import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
-import com.example.shoplocalxml.databinding.ActivityMainBinding
-import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
 
 class FilterActivity : AppCompatActivity() {
     //private lateinit var sharedViewModel: SharedViewModel
@@ -37,6 +18,17 @@ class FilterActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityFilterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        var typeToken = object : TypeToken<List<Brend>>() {}.type
+        //val logs = gson.fromJson<List<JsonLong>>(br, myType)
+
+
+        val gson = Gson()
+        val dataBrans      = intent.getStringExtra("brands")
+        val dataCategories = intent.getStringExtra("categories")
+
+
         dataBinding = ActivityFilterBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
@@ -45,9 +37,9 @@ class FilterActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
         val adapter = ExpandableAdapter()
-        val brands = SharedViewModel.getBrands()
-        val categories = SharedViewModel.getCategories()
-        adapter.addGroupItem(ID_BRAND, getStringResource(R.string.text_category), 50)
+       /* val brands = SharedViewModel.getBrands()
+        val categories = SharedViewModel.getCategories()*/
+     /*   adapter.addGroupItem(ID_BRAND, getStringResource(R.string.text_category), 50)
         brands.forEach {
             adapter.addChildItem(ID_BRAND, it.id.toLong(), it.name, 10, false)
         }
@@ -55,7 +47,7 @@ class FilterActivity : AppCompatActivity() {
         adapter.addGroupItem(ID_CATEGORY, getStringResource(R.string.text_brend), 30)
         categories.forEach {
             adapter.addChildItem(ID_CATEGORY, it.id.toLong(), it.name, 10, false)
-        }
+        }*/
         dataBinding.expListViewFilter.setAdapter(adapter)
 
        /* sharedViewModel =
