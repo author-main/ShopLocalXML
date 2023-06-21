@@ -34,6 +34,9 @@ val widthProductCard = (getDisplaySize().width - (paddingProductCard * 3)) / 2
 const val ANY_VALUE = -1
 const val DATA_PORTION = 8
 
+const val ID_BRAND    = 0L
+const val ID_CATEGORY = 1L
+
 
     //val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
 //const val SERVER_URL = "http://faceshot.ru"
