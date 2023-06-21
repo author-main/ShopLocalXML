@@ -132,7 +132,6 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
                 }
             }
         }
-
         return convertview!!
     }
 
