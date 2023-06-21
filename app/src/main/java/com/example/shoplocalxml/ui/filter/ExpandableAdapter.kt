@@ -10,6 +10,15 @@ data class ChildItem(val id: Long, val name: String, val count: Int, var selecte
 class ExpandableAdapter: BaseExpandableListAdapter() {
     private val groupItems = arrayListOf<GroupItem>()
     private val childItems = hashMapOf<Long, ArrayList<ChildItem>>()
+
+    fun addGroupItem(id: Long, name: String, count: Int) {
+        groupItems.add(GroupItem(id, name, count))
+    }
+
+    fun addChildItem(groupid: Long, id: Long, name: String, count: Int, selected: Boolean) {
+        childItems[groupid]?.add(ChildItem(id, name, count, selected))
+    }
+
     override fun getGroupCount(): Int {
         return groupItems.size
     }
