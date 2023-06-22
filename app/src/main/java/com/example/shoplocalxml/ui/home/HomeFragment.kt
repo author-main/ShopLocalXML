@@ -615,6 +615,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             val extraFilter = data.getStringExtra(FILTER_KEY)
             val filter = gson.fromJson(extraFilter, Filter::class.java)
             sharedViewModel.setFilterProduct(filter)
+            sharedViewModel.getProducts(1, true)
         }
     }
 

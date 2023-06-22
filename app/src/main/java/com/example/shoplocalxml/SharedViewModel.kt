@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
     var sortProduct        = SortOrder()
@@ -129,7 +130,11 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         processQuery = true
         //CoroutineScope(Dispatchers.Main).launch {
         viewModelScope.launch {
-            repository.getProducts(page, queryOrder)?.let { products ->
+            val resultQuery = repository.getProducts(page, queryOrder)
+            if (resultQuery == null)
+                processQuery = false
+
+            else resultQuery.let{ products ->
                 if (products.isNotEmpty()) {
                     portionData += 1
                     updateDataAfterQuery(products, uploadAgain)
@@ -137,6 +142,15 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
                 }
                 processQuery = false
             }
+
+           /*repository.getProducts(page, queryOrder)?.let { products ->
+                if (products.isNotEmpty()) {
+                    portionData += 1
+                    updateDataAfterQuery(products, uploadAgain)
+                    //setProducts(updateHostLink(products))
+                }
+                processQuery = false
+            }*/
         }
     }
 
@@ -212,19 +226,37 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
         val filterdiscount = filterProduct.discount
         val filterscreen   = 0
-
+        var section = EMPTY_STRING
+        for (entry in enum) {
+            val key = abs(entry.key)
+            section += "$key[" + entry.value.joinToString(",", postfix = "]-")
+        }
+        section = if (section.isEmpty())
+            "-1"
+        else
+            section.substringBeforeLast("-")
+        //log(section)
         /** Порядок для извлечения в PHP:
          *  0 - sort_order:         0 - ASCENDING, 1 - DESCENDING
          *  1 - sort_type:          0 POPULAR, 1 - RATING, 2 - PRICE
-         *  2 - filter_category:    ID категории продукта
-         *  3 - filter_brand:       ID бренда
-         *  4 - filter_favorite:    0 - все продукты, 1 - избранное
-         *  5 - filter_price:       интервал цен, н/р 1000,00-20000,00
-         *  6 - filter_discount:    скидка
-         *  7 - filrter_screen:     текущий экран
+
+       /*   2 - filter_category:    ID категории продукта
+         *  3 - filter_brand:       ID бренда  */
+
+         *  2 - filter_enum:        выборка по категории и бренду
+         *  3 - filter_favorite:    0 - все продукты, 1 - избранное
+         *  4 - filter_price:       интервал цен, н/р 1000,00-20000,00
+         *  5 - filter_discount:    скидка
+         *  6 - filrter_screen:     текущий экран
          */
-         val queryOrder = "$sortorder $sorttype -1 -1 $filterfavorite $filterprice $filterdiscount $filterscreen"
+
+        //log("$sortorder $sorttype $section $filterfavorite $filterprice $filterdiscount $filterscreen")
+
+      //  val queryOrder = "$sortorder $sorttype -1 -1 $filterfavorite $filterprice $filterdiscount $filterscreen"
+        val queryOrder = "$sortorder $sorttype $section $filterfavorite $filterprice $filterdiscount $filterscreen"
+        //log("queryOrder = $queryOrder")
          //val queryOrder = "$sortorder $sorttype $filtercategory $filterbrend $filterfavorite $filterprice $filterdiscount $filterscreen"
+         //log(encodeBase64(queryOrder))
          return encodeBase64(queryOrder)
 
         //return "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE="
