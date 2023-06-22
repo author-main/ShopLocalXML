@@ -12,6 +12,7 @@ import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
 import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -95,6 +96,12 @@ class FilterActivity : AppCompatActivity() {
     }*/
 
     private fun getExpandableAdapter(): ExpandableAdapter {
+
+        adapter.setOnExpandGroup {
+            if (!dataBinding.expListViewFilter.isGroupExpanded(it))
+                dataBinding.expListViewFilter.expandGroup(it)
+        }
+
         var typeToken = object : TypeToken<List<Brend>>() {}.type
         val gson    = Gson()
         var data    = intent.getStringExtra("brands")

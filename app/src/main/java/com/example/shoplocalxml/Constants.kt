@@ -34,8 +34,8 @@ val widthProductCard = (getDisplaySize().width - (paddingProductCard * 3)) / 2
 const val ANY_VALUE = -1
 const val DATA_PORTION = 8
 
-const val ID_CATEGORY = 0L
-const val ID_BRAND    = 1L
+const val ID_CATEGORY = 1L
+const val ID_BRAND    = 2L
 const val FILTER_KEY  = "filter"
 
 

@@ -19,7 +19,11 @@ import java.util.zip.Inflater
 
 
 class ExpandableAdapter: BaseExpandableListAdapter() {
-    data class GroupItem(val id: Long, val name: String, val count: Int)
+    private var onExpanded: ((groupPosition: Int) -> Unit)? = null
+    fun setOnExpandGroup(value: (groupPosition: Int) -> Unit) {
+        onExpanded = value
+    }
+    data class GroupItem(val id: Long, val name: String, val count: Int, var expanded: Boolean = false)
     data class ChildItem(val id: Long, val name: String, val count: Int, var selected: Boolean = false)
     private val groupItems = arrayListOf<GroupItem>()
     private val childItems = hashMapOf<Long, ArrayList<ChildItem>>()
@@ -87,6 +91,8 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
             it.nameGroupItem?.text           = groupItems[groupPosition].name
         }
 
+        if (groupItems[groupPosition].expanded)
+            onExpanded?.invoke(groupPosition)
         return convertview!!
     }
 
@@ -155,8 +161,10 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
                         array += entity.id
                 }
             }
-            if (array.isNotEmpty())
-                enum[group.id] = array.toLongArray()
+            if (array.isNotEmpty()) {
+                val expanded = if (group.expanded) -1 else 1
+                    enum[expanded * group.id] = array.toLongArray()
+            }
         }
         return enum
     }
@@ -164,7 +172,13 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
     fun updateFilterData(filter: Filter) {
         val enum = filter.enum
         for (entry in enum) {
-            val groupId = entry.key
+            val expanded = entry.key < 0
+            val groupId = if (expanded) -entry.key else entry.key
+/*            if (expanded)
+                onExpanded?.invoke(groupPosition)*/
+
+
+            groupItems.find { it.id == groupId }?.expanded = expanded
             childItems[groupId]?.let {child ->
                 for (entityChild in child) {
                     for (entityEntry in entry.value) {
@@ -174,7 +188,18 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
                     }
                 }
             }
+            //groupPosition += 1
         }
+    }
+
+    override fun onGroupExpanded(groupPosition: Int) {
+        super.onGroupExpanded(groupPosition)
+        groupItems[groupPosition].expanded = true
+    }
+
+    override fun onGroupCollapsed(groupPosition: Int) {
+        super.onGroupCollapsed(groupPosition)
+        groupItems[groupPosition].expanded = false
     }
 
     class GroupViewHolder {
