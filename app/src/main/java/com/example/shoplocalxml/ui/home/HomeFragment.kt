@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.home
 
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
@@ -16,6 +17,7 @@ import android.view.ViewGroup
 import android.view.animation.ScaleAnimation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.doAfterTextChanged
@@ -29,19 +31,25 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.DATA_PORTION
+import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
 import com.example.shoplocalxml.OnFabListener
 import com.example.shoplocalxml.OnSpeechRecognizer
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.Order
 import com.example.shoplocalxml.classes.sort_filter.Sort
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.custom_view.EditTextExt
+import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
+import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
@@ -51,18 +59,22 @@ import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.item_card.DividerItemDecoration
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
+import com.example.shoplocalxml.vibrate
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
-class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener {
+class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
 
    // private lateinit var sharedViewModel: SharedViewModel
-
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+       if (result.resultCode == Activity.RESULT_OK) {
+           updateFilter(result.data)
+       }
+   }
     private var orderQuery: String = ""
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
@@ -273,10 +285,25 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                         val gson = Gson()
                         val brandsJson = gson.toJson(SharedViewModel.getBrands())
                         val categoriesJson = gson.toJson(SharedViewModel.getCategories())
+                        val filterJson     = gson.toJson(sharedViewModel.filterProduct)
                         val intent = Intent(requireContext(), FilterActivity::class.java)
                         intent.putExtra("brands", brandsJson)
                         intent.putExtra("categories", categoriesJson)
-                        activity?.startActivity(intent)
+                        intent.putExtra(FILTER_KEY, filterJson)
+
+
+                        /*val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                            if (result.resultCode == Activity.RESULT_OK) {
+                                val data: Intent? = result.data
+                            }
+                        }*/
+                        resultLauncher.launch(intent)
+                        //activity?.startActivity(intent)
+                    } else {
+                        vibrate(400)
+                        val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_data_error))
+                        snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
+                        snackbarExt.show()
                     }
                 }
         }
@@ -581,7 +608,18 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
     }
 
-   /* override fun onStop() {
+    private fun updateFilter(intent: Intent?){
+        //log("update filter...")
+        intent?.let{data ->
+            val gson = Gson()
+            val extraFilter = data.getStringExtra(FILTER_KEY)
+            val filter = gson.fromJson(extraFilter, Filter::class.java)
+            sharedViewModel.setFilterProduct(filter)
+        }
+    }
+
+
+    /* override fun onStop() {
         (activity as MainActivity).setFabVisibility(false)
         super.onStop()
     }*/

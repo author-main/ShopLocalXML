@@ -1,13 +1,15 @@
 package com.example.shoplocalxml.ui.filter
 
-import android.graphics.drawable.GradientDrawable
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.ID_BRAND
 import com.example.shoplocalxml.ID_CATEGORY
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
+import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
 import com.example.shoplocalxml.getStringResource
 import com.google.gson.Gson
@@ -15,6 +17,8 @@ import com.google.gson.reflect.TypeToken
 
 
 class FilterActivity : AppCompatActivity() {
+    private var isCancelled = true
+    private val adapter = ExpandableAdapter()
     //private lateinit var sharedViewModel: SharedViewModel
     /*private var lateinit sharedViewModel: SharedViewModel =
         ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
@@ -34,6 +38,19 @@ class FilterActivity : AppCompatActivity() {
         dataBinding.expListViewFilter.setAdapter(
             getExpandableAdapter()
         )
+
+        dataBinding.textCaptionFilter.setOnClickListener {
+            val enum = adapter.getFilterEnum()
+            val filter = Filter()
+            filter.enum = enum
+            val gson = Gson()
+            val filterJson = gson.toJson(filter)
+            val data = Intent()
+            data.putExtra(FILTER_KEY, filterJson)
+            isCancelled = false
+            setResult(RESULT_OK, data)
+            finish()
+        }
 
 
         /*val colors = intArrayOf(0, 0xff0000, 0) // red for the example
@@ -85,7 +102,10 @@ class FilterActivity : AppCompatActivity() {
         typeToken   = object : TypeToken<List<Category>>() {}.type
         data        = intent.getStringExtra("categories")
         val categories = gson.fromJson<List<Category>>(data, typeToken)
-        val adapter = ExpandableAdapter()
+
+        data        = intent.getStringExtra(FILTER_KEY)
+        val filter = gson.fromJson(data, Filter::class.java)
+        //val adapter = ExpandableAdapter()
         adapter.addGroupItem(ID_CATEGORY, getStringResource(R.string.text_category), categories[ID_CATEGORY.toInt()].count)
         categories.forEach {
             adapter.addChildItem(ID_CATEGORY, it.id.toLong(), it.name, it.count, false)
@@ -94,6 +114,18 @@ class FilterActivity : AppCompatActivity() {
         brands.forEach {
             adapter.addChildItem(ID_BRAND, it.id.toLong(), it.name, it.count, false)
         }
+        adapter.updateFilterData(filter)
         return adapter
     }
+
+  /*  private fun getFilterEnum(): HashMap<Long, IntArray>{
+
+    }*/
+
+    override fun onDestroy() {
+        if (isCancelled)
+            setResult(RESULT_CANCELED)
+        super.onDestroy()
+    }
+
 }

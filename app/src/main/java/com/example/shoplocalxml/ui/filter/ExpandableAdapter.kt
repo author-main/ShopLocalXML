@@ -11,14 +11,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.log
 import java.util.zip.Inflater
 
 
-data class GroupItem(val id: Long, val name: String, val count: Int)
-data class ChildItem(val id: Long, val name: String, val count: Int, var selected: Boolean = false)
+
 
 class ExpandableAdapter: BaseExpandableListAdapter() {
+    data class GroupItem(val id: Long, val name: String, val count: Int)
+    data class ChildItem(val id: Long, val name: String, val count: Int, var selected: Boolean = false)
     private val groupItems = arrayListOf<GroupItem>()
     private val childItems = hashMapOf<Long, ArrayList<ChildItem>>()
     private var childViewHolder: ChildViewHolder? = null
@@ -141,6 +143,38 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
         return false//childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected ?: false
+    }
+
+    fun getFilterEnum(): HashMap<Long, LongArray> {
+        val enum = hashMapOf<Long, LongArray>()
+        for (group in groupItems) {
+            var array = emptyArray<Long>()
+            childItems[group.id]?.let{child ->
+                for (entity in child) {
+                    if (entity.selected)
+                        array += entity.id
+                }
+            }
+            if (array.isNotEmpty())
+                enum[group.id] = array.toLongArray()
+        }
+        return enum
+    }
+
+    fun updateFilterData(filter: Filter) {
+        val enum = filter.enum
+        for (entry in enum) {
+            val groupId = entry.key
+            childItems[groupId]?.let {child ->
+                for (entityChild in child) {
+                    for (entityEntry in entry.value) {
+                        if (entityChild.id == entityEntry) {
+                            entityChild.selected = true
+                        }
+                    }
+                }
+            }
+        }
     }
 
     class GroupViewHolder {

@@ -203,3 +203,4 @@ fun encodeBase64(value: String): String
     val height = ViewGroup.LayoutParams.WRAP_CONTENT
     dialog.window!!.setLayout(width, height)
 }*/
+

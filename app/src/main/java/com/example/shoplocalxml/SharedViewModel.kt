@@ -46,11 +46,20 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
 
 
     fun getFilterData(action: (value: Boolean) -> Unit){
+        if (processQuery) return
+        processQuery = true
         viewModelScope.launch(Dispatchers.IO) {
-            listBrend =  repository.getBrends() ?: listOf()
-            listCategory =  repository.getCategories() ?: listOf()
-            val success = !(listBrend.isEmpty() || listCategory.isEmpty())
-            action(success)
+            try {
+                listBrend = repository.getBrends() ?: listOf()
+                listCategory = repository.getCategories() ?: listOf()
+                val success = !(listBrend.isEmpty() || listCategory.isEmpty())
+                action(success)
+            } catch (e: Exception) {
+                action(false)
+            }
+            finally {
+                processQuery = false
+            }
         }
     }
 
@@ -193,8 +202,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     private fun getQueryOrder(): String {
         val sortorder          = sortProduct.order.value
         val sorttype           = sortProduct.sort.value
-        val filtercategory     = filterProduct.category
-        val filterbrend        = filterProduct.brend
+        val enum               =  filterProduct.enum
+        //val filtercategory     = filterProduct.category
+        //val filterbrend        = filterProduct.brend
         val filterfavorite     = filterProduct.favorite
         val filterprice        = run {
             val value: Pair<Float, Float>   = filterProduct.priceRange
@@ -213,7 +223,8 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
          *  6 - filter_discount:    скидка
          *  7 - filrter_screen:     текущий экран
          */
-         val queryOrder = "$sortorder $sorttype $filtercategory $filterbrend $filterfavorite $filterprice $filterdiscount $filterscreen"
+         val queryOrder = "$sortorder $sorttype -1 -1 $filterfavorite $filterprice $filterdiscount $filterscreen"
+         //val queryOrder = "$sortorder $sorttype $filtercategory $filterbrend $filterfavorite $filterprice $filterdiscount $filterscreen"
          return encodeBase64(queryOrder)
 
         //return "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE="
