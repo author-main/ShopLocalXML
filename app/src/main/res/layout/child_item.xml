@@ -53,5 +53,6 @@
         android:id="@+id/dividerChildItem"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/PrimaryDark" />
+        android:alpha="0.7"
+        android:background="@color/EditTextBackgroundDark" />
 </LinearLayout>
