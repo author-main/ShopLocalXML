@@ -40,7 +40,12 @@ class FilterActivity : AppCompatActivity() {
             getExpandableAdapter()
         )
 
-        dataBinding.textCaptionFilter.setOnClickListener {
+
+        dataBinding.buttonFilterCancel.setOnClickListener {
+            finish()
+        }
+
+        dataBinding.buttonFilterConfirm.setOnClickListener {
             val enum = adapter.getFilterEnum()
             val filter = Filter()
             filter.enum = enum
@@ -52,6 +57,7 @@ class FilterActivity : AppCompatActivity() {
             setResult(RESULT_OK, data)
             finish()
         }
+
 
 
         /*val colors = intArrayOf(0, 0xff0000, 0) // red for the example
