@@ -42,7 +42,7 @@ class FilterActivity : AppCompatActivity() {
         )
 
 
-        dataBinding.buttonFilterCancel.setOnClickListener {
+        dataBinding.buttonFilterReset.setOnClickListener {
             perform(Filter())
         }
 

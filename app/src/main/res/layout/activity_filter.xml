@@ -58,7 +58,7 @@
             app:layout_constraintTop_toTopOf="@+id/buttonFilterCancel" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonFilterCancel"
+            android:id="@+id/buttonFilterReset"
             style="@style/CancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
