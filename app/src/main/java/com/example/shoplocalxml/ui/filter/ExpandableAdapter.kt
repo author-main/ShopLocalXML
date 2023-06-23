@@ -169,8 +169,8 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
         return enum
     }
 
-    fun updateFilterData(filter: Filter) {
-        val enum = filter.enum
+    fun updateFilterSection(enum: HashMap<Long, LongArray>) {
+        //val enum = filter.enum
         for (entry in enum) {
             val expanded = entry.key < 0
             val groupId = if (expanded) -entry.key else entry.key

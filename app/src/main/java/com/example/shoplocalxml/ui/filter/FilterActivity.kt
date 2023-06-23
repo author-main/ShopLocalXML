@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken
 
 
 class FilterActivity : AppCompatActivity() {
+    private var filter = Filter()
     private var isCancelled = true
     private val adapter = ExpandableAdapter()
     //private lateinit var sharedViewModel: SharedViewModel
@@ -42,20 +43,12 @@ class FilterActivity : AppCompatActivity() {
 
 
         dataBinding.buttonFilterCancel.setOnClickListener {
-            finish()
+            perform(Filter())
         }
 
         dataBinding.buttonFilterConfirm.setOnClickListener {
-            val enum = adapter.getFilterEnum()
-            val filter = Filter()
-            filter.enum = enum
-            val gson = Gson()
-            val filterJson = gson.toJson(filter)
-            val data = Intent()
-            data.putExtra(FILTER_KEY, filterJson)
-            isCancelled = false
-            setResult(RESULT_OK, data)
-            finish()
+            filter.enum = adapter.getFilterEnum()
+            perform(filter)
         }
 
 
@@ -101,6 +94,16 @@ class FilterActivity : AppCompatActivity() {
         return stateDrawable
     }*/
 
+    private fun perform(queryFilter: Filter){
+        val gson = Gson()
+        val filterJson = gson.toJson(queryFilter)
+        val data = Intent()
+        data.putExtra(FILTER_KEY, filterJson)
+        isCancelled = false
+        setResult(RESULT_OK, data)
+        finish()
+    }
+
     private fun getExpandableAdapter(): ExpandableAdapter {
 
         adapter.setOnExpandGroup {
@@ -117,7 +120,7 @@ class FilterActivity : AppCompatActivity() {
         val categories = gson.fromJson<List<Category>>(data, typeToken)
 
         data        = intent.getStringExtra(FILTER_KEY)
-        val filter = gson.fromJson(data, Filter::class.java)
+        filter = gson.fromJson(data, Filter::class.java)
         //val adapter = ExpandableAdapter()
         adapter.addGroupItem(ID_CATEGORY, getStringResource(R.string.text_category), categories[ID_CATEGORY.toInt()].count)
         categories.forEach {
@@ -127,8 +130,13 @@ class FilterActivity : AppCompatActivity() {
         brands.forEach {
             adapter.addChildItem(ID_BRAND, it.id.toLong(), it.name, it.count, false)
         }
-        adapter.updateFilterData(filter)
+        adapter.updateFilterSection(filter.enum)
+        updateFilterData()
         return adapter
+    }
+
+    private fun updateFilterData(){
+
     }
 
   /*  private fun getFilterEnum(): HashMap<Long, IntArray>{
