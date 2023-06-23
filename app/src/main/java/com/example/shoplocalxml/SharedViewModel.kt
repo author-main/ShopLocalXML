@@ -129,28 +129,18 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         if (page <= portionData) return
         processQuery = true
         //CoroutineScope(Dispatchers.Main).launch {
+        var i =0
         viewModelScope.launch {
             val resultQuery = repository.getProducts(page, queryOrder)
             if (resultQuery == null)
                 processQuery = false
-
             else resultQuery.let{ products ->
                 if (products.isNotEmpty()) {
                     portionData += 1
                     updateDataAfterQuery(products, uploadAgain)
-                    //setProducts(updateHostLink(products))
                 }
                 processQuery = false
             }
-
-           /*repository.getProducts(page, queryOrder)?.let { products ->
-                if (products.isNotEmpty()) {
-                    portionData += 1
-                    updateDataAfterQuery(products, uploadAgain)
-                    //setProducts(updateHostLink(products))
-                }
-                processQuery = false
-            }*/
         }
     }
 
