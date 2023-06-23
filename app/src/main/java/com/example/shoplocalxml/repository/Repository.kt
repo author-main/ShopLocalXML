@@ -144,9 +144,9 @@ class Repository {
 
     suspend fun getProducts(page: Int, order: String): List<Product>? =
         token?.let {
-            log("token $token")
+           /* log("token $token")
             log("page $page")
-            log("order $order")
+            log("order $order")*/
             databaseHandler.getProducts(it, page, order)
         }
 
