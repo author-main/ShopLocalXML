@@ -7,22 +7,18 @@
             name="eventhandler"
             type="com.example.shoplocalxml.ui.filter.FilterActivity"/>
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BackgroundDark"
-    tools:context=".ui.filter.FilterActivity">
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/layoutFilterToolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/PrimaryDark"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/textCaptionFilter"
@@ -44,33 +40,61 @@
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutFilterToolbar"
-        app:layout_constraintVertical_bias="1.0">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="16dp">
 
-        <ExpandableListView
-            android:id="@+id/expListViewFilter"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:divider="@color/PrimaryDark"
-            android:dividerHeight="0dp"
-            android:groupIndicator="@null"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:scrollbars="none"
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonFilterConfirm"
+            style="@style/ConfirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_perform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/buttonFilterCancel"
+            app:layout_constraintTop_toTopOf="@+id/buttonFilterCancel" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonFilterCancel"
+            style="@style/CancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_reset"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonFilterConfirm"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            app:cardBackgroundColor="@color/PrimaryDark"
+            app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </ExpandableListView>
+            <ExpandableListView
+                android:id="@+id/expListViewFilter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/PrimaryDark"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@null"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:scrollbars="none">
+
+            </ExpandableListView>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 </layout>
