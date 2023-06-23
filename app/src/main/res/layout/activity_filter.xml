@@ -54,8 +54,8 @@
             android:text="@string/text_perform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonFilterCancel"
-            app:layout_constraintTop_toTopOf="@+id/buttonFilterCancel" />
+            app:layout_constraintStart_toEndOf="@+id/buttonFilterReset"
+            app:layout_constraintTop_toTopOf="@+id/buttonFilterReset" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonFilterReset"
@@ -112,7 +112,7 @@
             android:paddingVertical="8dp"
             app:cardBackgroundColor="@color/PrimaryDark"
             app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonFilterCancel"
+            app:layout_constraintBottom_toTopOf="@+id/buttonFilterReset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardViewRange">
