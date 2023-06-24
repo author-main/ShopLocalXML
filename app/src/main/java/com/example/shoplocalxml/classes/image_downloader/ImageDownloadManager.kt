@@ -50,20 +50,20 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 
         cacheMemory.get(hash)?.let{bitmap ->
             //log("load from cache memory...")
-            //@Synchronized {
+
                 handlerUI.post {
                     oncomplete(bitmap)
                 }
-            //}
+
             return
         }
         val cacheTimestamp = cacheDrive.find(hash)
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
-           // @Synchronized {
+
                 handlerUI.post {
                     oncomplete(bitmap)
                 }
-           // }
+
             taskList.remove(url)
             bitmap?.let{
                 cacheMemory.put(hash, it)
@@ -78,11 +78,12 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 
         }
 
+        @Synchronized
         if (taskList.containsKey(url))
             queue.add(url to task)
-        else {
+        else
             taskList[url] = executor.submit(task)
-        }
+
 
     }
 
