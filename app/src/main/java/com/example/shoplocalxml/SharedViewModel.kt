@@ -211,7 +211,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         //val filterbrend        = filterProduct.brend
         val filterfavorite     = filterProduct.favorite
         val filterprice        = run {
-            val value: Pair<Float, Float>   = filterProduct.priceRange
+            val value: Pair<Int, Int>   = filterProduct.priceRange
             "${value.first}-${value.second}"
         }
         val filterdiscount = filterProduct.discount

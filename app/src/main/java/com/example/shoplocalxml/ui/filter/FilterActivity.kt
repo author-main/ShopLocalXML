@@ -52,6 +52,11 @@ class FilterActivity : AppCompatActivity() {
         }
 
         dataBinding.buttonFilterConfirm.setOnClickListener {
+
+            filter.priceRange =
+                getInteger(dataBinding.editTextFilterRangeFrom.text) to
+                getInteger(dataBinding.editTextFilterRangeTo.text)
+
             filter.discount = getInteger(dataBinding.editTextFilterDiscount.text)
                 /*try {(dataBinding.editTextFilterDiscount.text.toString()).toInt()}
                               catch(_: Exception) {0}*/
@@ -65,6 +70,22 @@ class FilterActivity : AppCompatActivity() {
             val value = getInteger(dataBinding.editTextFilterDiscount.text)
             if (value == 0)
                 dataBinding.editTextFilterDiscount.setText("0")
+            true
+        }
+
+        dataBinding.editTextFilterRangeFrom.lossFocusOutside = true
+        dataBinding.editTextFilterRangeFrom.onValidValue = {
+            val value = getInteger(dataBinding.editTextFilterRangeFrom.text)
+            if (value == 0)
+                dataBinding.editTextFilterRangeFrom.setText("0")
+            true
+        }
+
+        dataBinding.editTextFilterRangeTo.lossFocusOutside = true
+        dataBinding.editTextFilterRangeTo.onValidValue = {
+            val value = getInteger(dataBinding.editTextFilterRangeTo.text)
+            if (value == 0)
+                dataBinding.editTextFilterRangeTo.setText("0")
             true
         }
 
@@ -153,6 +174,8 @@ class FilterActivity : AppCompatActivity() {
     }
 
     private fun updateFilterData(){
+        dataBinding.editTextFilterRangeFrom.setText(filter.priceRange.first.toString())
+        dataBinding.editTextFilterRangeTo.setText(filter.priceRange.second.toString())
         dataBinding.editTextFilterDiscount.setText(filter.discount.toString())
         dataBinding.checkboxFilterFavorite.isChecked = filter.favorite > 0
     }

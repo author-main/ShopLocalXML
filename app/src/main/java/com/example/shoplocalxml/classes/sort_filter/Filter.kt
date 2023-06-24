@@ -7,7 +7,7 @@ data class Filter(
     var viewmode: ProductsAdapter.Companion.ItemViewMode = ProductsAdapter.Companion.ItemViewMode.CARD,
     var enum: HashMap<Long, LongArray>   = hashMapOf(),
     var favorite: Int                   = 0,
-    var priceRange: Pair<Float, Float>  = 0f to 0f,
+    var priceRange: Pair<Int, Int>  = 0 to 0,
     var discount: Int                   = 0
 ) {
 
