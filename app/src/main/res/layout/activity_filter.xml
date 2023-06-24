@@ -199,7 +199,7 @@
                 android:dividerHeight="0dp"
                 android:groupIndicator="@null"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
+                android:paddingVertical="16dp"
                 android:scrollbars="none">
 
             </ExpandableListView>

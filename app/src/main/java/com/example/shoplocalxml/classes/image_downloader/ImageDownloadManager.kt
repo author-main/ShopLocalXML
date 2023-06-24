@@ -44,24 +44,27 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         super.onStop(owner)
     }
 
-    @Synchronized
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
         val hash = md5(url)
      //   log("task = $url...")
 
         cacheMemory.get(hash)?.let{bitmap ->
             //log("load from cache memory...")
-            handlerUI.post {
-                oncomplete(bitmap)
-            }
+            //@Synchronized {
+                handlerUI.post {
+                    oncomplete(bitmap)
+                }
+            //}
             return
         }
         val cacheTimestamp = cacheDrive.find(hash)
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
+           // @Synchronized {
+                handlerUI.post {
+                    oncomplete(bitmap)
+                }
+           // }
             taskList.remove(url)
-            handlerUI.post {
-                oncomplete(bitmap)
-            }
             bitmap?.let{
                 cacheMemory.put(hash, it)
             }
