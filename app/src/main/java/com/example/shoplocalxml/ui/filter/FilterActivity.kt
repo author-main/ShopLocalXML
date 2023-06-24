@@ -15,6 +15,7 @@ import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
+import com.example.shoplocalxml.getInteger
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.google.gson.Gson
@@ -31,8 +32,6 @@ class FilterActivity : AppCompatActivity() {
     private lateinit var dataBinding: ActivityFilterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         dataBinding = ActivityFilterBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
@@ -45,24 +44,27 @@ class FilterActivity : AppCompatActivity() {
             getExpandableAdapter()
         )
 
+        updateFilterData()
+
 
         dataBinding.buttonFilterReset.setOnClickListener {
             perform(Filter())
         }
 
         dataBinding.buttonFilterConfirm.setOnClickListener {
+            filter.discount = getInteger(dataBinding.editTextFilterDiscount.text)
+                /*try {(dataBinding.editTextFilterDiscount.text.toString()).toInt()}
+                              catch(_: Exception) {0}*/
+            filter.favorite = if (dataBinding.checkboxFilterFavorite.isChecked) 1 else 0
             filter.enum = adapter.getFilterEnum()
             perform(filter)
         }
 
         dataBinding.editTextFilterDiscount.lossFocusOutside = true
         dataBinding.editTextFilterDiscount.onValidValue = {
-            val value: Int = try {
-                it.toInt()
-            } catch(_: Exception) {
+            val value = getInteger(dataBinding.editTextFilterDiscount.text)
+            if (value == 0)
                 dataBinding.editTextFilterDiscount.setText("0")
-                0
-            }
             true
         }
 
@@ -110,6 +112,7 @@ class FilterActivity : AppCompatActivity() {
     }*/
 
     private fun perform(queryFilter: Filter){
+
         val gson = Gson()
         val filterJson = gson.toJson(queryFilter)
         val data = Intent()
@@ -146,12 +149,12 @@ class FilterActivity : AppCompatActivity() {
             adapter.addChildItem(ID_BRAND, it.id.toLong(), it.name, it.count, false)
         }
         adapter.updateFilterSection(filter.enum)
-        updateFilterData()
         return adapter
     }
 
     private fun updateFilterData(){
         dataBinding.editTextFilterDiscount.setText(filter.discount.toString())
+        dataBinding.checkboxFilterFavorite.isChecked = filter.favorite > 0
     }
 
   /*  private fun getFilterEnum(): HashMap<Long, IntArray>{

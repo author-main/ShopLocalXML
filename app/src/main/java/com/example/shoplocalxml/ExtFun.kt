@@ -197,6 +197,10 @@ fun isEven(value: Int) = value % 2 == 0
 fun encodeBase64(value: String): String
         = Base64.encodeToString(value.toByteArray(charset = Charset.defaultCharset()), Base64.NO_WRAP)
 
+fun<T> getInteger(value: T) : Int {
+    val strValue = if (value !is String) value.toString() else value
+    return try {strValue.toInt()} catch(_: Exception){0}
+}
 
 /*fun setWidthDialog(dialog: AlertDialog, widthDP: Int){
     val width: Int = widthDP.toPx
