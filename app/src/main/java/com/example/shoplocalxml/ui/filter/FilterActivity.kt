@@ -1,7 +1,10 @@
 package com.example.shoplocalxml.ui.filter
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.ID_BRAND
@@ -10,6 +13,7 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.sort_filter.Filter
+import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
@@ -50,6 +54,8 @@ class FilterActivity : AppCompatActivity() {
             filter.enum = adapter.getFilterEnum()
             perform(filter)
         }
+
+        dataBinding.editTextFilterDiscount.lossFocusOutside = true
 
 
 
@@ -149,4 +155,21 @@ class FilterActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (ev?.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus;
+            if ( v is EditTextExt) {
+                if (v.lossFocusOutside) {
+                    val outRect = Rect()
+                    v.getGlobalVisibleRect(outRect)
+                    if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                        v.clearFocus()
+                        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                    }
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
 }

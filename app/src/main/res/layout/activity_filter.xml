@@ -83,13 +83,48 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewDiscount"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:cardBackgroundColor="@color/PrimaryDark"
             app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardViewMode" />
+            app:layout_constraintTop_toBottomOf="@id/cardViewMode">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+
+                <com.example.shoplocalxml.custom_view.EditTextExt
+                    android:id="@+id/editTextFilterDiscount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberSigned"
+                    android:maxLength="10" />
+
+                <CheckBox
+                    android:id="@+id/checkboxFilterFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:button="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_checkbox"
+                    android:drawablePadding="2dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:text="@string/text_favorite"
+                    android:textColor="@color/EditTextFont" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewRange"
