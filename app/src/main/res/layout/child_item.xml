@@ -37,10 +37,11 @@
             android:textColor="@color/EditTextFont" />
 
         <CheckBox
+            android:background="@android:color/transparent"
             android:id="@+id/checkboxChildItem"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
-            android:button="@android:color/transparent"
+            android:button="@null"
             android:drawableStart="@drawable/ic_checkbox"
             android:minWidth="0dp"
             android:minHeight="0dp"
