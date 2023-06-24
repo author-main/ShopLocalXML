@@ -17,6 +17,7 @@ import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -292,7 +293,8 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         /*if (actionCode == EditorInfo.IME_ACTION_DONE) {
             clearFocus()
         }*/
-        clearFocus()
+        //clearFocus()
+        hideKeyboard()
         super.onEditorAction(actionCode)
     }
 
@@ -461,6 +463,14 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             drawableAction
         else
             drawableEnd
+
+
+    private fun hideKeyboard(){
+        clearFocus()
+        val imm = applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
 
 }
 

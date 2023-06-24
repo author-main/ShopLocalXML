@@ -109,18 +109,32 @@
                     android:textColor="@color/EditTextFont" />
 
 
+                <FrameLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
                 <com.example.shoplocalxml.custom_view.EditTextExt
                     android:id="@+id/editTextFilterDiscount"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginVertical="16dp"
-                    android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/text_from"
                     android:inputType="number"
                     android:maxLength="2"
                     android:textAlignment="textEnd" />
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:alpha="0.5"
+                        android:text="@string/text_from"
+                        android:textColor="@color/EditTextFont" />
+                </FrameLayout>
 
 
                 <TextView

@@ -56,6 +56,15 @@ class FilterActivity : AppCompatActivity() {
         }
 
         dataBinding.editTextFilterDiscount.lossFocusOutside = true
+        dataBinding.editTextFilterDiscount.onValidValue = {
+            val value: Int = try {
+                it.toInt()
+            } catch(_: Exception) {
+                dataBinding.editTextFilterDiscount.setText("0")
+                0
+            }
+            true
+        }
 
 
 
@@ -142,7 +151,7 @@ class FilterActivity : AppCompatActivity() {
     }
 
     private fun updateFilterData(){
-
+        dataBinding.editTextFilterDiscount.setText(filter.discount.toString())
     }
 
   /*  private fun getFilterEnum(): HashMap<Long, IntArray>{
