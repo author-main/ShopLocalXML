@@ -99,15 +99,38 @@
                 >
 
 
+                <TextView
+                    android:id="@+id/textFilterDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/text_discount"
+                    android:textColor="@color/EditTextFont" />
+
+
                 <com.example.shoplocalxml.custom_view.EditTextExt
                     android:id="@+id/editTextFilterDiscount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginVertical="16dp"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/text_from"
                     android:inputType="number"
-                    android:maxLength="6" />
+                    android:maxLength="2"
+                    android:textAlignment="textEnd" />
+
+
+                <TextView
+                    android:id="@+id/textFilterPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="32dp"
+                    android:text="%"
+                    android:textColor="@color/EditTextFont" />
 
                 <CheckBox
                     android:background="@android:color/transparent"
@@ -123,6 +146,7 @@
                     android:minHeight="0dp"
                     android:text="@string/text_favorite"
                     android:textColor="@color/EditTextFont" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
