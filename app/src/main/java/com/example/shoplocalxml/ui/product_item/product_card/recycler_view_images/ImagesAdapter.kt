@@ -54,6 +54,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
         return countUploaded == itemCount
     }*/
 
+    @Synchronized
     @SuppressLint("NotifyDataSetChanged")
     fun setImages(list: List<String>){
         images.clear()

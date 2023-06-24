@@ -78,7 +78,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 
         }
 
-        @Synchronized
+        //@Synchronized
         if (taskList.containsKey(url))
             queue.add(url to task)
         else
