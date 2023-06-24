@@ -59,11 +59,11 @@ fun Int.alpha(value: Float): Int {
 
 
 fun getStringArrayResource(@ArrayRes id: Int): Array<String> =
-    AppShopLocal.applicationContext.resources.getStringArray(id)
+    applicationContext.resources.getStringArray(id)
 
 fun getStringResource(@StringRes id: Int): String =
     try {
-        AppShopLocal.applicationContext.getString(id)
+        applicationContext.getString(id)
     }
     catch (e: Exception){
         EMPTY_STRING

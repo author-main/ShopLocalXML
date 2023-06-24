@@ -1,5 +1,6 @@
 package com.example.shoplocalxml.ui.filter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
@@ -30,6 +31,7 @@ class FilterActivity : AppCompatActivity() {
     /*private var lateinit sharedViewModel: SharedViewModel =
         ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
     private lateinit var dataBinding: ActivityFilterBinding
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = ActivityFilterBinding.inflate(layoutInflater)
@@ -88,6 +90,9 @@ class FilterActivity : AppCompatActivity() {
                 dataBinding.editTextFilterRangeTo.setText("0")
             true
         }
+
+        dataBinding.textFilterPrice.text =
+            getStringResource(R.string.text_price) + ", " + getStringResource(R.string.text_currency)
 
 
 
