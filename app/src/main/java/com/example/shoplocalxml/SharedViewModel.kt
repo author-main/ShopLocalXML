@@ -119,7 +119,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
 
-    fun getProducts(page: Int, uploadAgain: Boolean  = false){//}, order: String) {
+    fun getProducts(page: Int, uploadAgain: Boolean  = false, onEmptyResult: (()->Unit)? = null){//}, order: String) {
 //        uploadDataAgain = uploadAgain
         if (uploadAgain) {
             portionData = 0
@@ -128,6 +128,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         if (processQuery) return
         if (page <= portionData) return
         processQuery = true
+        //log(queryOrder)
         //CoroutineScope(Dispatchers.Main).launch {
         var i =0
         viewModelScope.launch {
@@ -141,6 +142,8 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
                 }
                 processQuery = false
             }
+            if (resultQuery.isNullOrEmpty())
+                onEmptyResult?.invoke()
         }
     }
 
