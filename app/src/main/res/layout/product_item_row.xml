@@ -53,7 +53,7 @@
                     android:padding="8dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_addcart"
-                    android:tint="@color/colorBrend" />
+                    android:tint="@color/colorAccent" />
 
 
                 <LinearLayout

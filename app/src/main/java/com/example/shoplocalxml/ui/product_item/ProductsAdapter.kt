@@ -1,5 +1,6 @@
 package com.example.shoplocalxml.ui.product_item
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -42,9 +43,10 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         }*/
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setViewMode(value: ItemViewMode){
         viewMode = value
-        notifyItemsChanged()
+//        notifyItemsChanged()
     }
 
 
