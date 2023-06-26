@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
+            name="filter"
+            type="com.example.shoplocalxml.classes.sort_filter.Filter"/>
+        <variable
             name="eventhandler"
             type="com.example.shoplocalxml.ui.filter.FilterActivity"/>
     </data>
@@ -34,8 +37,10 @@
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="8dp"
-            android:tint="@color/EditTextFont"
-            app:srcCompat="@drawable/ic_arrow_back" />
+            app:tint="@color/EditTextFont"
+            app:srcCompat="@drawable/ic_arrow_back"
+            android:onClick="@{()->eventhandler.performClickButtonBack()}"
+            />
 
     </FrameLayout>
 
@@ -55,7 +60,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/buttonFilterReset"
-            app:layout_constraintTop_toTopOf="@+id/buttonFilterReset" />
+            app:layout_constraintTop_toTopOf="@+id/buttonFilterReset"
+            android:onClick="@{()->eventhandler.applyFilter()}"
+            />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonFilterReset"
@@ -67,7 +74,9 @@
             app:layout_constraintEnd_toStartOf="@+id/buttonFilterConfirm"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()->eventhandler.resetFilter()}"
+            />
 
 
         <androidx.cardview.widget.CardView
@@ -123,7 +132,9 @@
                     android:ems="10"
                     android:inputType="number"
                     android:maxLength="2"
-                    android:textAlignment="textEnd" />
+                    android:textAlignment="textEnd"
+                    android:text="@={filter.discount}"
+                    />
 
                     <TextView
                         android:id="@+id/textView8"
@@ -159,7 +170,9 @@
                     android:minWidth="0dp"
                     android:minHeight="0dp"
                     android:text="@string/text_favorite"
-                    android:textColor="@color/EditTextFont" />
+                    android:textColor="@color/EditTextFont"
+                    android:checked="@={filter.favorite}"
+                    />
 
             </LinearLayout>
 
@@ -213,7 +226,9 @@
                         android:ems="10"
                         android:inputType="number"
                         android:maxLength="6"
-                        android:textAlignment="textEnd" />
+                        android:textAlignment="textEnd"
+                        android:text="@={filter.fromPrice}"
+                        />
 
                     <TextView
                         android:id="@+id/textHintRangeFrom"
@@ -239,7 +254,9 @@
                         android:ems="10"
                         android:inputType="number"
                         android:maxLength="6"
-                        android:textAlignment="textEnd" />
+                        android:textAlignment="textEnd"
+                        android:text="@={filter.toPrice}"
+                        />
 
                     <TextView
                         android:id="@+id/textHintRangeTo"

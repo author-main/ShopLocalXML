@@ -176,6 +176,77 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         super.onCleared()
     }
 
+
+    fun getProductFromId(id: Int) =
+        _products.value.find { it.id == id }
+
+    private fun getQueryOrder(): String {
+        val sortorder          = sortProduct.order.value
+        val sorttype           = sortProduct.sort.value
+        val enum               =  filterProduct.enum
+        //val filtercategory     = filterProduct.category
+        //val filterbrend        = filterProduct.brend
+        val filterfavorite     = if (filterProduct.favorite) 1 else 0
+        val filterprice        = "${filterProduct.fromPrice}-${filterProduct.toPrice}" /*run {
+            val value: Pair<Int, Int>   = filterProduct.priceRange
+            "${value.first}-${value.second}"
+        }*/
+        val filterdiscount = filterProduct.discount
+        val filterscreen   = 0
+        var section = EMPTY_STRING
+        for (entry in enum) {
+            val key = abs(entry.key)
+            section += "$key[" + entry.value.joinToString(",", postfix = "]-")
+        }
+        section = if (section.isEmpty())
+            "-1"
+        else
+            section.substringBeforeLast("-")
+        //log(section)
+        /** Порядок для извлечения в PHP:
+         *  0 - sort_order:         0 - ASCENDING, 1 - DESCENDING
+         *  1 - sort_type:          0 POPULAR, 1 - RATING, 2 - PRICE
+
+        /*   2 - filter_category:    ID категории продукта
+         *  3 - filter_brand:       ID бренда  */
+
+         *  2 - filter_enum:        выборка по категории и бренду
+         *  3 - filter_favorite:    0 - все продукты, 1 - избранное
+         *  4 - filter_price:       интервал цен, н/р 1000,00-20000,00
+         *  5 - filter_discount:    скидка
+         *  6 - filrter_screen:     текущий экран
+         */
+
+        //log("$sortorder $sorttype $section $filterfavorite $filterprice $filterdiscount $filterscreen")
+
+        //  val queryOrder = "$sortorder $sorttype -1 -1 $filterfavorite $filterprice $filterdiscount $filterscreen"
+        val queryOrder = "$sortorder $sorttype $section $filterfavorite $filterprice $filterdiscount $filterscreen"
+        //log("queryOrder = $queryOrder")
+        //val queryOrder = "$sortorder $sorttype $filtercategory $filterbrend $filterfavorite $filterprice $filterdiscount $filterscreen"
+        //log(encodeBase64(queryOrder))
+        return encodeBase64(queryOrder)
+
+        //return "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE="
+    }
+
+    @JvmName("setFilterProducts_")
+    fun setFilterProduct(filter: Filter) {
+        if (filter != filterProduct) {
+            filterProduct = filter
+            queryOrder = getQueryOrder()
+        }
+    }
+
+    @JvmName("setSortProducts_")
+    fun setSortProduct(sort: SortOrder){
+        if (sort != sortProduct) {
+            sortProduct = sort
+            queryOrder = getQueryOrder()
+        }
+    }
+
+
+
     companion object {
         private var listBrend    = listOf<Brend>()
         private var listCategory = listOf<Category>()
@@ -202,73 +273,4 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
             return textPromotion
         }
     }
-
-    fun getProductFromId(id: Int) =
-        _products.value.find { it.id == id }
-
-    private fun getQueryOrder(): String {
-        val sortorder          = sortProduct.order.value
-        val sorttype           = sortProduct.sort.value
-        val enum               =  filterProduct.enum
-        //val filtercategory     = filterProduct.category
-        //val filterbrend        = filterProduct.brend
-        val filterfavorite     = filterProduct.favorite
-        val filterprice        = run {
-            val value: Pair<Int, Int>   = filterProduct.priceRange
-            "${value.first}-${value.second}"
-        }
-        val filterdiscount = filterProduct.discount
-        val filterscreen   = 0
-        var section = EMPTY_STRING
-        for (entry in enum) {
-            val key = abs(entry.key)
-            section += "$key[" + entry.value.joinToString(",", postfix = "]-")
-        }
-        section = if (section.isEmpty())
-            "-1"
-        else
-            section.substringBeforeLast("-")
-        //log(section)
-        /** Порядок для извлечения в PHP:
-         *  0 - sort_order:         0 - ASCENDING, 1 - DESCENDING
-         *  1 - sort_type:          0 POPULAR, 1 - RATING, 2 - PRICE
-
-       /*   2 - filter_category:    ID категории продукта
-         *  3 - filter_brand:       ID бренда  */
-
-         *  2 - filter_enum:        выборка по категории и бренду
-         *  3 - filter_favorite:    0 - все продукты, 1 - избранное
-         *  4 - filter_price:       интервал цен, н/р 1000,00-20000,00
-         *  5 - filter_discount:    скидка
-         *  6 - filrter_screen:     текущий экран
-         */
-
-        //log("$sortorder $sorttype $section $filterfavorite $filterprice $filterdiscount $filterscreen")
-
-      //  val queryOrder = "$sortorder $sorttype -1 -1 $filterfavorite $filterprice $filterdiscount $filterscreen"
-        val queryOrder = "$sortorder $sorttype $section $filterfavorite $filterprice $filterdiscount $filterscreen"
-        //log("queryOrder = $queryOrder")
-         //val queryOrder = "$sortorder $sorttype $filtercategory $filterbrend $filterfavorite $filterprice $filterdiscount $filterscreen"
-         //log(encodeBase64(queryOrder))
-         return encodeBase64(queryOrder)
-
-        //return "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE="
-    }
-
-    @JvmName("setFilterProducts_")
-    fun setFilterProduct(filter: Filter) {
-        if (filter != filterProduct) {
-            filterProduct = filter
-            queryOrder = getQueryOrder()
-        }
-    }
-
-    @JvmName("setSortProducts_")
-    fun setSortProduct(sort: SortOrder){
-        if (sort != sortProduct) {
-            sortProduct = sort
-            queryOrder = getQueryOrder()
-        }
-    }
-
 }

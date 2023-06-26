@@ -6,8 +6,10 @@ import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 data class Filter(
     var viewmode: ProductsAdapter.Companion.ItemViewMode = ProductsAdapter.Companion.ItemViewMode.CARD,
     var enum: HashMap<Long, LongArray>   = hashMapOf(),
-    var favorite: Int                   = 0,
-    var priceRange: Pair<Int, Int>  = 0 to 0,
+    var favorite: Boolean               = false,
+    var fromPrice: Int                  = 0,
+    var toPrice: Int                    = 0,
+    //var priceRange: Pair<Int, Int>  = 0 to 0,
     var discount: Int                   = 0
 ) {
 
@@ -19,8 +21,8 @@ data class Filter(
     private fun equalsFilter(filter: Filter): Boolean {
         return  filter.equalsHashMap(enum)
                 && filter.favorite          == favorite
-                && filter.priceRange.first  == priceRange.first
-                && filter.priceRange.second == priceRange.second
+                && filter.fromPrice         == fromPrice
+                && filter.toPrice           == toPrice
                 && filter.discount          == discount
                 && filter.viewmode          == viewmode
     }
