@@ -104,15 +104,15 @@ class SwitchableDatabinding(private var mode: ProductsAdapter.Companion.ItemView
     val buttonCart      : ImageView
         get() = getButtonCart_()
 
-    val textName        : TextView
+  /*  val textName        : TextView
         get() = getTextName_()
 
     val textSalePrice   : TextView
         get() = getTextSalePrice_()
-
+*/
     val textPrice       : TextView
         get() = getTextPrice_()
-
+/*
     val textPromotion   : TextView
         get() = getTextPromotion_()
 
@@ -121,7 +121,7 @@ class SwitchableDatabinding(private var mode: ProductsAdapter.Companion.ItemView
 
     val ratingView      : RatingView
         get() = getRatingView_()
-
+*/
     private fun getProductCard_() =
         if (mode == ProductsAdapter.Companion.ItemViewMode.CARD)
             dataBindingCard!!.productCard
@@ -134,7 +134,7 @@ class SwitchableDatabinding(private var mode: ProductsAdapter.Companion.ItemView
         else
             dataBindingRow!!.buttonCart
 
-    private fun getTextName_() =
+   /* private fun getTextName_() =
         if (mode == ProductsAdapter.Companion.ItemViewMode.CARD)
             dataBindingCard!!.textName
         else
@@ -145,14 +145,14 @@ class SwitchableDatabinding(private var mode: ProductsAdapter.Companion.ItemView
             dataBindingCard!!.textSalePrice
         else
             dataBindingRow!!.textSalePrice
-
+*/
     private fun getTextPrice_() =
         if (mode == ProductsAdapter.Companion.ItemViewMode.CARD)
             dataBindingCard!!.textPrice
         else
             dataBindingRow!!.textPrice
 
-    private fun getTextPromotion_() =
+ /*   private fun getTextPromotion_() =
         if (mode == ProductsAdapter.Companion.ItemViewMode.CARD)
             dataBindingCard!!.textPromotion
         else
@@ -169,7 +169,7 @@ class SwitchableDatabinding(private var mode: ProductsAdapter.Companion.ItemView
             dataBindingCard!!.ratingView
         else
             dataBindingRow!!.ratingView
-
+*/
     private fun getRoot_() =
         if (mode == ProductsAdapter.Companion.ItemViewMode.CARD)
             dataBindingCard!!.root
