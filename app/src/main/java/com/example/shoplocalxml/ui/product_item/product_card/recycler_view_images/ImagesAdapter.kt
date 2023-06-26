@@ -2,7 +2,6 @@ package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_imag
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.media.Image
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
 data class ImageItem(var url: String, var image: Bitmap?, var default: Boolean = false){}
 
 class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
-    //private val handlerUI = Handler(Looper.getMainLooper())
+    private val handlerUI = Handler(Looper.getMainLooper())
     private var countUploaded = 0
     private var images: MutableList<ImageItem> = mutableListOf()
     private var onClickItem: ((index: Int) -> Unit)? = null
@@ -57,27 +56,38 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     @Synchronized
     @SuppressLint("NotifyDataSetChanged")
     fun setImages(list: List<String>){
-        images.clear()
-        notifyDataSetChanged()
+       //images.clear()
         countUploaded = 0
-       // handlerUI.post {
+        val listImages = mutableListOf<ImageItem>()
+        //handlerUI.post {
+            list.forEach {
+                listImages.add(ImageItem(it, image = null))
+            }
+            images = listImages
+            notifyDataSetChanged()
+        //}
         CoroutineScope(Dispatchers.Main).launch {
-            for (i in list.indices) {
+            //for (item in images){
+            for (i in images.indices) {
+                val item = images[i]
+           /* for (i in list.indices) {
                 val item = ImageItem(list[i], image = null)
-                images.add(item)
+                images.add(item)*/
                 ImageDownloadManager.download(item.url) {
                     item.image = it ?: run {
                         item.default = true
                         DEFAULT_BITMAP
                     }
-                    notifyItemChanged(i)
+
+                    notifyDataSetChanged()
+                    //notifyItemChanged(i)
                     countUploaded += 1
                     if (countUploaded == images.size)
                         onUploaded?.invoke()
                 }
             }
-
         }
+
       //  }
     }
 
