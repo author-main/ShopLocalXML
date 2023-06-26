@@ -13,6 +13,7 @@ import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.DEFAULT_BITMAP
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
+import com.example.shoplocalxml.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -74,6 +75,8 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
                 val item = ImageItem(list[i], image = null)
                 images.add(item)*/
                 ImageDownloadManager.download(item.url) {
+
+
                     item.image = it ?: run {
                         item.default = true
                         DEFAULT_BITMAP
