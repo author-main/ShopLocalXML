@@ -54,4 +54,7 @@ data class Filter(
         }
         return true
     }
+
+    fun changedViewMode(other: Filter) =
+        viewmode != other.viewmode
 }

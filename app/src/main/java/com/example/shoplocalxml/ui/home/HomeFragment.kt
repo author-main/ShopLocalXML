@@ -49,7 +49,6 @@ import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.getStringResource
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
@@ -57,7 +56,7 @@ import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion.MenuItemProduct
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
-import com.example.shoplocalxml.ui.product_item.item_card.DividerItemDecoration
+import com.example.shoplocalxml.ui.product_item.DividerItemDecoration
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 import com.example.shoplocalxml.vibrate
 import com.google.gson.Gson
@@ -70,6 +69,10 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
 
    // private lateinit var sharedViewModel: SharedViewModel
+    private val adapter:ProductsAdapter by lazy {
+       ProductsAdapter(context = requireContext())
+   }
+
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
        if (result.resultCode == Activity.RESULT_OK) {
            updateFilter(result.data)
@@ -179,7 +182,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
         })
 
-        val adapter = ProductsAdapter(context = requireContext())
+//        val adapter = ProductsAdapter(context = requireContext())
         adapter.setOnProductItemListener(object: OnProductItemListener{
             override fun onChangedFavorite(id: Int, value: Boolean) {
                 sharedViewModel.updateProductFavorite(id, value)
@@ -613,8 +616,11 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         intent?.let{data ->
             val gson = Gson()
             val extraFilter = data.getStringExtra(FILTER_KEY)
+            val prevFilter = sharedViewModel.filterProduct
             val filter = gson.fromJson(extraFilter, Filter::class.java)
             sharedViewModel.setFilterProduct(filter)
+            if (filter.changedViewMode(prevFilter))
+                adapter.setViewMode(filter.viewmode)
             sharedViewModel.getProducts(1, true) {
                 val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_data_filterinfo))
                 snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO

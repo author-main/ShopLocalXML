@@ -11,7 +11,7 @@
 
         <variable
             name="eventhandler"
-            type="com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard"/>
+            type="com.example.shoplocalxml.ui.product_item.ProductItem"/>
 
     </data>
 
@@ -53,7 +53,7 @@
                     android:padding="8dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_addcart"
-                    app:tint="@color/colorBrend" />
+                    android:tint="@color/colorBrend" />
 
 
                 <LinearLayout

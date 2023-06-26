@@ -1,26 +1,13 @@
 package com.example.shoplocalxml.ui.product_item
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.DATA_PORTION
-import com.example.shoplocalxml.DIR_IMAGES
-import com.example.shoplocalxml.R
-import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.image_downloader.DiffCallback
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.ui.history_search.SearchAdapter
-import com.example.shoplocalxml.ui.product_item.item_card.ProductItemCard
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
-import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
-import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImageItem
 
 class ProductsAdapter(val context: Context, private var products: MutableList<Product> = mutableListOf(), private var viewMode: ItemViewMode = ItemViewMode.CARD): RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
 
@@ -55,14 +42,15 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         }*/
     }
 
-   /* fun setViewMode(value: ItemViewMode){
+    fun setViewMode(value: ItemViewMode){
         viewMode = value
         notifyItemsChanged()
-    }*/
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = ProductItemCard(context)
+        val view = ProductItem(context)
+        view.viewMode = viewMode
         return ViewHolder(view, onProductItemListener)
     }
 
@@ -94,7 +82,7 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         //lateinit var item: Product
         fun bindItem(item: Product){
           //  this.item = item
-            val itemCard = view as ProductItemCard
+            val itemCard = view as ProductItem
             itemCard.product = item
             itemCard.setOnProductItemListener(onProductItemListener)
             /*with((view as ProductItemCard)) {
@@ -105,7 +93,7 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
 
         fun updateFavoriteItem(value: Boolean) {
             //log("favorite ${item.favorite}")
-            (view as ProductItemCard).updateFavorite(value)
+            (view as ProductItem).updateFavorite(value)
         }
 
     }
