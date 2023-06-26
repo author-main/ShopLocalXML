@@ -82,12 +82,61 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewMode"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/PrimaryDark"
             app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonFilterCardMode"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    app:backgroundTint="@color/EditTextBackgroundDark"
+                    app:icon="@drawable/ic_cardmode"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/colorBrend"
+                    android:onClick="@{(view)->eventhandler.changeViewMode(view)}"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonFilterRowMode"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    app:backgroundTint="@color/UncheckedButton"
+                    app:icon="@drawable/ic_rowmode"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/EditTextFont"
+                    android:onClick="@{(view)->eventhandler.changeViewMode(view)}"
+                    />
+
+
+
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewDiscount"

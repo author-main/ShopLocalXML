@@ -3,10 +3,13 @@ package com.example.shoplocalxml.ui.filter
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Rect
+import android.nfc.cardemulation.CardEmulation
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.ID_BRAND
 import com.example.shoplocalxml.ID_CATEGORY
@@ -19,6 +22,8 @@ import com.example.shoplocalxml.databinding.ActivityFilterBinding
 import com.example.shoplocalxml.getInteger
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.product_item.ProductsAdapter
+import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -63,7 +68,11 @@ class FilterActivity : AppCompatActivity() {
         }
         dataBinding.textFilterPrice.text =
             getStringResource(R.string.text_price) + ", " + getStringResource(R.string.text_currency)
+
+        updateStateButtonMode(filter.viewmode)
+
     }
+
     /*private fun getCheckboxIcon(): StateListDrawable {
         val size = 24.toPx
         val radius = 10.toPx.toFloat()
@@ -169,6 +178,36 @@ class FilterActivity : AppCompatActivity() {
 
     fun performClickButtonBack(){
         finish()
+    }
+
+
+    private fun updateStateButtonMode(mode: ProductsAdapter.Companion.ItemViewMode){
+        fun changeButtonColor(button: MaterialButton, colorIcon: Int, backgroundColor: Int){
+            /*log("color icon = $colorIcon")
+            val icon = button.icon
+            icon?.setTint(colorIcon)
+            button.icon = icon*/
+            button.setIconTintResource(colorIcon)
+            button.setBackgroundColor(backgroundColor)
+        }
+        val selectedBackgroundColor = baseContext.getColor(R.color.EditTextBackgroundDark)
+        val selectedIconColor = R.color.colorBrend
+        val backgroundColor = baseContext.getColor(R.color.UncheckedButton)
+        val iconColor = R.color.EditTextFont
+        if (mode == ProductsAdapter.Companion.ItemViewMode.CARD) {
+            changeButtonColor(dataBinding.buttonFilterCardMode, selectedIconColor, selectedBackgroundColor)
+            changeButtonColor(dataBinding.buttonFilterRowMode,  iconColor, backgroundColor)
+        } else {
+            changeButtonColor(dataBinding.buttonFilterCardMode, iconColor, backgroundColor)
+            changeButtonColor(dataBinding.buttonFilterRowMode,  selectedIconColor, selectedBackgroundColor)
+        }
+    }
+
+
+    fun changeViewMode(view: View){
+        val mode = if (view.id == R.id.buttonFilterCardMode) ProductsAdapter.Companion.ItemViewMode.CARD else ProductsAdapter.Companion.ItemViewMode.ROW
+        filter.viewmode = mode
+        updateStateButtonMode(mode)
     }
 
 }
