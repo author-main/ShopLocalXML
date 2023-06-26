@@ -38,88 +38,31 @@ class FilterActivity : AppCompatActivity() {
         dataBinding.eventhandler = this
         filter = getFilter()
         dataBinding.filter = filter
-        //dataBinding.filter = filter
         setContentView(dataBinding.root)
-        /*dataBinding.buttonBackFilter.setOnClickListener {
-            finish()
-        }*/
         supportActionBar?.hide()
-
-
-
         dataBinding.expListViewFilter.setAdapter(
             getExpandableAdapter()
         )
-
-
-
-
-        //updateFilterData()
-
-
-        /*dataBinding.buttonFilterReset.setOnClickListener {
-            perform(Filter())
-        }*/
-
-        /*dataBinding.buttonFilterConfirm.setOnClickListener {
-
-            filter.priceRange =
-                getInteger(dataBinding.editTextFilterRangeFrom.text) to
-                getInteger(dataBinding.editTextFilterRangeTo.text)
-
-            filter.discount = getInteger(dataBinding.editTextFilterDiscount.text)
-                /*try {(dataBinding.editTextFilterDiscount.text.toString()).toInt()}
-                              catch(_: Exception) {0}*/
-            filter.favorite = if (dataBinding.checkboxFilterFavorite.isChecked) 1 else 0
-            filter.enum = adapter.getFilterEnum()
-            perform(filter)
-        }*/
-
         dataBinding.editTextFilterDiscount.lossFocusOutside = true
         dataBinding.editTextFilterDiscount.onValidValue = {
-            //val value = getInteger(dataBinding.editTextFilterDiscount.text)
-            //if (value == 0)
             if (getInteger(it) == 0)
                 dataBinding.editTextFilterDiscount.setText("0")
             true
         }
-
         dataBinding.editTextFilterRangeFrom.lossFocusOutside = true
         dataBinding.editTextFilterRangeFrom.onValidValue = {
-            //val value = getInteger(dataBinding.editTextFilterRangeFrom.text)
             if (getInteger(it) == 0)
-            //if (value == 0)
                 dataBinding.editTextFilterRangeFrom.setText("0")
             true
         }
-
         dataBinding.editTextFilterRangeTo.lossFocusOutside = true
         dataBinding.editTextFilterRangeTo.onValidValue = {
-/*            val value = getInteger(dataBinding.editTextFilterRangeTo.text)
-            if (value == 0)*/
             if (getInteger(it) == 0)
                 dataBinding.editTextFilterRangeTo.setText("0")
             true
         }
-
         dataBinding.textFilterPrice.text =
             getStringResource(R.string.text_price) + ", " + getStringResource(R.string.text_currency)
-
-
-
-        /*val colors = intArrayOf(0, 0xff0000, 0) // red for the example
-        dataBinding.expListViewFilter.setChildDivider(GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors))
-        dataBinding.expListViewFilter.divider = GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors)*/
-
-
-       /* sharedViewModel =
-            ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
-
-       /* onBackPressedDispatcher.addCallback(this, object: OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                finish()
-            }
-        })*/
     }
     /*private fun getCheckboxIcon(): StateListDrawable {
         val size = 24.toPx
@@ -149,7 +92,6 @@ class FilterActivity : AppCompatActivity() {
     }*/
 
     private fun perform(queryFilter: Filter){
-
         val gson = Gson()
         val filterJson = gson.toJson(queryFilter)
         val data = Intent()
@@ -167,7 +109,6 @@ class FilterActivity : AppCompatActivity() {
     }
 
     private fun getExpandableAdapter(): ExpandableAdapter {
-
         adapter.setOnExpandGroup {
             if (!dataBinding.expListViewFilter.isGroupExpanded(it))
                 dataBinding.expListViewFilter.expandGroup(it)
@@ -181,9 +122,6 @@ class FilterActivity : AppCompatActivity() {
         data        = intent.getStringExtra("categories")
         val categories = gson.fromJson<List<Category>>(data, typeToken)
 
-        /*data        = intent.getStringExtra(FILTER_KEY)
-        filter = gson.fromJson(data, Filter::class.java)*/
-        //val adapter = ExpandableAdapter()
         adapter.addGroupItem(ID_CATEGORY, getStringResource(R.string.text_category), categories[ID_CATEGORY.toInt()].count)
         categories.forEach {
             adapter.addChildItem(ID_CATEGORY, it.id.toLong(), it.name, it.count, false)
@@ -195,17 +133,6 @@ class FilterActivity : AppCompatActivity() {
         adapter.updateFilterSection(filter.enum)
         return adapter
     }
-
-  /*  private fun updateFilterData(){
-        dataBinding.editTextFilterRangeFrom.setText(filter.priceRange.first.toString())
-        dataBinding.editTextFilterRangeTo.setText(filter.priceRange.second.toString())
-        dataBinding.editTextFilterDiscount.setText(filter.discount.toString())
-        dataBinding.checkboxFilterFavorite.isChecked = filter.favorite > 0
-    }*/
-
-  /*  private fun getFilterEnum(): HashMap<Long, IntArray>{
-
-    }*/
 
     override fun onDestroy() {
         if (isCancelled)
@@ -236,17 +163,6 @@ class FilterActivity : AppCompatActivity() {
     }
 
     fun applyFilter(){
-        /*filter.priceRange =
-            getInteger(dataBinding.editTextFilterRangeFrom.text) to
-                    getInteger(dataBinding.editTextFilterRangeTo.text)*/
-       /* filter.fromPrice = getInteger(dataBinding.editTextFilterRangeFrom.text)
-        filter.toPrice = getInteger(dataBinding.editTextFilterRangeTo.text)
-
-        filter.discount = getInteger(dataBinding.editTextFilterDiscount.text)
-        /*try {(dataBinding.editTextFilterDiscount.text.toString()).toInt()}
-                      catch(_: Exception) {0}*/
-        filter.favorite = dataBinding.checkboxFilterFavorite.isChecked//if (dataBinding.checkboxFilterFavorite.isChecked) 1 else 0*/
-        //log("favorite ${filter.favorite}")
         filter.enum = adapter.getFilterEnum()
         perform(filter)
     }

@@ -616,7 +616,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             val filter = gson.fromJson(extraFilter, Filter::class.java)
             sharedViewModel.setFilterProduct(filter)
             sharedViewModel.getProducts(1, true) {
-                log ("no updated data...")
+                val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_data_filterinfo))
+                snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
+                snackbarExt.show()
             }
         }
     }

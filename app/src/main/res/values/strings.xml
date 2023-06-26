@@ -30,6 +30,7 @@
     <string name="text_newpassword">Новый\nпароль</string>
     <string name="message_login_error">Ошибка проверки данных клиента.\nВ доступе отказано</string>
     <string name="message_data_error">Ошибка получения данных.\nПовторите попытку позже</string>
+    <string name="message_data_filterinfo">Товаров, удовлетворяющих вашему\nзапросу не найдено</string>
     <string name="text_bestseller">Бестселлер</string>
     <string name="text_action">Акция</string>
     <string name="text_benefit">Выгодно</string>
