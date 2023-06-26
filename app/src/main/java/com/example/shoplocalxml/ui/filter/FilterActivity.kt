@@ -183,10 +183,6 @@ class FilterActivity : AppCompatActivity() {
 
     private fun updateStateButtonMode(mode: ProductsAdapter.Companion.ItemViewMode){
         fun changeButtonColor(button: MaterialButton, colorIcon: Int, backgroundColor: Int){
-            /*log("color icon = $colorIcon")
-            val icon = button.icon
-            icon?.setTint(colorIcon)
-            button.icon = icon*/
             button.setIconTintResource(colorIcon)
             button.setBackgroundColor(backgroundColor)
         }
