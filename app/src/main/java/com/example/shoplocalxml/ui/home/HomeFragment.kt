@@ -171,7 +171,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         dataBinding.recyclerViewProductHome.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val showFab = recyclerView.canScrollVertically(-1) && dy < 0
-                super.onScrolled(recyclerView, dx, dy)
                 //(activity as MainActivity).setFabVisibility(canScrollUp)//recyclerView.canScrollVertically(-1))
                 (activity as MainActivity).setFabVisibility(showFab)
                 if (!recyclerView.canScrollVertically(1)) {
@@ -184,6 +183,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                         sharedViewModel.getProducts(nextPortion + 1)//, sharedViewModel.getQueryOrder())
                     }
                 }
+                super.onScrolled(recyclerView, dx, dy)
             }
         })
 
@@ -636,22 +636,20 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getLayoutManagerRecyclerViewProductHome(viewMode: ProductsAdapter.Companion.ItemViewMode){
+        val countColumn = if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD) 2 else 1
         if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
             dataBinding.recyclerViewProductHome.removeItemDecorationAt(0)
         adapter.setViewMode(sharedViewModel.filterProduct.viewmode)
-        if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD) {
-            val layoutManager = GridLayoutManager(requireContext(), 2)
-            dataBinding.recyclerViewProductHome.layoutManager = layoutManager
+        dataBinding.recyclerViewProductHome.adapter = null
+        dataBinding.recyclerViewProductHome.layoutManager = null
+        dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), countColumn)
+        if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD)
             dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
-        } else {
-        //if (viewMode == ProductsAdapter.Companion.ItemViewMode.ROW) {
-            val layoutManager = GridLayoutManager(requireContext(), 1)
-            dataBinding.recyclerViewProductHome.layoutManager = layoutManager
-            //dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
-        }
-        //dataBinding.recyclerViewProductHome.invalidate()
-        //adapter.notifyDataSetChanged()
 
+        dataBinding.recyclerViewProductHome.adapter = adapter
+        adapter.notifyDataSetChanged()
+
+        dataBinding.recyclerViewProductHome.itemAnimator = null
     }
 
 

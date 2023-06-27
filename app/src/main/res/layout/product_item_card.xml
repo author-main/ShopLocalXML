@@ -75,7 +75,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPrice(product.price)}"
-                        />
+                        android:visibility="@{product.discount == 0 ? View.GONE : View.VISIBLE}"/>
+
 
                     <TextView
                         android:id="@+id/textPromotion"
