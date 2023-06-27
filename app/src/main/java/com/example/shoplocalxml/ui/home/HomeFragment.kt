@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.home
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -160,9 +161,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
 
 
-        val layoutManager = GridLayoutManager(requireContext(), 2)
+        /*val layoutManager = GridLayoutManager(requireContext(), 2)
         dataBinding.recyclerViewProductHome.layoutManager = layoutManager
         dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
+        dataBinding.recyclerViewProductHome.itemAnimator = null*/
+
+        getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
         dataBinding.recyclerViewProductHome.itemAnimator = null
         dataBinding.recyclerViewProductHome.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -171,6 +175,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 //(activity as MainActivity).setFabVisibility(canScrollUp)//recyclerView.canScrollVertically(-1))
                 (activity as MainActivity).setFabVisibility(showFab)
                 if (!recyclerView.canScrollVertically(1)) {
+                    val layoutManager = recyclerView.layoutManager as GridLayoutManager
                     val lastVisibilityPosition = layoutManager.findLastVisibleItemPosition()
                     val nextPortion = lastVisibilityPosition / DATA_PORTION + 1
                     val nextPortionPosition = nextPortion * DATA_PORTION
@@ -620,13 +625,33 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             val filter = gson.fromJson(extraFilter, Filter::class.java)
             sharedViewModel.setFilterProduct(filter)
             if (filter.changedViewMode(prevFilter))
-                adapter.setViewMode(filter.viewmode)
+                getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
             sharedViewModel.getProducts(1, true) {
                 val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_data_filterinfo))
                 snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
                 snackbarExt.show()
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun getLayoutManagerRecyclerViewProductHome(viewMode: ProductsAdapter.Companion.ItemViewMode){
+        if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
+            dataBinding.recyclerViewProductHome.removeItemDecorationAt(0)
+        adapter.setViewMode(sharedViewModel.filterProduct.viewmode)
+        if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD) {
+            val layoutManager = GridLayoutManager(requireContext(), 2)
+            dataBinding.recyclerViewProductHome.layoutManager = layoutManager
+            dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
+        } else {
+        //if (viewMode == ProductsAdapter.Companion.ItemViewMode.ROW) {
+            val layoutManager = GridLayoutManager(requireContext(), 1)
+            dataBinding.recyclerViewProductHome.layoutManager = layoutManager
+            //dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
+        }
+        //dataBinding.recyclerViewProductHome.invalidate()
+        //adapter.notifyDataSetChanged()
+
     }
 
 

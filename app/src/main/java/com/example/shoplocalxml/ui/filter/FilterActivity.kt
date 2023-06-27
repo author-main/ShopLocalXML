@@ -68,9 +68,7 @@ class FilterActivity : AppCompatActivity() {
         }
         dataBinding.textFilterPrice.text =
             getStringResource(R.string.text_price) + ", " + getStringResource(R.string.text_currency)
-
         updateStateButtonMode(filter.viewmode)
-
     }
 
     /*private fun getCheckboxIcon(): StateListDrawable {
@@ -168,7 +166,9 @@ class FilterActivity : AppCompatActivity() {
     }
 
     fun resetFilter(){
-        perform(Filter())
+        val defaultFilter = Filter()
+        defaultFilter.viewmode = filter.viewmode
+        perform(defaultFilter)
     }
 
     fun applyFilter(){

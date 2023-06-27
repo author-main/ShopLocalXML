@@ -74,14 +74,17 @@
                         style="@style/TextProduct_Price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPrice(product.price)}" />
+                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPrice(product.price)}"
+                        />
 
                     <TextView
                         android:id="@+id/textPromotion"
                         style="@style/TextProduct_Promotion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPromotion(product.discount, product.sold)}" />
+                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPromotion(product.discount, product.sold)}"
+                        android:visibility="@{TextUtils.isEmpty(textPromotion.text) ? View.GONE : View.VISIBLE}"
+                        />
                 </LinearLayout>
             </FrameLayout>
 
