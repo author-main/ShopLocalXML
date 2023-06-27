@@ -634,9 +634,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 sharedViewModel.setFilterProduct(filter, changedFilterData)
             val onlyChangedViewMode = changedViewMode && !changedFilterData
 
-            var firstVisibled = -1
-            if (onlyChangedViewMode) {
-                firstVisibled = try {
+            if (onlyChangedViewMode) { // если изменился только viewMode, не загружаем данные
+                                       // и делаем скролл до позиции в предыдущем viewMode
+                val firstVisibled = try {
                     val manager = dataBinding.recyclerViewProductHome.layoutManager
                     (manager as GridLayoutManager).findFirstVisibleItemPosition()
                 } catch(_:Exception) {-1}
