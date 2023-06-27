@@ -620,8 +620,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun updateFilter(intent: Intent?){
-        //log("update filter...")
-        intent?.let{data ->
+         intent?.let{data ->
             val gson = Gson()
             val extraFilter = data.getStringExtra(FILTER_KEY)
             val prevFilter = sharedViewModel.filterProduct
