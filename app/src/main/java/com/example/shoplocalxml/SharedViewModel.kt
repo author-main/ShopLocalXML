@@ -119,7 +119,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
 
-    fun getProducts(page: Int, uploadAgain: Boolean  = false, onEmptyResult: (()->Unit)? = null){//}, order: String) {
+    fun getProducts(page: Int, uploadAgain: Boolean  = false, onEmptyResult: ((Boolean)->Unit)? = null){//}, order: String) {
 //        uploadDataAgain = uploadAgain
         if (uploadAgain) {
             portionData = 0
@@ -142,8 +142,11 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
                 }
                 processQuery = false
             }
-            if (resultQuery.isNullOrEmpty())
-                onEmptyResult?.invoke()
+
+            onEmptyResult?.invoke(resultQuery.isNullOrEmpty())
+
+            /*if (resultQuery.isNullOrEmpty())
+                onEmptyResult?.invoke(true)*/
         }
     }
 

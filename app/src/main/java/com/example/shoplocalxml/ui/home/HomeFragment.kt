@@ -11,6 +11,8 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +52,7 @@ import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
@@ -69,7 +72,7 @@ import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
-
+    private var firstVisibled = -1
    // private lateinit var sharedViewModel: SharedViewModel
     private val adapter:ProductsAdapter by lazy {
        ProductsAdapter(context = requireContext())
@@ -349,7 +352,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
                     (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.uploadDataAgain)//, sharedViewModel.portionData)
 
-                   /* products.forEach { product ->
+
+
+            /* products.forEach { product ->
                         product.linkimages?.forEach {url ->
                             sharedViewModel.downloadImage(url) {bitmap ->
                                 (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).updateImage(url, bitmap)
@@ -627,10 +632,31 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             sharedViewModel.setFilterProduct(filter)
             if (filter.changedViewMode(prevFilter))
                 getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
-            sharedViewModel.getProducts(1, true) {
-                val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_data_filterinfo))
-                snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
-                snackbarExt.show()
+            sharedViewModel.getProducts(1, true) {isEmpty ->
+                if (isEmpty) {
+                    firstVisibled = -1
+                    val snackbarExt = SnackbarExt(
+                        dataBinding.root,
+                        getStringResource(R.string.message_data_filterinfo)
+                    )
+                    snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
+                    snackbarExt.show()
+                } else {
+                    log("first visibled $firstVisibled")
+                }
+                /*else {
+                                        if (firstVisibled != -1) {
+                                           //dataBinding.recyclerViewProductHome.scrollToPosition(8)
+                                            Handler(Looper.getMainLooper()).post{
+                                                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(
+                                                    firstVisibled,
+                                                    0
+                                                )
+                                                log("first visibled $firstVisibled")
+                                            }
+                                        }
+                                    }*/
+
             }
         }
     }
@@ -638,6 +664,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     @SuppressLint("NotifyDataSetChanged")
     private fun getLayoutManagerRecyclerViewProductHome(viewMode: ProductsAdapter.Companion.ItemViewMode){
         val countColumn = if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD) 2 else 1
+        firstVisibled = try {
+            val manager = dataBinding.recyclerViewProductHome.layoutManager
+            (manager as GridLayoutManager).findFirstVisibleItemPosition()
+        } catch(_:Exception) {-1}
         if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
             dataBinding.recyclerViewProductHome.removeItemDecorationAt(0)
         adapter.setViewMode(sharedViewModel.filterProduct.viewmode)
@@ -648,11 +678,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemCardDecoration())
         else
             dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemRowDecoration())
-
-        dataBinding.recyclerViewProductHome.adapter = adapter
-        adapter.notifyDataSetChanged()
-
         dataBinding.recyclerViewProductHome.itemAnimator = null
+        dataBinding.recyclerViewProductHome.scrollToPosition(0)
+        dataBinding.recyclerViewProductHome.adapter = adapter
+
+        //adapter.notifyDataSetChanged()
+
+     /*   log("first visible = $firstVisibility")
+        if (firstVisibility != -1)
+            Handler(Looper.getMainLooper()).post {
+                //dataBinding.recyclerViewProductHome.scrollToPosition(8)
+                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(8, 0)
+            }*/
+
     }
 
 

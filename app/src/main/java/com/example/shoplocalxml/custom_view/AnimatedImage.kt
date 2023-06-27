@@ -10,6 +10,7 @@ import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.shoplocalxml.toPx
 
