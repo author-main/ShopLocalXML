@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.ui.home
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -633,6 +634,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getLayoutManagerRecyclerViewProductHome(viewMode: ProductsAdapter.Companion.ItemViewMode){
         if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
             dataBinding.recyclerViewProductHome.removeItemDecorationAt(0)
@@ -647,6 +649,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             dataBinding.recyclerViewProductHome.layoutManager = layoutManager
             //dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
         }
+        //dataBinding.recyclerViewProductHome.invalidate()
+        //adapter.notifyDataSetChanged()
+
     }
 
 

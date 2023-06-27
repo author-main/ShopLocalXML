@@ -68,9 +68,7 @@ class FilterActivity : AppCompatActivity() {
         }
         dataBinding.textFilterPrice.text =
             getStringResource(R.string.text_price) + ", " + getStringResource(R.string.text_currency)
-
         updateStateButtonMode(filter.viewmode)
-
     }
 
     /*private fun getCheckboxIcon(): StateListDrawable {

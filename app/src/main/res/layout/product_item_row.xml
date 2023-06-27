@@ -18,28 +18,37 @@
 
     <LinearLayout
         android:id="@+id/productItemCardRoot"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <com.example.shoplocalxml.ui.product_item.product_card.ProductCard
             android:id="@+id/productCard"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp">
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp">
 
         </com.example.shoplocalxml.ui.product_item.product_card.ProductCard>
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textName"
+                style="@style/TextProduct_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{product.name}" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
 
                 <ImageView
@@ -62,55 +71,57 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textSalePrice"
-                        style="@style/TextProduct_SalePrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductSalePrice(product.price, product.discount)}" />
-
-                    <TextView
-                        android:id="@+id/textPrice"
-                        style="@style/TextProduct_Price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPrice(product.price)}" />
-
-                    <TextView
                         android:id="@+id/textPromotion"
                         style="@style/TextProduct_Promotion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPromotion(product.discount, product.sold)}" />
+                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPromotion(product.discount, product.sold)}"
+                        android:visibility="@{TextUtils.isEmpty(textPromotion.text) ? View.GONE : View.VISIBLE}" />
+
+                    <TextView
+                        android:id="@+id/textBrend"
+                        style="@style/TextProduct_Brend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductBrend(product.brand)}" />
+
+                    <com.example.shoplocalxml.custom_view.RatingView
+                        android:id="@+id/ratingView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="10dp"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="6dp"
+                        app:count="@{product.star}"
+                        app:interval="1dp" />
+
                 </LinearLayout>
             </FrameLayout>
-
-            <TextView
-                android:id="@+id/textBrend"
-                style="@style/TextProduct_Brend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="@{com.example.shoplocalxml.SharedViewModel.getProductBrend(product.brand)}" />
-
-            <com.example.shoplocalxml.custom_view.RatingView
-                android:id="@+id/ratingView"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"
-                android:layout_gravity="start"
-                android:layout_marginBottom="2dp"
-                app:count="@{product.star}"
-                app:interval="1dp" />
-
-            <TextView
-                android:id="@+id/textName"
-                style="@style/TextProduct_Name"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{product.name}" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textSalePrice"
+                    style="@style/TextProduct_SalePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{com.example.shoplocalxml.SharedViewModel.getProductSalePrice(product.price, product.discount)}" />
+
+                <TextView
+                    android:id="@+id/textPrice"
+                    style="@style/TextProduct_Price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPrice(product.price)}"
+                    android:visibility="@{product.discount == 0 ? View.GONE : View.VISIBLE}"/>
+            </LinearLayout>
 
         </LinearLayout>
+
+
 
 
     </LinearLayout>

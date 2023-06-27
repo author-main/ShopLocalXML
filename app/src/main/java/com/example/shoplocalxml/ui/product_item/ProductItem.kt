@@ -29,11 +29,12 @@ class ProductItem: FrameLayout {
         }
     var viewMode: ProductsAdapter.Companion.ItemViewMode = ProductsAdapter.Companion.ItemViewMode.CARD
         set(value) {
-            if (field != value) {
+            val updateView = field != value
+            field = value
+            if (updateView) {
                 dataBinding.changeMode(value)
                 getDataBinding()
             }
-            field = value
         }
     //private lateinit var dataBinding: ProductItemCardBinding
     private val dataBinding = SwitchableDatabinding(parent = this)
@@ -73,10 +74,12 @@ class ProductItem: FrameLayout {
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)*/
 
         //log("getDataBinding")
-        val layoutParams = dataBinding.productCard.layoutParams
-        layoutParams.height = widthProductCard
-        layoutParams.width  = widthProductCard
-        dataBinding.productCard.layoutParams = layoutParams
+        if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD) {
+            val layoutParams = dataBinding.productCard.layoutParams
+            layoutParams.height = widthProductCard
+            layoutParams.width = widthProductCard
+            dataBinding.productCard.layoutParams = layoutParams
+        }
 
         dataBinding.textPrice.paintFlags = dataBinding.textPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         // Обработка события добавления продукта в корзину
