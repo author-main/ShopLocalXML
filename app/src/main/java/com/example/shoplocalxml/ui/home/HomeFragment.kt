@@ -57,7 +57,8 @@ import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion.MenuItemProduct
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
-import com.example.shoplocalxml.ui.product_item.DividerItemDecoration
+import com.example.shoplocalxml.ui.product_item.DividerItemCardDecoration
+import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 import com.example.shoplocalxml.vibrate
 import com.google.gson.Gson
@@ -644,7 +645,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         dataBinding.recyclerViewProductHome.layoutManager = null
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), countColumn)
         if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD)
-            dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
+            dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemCardDecoration())
+        else
+            dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemRowDecoration())
 
         dataBinding.recyclerViewProductHome.adapter = adapter
         adapter.notifyDataSetChanged()

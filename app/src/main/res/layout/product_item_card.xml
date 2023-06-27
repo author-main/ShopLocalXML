@@ -75,7 +75,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPrice(product.price)}"
-                        android:visibility="@{product.discount == 0 ? View.GONE : View.VISIBLE}"/>
+                        android:visibility="@{product.discount == 0 ? View.GONE : View.VISIBLE}" />
 
 
                     <TextView
@@ -84,18 +84,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{com.example.shoplocalxml.SharedViewModel.getProductPromotion(product.discount, product.sold)}"
-                        android:visibility="@{TextUtils.isEmpty(textPromotion.text) ? View.GONE : View.VISIBLE}"
-                        />
+                        android:visibility="@{TextUtils.isEmpty(textPromotion.text) ? View.GONE : View.VISIBLE}" />
+
+                    <TextView
+                        android:id="@+id/textBrend"
+                        style="@style/TextProduct_Brend"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="@{com.example.shoplocalxml.SharedViewModel.getProductBrend(product.brand)}" />
                 </LinearLayout>
             </FrameLayout>
-
-            <TextView
-                android:id="@+id/textBrend"
-                style="@style/TextProduct_Brend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="@{com.example.shoplocalxml.SharedViewModel.getProductBrend(product.brand)}" />
 
             <com.example.shoplocalxml.custom_view.RatingView
                 android:id="@+id/ratingView"
