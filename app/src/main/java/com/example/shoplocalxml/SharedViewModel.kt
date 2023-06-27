@@ -233,11 +233,12 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
     @JvmName("setFilterProducts_")
-    fun setFilterProduct(filter: Filter) {
-        if (filter != filterProduct) {
+    fun setFilterProduct(filter: Filter, changedFilterData: Boolean) {
+        //if (filter != filterProduct) {
             filterProduct = filter
-            queryOrder = getQueryOrder()
-        }
+            if (changedFilterData)
+                queryOrder = getQueryOrder()
+        //}
     }
 
     @JvmName("setSortProducts_")

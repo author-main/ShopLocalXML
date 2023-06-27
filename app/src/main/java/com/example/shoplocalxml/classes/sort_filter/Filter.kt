@@ -24,7 +24,7 @@ data class Filter(
                 && filter.fromPrice         == fromPrice
                 && filter.toPrice           == toPrice
                 && filter.discount          == discount
-                && filter.viewmode          == viewmode
+                //&& filter.viewmode          == viewmode
     }
 
     override fun hashCode(): Int {

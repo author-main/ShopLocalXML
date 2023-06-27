@@ -72,7 +72,6 @@ import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
-    private var firstVisibled = -1
    // private lateinit var sharedViewModel: SharedViewModel
     private val adapter:ProductsAdapter by lazy {
        ProductsAdapter(context = requireContext())
@@ -348,7 +347,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     }*/
 
 
-
                     (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.uploadDataAgain)//, sharedViewModel.portionData)
 
 
@@ -621,6 +619,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun updateFilter(intent: Intent?){
         //log("update filter...")
         intent?.let{data ->
@@ -628,22 +627,37 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             val extraFilter = data.getStringExtra(FILTER_KEY)
             val prevFilter = sharedViewModel.filterProduct
             val filter = gson.fromJson(extraFilter, Filter::class.java)
-            sharedViewModel.setFilterProduct(filter)
-            if (filter.changedViewMode(prevFilter))
+
+            val changedViewMode = prevFilter.changedViewMode(filter)
+            val changedFilterData = prevFilter != filter
+            if (changedViewMode || changedFilterData)
+                sharedViewModel.setFilterProduct(filter, changedFilterData)
+            val onlyChangedViewMode = changedViewMode && !changedFilterData
+
+            var firstVisibled = -1
+            if (onlyChangedViewMode) {
+                firstVisibled = try {
+                    val manager = dataBinding.recyclerViewProductHome.layoutManager
+                    (manager as GridLayoutManager).findFirstVisibleItemPosition()
+                } catch(_:Exception) {-1}
                 getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
-            sharedViewModel.getProducts(1, true) {isEmpty ->
+                if (firstVisibled != -1) {
+                    dataBinding.recyclerViewProductHome.scrollToPosition(
+                        firstVisibled
+                    )
+                }
+
+            } else {
+            sharedViewModel.getProducts(1, true) { isEmpty ->
                 if (isEmpty) {
-                    firstVisibled = -1
                     val snackbarExt = SnackbarExt(
                         dataBinding.root,
                         getStringResource(R.string.message_data_filterinfo)
                     )
                     snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
                     snackbarExt.show()
-                } else {
-                    if (firstVisibled != -1)
-                        dataBinding.recyclerViewProductHome.scrollToPosition(firstVisibled)
-                    }
+                }
+            }
                 /*else {
                                         if (firstVisibled != -1) {
                                            //dataBinding.recyclerViewProductHome.scrollToPosition(8)
@@ -664,10 +678,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     @SuppressLint("NotifyDataSetChanged")
     private fun getLayoutManagerRecyclerViewProductHome(viewMode: ProductsAdapter.Companion.ItemViewMode){
         val countColumn = if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD) 2 else 1
-        firstVisibled = try {
+        /*firstVisibled = try {
             val manager = dataBinding.recyclerViewProductHome.layoutManager
             (manager as GridLayoutManager).findFirstVisibleItemPosition()
-        } catch(_:Exception) {-1}
+        } catch(_:Exception) {-1}*/
         if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
             dataBinding.recyclerViewProductHome.removeItemDecorationAt(0)
         adapter.setViewMode(sharedViewModel.filterProduct.viewmode)
