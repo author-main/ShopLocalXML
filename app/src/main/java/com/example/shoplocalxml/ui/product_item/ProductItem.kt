@@ -29,16 +29,19 @@ class ProductItem: FrameLayout {
         }
     var viewMode: ProductsAdapter.Companion.ItemViewMode = ProductsAdapter.Companion.ItemViewMode.CARD
         set(value) {
+            if (field != value) {
+                dataBinding.changeMode(value)
+                getDataBinding()
+            }
             field = value
-            dataBinding.changeMode(value)
         }
     //private lateinit var dataBinding: ProductItemCardBinding
     private val dataBinding = SwitchableDatabinding(parent = this)
     private var onProductItemListener: OnProductItemListener? = null
 
-   /* init {
+    init {
         getDataBinding()
-    }*/
+    }
 
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
@@ -69,7 +72,7 @@ class ProductItem: FrameLayout {
         dataBinding =
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.product_item_card, this, true)*/
 
-
+        //log("getDataBinding")
         val layoutParams = dataBinding.productCard.layoutParams
         layoutParams.height = widthProductCard
         layoutParams.width  = widthProductCard
