@@ -619,7 +619,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun updateFilter(intent: Intent?){
         //log("update filter...")
         intent?.let{data ->
