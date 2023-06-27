@@ -168,7 +168,9 @@ class FilterActivity : AppCompatActivity() {
     }
 
     fun resetFilter(){
-        perform(Filter())
+        val defaultFilter = Filter()
+        defaultFilter.viewmode = filter.viewmode
+        perform(defaultFilter)
     }
 
     fun applyFilter(){

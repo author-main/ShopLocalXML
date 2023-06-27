@@ -103,6 +103,7 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
     private fun getProductPositionFromId(id: Int) =
         products.indexOfFirst { it.id == id }
 
+
     companion object {
         enum class ItemViewMode(value: Int) {
             CARD(0),
