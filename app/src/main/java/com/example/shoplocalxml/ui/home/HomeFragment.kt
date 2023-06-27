@@ -107,7 +107,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     ): View {
         /*val displaySize = getDisplaySize()
         val widthProductItemCard = (displaySize.width - 16.toPx * 3) / 2*/
-
         homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]
 
@@ -642,8 +641,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
                     snackbarExt.show()
                 } else {
-                    log("first visibled $firstVisibled")
-                }
+                    if (firstVisibled != -1)
+                        dataBinding.recyclerViewProductHome.scrollToPosition(firstVisibled)
+                    }
                 /*else {
                                         if (firstVisibled != -1) {
                                            //dataBinding.recyclerViewProductHome.scrollToPosition(8)
@@ -679,17 +679,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         else
             dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemRowDecoration())
         dataBinding.recyclerViewProductHome.itemAnimator = null
-        dataBinding.recyclerViewProductHome.scrollToPosition(0)
         dataBinding.recyclerViewProductHome.adapter = adapter
 
         //adapter.notifyDataSetChanged()
 
-     /*   log("first visible = $firstVisibility")
-        if (firstVisibility != -1)
-            Handler(Looper.getMainLooper()).post {
-                //dataBinding.recyclerViewProductHome.scrollToPosition(8)
-                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(8, 0)
-            }*/
+        //log("first visible = $firstVisibled")
+/*        if (firstVisibled != -1)
+            //Handler(Looper.getMainLooper()).post {
+                dataBinding.recyclerViewProductHome.scrollToPosition(firstVisibled)
+                //(dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(8, 0)
+            //}*/
 
     }
 
