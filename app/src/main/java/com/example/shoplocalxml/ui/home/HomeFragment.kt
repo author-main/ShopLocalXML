@@ -697,28 +697,32 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     val manager = dataBinding.recyclerViewProductHome.layoutManager
                     (manager as GridLayoutManager).findFirstVisibleItemPosition()
                 } catch(_:Exception) {-1}
-                //getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
                 if (firstVisibled != -1) {
                     dataBinding.recyclerViewProductHome.scrollToPosition(
                         firstVisibled
                     )
                 }
+            } else
+                updateProductsWhenFilterChanges()
 
-            } else {
-                if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.MAIN) {
-                    sharedViewModel.getProducts(1, true) { isEmpty ->
-                        if (isEmpty)
-                            showNoProductInfo()
-                    }
-                }
+        }
+    }
 
-                if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
-                    val searchQuery = dataBinding.editTextSearchQuery.text.toString()
-                    sharedViewModel.getSearchProducts(searchQuery, 1, true) { isEmpty ->
-                        if (isEmpty)
-                            showNoProductInfo()
-                    }
-                }
+    private fun updateProductsWhenFilterChanges() {
+        fun showInfoMessage(isEmpty: Boolean) {
+            if (isEmpty)
+                showNoProductInfo()
+        }
+        if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.MAIN) {
+            sharedViewModel.getProducts(1, true) { isEmpty ->
+                showInfoMessage(isEmpty)
+            }
+        }
+
+        if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
+            val searchQuery = dataBinding.editTextSearchQuery.text.toString()
+            sharedViewModel.getSearchProducts(searchQuery, 1, true) { isEmpty ->
+                showInfoMessage(isEmpty)
             }
         }
     }
