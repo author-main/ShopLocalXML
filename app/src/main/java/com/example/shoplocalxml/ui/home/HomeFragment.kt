@@ -506,7 +506,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     private fun performBack(){
         hideSearchHistoryPanel()
-        val mode = homeViewModel.getStackMode()
+        val mode = homeViewModel.modeSearchProduct.value//homeViewModel.getStackMode()
         if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN) {
             dataBinding.editTextSearchQuery.text?.clear()
             if (mode == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
@@ -536,9 +536,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun searchProducts(query: String){
-        val firstVisibled = try {
+        //log(homeViewModel.modeSearchProduct.value)
+        /*val firstVisibled = try {
             (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-        } catch(_:Exception) {-1}
+        } catch(_:Exception) {-1}*/
 
         homeViewModel.saveData(
             HomeViewModel.Companion.HomeMode.MAIN,
@@ -546,7 +547,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             sharedViewModel.filterProduct.copy(),
             sharedViewModel.portionData,
             sharedViewModel.products.value.toList(),
-            firstVisibled
+            try {
+                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+            } catch(_:Exception) {-1}
         )
         sharedViewModel.getSearchProducts(query, page = 1, uploadAgain = true) {isEmpty ->
             if (isEmpty) {
