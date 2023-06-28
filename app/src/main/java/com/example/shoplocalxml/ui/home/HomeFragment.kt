@@ -630,7 +630,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             val changedFilterData = prevFilter != filter
             if (changedViewMode || changedFilterData)
                 sharedViewModel.setFilterProduct(filter, changedFilterData)
+            else return
+
+            getLayoutManagerRecyclerViewProductHome(filter.viewmode)
             val onlyChangedViewMode = changedViewMode && !changedFilterData
+
+             //log("changedViewMode $changedViewMode, changedFilterData $changedFilterData")
+
 
             if (onlyChangedViewMode) { // если изменился только viewMode, не загружаем данные
                                        // и делаем скролл до позиции в предыдущем viewMode
@@ -638,7 +644,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     val manager = dataBinding.recyclerViewProductHome.layoutManager
                     (manager as GridLayoutManager).findFirstVisibleItemPosition()
                 } catch(_:Exception) {-1}
-                getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
+                //getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
                 if (firstVisibled != -1) {
                     dataBinding.recyclerViewProductHome.scrollToPosition(
                         firstVisibled
@@ -656,19 +662,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     snackbarExt.show()
                 }
             }
-                /*else {
-                                        if (firstVisibled != -1) {
-                                           //dataBinding.recyclerViewProductHome.scrollToPosition(8)
-                                            Handler(Looper.getMainLooper()).post{
-                                                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(
-                                                    firstVisibled,
-                                                    0
-                                                )
-                                                log("first visibled $firstVisibled")
-                                            }
-                                        }
-                                    }*/
-
             }
         }
     }

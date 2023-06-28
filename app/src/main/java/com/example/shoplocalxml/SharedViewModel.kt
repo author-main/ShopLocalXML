@@ -21,7 +21,7 @@ import kotlin.math.abs
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
     var sortProduct        = SortOrder()
-    var filterProduct      = Filter().apply { discount = 0 }
+    var filterProduct      = Filter().apply { discount = 2 }
 //    var uploadDataAgain: Boolean = false
     private var queryOrder = getQueryOrder()
     private var processQuery = false
