@@ -31,7 +31,6 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     val products = _products.asStateFlow()
     private fun setProducts(value: MutableList<Product>) {
         _products.value = value
-
     }
 
     fun getListBrend(){
@@ -98,6 +97,14 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     /*fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit) {
         repository.downloadImage(url, reduce, oncomplete)
     }*/
+
+    fun restoreDataMode(portionData: Int, sort: SortOrder, filter: Filter, products: List<Product>){
+        this.portionData = portionData
+        this.setSortProduct(sort, false)
+        this.setFilterProduct(filter, true)
+        ImageDownloadManager.cancelAll()
+        _products.value = products.toMutableList()
+    }
 
     private fun updateDataAfterQuery(list: List<Product>, uploadAgain: Boolean) {
             val updateList = updateHostLink(list)
@@ -267,10 +274,11 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
     @JvmName("setSortProducts_")
-    fun setSortProduct(sort: SortOrder){
+    fun setSortProduct(sort: SortOrder, updateQueryOrder: Boolean = true){
         if (sort != sortProduct) {
             sortProduct = sort
-            queryOrder = getQueryOrder()
+            if (updateQueryOrder)
+                queryOrder = getQueryOrder()
         }
     }
 

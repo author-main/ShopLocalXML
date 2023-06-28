@@ -17,11 +17,11 @@ import java.util.Stack
 import java.util.concurrent.Executors
 
 class HomeViewModel : ViewModel() {
-data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>)
+data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>, var scrollPosition: Int)
 
     private val hashDataMode = hashMapOf<HomeMode, DataMode>()
-    fun saveData(mode: HomeMode, sort: SortOrder, filter: Filter, portionData: Int, products: List<Product>){
-        hashDataMode[mode] = DataMode(sort, filter, portionData, products)
+    fun saveData(mode: HomeMode, sort: SortOrder, filter: Filter, portionData: Int, products: List<Product>, scrollPosition: Int){
+        hashDataMode[mode] = DataMode(sort, filter, portionData, products, scrollPosition)
     }
     fun getData(mode: HomeMode): DataMode? =
         hashDataMode[mode]
@@ -34,6 +34,16 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
     }
     private val _modeSearchProduct = MutableLiveData<HomeMode>(HomeMode.MAIN)
     val modeSearchProduct: LiveData<HomeMode> = _modeSearchProduct
+
+    fun getStackMode(): HomeMode{
+        return try {
+        //    stackMode.lastElement()
+            stackMode.peek()
+        } catch(_: Exception){
+            HomeMode.NULL
+        }
+    }
+
     fun popStackMode(): HomeMode{
         try {
             stackMode.pop()

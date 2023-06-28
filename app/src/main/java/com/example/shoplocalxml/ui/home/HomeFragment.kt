@@ -506,8 +506,25 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     private fun performBack(){
         hideSearchHistoryPanel()
-        if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN)
+        val mode = homeViewModel.getStackMode()
+        if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN) {
             dataBinding.editTextSearchQuery.text?.clear()
+            if (mode == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
+                val dataMode = homeViewModel.getData(HomeViewModel.Companion.HomeMode.MAIN)
+                dataMode?.let{data ->
+                    val changedViewMode = sharedViewModel.filterProduct.changedViewMode(data.filter)
+                    if (changedViewMode)
+                        getLayoutManagerRecyclerViewProductHome(data.filter.viewmode)
+                    sharedViewModel.restoreDataMode(data.portionData, data.sort, data.filter, data.products)
+                    if (data.scrollPosition != -1) {
+                        dataBinding.recyclerViewProductHome.scrollToPosition(
+                            data.scrollPosition
+                        )
+                    }
+                }
+                homeViewModel.removeData(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+            }
+        }
 
         hideKeyboard()
     }
@@ -519,20 +536,28 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun searchProducts(query: String){
+        val firstVisibled = try {
+            (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+        } catch(_:Exception) {-1}
+
         homeViewModel.saveData(
             HomeViewModel.Companion.HomeMode.MAIN,
             sharedViewModel.sortProduct.copy(),
             sharedViewModel.filterProduct.copy(),
             sharedViewModel.portionData,
-            sharedViewModel.products.value.toList()
+            sharedViewModel.products.value.toList(),
+            firstVisibled
         )
         sharedViewModel.getSearchProducts(query, page = 1, uploadAgain = true) {isEmpty ->
             if (isEmpty) {
+                sharedViewModel.portionData = homeViewModel.getData(HomeViewModel.Companion.HomeMode.MAIN)?.portionData ?: run {
+                    val countProducts = sharedViewModel.products.value.size
+                    countProducts / DATA_PORTION + if (countProducts % DATA_PORTION > 0) 1 else 0
+                }
                 homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
                 showNoProductInfo()
-            } else {
+            } else
                 homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
-            }
         }
 
 
@@ -694,7 +719,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         } catch(_:Exception) {-1}*/
         if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
             dataBinding.recyclerViewProductHome.removeItemDecorationAt(0)
-        adapter.setViewMode(sharedViewModel.filterProduct.viewmode)
+        //adapter.setViewMode(sharedViewModel.filterProduct.viewmode)
+        adapter.setViewMode(viewMode)
         dataBinding.recyclerViewProductHome.adapter = null
         dataBinding.recyclerViewProductHome.layoutManager = null
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), countColumn)
