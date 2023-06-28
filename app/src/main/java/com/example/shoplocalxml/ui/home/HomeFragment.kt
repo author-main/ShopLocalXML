@@ -713,17 +713,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             if (isEmpty)
                 showNoProductInfo()
         }
-        if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.MAIN) {
-            sharedViewModel.getProducts(1, true) { isEmpty ->
-                showInfoMessage(isEmpty)
+        when (homeViewModel.modeSearchProduct.value) {
+            HomeViewModel.Companion.HomeMode.MAIN -> {
+                sharedViewModel.getProducts(1, true) { isEmpty ->
+                    showInfoMessage(isEmpty)
+                }
             }
-        }
-
-        if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
-            val searchQuery = dataBinding.editTextSearchQuery.text.toString()
-            sharedViewModel.getSearchProducts(searchQuery, 1, true) { isEmpty ->
-                showInfoMessage(isEmpty)
+            HomeViewModel.Companion.HomeMode.SEARCH_RESULT -> {
+                val searchQuery = dataBinding.editTextSearchQuery.text.toString()
+                sharedViewModel.getSearchProducts(searchQuery, 1, true) { isEmpty ->
+                    showInfoMessage(isEmpty)
+                }
             }
+            else -> {}
         }
     }
 
