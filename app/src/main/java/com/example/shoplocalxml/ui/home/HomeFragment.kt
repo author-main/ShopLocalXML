@@ -540,7 +540,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         /*val firstVisibled = try {
             (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
         } catch(_:Exception) {-1}*/
-
+        //homeViewModel.searchQuery = query
         homeViewModel.saveData(
             HomeViewModel.Companion.HomeMode.MAIN,
             sharedViewModel.sortProduct.copy(),
@@ -705,10 +705,20 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 }
 
             } else {
-            sharedViewModel.getProducts(1, true) { isEmpty ->
-                if (isEmpty)
-                    showNoProductInfo()
-            }
+                if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.MAIN) {
+                    sharedViewModel.getProducts(1, true) { isEmpty ->
+                        if (isEmpty)
+                            showNoProductInfo()
+                    }
+                }
+
+                if (homeViewModel.modeSearchProduct.value == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
+                    val searchQuery = dataBinding.editTextSearchQuery.text.toString()
+                    sharedViewModel.getSearchProducts(searchQuery, 1, true) { isEmpty ->
+                        if (isEmpty)
+                            showNoProductInfo()
+                    }
+                }
             }
         }
     }

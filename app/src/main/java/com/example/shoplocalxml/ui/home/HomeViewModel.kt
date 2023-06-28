@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
@@ -13,12 +14,13 @@ import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.log
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.util.EmptyStackException
 import java.util.Stack
 import java.util.concurrent.Executors
 
 class HomeViewModel : ViewModel() {
 data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>, var scrollPosition: Int)
-
+    //var searchQuery = EMPTY_STRING
     private val hashDataMode = hashMapOf<HomeMode, DataMode>()
     fun saveData(mode: HomeMode, sort: SortOrder, filter: Filter, portionData: Int, products: List<Product>, scrollPosition: Int){
         if (hashDataMode[mode] == null)
