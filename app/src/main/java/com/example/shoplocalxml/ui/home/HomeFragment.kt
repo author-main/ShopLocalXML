@@ -519,7 +519,32 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun searchProducts(query: String){
-        homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+        homeViewModel.saveData(
+            HomeViewModel.Companion.HomeMode.MAIN,
+            sharedViewModel.sortProduct.copy(),
+            sharedViewModel.filterProduct.copy(),
+            sharedViewModel.portionData,
+            sharedViewModel.products.value.toList()
+        )
+        sharedViewModel.getSearchProducts(query, page = 1, uploadAgain = true) {isEmpty ->
+            if (isEmpty) {
+                homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
+                showNoProductInfo()
+            } else {
+                homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+            }
+        }
+
+
+    }
+
+    private fun showNoProductInfo(){
+        val snackbarExt = SnackbarExt(
+            dataBinding.root,
+            getStringResource(R.string.message_data_filterinfo)
+        )
+        snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
+        snackbarExt.show()
     }
 
     private fun isNotShowSearchPanel() = searchHistoryPanel == null
@@ -653,14 +678,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
             } else {
             sharedViewModel.getProducts(1, true) { isEmpty ->
-                if (isEmpty) {
-                    val snackbarExt = SnackbarExt(
-                        dataBinding.root,
-                        getStringResource(R.string.message_data_filterinfo)
-                    )
-                    snackbarExt.type = SnackbarExt.Companion.SnackbarType.INFO
-                    snackbarExt.show()
-                }
+                if (isEmpty)
+                    showNoProductInfo()
             }
             }
         }

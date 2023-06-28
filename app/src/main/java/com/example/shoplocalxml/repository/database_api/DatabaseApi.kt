@@ -10,17 +10,24 @@ interface DatabaseApi {
     @POST("/api/{script}")
     suspend fun queryUser(@Body user: User, @Path("script") phpScript: String): Response<User>
 
-    @GET("/api/get_products")
-    suspend fun getProducts(@Query("token") token: String,
+    @GET("/api/get_found_products")
+    suspend fun getSearchProducts(@Query("token") token: String,
+                    @Query("uuid") uuid: String,
+                    @Query("query") searchQuery: String,
                     @Query("part") part: Int,
                     @Query("order") order: String): Response<List<Product>>
 
-    @GET("/api/get_found_products")
+    @GET("/api/get_products")
+    suspend fun getProducts(@Query("token") token: String,
+                            @Query("part") part: Int,
+                            @Query("order") order: String): Response<List<Product>>
+
+  /*  @GET("/api/get_found_products")
     suspend fun getFoundProducts(@Query("query") query: String,
                          @Query("order") order: String,
                          @Query("portion") portion: Int,
                          @Query("uuid") uuid: String,
-                         @Query("token") token: String): Response<List<Product>>
+                         @Query("token") token: String): Response<List<Product>>*/
 
     @GET("/api/get_reviews_product")
     suspend fun getReviewProduct(@Query("id") id: Int): Response<List<Review>>

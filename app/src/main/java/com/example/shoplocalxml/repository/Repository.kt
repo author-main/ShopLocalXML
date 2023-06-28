@@ -150,6 +150,13 @@ class Repository {
             databaseHandler.getProducts(it, page, order)
         }
 
+
+    suspend fun getSearchProducts(uuid: String, searchQuery: String, page: Int, order: String): List<Product>? =
+        token?.let {
+            databaseHandler.getSearchProducts(it, uuid, searchQuery, page, order)
+        }
+
+
     suspend fun updateProductFavorite(idProduct: Int, favorite:Boolean) {
         token?.let {
             databaseHandler.updateProductFavorite(it, idProduct, favorite)

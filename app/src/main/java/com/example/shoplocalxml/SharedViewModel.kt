@@ -20,12 +20,13 @@ import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
+    private val UUID_QUERY = System.nanoTime().toString()
     var sortProduct        = SortOrder()
     var filterProduct      = Filter().apply { discount = 2 }
 //    var uploadDataAgain: Boolean = false
     private var queryOrder = getQueryOrder()
     private var processQuery = false
-    private var portionData = 0
+    var portionData = 0
     private val _products = MutableStateFlow<MutableList<Product>>(mutableListOf())
     val products = _products.asStateFlow()
     private fun setProducts(value: MutableList<Product>) {
@@ -118,6 +119,30 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }*/
     }
 
+    fun getSearchProducts(searchQuery: String, page: Int, uploadAgain: Boolean = false, onEmptyResult: ((Boolean)->Unit)? = null){
+        if (uploadAgain) {
+            portionData = 0
+            processQuery = false
+        }
+        if (processQuery) return
+        if (page <= portionData) return
+        processQuery = true
+        viewModelScope.launch {
+            val resultQuery = repository.getSearchProducts(UUID_QUERY, searchQuery, page, queryOrder)
+            if (resultQuery == null)
+                processQuery = false
+            else resultQuery.let{ products ->
+                if (products.isNotEmpty()) {
+                    portionData += 1
+                    updateDataAfterQuery(products, uploadAgain)
+                }
+                processQuery = false
+            }
+
+            onEmptyResult?.invoke(page==1 && resultQuery.isNullOrEmpty())
+        }
+    }
+
 
     fun getProducts(page: Int, uploadAgain: Boolean  = false, onEmptyResult: ((Boolean)->Unit)? = null){//}, order: String) {
 //        uploadDataAgain = uploadAgain
@@ -130,7 +155,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         processQuery = true
         //log(queryOrder)
         //CoroutineScope(Dispatchers.Main).launch {
-        var i =0
+
         viewModelScope.launch {
             val resultQuery = repository.getProducts(page, queryOrder)
             if (resultQuery == null)
@@ -143,7 +168,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
                 processQuery = false
             }
 
-            onEmptyResult?.invoke(resultQuery.isNullOrEmpty())
+            onEmptyResult?.invoke(page==1 && resultQuery.isNullOrEmpty())
 
             /*if (resultQuery.isNullOrEmpty())
                 onEmptyResult?.invoke(true)*/
@@ -276,5 +301,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
             if (discount > 0)           textPromotion = getStringResource(R.string.text_benefit)
             return textPromotion
         }
+
+
     }
 }

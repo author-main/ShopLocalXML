@@ -5,6 +5,7 @@ import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.log
 import com.google.gson.GsonBuilder
 import retrofit2.Response
@@ -48,6 +49,17 @@ class DatabaseApiImpl {
     suspend fun restoreUser(user: User): Response<User> {
         return queryUser(QUERY_RESTOREUSER, user)
     }
+
+
+    suspend fun getSearchProducts(token: String, uuid: String, searchQuery: String, page: Int, order: String): Response<List<Product>>? {
+        return try {
+            val query64 = encodeBase64(searchQuery)
+            retrofitInstance.getSearchProducts(token, uuid, query64, page, order)
+        } catch (_: Exception){
+            null
+        }
+    }
+
 
     suspend fun getProducts(token: String, page: Int, order: String): Response<List<Product>>? {
         return try {

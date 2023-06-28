@@ -5,8 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
+import com.example.shoplocalxml.classes.sort_filter.Filter
+import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.log
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -14,14 +17,17 @@ import java.util.Stack
 import java.util.concurrent.Executors
 
 class HomeViewModel : ViewModel() {
+data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>)
 
-  /*  var order: String = ""
-        set(value) {
-            field = value
-            setOrderQuery(value)
-        }*/
-
-    private var orderQuery: String = ""
+    private val hashDataMode = hashMapOf<HomeMode, DataMode>()
+    fun saveData(mode: HomeMode, sort: SortOrder, filter: Filter, portionData: Int, products: List<Product>){
+        hashDataMode[mode] = DataMode(sort, filter, portionData, products)
+    }
+    fun getData(mode: HomeMode): DataMode? =
+        hashDataMode[mode]
+    fun removeData(mode: HomeMode) {
+        hashDataMode.remove(mode)
+    }
 
     private val stackMode = Stack<HomeMode>().apply {
         push(HomeMode.MAIN)
@@ -54,6 +60,11 @@ class HomeViewModel : ViewModel() {
         orderQuery = value
     }*/
 
+    override fun onCleared() {
+        hashDataMode.clear()
+        stackMode.clear()
+        super.onCleared()
+    }
 
     companion object {
         enum class HomeMode {
