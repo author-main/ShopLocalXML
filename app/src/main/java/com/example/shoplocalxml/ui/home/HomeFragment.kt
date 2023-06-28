@@ -703,17 +703,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     )
                 }
             } else
-                updateProductsWhenFilterChanges()
-
+                updateProductsWhenFilterChanges(homeViewModel.modeSearchProduct.value!!)
         }
     }
 
-    private fun updateProductsWhenFilterChanges() {
+    private fun updateProductsWhenFilterChanges(mode: HomeViewModel.Companion.HomeMode) {
         fun showInfoMessage(isEmpty: Boolean) {
             if (isEmpty)
                 showNoProductInfo()
         }
-        when (homeViewModel.modeSearchProduct.value) {
+        when (mode) {
             HomeViewModel.Companion.HomeMode.MAIN -> {
                 sharedViewModel.getProducts(1, true) { isEmpty ->
                     showInfoMessage(isEmpty)
