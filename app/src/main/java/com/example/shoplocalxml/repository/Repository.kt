@@ -7,6 +7,7 @@ import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
+import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.isConnectedNet
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
@@ -153,7 +154,8 @@ class Repository {
 
     suspend fun getSearchProducts(uuid: String, searchQuery: String, page: Int, order: String): List<Product>? =
         token?.let {
-            databaseHandler.getSearchProducts(it, uuid, searchQuery, page, order)
+            val query64 = encodeBase64(searchQuery)
+            databaseHandler.getSearchProducts(it, uuid, query64, page, order)
         }
 
 

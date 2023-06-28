@@ -53,8 +53,7 @@ class DatabaseApiImpl {
 
     suspend fun getSearchProducts(token: String, uuid: String, searchQuery: String, page: Int, order: String): Response<List<Product>>? {
         return try {
-            val query64 = encodeBase64(searchQuery)
-            retrofitInstance.getSearchProducts(token, uuid, query64, page, order)
+            retrofitInstance.getSearchProducts(token, uuid, searchQuery, page, order)
         } catch (_: Exception){
             null
         }
