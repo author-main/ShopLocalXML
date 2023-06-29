@@ -65,8 +65,8 @@ class FilterActivity : AppCompatActivity() {
                 dataBinding.editTextFilterRangeTo.setText("0")
             true
         }
-        dataBinding.textFilterPrice.text =
-            getStringResource(R.string.text_price) + ", " + getStringResource(R.string.text_currency)
+        val textFilterPrice = getStringResource(R.string.text_price) + ", " + getStringResource(R.string.text_currency)
+        dataBinding.textFilterPrice.text = textFilterPrice
         updateStateButtonMode(filter.viewmode)
     }
 
