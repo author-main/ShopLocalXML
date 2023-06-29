@@ -36,7 +36,6 @@ class FilterActivity : AppCompatActivity() {
     /*private var lateinit sharedViewModel: SharedViewModel =
         ViewModelProvider(this, FactoryViewModel(this, repository))[SharedViewModel::class.java]*/
     private lateinit var dataBinding: ActivityFilterBinding
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = ActivityFilterBinding.inflate(layoutInflater)
