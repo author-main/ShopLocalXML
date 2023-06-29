@@ -54,6 +54,7 @@ import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
+import com.example.shoplocalxml.ui.detail_product.DetailProductActivity
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -82,6 +83,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
            updateFilter(result.data)
        }
    }
+
+
+
+
     private var orderQuery: String = ""
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
@@ -197,6 +202,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
             override fun onClick(id: Int, index: Int) {
                // log("product $id, index $index")
+                openDetailProductActivity(id, index)
             }
 
             override fun onShowMenu(id: Int) {
@@ -760,6 +766,27 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 //(dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(8, 0)
             //}*/
 
+    }
+
+    private fun openDetailProductActivity(idProduct: Int, indexImage: Int) {
+        val gson = Gson()
+        /*val brandsJson = gson.toJson(SharedViewModel.getBrands())
+        val categoriesJson = gson.toJson(SharedViewModel.getCategories())
+        val filterJson     = gson.toJson(sharedViewModel.filterProduct)*/
+        val product = sharedViewModel.products.value.find { it.id == idProduct }
+        product?.let{
+            val productExtra = gson.toJson(it)
+            val intent = Intent(requireContext(), DetailProductActivity::class.java)
+            intent.putExtra("product", productExtra)
+            val brand = SharedViewModel.getProductBrend(it.brand)
+            intent.putExtra("brand", brand)
+            activity?.startActivity(intent)
+        }
+        /*val intent = Intent(requireContext(), FilterActivity::class.java)
+        intent.putExtra("brands", brandsJson)
+        intent.putExtra("categories", categoriesJson)
+        intent.putExtra(FILTER_KEY, filterJson)
+        activity?.startActivity(intent)*/
     }
 
 

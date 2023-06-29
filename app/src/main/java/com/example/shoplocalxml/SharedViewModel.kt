@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.math.abs
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
@@ -289,8 +290,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         private var listCategory = listOf<Category>()
         fun getCategories() = listCategory
         fun getBrands()     = listBrend
-        @JvmStatic fun getProductBrend(id: Int) =
-            listBrend.find { it.id == id }?.name ?: EMPTY_STRING
+        @JvmStatic fun getProductBrend(id: Int?) =
+            if (id == null) EMPTY_STRING
+                else listBrend.find { it.id == id }?.name ?: EMPTY_STRING
 
         @JvmStatic fun getProductSalePrice(value: Float, discount: Int) =
             getFormattedFloat(value - value * discount / 100f)
