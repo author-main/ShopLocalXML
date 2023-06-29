@@ -20,7 +20,7 @@ import java.util.concurrent.Executors
 
 class HomeViewModel : ViewModel() {
 data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>, var scrollPosition: Int)
-    //var searchQuery = EMPTY_STRING
+    var searchQuery = EMPTY_STRING
     private val hashDataMode = hashMapOf<HomeMode, DataMode>()
     fun saveData(mode: HomeMode, sort: SortOrder, filter: Filter, portionData: Int, products: List<Product>, scrollPosition: Int){
         if (hashDataMode[mode] == null)

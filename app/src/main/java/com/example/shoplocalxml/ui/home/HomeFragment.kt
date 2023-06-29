@@ -552,6 +552,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             } catch(_:Exception) {-1}
         )
         sharedViewModel.getSearchProducts(query, page = 1, uploadAgain = true) {isEmpty ->
+            homeViewModel.searchQuery = query
             if (isEmpty) {
             /*    sharedViewModel.portionData = homeViewModel.getData(HomeViewModel.Companion.HomeMode.MAIN)?.portionData ?: run {
                     val countProducts = sharedViewModel.products.value.size
@@ -719,7 +720,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 }
             }
             HomeViewModel.Companion.HomeMode.SEARCH_RESULT -> {
-                val searchQuery = dataBinding.editTextSearchQuery.text.toString()
+                val searchQuery = homeViewModel.searchQuery
+                    //dataBinding.editTextSearchQuery.text.toString()
                 sharedViewModel.getSearchProducts(searchQuery, 1, true) { isEmpty ->
                     showInfoMessage(isEmpty)
                 }
