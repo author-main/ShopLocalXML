@@ -1,23 +1,16 @@
 package com.example.shoplocalxml.ui.detail_product
 
-import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shoplocalxml.R
-import com.example.shoplocalxml.databinding.ActivityDetailProductBinding
+import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 
 
-class DetailProductActivity: AppCompatActivity() {
-    private lateinit var dataBinding: ActivityDetailProductBinding
+class UserMessagesActivity: AppCompatActivity() {
+    private lateinit var dataBinding: ActivityUserMessagesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dataBinding = ActivityDetailProductBinding.inflate(layoutInflater)
+        dataBinding = ActivityUserMessagesBinding.inflate(layoutInflater)
         setContentView(dataBinding.root)
         supportActionBar?.hide()
 

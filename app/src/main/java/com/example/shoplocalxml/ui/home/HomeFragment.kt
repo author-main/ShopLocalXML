@@ -11,8 +11,6 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
@@ -52,9 +50,8 @@ import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.getStringResource
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
-import com.example.shoplocalxml.ui.detail_product.DetailProductActivity
+import com.example.shoplocalxml.ui.detail_product.UserMessagesActivity
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -202,7 +199,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
             override fun onClick(id: Int, index: Int) {
                // log("product $id, index $index")
-                openDetailProductActivity(id, index)
+                openDetailProductFragment(id, index)
             }
 
             override fun onShowMenu(id: Int) {
@@ -768,25 +765,17 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     }
 
-    private fun openDetailProductActivity(idProduct: Int, indexImage: Int) {
-        val gson = Gson()
-        /*val brandsJson = gson.toJson(SharedViewModel.getBrands())
-        val categoriesJson = gson.toJson(SharedViewModel.getCategories())
-        val filterJson     = gson.toJson(sharedViewModel.filterProduct)*/
+    private fun openDetailProductFragment(idProduct: Int, indexImage: Int) {
+/*        val gson = Gson()
         val product = sharedViewModel.products.value.find { it.id == idProduct }
         product?.let{
             val productExtra = gson.toJson(it)
-            val intent = Intent(requireContext(), DetailProductActivity::class.java)
+            val intent = Intent(requireContext(), UserMessagesActivity::class.java)
             intent.putExtra("product", productExtra)
             val brand = SharedViewModel.getProductBrend(it.brand)
             intent.putExtra("brand", brand)
             activity?.startActivity(intent)
-        }
-        /*val intent = Intent(requireContext(), FilterActivity::class.java)
-        intent.putExtra("brands", brandsJson)
-        intent.putExtra("categories", categoriesJson)
-        intent.putExtra(FILTER_KEY, filterJson)
-        activity?.startActivity(intent)*/
+        }*/
     }
 
 
