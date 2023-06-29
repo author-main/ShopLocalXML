@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
+import com.example.shoplocalxml.log
 
 class DetailProductFragment : Fragment() {
     private lateinit var dataBinding: FragmentDetailProductBinding

@@ -70,6 +70,7 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
             stackMode.push(value)
         }
     }
+    fun currentMode() = stackMode.peek()
 
     /*private fun setOrderQuery(value: String) {
         orderQuery = value
@@ -86,6 +87,7 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
             MAIN,
             SEARCH_QUERY,
             SEARCH_RESULT,
+            PRODUCT_DETAIL,
             NULL
         }
     }

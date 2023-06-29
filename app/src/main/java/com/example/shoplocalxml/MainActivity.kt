@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.core.view.marginBottom
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
@@ -316,10 +317,11 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
                 if (it is OnBackPressed) {
                     (it as OnBackPressed).backPressed()
                 }
+            } ?: run {
+                log("product_detail")
             }
         }
     }
-
 
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

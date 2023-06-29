@@ -53,6 +53,7 @@ import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.detail_product.DetailProductFragment
 import com.example.shoplocalxml.ui.filter.FilterActivity
@@ -511,6 +512,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun performBack(){
+        if (homeViewModel.currentMode() == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
+            activity?.supportFragmentManager?.popBackStack()
+            return
+        }
         hideSearchHistoryPanel()
         val mode = homeViewModel.modeSearchProduct.value//homeViewModel.getStackMode()
         if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN) {
@@ -770,12 +775,18 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     private fun openDetailProductFragment(idProduct: Int, indexImage: Int) {
         sharedViewModel.products.value.find { it.id == idProduct } ?.let{product ->
-            val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
-            val brand = SharedViewModel.getProductBrend(product.brand)
-            val fragment = DetailProductFragment.newInstance(product, brand, indexImage)
-            fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
-            fragmentTransaction.addToBackStack("DETAIL_FRAGMENT")
-            fragmentTransaction.commit()
+            homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
+            //val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
+                activity?.supportFragmentManager?.let {
+                    val fragmentTransaction = it.beginTransaction()
+                    val brand = SharedViewModel.getProductBrend(product.brand)
+                    val fragment = DetailProductFragment.newInstance(product, brand, indexImage)
+                    fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
+                    fragmentTransaction.addToBackStack("DETAIL_FRAGMENT")
+                    fragmentTransaction.commit()
+                }
+
+
         }
 
 
