@@ -553,13 +553,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         )
         sharedViewModel.getSearchProducts(query, page = 1, uploadAgain = true) {isEmpty ->
             if (isEmpty) {
-                sharedViewModel.portionData = homeViewModel.getData(HomeViewModel.Companion.HomeMode.MAIN)?.portionData ?: run {
+            /*    sharedViewModel.portionData = homeViewModel.getData(HomeViewModel.Companion.HomeMode.MAIN)?.portionData ?: run {
                     val countProducts = sharedViewModel.products.value.size
                     countProducts / DATA_PORTION + if (countProducts % DATA_PORTION > 0) 1 else 0
                 }
-                homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
+                homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)*/
                 showNoProductInfo()
-            } else
+            }// else
                 homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
         }
 
