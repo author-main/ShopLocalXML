@@ -1,4 +1,4 @@
-package com.example.shoplocalxml.ui.detail_product
+package com.example.shoplocalxml.ui.user_messages
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

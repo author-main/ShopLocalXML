@@ -23,6 +23,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -47,19 +49,20 @@ import com.example.shoplocalxml.classes.sort_filter.Sort
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
+import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.toPx
-import com.example.shoplocalxml.ui.detail_product.UserMessagesActivity
+import com.example.shoplocalxml.ui.detail_product.DetailProductFragment
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion.MenuItemProduct
-import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.DividerItemCardDecoration
 import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
+import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 import com.example.shoplocalxml.vibrate
 import com.google.gson.Gson
@@ -766,6 +769,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun openDetailProductFragment(idProduct: Int, indexImage: Int) {
+        sharedViewModel.products.value.find { it.id == idProduct } ?.let{product ->
+            val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
+            val brand = SharedViewModel.getProductBrend(product.brand)
+            val fragment = DetailProductFragment.newInstance(product, brand, indexImage)
+            fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
+            fragmentTransaction.addToBackStack("DETAIL_FRAGMENT")
+            fragmentTransaction.commit()
+        }
+
+
+
+
+
 /*        val gson = Gson()
         val product = sharedViewModel.products.value.find { it.id == idProduct }
         product?.let{

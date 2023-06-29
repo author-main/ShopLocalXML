@@ -23,7 +23,7 @@
             android:name=".ui.filter.FilterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.detail_product.UserMessagesActivity"
+            android:name=".ui.user_messages.UserMessagesActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
