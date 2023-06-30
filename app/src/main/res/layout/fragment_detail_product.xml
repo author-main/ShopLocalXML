@@ -35,17 +35,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/text_addcart"
-            android:textColor="@color/TextDescription" />
+            android:textColor="@color/TextDescription"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewDateDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/robotocondensed_regular"
+            android:fontFamily="@font/robotocondensed_light"
             android:text="@string/text_datedelivery"
             android:textColor="@color/TextDescription"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 </LinearLayout>
