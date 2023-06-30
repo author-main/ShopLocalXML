@@ -514,7 +514,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private fun performBack(){
         if (homeViewModel.currentMode() == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
             activity?.supportFragmentManager?.popBackStack()
-            return
         }
         hideSearchHistoryPanel()
         val mode = homeViewModel.modeSearchProduct.value//homeViewModel.getStackMode()
