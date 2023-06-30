@@ -127,7 +127,6 @@
     <string name="text_notifyrestore">Вам отправлено письмо для подтверждения\nизменения данных</string>
     <string name="text_notifyrestore_error">Запрос на восстановление доступа\nне обработан</string>
 
-
     <string name="eCharPassword">○</string>
     <string name="fCharPassword">●</string>
     <!-- TODO: Remove or change this placeholder text -->

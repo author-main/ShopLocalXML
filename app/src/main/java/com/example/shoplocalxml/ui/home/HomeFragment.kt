@@ -777,6 +777,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
             //val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
                 activity?.supportFragmentManager?.let {
+                    hideFab()
                     val fragmentTransaction = it.beginTransaction()
                     val brand = SharedViewModel.getProductBrend(product.brand)
                     val fragment = DetailProductFragment.newInstance(product, brand, indexImage)
