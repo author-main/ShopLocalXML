@@ -30,7 +30,7 @@ class DetailProductFragment : Fragment() {
     ): View {
         dataBinding = FragmentDetailProductBinding.inflate(inflater, container, false)
         setDateDelivery(System.currentTimeMillis())
-        dataBinding.root.isClickable = true
+        //dataBinding.root.isClickable = true
         return dataBinding.root
     }
 
