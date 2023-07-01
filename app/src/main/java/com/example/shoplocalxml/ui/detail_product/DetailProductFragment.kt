@@ -30,8 +30,10 @@ class DetailProductFragment : Fragment() {
     ): View {
         dataBinding = FragmentDetailProductBinding.inflate(inflater, container, false)
         setDateDelivery(System.currentTimeMillis())
+        dataBinding.root.isClickable = true
         return dataBinding.root
     }
+
 
     private fun setDateDelivery(date: Long){
         val arrayMonth = getStringArrayResource(R.array.month)
