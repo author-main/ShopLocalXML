@@ -28,7 +28,6 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
     private val showItems = items.toMutableList()
 
 
-
     //val differ = AsyncListDiffer(this, DiffCallback())
 
 
