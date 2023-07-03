@@ -17,4 +17,9 @@
         <attr name="interval" format="dimension" />
 
     </declare-styleable>
+
+    <declare-styleable name="ImageIndicator">
+        <attr name="countImages" format="integer" />
+        <attr name="selectedIndex" format="integer" />
+    </declare-styleable>
 </resources>
