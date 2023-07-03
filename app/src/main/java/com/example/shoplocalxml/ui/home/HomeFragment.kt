@@ -612,6 +612,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     override fun onFabClick() {
         dataBinding.appbarHome.setExpanded(true, true)
+        hideFab()
         dataBinding.recyclerViewProductHome.scrollToPosition(0)
     }
 
