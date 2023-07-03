@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.toPx
 
 class ImageIndicator: LinearLayout {
     constructor(context: Context) : super(context) {}
@@ -15,6 +17,8 @@ class ImageIndicator: LinearLayout {
         }
     }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    val indicatorSym = getStringResource(R.string.fCharPassword)
+    val interval = 4.toPx
     var count = 1
     var selectedIndex = 0
         set (value) {

@@ -55,9 +55,9 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         return Size(0,minValue)
     }*/
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas?.drawColor(Color.TRANSPARENT)
+        canvas.drawColor(Color.TRANSPARENT)
         val step = bitmapStar?.let {
             (it.width + interval).toFloat()
         } ?: 0f
@@ -69,11 +69,11 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         for (i in 0..4) {
             if (i < intPart)
                 bitmapStar?.let {
-                    canvas?.drawBitmap(it, posX, posY, paint)
+                    canvas.drawBitmap(it, posX, posY, paint)
                 }
             else
                 bitmapBackgroundStar?.let {
-                    canvas?.drawBitmap(it, posX, posY, paint)
+                    canvas.drawBitmap(it, posX, posY, paint)
                     if (lastPos == 0f)
                         lastPos = posX
                 }
@@ -95,7 +95,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                     set(0, 0, widthStar.toInt(), it.height)
                 }
 
-                canvas?.drawBitmap(it, rectSource, rect, paint)
+                canvas.drawBitmap(it, rectSource, rect, paint)
                 //canvas?.drawBitmap(it, 0f, 0f, paint)
             }
         }

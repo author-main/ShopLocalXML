@@ -54,14 +54,14 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
         getGradientDrawable()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (state == ImageState.LOADED && animator?.isRunning == true) {
             gradientBitmap?.let {
                 matrix.reset()
                 matrix.postRotate(45f)
                 matrix.postTranslate(animatedValue, -delta)
-                canvas?.drawBitmap(it, matrix, paint)
+                canvas.drawBitmap(it, matrix, paint)
             }
         }
     }

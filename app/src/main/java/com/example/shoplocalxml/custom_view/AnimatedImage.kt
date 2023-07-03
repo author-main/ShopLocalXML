@@ -49,14 +49,14 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
         getGradientDrawable()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (animator?.isRunning == true) {
             gradientBitmap?.let {
                 matrix.reset()
                 matrix.postRotate(45f)
                 matrix.postTranslate(animatedValue, -delta)
-                canvas?.drawBitmap(it, matrix, paint)
+                canvas.drawBitmap(it, matrix, paint)
             }
         }
     }
