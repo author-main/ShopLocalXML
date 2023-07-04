@@ -1,37 +1,57 @@
 package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.AttributeSet
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.DIR_IMAGES
-import com.example.shoplocalxml.EMPTY_STRING
-import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.log
-import com.example.shoplocalxml.md5
-import com.example.shoplocalxml.ui.history_search.SearchAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 class RecyclerViewImages(context: Context,
                          attrs: AttributeSet
                         )  : RecyclerView(context, attrs) {
 
-    /*init {
-        layoutManager = LinearLayoutManager(applicationContext)
-        adapter = imagesAdapter
+    private var currentImageIndex = 0
+    private var onChangeSelectedItem: ((index: Int) -> Unit)? = null
+    fun setOnChangeSelectedItem(value: (index: Int) -> Unit){
+        onChangeSelectedItem = value
+    }
+    /*private var onChangeSelectedItem: OnChangeSelectedItem? = null
+    fun setOnChangeSelectedItem(value: OnChangeSelectedItem) {
+        onChangeSelectedItem = value
     }*/
+   init {
+        addOnScrollListener(object: OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val offset = computeHorizontalScrollOffset()
+                val extent = computeHorizontalScrollExtent()
+                if (offset % extent == 0) {
+                    val index = offset / extent
+                    if (index != currentImageIndex) {
+                        currentImageIndex = index
+                        onChangeSelectedItem?.invoke(index)
+                    }
+                }
+            }
+        })
+    }
 
     private var onStateImagesListener: OnStateImagesListener? = null
     fun setOnStateImagesListener (value: OnStateImagesListener){
         onStateImagesListener = value
     }
+
+
+
+
+    /*override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
+            super.onScrollChanged(l, t, oldl, oldt)
+            log("$l, $t, $oldl, $oldt")
+        }*/
 
     fun setImages(value: List<String>?) {
         value?.let{

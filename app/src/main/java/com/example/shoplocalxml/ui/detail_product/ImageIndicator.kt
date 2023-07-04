@@ -20,12 +20,12 @@ import com.example.shoplocalxml.toPx
 
 
 class ImageIndicator: LinearLayout {
-    private var initialized = false
+    //private var initialized = false
     private val images = ArrayList<ImageView>()
     private var sizeSym = 8.toPx
     //private val sym = getStringResource(R.string.fCharPassword)
     private var interval = 4.toPx
-    private var count = 0
+    var count = 0
         set(value) {
             field = value
             setCount(value)
@@ -63,46 +63,68 @@ class ImageIndicator: LinearLayout {
 
     @JvmName("setSelectedIndex_")
     private fun setSelectedIndex(value: Int){
-        if (!initialized) {
+        /*if (!initialized) {
             if (value > -1)
                 images[value].setColorFilter(selectedColorSymbol)
             initialized = true
             return
-        }
-//        val prevIndex = selectedIndex
-        if (prevIndex != selectedIndex) {
-            if (prevIndex != -1) {
-                val colorAnimation =
-                    ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
-                colorAnimation.duration = 250
-                colorAnimation.addUpdateListener { animator ->
-                    val color = animator.animatedValue as Int
-                    images[prevIndex].setColorFilter(color)
+        }*/
+        log( "$prevIndex, $selectedIndex")
+
+                if (prevIndex != -1) {
+                    val colorAnimation =
+                        ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
+                    colorAnimation.duration = 250
+                    colorAnimation.addUpdateListener { animator ->
+                        val color = animator.animatedValue as Int
+                        images[prevIndex].setColorFilter(color)
+                    }
+                    colorAnimation.start()
                 }
-                colorAnimation.start()
-            }
-            if (selectedIndex != -1) {
-                val colorAnimation1 =
-                    ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
-                colorAnimation1.duration = 250
-                colorAnimation1.addUpdateListener { animator ->
-                    images[value].setColorFilter(
-                        animator.animatedValue as Int
-                    )
+
+                if (value != -1) {
+                    val colorAnimation1 =
+                        ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
+                    colorAnimation1.duration = 250
+                    colorAnimation1.addUpdateListener { animator ->
+                        images[value].setColorFilter(
+                            animator.animatedValue as Int
+                        )
+                    }
+                    colorAnimation1.start()
                 }
-                colorAnimation1.start()
-            }
-        }
+
+
     }
 
     @JvmName("setCount_")
     private fun setCount(value: Int) {
-        val layoutParams = ViewGroup.LayoutParams(
-        count * sizeSym + interval * (count - 1),
+        this.removeAllViews()
+        images.clear()
+        val widthView = value * sizeSym + interval * (value - 1)
+        val heightView = sizeSym
+
+       val params = if (layoutParams == null)
+            ViewGroup.LayoutParams(
+                widthView,
+                heightView
+            ) else {
+                layoutParams.apply {
+                    width = widthView
+                    height = heightView
+                }
+        }
+
+
+
+
+        /*val layoutParams = ViewGroup.LayoutParams(
+        value * sizeSym + interval * (value - 1),
             sizeSym
         )
-        this.layoutParams = layoutParams
-        images.clear()
+        this.layoutParams = layoutParams*/
+        layoutParams = params
+
         for (i in 0 until value) {
             addImageView(i)
         }

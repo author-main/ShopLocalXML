@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.getStringArrayResource
+import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -16,6 +19,10 @@ import java.util.Date
 
 class DetailProductFragment : Fragment() {
     private lateinit var dataBinding: FragmentDetailProductBinding
+    private var product: Product = Product()
+    private var brand: String = EMPTY_STRING
+    private var imageIndex: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 /*        arguments?.let {
@@ -29,8 +36,15 @@ class DetailProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = FragmentDetailProductBinding.inflate(inflater, container, false)
+        dataBinding.indicatorImages.count = product.linkimages?.size ?: 0
+        dataBinding.indicatorImages.selectedIndex = imageIndex
+        dataBinding.cardViewProductImages.product = product
+        dataBinding.cardViewProductImages.setOnChangeSelectedItem(object: OnChangeSelectedItem{
+            override fun onChangeItemIndex(index: Int) {
+                dataBinding.indicatorImages.selectedIndex = index
+            }
+        })
         setDateDelivery(System.currentTimeMillis())
-        //dataBinding.root.isClickable = true
         return dataBinding.root
     }
 
@@ -49,15 +63,15 @@ class DetailProductFragment : Fragment() {
     }
 
     private fun setProduct(value: Product) {
-
+       product = value
     }
 
     private fun setBrandName(value: String) {
-
+        brand = value
     }
 
     private fun setImageIndex(value: Int) {
-
+        imageIndex = value
     }
 
     companion object {

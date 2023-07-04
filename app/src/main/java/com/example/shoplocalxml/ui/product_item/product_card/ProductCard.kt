@@ -20,6 +20,7 @@ import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
+import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
 import com.example.shoplocalxml.widthProductCard
 
@@ -31,8 +32,12 @@ class ProductCard: CardView {
         }*/
 
     private var onChangedFavorite : ((value: Boolean) -> Unit)? = null
+    private var onChangeSelectedItem: OnChangeSelectedItem? = null
     private var onClick:            ((index: Int)->Unit)? = null
     private var onShowMenu:         (()->Unit)? = null
+    fun setOnChangeSelectedItem(value: OnChangeSelectedItem) {
+        onChangeSelectedItem = value
+    }
     fun setOnChangedFavorite (action: (value: Boolean) -> Unit){
         onChangedFavorite = action
     }
@@ -70,6 +75,17 @@ class ProductCard: CardView {
         dataBinding.product = value
         value?.let { product ->
             dataBinding.recyclerViewImages.setImages(product.linkimages)
+            /*dataBinding.recyclerViewImages.setOnChangeSelectedItem(object: OnChangeSelectedItem {
+                override fun onChangeItemIndex(index: Int) {
+                    log("$index")
+                }
+            })*/
+
+            dataBinding.recyclerViewImages.setOnChangeSelectedItem {index ->
+                onChangeSelectedItem?.onChangeItemIndex(index)
+            }
+
+
             //log(product.linkimages)
             /*product.linkimages?.forEach {url ->
                 ImageDownloadManager.download(url) { bitmap ->
@@ -105,6 +121,8 @@ class ProductCard: CardView {
             false
         )
         dataBinding.recyclerViewImages.layoutManager = manager
+
+
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(dataBinding.recyclerViewImages)
         dataBinding.recyclerViewImages.adapter = ImagesAdapter()

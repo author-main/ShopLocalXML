@@ -17,7 +17,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <androidx.cardview.widget.CardView
+        <com.example.shoplocalxml.ui.product_item.product_card.ProductCard
             android:id="@+id/cardViewProductImages"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -31,6 +31,7 @@
             android:id="@+id/indicatorImages"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
+            android:layout_marginTop="4dp"
             app:countImages="3"
             app:intervalSymbol="2.dp"
             app:layout_constraintEnd_toEndOf="parent"
