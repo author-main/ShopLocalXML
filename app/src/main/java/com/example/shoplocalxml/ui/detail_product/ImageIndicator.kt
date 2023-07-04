@@ -20,6 +20,7 @@ import com.example.shoplocalxml.toPx
 
 
 class ImageIndicator: LinearLayout {
+    private var initialized = false
     private val images = ArrayList<ImageView>()
     private var sizeSym = 8.toPx
     //private val sym = getStringResource(R.string.fCharPassword)
@@ -31,9 +32,8 @@ class ImageIndicator: LinearLayout {
         }
     var selectedIndex = 0
         set (value) {
-            if (selectedIndex != value)
-                setSelectedIndex(value)
-            field = value
+            setSelectedIndex(value)
+            field = getNormalizeSelectedIndex(value)
         }
 
     constructor(context: Context) : super(context) {}
@@ -52,30 +52,34 @@ class ImageIndicator: LinearLayout {
     private val colorSymbol = context.getColor(R.color.PrimaryDark)
     private val selectedColorSymbol = context.getColor(R.color.EditTextBackgroundDark)
 
-   /* init {
-        addImageView()
-    }*/
+    private fun getNormalizeSelectedIndex(value: Int) =
+        if (value > count - 1) count - 1 else value
+
     @JvmName("setSelectedIndex_")
     private fun setSelectedIndex(value: Int){
-        log("selected index = $selectedIndex, value = $value")
-        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
-        colorAnimation.duration = 250
-        colorAnimation.addUpdateListener { animator -> images[selectedIndex].setColorFilter(animator.animatedValue as Int) }
-        colorAnimation.start()
-      /*  val colorAnimation1 = ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
-        colorAnimation1.duration = 250
-        colorAnimation1.addUpdateListener { animator -> images[value].setColorFilter(animator.animatedValue as Int) }
-        colorAnimation1.start()*/
+        if (!initialized) {
+            val index = getNormalizeSelectedIndex(value)
+            images[index].setColorFilter(selectedColorSymbol)
+            initialized = true
+            return
+        }
+        val prevIndex = selectedIndex
+        if (prevIndex != selectedIndex) {
+            val colorAnimation =
+                ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
+            colorAnimation.duration = 250
+            colorAnimation.addUpdateListener { animator ->
+                val color = animator.animatedValue as Int
+                images[prevIndex].setColorFilter(color)
+            }
+            colorAnimation.start()
+            val colorAnimation1 =
+                ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
+            colorAnimation1.duration = 250
+            colorAnimation1.addUpdateListener { animator -> images[value].setColorFilter(animator.animatedValue as Int) }
+            colorAnimation1.start()
+        }
     }
-
-   /* override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val paddingWidth = paddingRight + paddingEnd
-        val paddingHeight = paddingTop + paddingBottom
-        val measureHeight = MeasureSpec.getSize(heightMeasureSpec)
-        val heightSymbol = if (measureHeight < sizeSym) sizeSym else measureHeight
-        val widthSymbols  = count * sizeSym + interval * (count - 1)
-        setMeasuredDimension(widthSymbols + paddingWidth, heightSymbol + paddingHeight)
-    }*/
 
     @JvmName("setCount_")
     private fun setCount(value: Int) {
@@ -88,13 +92,11 @@ class ImageIndicator: LinearLayout {
         for (i in 0 until value) {
             addImageView(i)
         }
-        //setSelectedIndex(selectedIndex)
     }
 
     private fun addImageView(index: Int) {
         AppCompatResources.getDrawable(context, R.drawable.ic_circle)?.let {drawable ->
             val imageView = ImageView(context)
-            //imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
             drawable.setTint(colorSymbol)
             imageView.setImageDrawable(drawable)
             val layoutParams = LayoutParams(
@@ -104,23 +106,8 @@ class ImageIndicator: LinearLayout {
             if (index < count - 1)
                 layoutParams.marginEnd = interval
             imageView.layoutParams = layoutParams
-            //imageView.setPadding(interval, 0, interval, 0)
             images.add(imageView)
             addView(imageView)
         }
-
-
- /*       val textView = TextView(context)
-        val layoutParams = LayoutParams(
-            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT
-        )
-        textView.layoutParams = layoutParams
-        textView.setPadding(0)
-        textView.minWidth = 0
-        textView.minHeight = 0
-        textView.text = sym
-        textView.textSize = sizeSym
-        this.addView(textView)
-        arrayTextView.add(textView)*/
     }
 }
