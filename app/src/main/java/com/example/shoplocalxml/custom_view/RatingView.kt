@@ -44,7 +44,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                 if (attrTintBackgroundColor != -1)
                     tintBackgroundColor = attrTintBackgroundColor
                 count = getFloat(R.styleable.RatingView_count, 1f).coerceIn(1f, 5f)
-                interval = getDimensionPixelSize(R.styleable.RatingView_interval, 1)
+                interval = getDimensionPixelSize(R.styleable.RatingView_intervalStar, 1)
                 recycle()
             }
     }
@@ -89,7 +89,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                 }
                 paint.color = Color.TRANSPARENT
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-                canvas?.drawRect(rect, paint)
+                canvas.drawRect(rect, paint)
                 paint.reset()
                 val rectSource =  Rect().apply {
                     set(0, 0, widthStar.toInt(), it.height)

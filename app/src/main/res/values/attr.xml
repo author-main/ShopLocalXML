@@ -14,13 +14,13 @@
         <attr name="tintStar" format="color" />
         <attr name="tintBackgroundStar" format="color" />
         <attr name="count" format="float" />
-        <attr name="interval" format="dimension" />
-
+        <attr name="intervalStar" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="ImageIndicator">
         <attr name="countImages" format="integer" />
         <attr name="selectedIndex" format="integer" />
-        <attr name="sizeSymbol" format="integer" />
+        <attr name="sizeSymbol" format="dimension" />
+        <attr name="intervalSymbol" format="dimension" />
     </declare-styleable>
 </resources>

@@ -66,7 +66,7 @@ class ProgressImageView: AppCompatImageView, ValueAnimator.AnimatorUpdateListene
         }
     }
 
-    fun setImageBitmap(bm: Bitmap?, state: ImageState) {
+    private fun setImageBitmap(bm: Bitmap?, state: ImageState) {
         this.state = state
         val bitmap = if (state == ImageState.UPLOADED && bm == null) {
                         scaleType = ScaleType.CENTER_INSIDE

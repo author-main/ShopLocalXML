@@ -103,7 +103,7 @@
                 android:layout_gravity="start"
                 android:layout_marginBottom="2dp"
                 app:count="@{product.star}"
-                app:interval="1dp" />
+                app:intervalStar="1dp" />
 
             <TextView
                 android:id="@+id/textName"

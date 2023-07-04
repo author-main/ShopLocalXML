@@ -14,6 +14,7 @@ import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
+import android.util.TypedValue
 import android.view.Window
 import android.widget.TextView
 import androidx.annotation.ArrayRes
@@ -30,6 +31,9 @@ import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
+
+val Float.toPx: Float
+    get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, Resources.getSystem().displayMetrics)
 
 val Int.toDp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
