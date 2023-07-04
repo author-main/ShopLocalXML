@@ -75,7 +75,7 @@ class ImageIndicator: LinearLayout {
         }
       //  log( "$prevIndex, $selectedIndex")
 
-
+            CoroutineScope(Dispatchers.Main).launch {
                 if (prevIndex != -1) {
                     val colorAnimation =
                         ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
@@ -98,7 +98,7 @@ class ImageIndicator: LinearLayout {
                     }
                     colorAnimation1.start()
                 }
-
+            }
 
 
     }
