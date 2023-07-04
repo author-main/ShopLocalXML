@@ -15,12 +15,16 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.size
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ImageIndicator: LinearLayout {
-    //private var initialized = false
+    private var initialized = false
     private val images = ArrayList<ImageView>()
     private var sizeSym = 8.toPx
     //private val sym = getStringResource(R.string.fCharPassword)
@@ -51,8 +55,8 @@ class ImageIndicator: LinearLayout {
         orientation = LinearLayout.HORIZONTAL
     }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
-    private val colorSymbol = context.getColor(R.color.PrimaryDark)
-    private val selectedColorSymbol = context.getColor(R.color.EditTextBackgroundDark)
+    private val colorSymbol = context.getColor(R.color.EditTextBackgroundDark)
+    private val selectedColorSymbol = context.getColor(R.color.colorBrend)
 
     private fun getNormalizeSelectedIndex(value: Int): Int {
         return if (count == 0 || value < 0) -1
@@ -63,18 +67,19 @@ class ImageIndicator: LinearLayout {
 
     @JvmName("setSelectedIndex_")
     private fun setSelectedIndex(value: Int){
-        /*if (!initialized) {
+        if (!initialized) {
             if (value > -1)
                 images[value].setColorFilter(selectedColorSymbol)
             initialized = true
             return
-        }*/
-        log( "$prevIndex, $selectedIndex")
+        }
+      //  log( "$prevIndex, $selectedIndex")
+
 
                 if (prevIndex != -1) {
                     val colorAnimation =
                         ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
-                    colorAnimation.duration = 250
+                    colorAnimation.duration = 450
                     colorAnimation.addUpdateListener { animator ->
                         val color = animator.animatedValue as Int
                         images[prevIndex].setColorFilter(color)
@@ -85,7 +90,7 @@ class ImageIndicator: LinearLayout {
                 if (value != -1) {
                     val colorAnimation1 =
                         ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
-                    colorAnimation1.duration = 250
+                    colorAnimation1.duration = 450
                     colorAnimation1.addUpdateListener { animator ->
                         images[value].setColorFilter(
                             animator.animatedValue as Int
@@ -95,10 +100,12 @@ class ImageIndicator: LinearLayout {
                 }
 
 
+
     }
 
     @JvmName("setCount_")
     private fun setCount(value: Int) {
+        initialized = false
         this.removeAllViews()
         images.clear()
         val widthView = value * sizeSym + interval * (value - 1)
