@@ -57,7 +57,7 @@
             android:layout_gravity="bottom"
             android:layout_margin="8dp"
             android:text='@{"-"+product.discount+"%"}'
-            android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}' />
+            android:visibility='@{product.discount == 0 || !eventhandler.visibleCardButton? View.GONE : View.VISIBLE}' />
 
         <ImageView
             android:id="@+id/buttonMore"

@@ -79,7 +79,7 @@ class ImageIndicator: LinearLayout {
                 if (prevIndex != -1) {
                     val colorAnimation =
                         ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
-                    colorAnimation.duration = 450
+                    colorAnimation.duration = 350
                     colorAnimation.addUpdateListener { animator ->
                         val color = animator.animatedValue as Int
                         images[prevIndex].setColorFilter(color)
@@ -90,7 +90,7 @@ class ImageIndicator: LinearLayout {
                 if (value != -1) {
                     val colorAnimation1 =
                         ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
-                    colorAnimation1.duration = 450
+                    colorAnimation1.duration = 350
                     colorAnimation1.addUpdateListener { animator ->
                         images[value].setColorFilter(
                             animator.animatedValue as Int
