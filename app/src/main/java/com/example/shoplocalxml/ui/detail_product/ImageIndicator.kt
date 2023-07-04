@@ -25,15 +25,17 @@ class ImageIndicator: LinearLayout {
     private var sizeSym = 8.toPx
     //private val sym = getStringResource(R.string.fCharPassword)
     private var interval = 4.toPx
-    private var count = 1
+    private var count = 0
         set(value) {
             field = value
             setCount(value)
         }
-    var selectedIndex = 0
+    private var prevIndex = -1
+    var selectedIndex = -1
         set (value) {
-            setSelectedIndex(value)
+            prevIndex = field
             field = getNormalizeSelectedIndex(value)
+            setSelectedIndex(field)
         }
 
     constructor(context: Context) : super(context) {}
@@ -52,32 +54,44 @@ class ImageIndicator: LinearLayout {
     private val colorSymbol = context.getColor(R.color.PrimaryDark)
     private val selectedColorSymbol = context.getColor(R.color.EditTextBackgroundDark)
 
-    private fun getNormalizeSelectedIndex(value: Int) =
-        if (value > count - 1) count - 1 else value
+    private fun getNormalizeSelectedIndex(value: Int): Int {
+        return if (count == 0 || value < 0) -1
+        else
+            if (value > count - 1) count - 1
+            else value
+    }
 
     @JvmName("setSelectedIndex_")
     private fun setSelectedIndex(value: Int){
         if (!initialized) {
-            val index = getNormalizeSelectedIndex(value)
-            images[index].setColorFilter(selectedColorSymbol)
+            if (value > -1)
+                images[value].setColorFilter(selectedColorSymbol)
             initialized = true
             return
         }
-        val prevIndex = selectedIndex
+//        val prevIndex = selectedIndex
         if (prevIndex != selectedIndex) {
-            val colorAnimation =
-                ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
-            colorAnimation.duration = 250
-            colorAnimation.addUpdateListener { animator ->
-                val color = animator.animatedValue as Int
-                images[prevIndex].setColorFilter(color)
+            if (prevIndex != -1) {
+                val colorAnimation =
+                    ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
+                colorAnimation.duration = 250
+                colorAnimation.addUpdateListener { animator ->
+                    val color = animator.animatedValue as Int
+                    images[prevIndex].setColorFilter(color)
+                }
+                colorAnimation.start()
             }
-            colorAnimation.start()
-            val colorAnimation1 =
-                ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
-            colorAnimation1.duration = 250
-            colorAnimation1.addUpdateListener { animator -> images[value].setColorFilter(animator.animatedValue as Int) }
-            colorAnimation1.start()
+            if (selectedIndex != -1) {
+                val colorAnimation1 =
+                    ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
+                colorAnimation1.duration = 250
+                colorAnimation1.addUpdateListener { animator ->
+                    images[value].setColorFilter(
+                        animator.animatedValue as Int
+                    )
+                }
+                colorAnimation1.start()
+            }
         }
     }
 
