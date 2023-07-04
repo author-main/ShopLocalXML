@@ -21,5 +21,6 @@
     <declare-styleable name="ImageIndicator">
         <attr name="countImages" format="integer" />
         <attr name="selectedIndex" format="integer" />
+        <attr name="sizeSymbol" format="integer" />
     </declare-styleable>
 </resources>
