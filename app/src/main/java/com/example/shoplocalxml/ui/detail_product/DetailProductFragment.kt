@@ -38,6 +38,7 @@ class DetailProductFragment : Fragment() {
         dataBinding = FragmentDetailProductBinding.inflate(inflater, container, false)
         dataBinding.indicatorImages.count = product.linkimages?.size ?: 0
         dataBinding.indicatorImages.selectedIndex = imageIndex
+        dataBinding.cardViewProductImages.visibleCardButton = false
         dataBinding.cardViewProductImages.product = product
         dataBinding.cardViewProductImages.setOnChangeSelectedItem(object: OnChangeSelectedItem{
             override fun onChangeItemIndex(index: Int) {

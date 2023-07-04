@@ -31,6 +31,16 @@ class ProductCard: CardView {
             setDiscount(value)
         }*/
 
+    var visibleCardButton = true
+        set(value) {
+            field = value
+            setVisibleButton(value)
+        }
+    private fun setVisibleButton(value: Boolean){
+        dataBinding.buttonMore.visibility = View.GONE
+        dataBinding.imageFavorite.visibility = View.GONE
+        dataBinding.textDiscount.visibility = View.GONE
+    }
     private var onChangedFavorite : ((value: Boolean) -> Unit)? = null
     private var onChangeSelectedItem: OnChangeSelectedItem? = null
     private var onClick:            ((index: Int)->Unit)? = null
@@ -198,13 +208,13 @@ class ProductCard: CardView {
 
 */
 
-    @JvmName("setDiscount_")
+  /*  @JvmName("setDiscount_")
     private fun setDiscount(value: Int) {
        val visibility = if (value == 0) View.GONE else View.VISIBLE
        dataBinding.textDiscount.visibility = visibility
        val discount =  "-${value.toString()}%"
        dataBinding.textDiscount.text = discount
-    }
+    }*/
 
 
     fun onClickMoreButton(){
