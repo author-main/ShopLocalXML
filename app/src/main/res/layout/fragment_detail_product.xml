@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="product"
+            type="com.example.shoplocalxml.classes.Product" />
+
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.detail_product.DetailProductFragment" />
+    </data>
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/BackgroundDark"
@@ -41,6 +57,17 @@
             app:selectedIndex="1"
             app:sizeSymbol="5.dp"
             tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textViewDiscount"
+            style="@style/TextProduct_Discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text='@{"-"+product.discount+"%"}'
+            android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}'
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/indicatorImages" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -74,3 +101,4 @@
 
     </LinearLayout>
 </LinearLayout>
+</layout>

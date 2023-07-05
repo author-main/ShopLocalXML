@@ -45,6 +45,8 @@ class DetailProductFragment : Fragment() {
                 dataBinding.indicatorImages.selectedIndex = index
             }
         })
+        dataBinding.product = product
+        dataBinding.eventhandler = this
         setDateDelivery(System.currentTimeMillis())
         return dataBinding.root
     }
