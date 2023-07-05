@@ -11,6 +11,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.example.shoplocalxml.CACHE_DIR
 import com.example.shoplocalxml.EXT_TEMPFILE
 import com.example.shoplocalxml.deleteFile
+import com.example.shoplocalxml.getReduceImageHash
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
 import java.util.concurrent.Executors
@@ -45,7 +46,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
     }
 
     private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
-        val hash = md5(url)
+        val hash = getReduceImageHash(url, reduce)//if (!reduce) md5(url) else md5("${url}_")
      //   log("task = $url...")
 
         cacheMemory.get(hash)?.let{bitmap ->

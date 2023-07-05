@@ -212,3 +212,5 @@ fun<T> getInteger(value: T) : Int {
     dialog.window!!.setLayout(width, height)
 }*/
 
+fun getReduceImageHash(url: String, reduce: Boolean) =
+    if (!reduce) md5(url) else md5("${url}_")

@@ -6,6 +6,7 @@ import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.EXT_TEMPFILE
 import com.example.shoplocalxml.fileNameFromPath
 import com.example.shoplocalxml.getCacheDirectory
+import com.example.shoplocalxml.getReduceImageHash
 import com.example.shoplocalxml.loadBitmap
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
@@ -41,7 +42,7 @@ class ImageDownloaderImpl
         var timeStamp = timestamp
         val bufferSize = 32768
         //log("download $url...")
-        val fileHash = md5(url)
+        val fileHash = getReduceImageHash(url, reduce)//if (!reduce) md5(url) else md5("${url}_")
         val filenameCache = getCacheDirectory() + fileHash
         val filenameTemp  = "$filenameCache$.EXT_TEMPFILE"
         var bitmap: Bitmap? = null
