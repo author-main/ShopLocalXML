@@ -76,17 +76,6 @@ class ImageIndicator: LinearLayout {
       //  log( "$prevIndex, $selectedIndex")
 
             CoroutineScope(Dispatchers.Main).launch {
-                if (prevIndex != -1) {
-                    val colorAnimation =
-                        ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
-                    colorAnimation.duration = 350
-                    colorAnimation.addUpdateListener { animator ->
-                        val color = animator.animatedValue as Int
-                        images[prevIndex].setColorFilter(color)
-                    }
-                    colorAnimation.start()
-                }
-
                 if (value != -1) {
                     val colorAnimation1 =
                         ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
@@ -97,6 +86,17 @@ class ImageIndicator: LinearLayout {
                         )
                     }
                     colorAnimation1.start()
+                }
+
+                if (prevIndex != -1) {
+                    val colorAnimation =
+                        ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
+                    colorAnimation.duration = 350
+                    colorAnimation.addUpdateListener { animator ->
+                        val color = animator.animatedValue as Int
+                        images[prevIndex].setColorFilter(color)
+                    }
+                    colorAnimation.start()
                 }
             }
 

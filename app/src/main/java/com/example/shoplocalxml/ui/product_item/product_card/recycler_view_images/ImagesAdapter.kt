@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 data class ImageItem(var url: String, var image: Bitmap?, var default: Boolean = false){}
 
 class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
+    var reduceImage = false
     private val handlerUI = Handler(Looper.getMainLooper())
     private var countUploaded = 0
     private var images: MutableList<ImageItem> = mutableListOf()
@@ -74,7 +75,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
            /* for (i in list.indices) {
                 val item = ImageItem(list[i], image = null)
                 images.add(item)*/
-                ImageDownloadManager.download(item.url) {
+                ImageDownloadManager.download(item.url, reduce = reduceImage) {
 
 
                     item.image = it ?: run {

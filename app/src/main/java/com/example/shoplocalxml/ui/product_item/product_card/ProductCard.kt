@@ -30,9 +30,13 @@ class ProductCard: CardView {
             field = value
             setDiscount(value)
         }*/
-
+    var reduceImage = false
+       set(value)  {
+           field = value
+           (dataBinding.recyclerViewImages.adapter as ImagesAdapter).reduceImage = reduceImage
+       }
     var visibleCardButton = true
-        set(value) {
+    /*    set(value) {
             field = value
             setVisibleButton(value)
         }
@@ -40,7 +44,7 @@ class ProductCard: CardView {
         dataBinding.buttonMore.visibility = View.GONE
         dataBinding.imageFavorite.visibility = View.GONE
         dataBinding.textDiscount.visibility = View.GONE
-    }
+    }*/
     private var onChangedFavorite : ((value: Boolean) -> Unit)? = null
     private var onChangeSelectedItem: OnChangeSelectedItem? = null
     private var onClick:            ((index: Int)->Unit)? = null
@@ -136,6 +140,7 @@ class ProductCard: CardView {
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(dataBinding.recyclerViewImages)
         dataBinding.recyclerViewImages.adapter = ImagesAdapter()
+        (dataBinding.recyclerViewImages.adapter as ImagesAdapter).reduceImage = reduceImage
         dataBinding.recyclerViewImages.setOnStateImagesListener(object: OnStateImagesListener {
             override fun download() {
                 dataBinding.imageViewProgress.startAnimation()

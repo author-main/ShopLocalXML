@@ -30,15 +30,16 @@
         <com.example.shoplocalxml.ui.detail_product.ImageIndicator
             android:id="@+id/indicatorImages"
             android:layout_width="wrap_content"
-            android:layout_height="16dp"
+            android:layout_height="0dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             app:countImages="3"
-            app:intervalSymbol="2.dp"
+            app:intervalSymbol="3.dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardViewProductImages"
             app:selectedIndex="1"
-            app:sizeSymbol="6.dp"
+            app:sizeSymbol="5.dp"
             tools:src="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

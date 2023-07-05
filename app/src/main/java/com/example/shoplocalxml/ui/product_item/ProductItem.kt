@@ -104,7 +104,7 @@ class ProductItem: FrameLayout {
         dataBinding.root.setOnClickListener {
             onClickProductItem(0)
         }
-
+        dataBinding.productCard.reduceImage = true
         dataBinding.eventhandler = this
     }
 

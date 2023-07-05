@@ -47,7 +47,9 @@
             android:checked="@{product.favorite > 0}"
             android:src="@drawable/favorite_checkable"
             app:onChecked="@{checked -> eventhandler.onCheckedFavorite(checked)}"
-            app:tintCheckedDrawable="@color/colorDiscount" />
+            app:tintCheckedDrawable="@color/colorDiscount"
+            android:visibility='@{eventhandler.visibleCardButton ? View.VISIBLE : View.GONE}'
+            />
 
         <TextView
             android:id="@+id/textDiscount"
@@ -57,7 +59,7 @@
             android:layout_gravity="bottom"
             android:layout_margin="8dp"
             android:text='@{"-"+product.discount+"%"}'
-            android:visibility='@{product.discount == 0 || !eventhandler.visibleCardButton? View.GONE : View.VISIBLE}' />
+            android:visibility='@{product.discount == 0 || !eventhandler.visibleCardButton ? View.GONE : View.VISIBLE}' />
 
         <ImageView
             android:id="@+id/buttonMore"
@@ -69,6 +71,7 @@
             android:onClick="@{() -> eventhandler.onClickMoreButton()}"
             android:padding="4dp"
             android:scaleType="centerInside"
+            android:visibility='@{eventhandler.visibleCardButton ? View.VISIBLE : View.GONE}'
             android:src="@drawable/ic_more" />
 
     </androidx.cardview.widget.CardView>
