@@ -22,6 +22,8 @@ class DetailProductFragment : Fragment() {
     private var product: Product = Product()
     private var brand: String = EMPTY_STRING
     private var imageIndex: Int = 0
+    private var actionSale = EMPTY_STRING
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +71,10 @@ class DetailProductFragment : Fragment() {
        product = value
     }
 
+    private fun setActionSale(value: String) {
+        actionSale = value
+    }
+
     private fun setBrandName(value: String) {
         brand = value
     }
@@ -79,11 +85,12 @@ class DetailProductFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(product: Product, brandName: String, imageIndex: Int) =
+        fun newInstance(product: Product, brandName: String, actionSale: String, imageIndex: Int) =
             DetailProductFragment().apply {
                 setProduct(product)
                 setBrandName(brandName)
                 setImageIndex(imageIndex)
+                setActionSale(actionSale)
             }
     }
 }
