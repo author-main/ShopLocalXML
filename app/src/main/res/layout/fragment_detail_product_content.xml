@@ -44,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:padding="2dp"
                 android:text='@{"-"+product.discount+"%"}'
                 android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}'
                 tools:text="@null" />
@@ -51,10 +52,13 @@
             <TextView
                 android:id="@+id/textViewPromotion"
                 style="@style/TextProduct_Promotion"
+                android:background = "@drawable/roundrect_text"
+                android:backgroundTint = "@color/BackgroundBlockText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
+                android:padding="3dp"
                 android:text='@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getActionSale()}' />
         </LinearLayout>
     </LinearLayout>
