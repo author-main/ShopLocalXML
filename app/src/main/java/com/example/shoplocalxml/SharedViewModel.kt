@@ -301,12 +301,10 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
             getFormattedFloat(value)
 
         @JvmStatic fun getProductPromotion(discount: Int, sold: Int): String {
-            val boundSold   = 10
-            val boundAction =  7
             var textPromotion = EMPTY_STRING
-            if (sold > boundSold)       textPromotion = getStringResource(R.string.text_bestseller)
+            if (sold > BOUND_BESTSELLER)       textPromotion = getStringResource(R.string.text_bestseller)
             else
-            if (discount > boundAction) textPromotion = getStringResource(R.string.text_action)
+            if (discount > BOUND_ACTION) textPromotion = getStringResource(R.string.text_action)
             else
             if (discount > 0)           textPromotion = getStringResource(R.string.text_benefit)
             return textPromotion

@@ -157,6 +157,11 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="TextButtonContent" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/colorBrend</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
 
     <style name="TextProduct_Brend" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/colorBrend</item>

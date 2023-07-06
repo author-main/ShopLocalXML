@@ -8,10 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.WORD_RATE
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
+import com.example.shoplocalxml.getAfterWord
 import com.example.shoplocalxml.getStringArrayResource
+import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.home.HomeFragment
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -20,6 +24,7 @@ import java.util.Date
 
 class DetailProductFragment : Fragment() {
     private lateinit var dataBinding: FragmentDetailProductBinding
+    private var onDetailContentListener: OnDetailContentListener? = null
     private var product: Product = Product()
     private var brand: String = EMPTY_STRING
     private var imageIndex: Int = 0
@@ -77,6 +82,10 @@ class DetailProductFragment : Fragment() {
        product = value
     }
 
+    private fun setOnDetailContentListener(value: OnDetailContentListener){
+        onDetailContentListener = value
+    }
+
     private fun setActionSale(value: String) {
         actionSale = value
     }
@@ -89,16 +98,22 @@ class DetailProductFragment : Fragment() {
         imageIndex = value
     }
 
+    fun onClickReviews(){
+        onDetailContentListener?.onShowReviews()
+    }
+
     companion object {
         private var instance: DetailProductFragment? = null
         @JvmStatic
-        fun newInstance(product: Product, imageIndex: Int, brandName: String, actionSale: String, reviews: List<Review>) =
+        fun newInstance(product: Product, imageIndex: Int, brandName: String, actionSale: String, reviews: List<Review>,
+                        onDetailContentListener: OnDetailContentListener) =
             DetailProductFragment().apply {
                 setProduct(product)
                 setBrandName(brandName)
                 setImageIndex(imageIndex)
                 setActionSale(actionSale)
                 setReviews(reviews)
+                setOnDetailContentListener(onDetailContentListener)
                 instance = this
             }
 
@@ -108,6 +123,13 @@ class DetailProductFragment : Fragment() {
         @JvmStatic
         fun getActionSale() = instance?.actionSale ?: EMPTY_STRING
 
+        @JvmStatic
+        fun getRating() = getAfterWord(instance?.reviews?.count(), WORD_RATE)
 
+        @JvmStatic
+        fun getCountReviews() = instance?.reviews?.count().toString() ?: "0"
+
+        @JvmStatic
+        fun getCountQuestions() = "4"
     }
 }

@@ -23,7 +23,7 @@ const val EMPTY_STRING      = ""
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
 //const val SERVER_URL = "http://faceshot.ru"
-const val SERVER_URL        = "http://192.168.1.10"
+const val SERVER_URL        = "http://192.168.0.10"
 const val DIR_IMAGES        = "images_ls"
 val DEFAULT_BITMAP: Bitmap? = run{
     val drawable = AppCompatResources.getDrawable(applicationContext, R.drawable.ic_default)
@@ -38,6 +38,9 @@ const val ID_CATEGORY = 1L
 const val ID_BRAND    = 2L
 const val FILTER_KEY  = "filter"
 
-
+const val BOUND_BESTSELLER = 10
+const val BOUND_ACTION     =  5
+const val WORD_REVIEW         = 0
+const val WORD_RATE           = 1
     //val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
 //const val SERVER_URL = "http://faceshot.ru"

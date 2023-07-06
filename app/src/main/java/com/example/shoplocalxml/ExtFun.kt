@@ -214,3 +214,31 @@ fun<T> getInteger(value: T) : Int {
 
 fun getReduceImageHash(url: String, reduce: Boolean) =
     if (!reduce) md5(url) else md5("${url}_")
+
+
+fun getAfterWord(count: Int?, what: Int): String {
+    val idResource = when (what) {
+        WORD_RATE   -> R.array.rate
+        WORD_REVIEW -> R.array.review
+        else        -> -1
+    }
+    if (idResource == -1)
+        return EMPTY_STRING
+    val aWord = getStringArrayResource(idResource)
+
+    if (count == null)
+        return "0 ${aWord[2]}"
+
+    var sCount = count.toString()
+    val length = sCount.length
+    if (length >=2 )
+        sCount = sCount.substring(length - 2)
+    val iCount = sCount.toInt()
+    if (iCount in 11..14)
+        return "$count ${aWord[2]}"
+    return when (sCount.last().toString().toInt()) {
+        1     -> "$count ${aWord[0]}"
+        2,3,4 -> "$count ${aWord[1]}"
+        else  -> "$count ${aWord[2]}"
+    }
+}

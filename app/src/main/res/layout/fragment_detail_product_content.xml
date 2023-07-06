@@ -53,13 +53,157 @@
                 android:id="@+id/textViewPromotion"
                 style="@style/TextProduct_Promotion"
                 android:background = "@drawable/roundrect_text"
-                android:backgroundTint = "@color/BackgroundBlockText"
+                android:backgroundTint = "@color/PrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="4dp"
                 android:padding="3dp"
                 android:text='@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getActionSale()}' />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonRating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/roundrect_text"
+                android:backgroundTint="@color/PrimaryDark">
+
+                <com.example.shoplocalxml.custom_view.RatingView
+                    android:id="@+id/ratingView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_horizontal"
+                    app:count="@{product.star}"
+                    app:intervalStar="1dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textRating"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/textRating"
+                    style="@style/TextButtonContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getRating()}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingView"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonReviews"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_button"
+                android:backgroundTint="@color/PrimaryDark"
+                android:clickable="true"
+                android:paddingVertical="8dp"
+                android:onClick="@{()->eventhandler.onClickReviews()}"
+                >
+
+                <ImageView
+                    android:id="@+id/imageReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    app:layout_constraintEnd_toStartOf="@+id/textCountReviews"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_review"
+                    app:tint="@color/EditTextFont" />
+
+                <TextView
+                    android:id="@+id/textCountReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getCountReviews()}"
+                    android:textColor="@color/EditTextFont"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageReviews"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageReviews"
+                    app:layout_constraintTop_toTopOf="@+id/imageReviews" />
+
+                <TextView
+                    android:id="@+id/textReviews"
+                    style="@style/TextButtonContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_review"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageReviews"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/background_button"
+                android:backgroundTint="@color/PrimaryDark"
+                android:clickable="true"
+                android:paddingVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/imageQuestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    app:layout_constraintEnd_toStartOf="@+id/textCountQuestions"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_question"
+                    app:tint="@color/EditTextFont" />
+
+                <TextView
+                    android:id="@+id/textCountQuestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getCountQuestions()}"
+                    android:textColor="@color/EditTextFont"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageQuestions"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/imageQuestions"
+                    app:layout_constraintTop_toTopOf="@+id/imageQuestions" />
+
+                <TextView
+                    android:id="@+id/textQuestions"
+                    style="@style/TextButtonContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_question"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageQuestions"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

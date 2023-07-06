@@ -43,6 +43,7 @@ import com.example.shoplocalxml.OnFabListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.Order
 import com.example.shoplocalxml.classes.sort_filter.Sort
@@ -56,6 +57,7 @@ import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.detail_product.DetailProductFragment
+import com.example.shoplocalxml.ui.detail_product.OnDetailContentListener
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -782,7 +784,29 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     val fragmentTransaction = it.beginTransaction()
                     val brand = SharedViewModel.getProductBrend(product.brand)
                     val actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
-                    val fragment = DetailProductFragment.newInstance(product, indexImage, brand, actionSale, reviews = listOf())
+                    val fragment = DetailProductFragment.newInstance(product, indexImage, brand, actionSale, reviews = listOf(),
+                        object: OnDetailContentListener {
+                            override fun onShowReviews() {
+                                log("click reviews...")
+                            }
+
+                            override fun onShowReview(review: Review) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onShowQuestions() {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onAddCart() {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onBuyOneClick() {
+                                TODO("Not yet implemented")
+                            }
+                        }
+                        )
                     fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
                     fragmentTransaction.addToBackStack("DETAIL_FRAGMENT")
                     fragmentTransaction.commit()
@@ -806,7 +830,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             activity?.startActivity(intent)
         }*/
     }
-
 
     /* override fun onStop() {
         (activity as MainActivity).setFabVisibility(false)
