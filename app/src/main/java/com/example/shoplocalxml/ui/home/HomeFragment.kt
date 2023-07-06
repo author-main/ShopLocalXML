@@ -791,7 +791,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                             }
 
                             override fun onShowReview(review: Review) {
-                                TODO("Not yet implemented")
+                                log("click on show reviews...")
                             }
 
                             override fun onShowQuestions() {
