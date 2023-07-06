@@ -38,13 +38,13 @@ class DetailProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = FragmentDetailProductBinding.inflate(inflater, container, false)
-        dataBinding.indicatorImages.count = product.linkimages?.size ?: 0
-        dataBinding.indicatorImages.selectedIndex = imageIndex
+        dataBinding.detailProductContent.indicatorImages.count = product.linkimages?.size ?: 0
+        dataBinding.detailProductContent.indicatorImages.selectedIndex = imageIndex
         dataBinding.cardViewProductImages.visibleCardButton = false
         dataBinding.cardViewProductImages.product = product
         dataBinding.cardViewProductImages.setOnChangeSelectedItem(object: OnChangeSelectedItem{
             override fun onChangeItemIndex(index: Int) {
-                dataBinding.indicatorImages.selectedIndex = index
+                dataBinding.detailProductContent.indicatorImages.selectedIndex = index
             }
         })
         dataBinding.product = product
@@ -84,6 +84,7 @@ class DetailProductFragment : Fragment() {
     }
 
     companion object {
+        private var instance: DetailProductFragment? = null
         @JvmStatic
         fun newInstance(product: Product, brandName: String, actionSale: String, imageIndex: Int) =
             DetailProductFragment().apply {
@@ -91,6 +92,15 @@ class DetailProductFragment : Fragment() {
                 setBrandName(brandName)
                 setImageIndex(imageIndex)
                 setActionSale(actionSale)
+                instance = this
             }
+
+        @JvmStatic
+        fun getBrand() = instance?.brand ?: EMPTY_STRING
+
+        @JvmStatic
+        fun getActionSale() = instance?.actionSale ?: EMPTY_STRING
+
+
     }
 }

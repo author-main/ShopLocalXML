@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="android.text.TextUtils"/>
+
+        <variable
+            name="product"
+            type="com.example.shoplocalxml.classes.Product" />
+
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.detail_product.DetailProductFragment" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.example.shoplocalxml.ui.detail_product.ImageIndicator
+            android:id="@+id/indicatorImages"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="8dp"
+            app:countImages="3"
+            app:intervalSymbol="3.dp"
+            app:selectedIndex="1"
+            app:sizeSymbol="5.dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewDiscount"
+                style="@style/TextProduct_Discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text='@{"-"+product.discount+"%"}'
+                android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}'
+                tools:text="@null" />
+
+            <TextView
+                android:id="@+id/textViewPromotion"
+                style="@style/TextProduct_Promotion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text='@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getActionSale()}' />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
