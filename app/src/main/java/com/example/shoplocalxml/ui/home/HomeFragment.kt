@@ -782,7 +782,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     val fragmentTransaction = it.beginTransaction()
                     val brand = SharedViewModel.getProductBrend(product.brand)
                     val actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
-                    val fragment = DetailProductFragment.newInstance(product, brand, actionSale, indexImage)
+                    val fragment = DetailProductFragment.newInstance(product, indexImage, brand, actionSale, reviews = listOf())
                     fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
                     fragmentTransaction.addToBackStack("DETAIL_FRAGMENT")
                     fragmentTransaction.commit()

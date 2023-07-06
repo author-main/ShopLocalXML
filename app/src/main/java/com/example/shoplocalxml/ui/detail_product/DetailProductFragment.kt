@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
@@ -23,6 +24,7 @@ class DetailProductFragment : Fragment() {
     private var brand: String = EMPTY_STRING
     private var imageIndex: Int = 0
     private var actionSale = EMPTY_STRING
+    private var reviews = listOf<Review>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +69,10 @@ class DetailProductFragment : Fragment() {
         dataBinding.textViewDateDelivery.text = textDate
     }
 
+    private fun setReviews(value: List<Review>) {
+        reviews = value
+    }
+
     private fun setProduct(value: Product) {
        product = value
     }
@@ -86,12 +92,13 @@ class DetailProductFragment : Fragment() {
     companion object {
         private var instance: DetailProductFragment? = null
         @JvmStatic
-        fun newInstance(product: Product, brandName: String, actionSale: String, imageIndex: Int) =
+        fun newInstance(product: Product, imageIndex: Int, brandName: String, actionSale: String, reviews: List<Review>) =
             DetailProductFragment().apply {
                 setProduct(product)
                 setBrandName(brandName)
                 setImageIndex(imageIndex)
                 setActionSale(actionSale)
+                setReviews(reviews)
                 instance = this
             }
 
