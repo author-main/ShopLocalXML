@@ -153,6 +153,9 @@
     </style>
 
     <style name="TextProduct_Promotion" parent="@android:style/Widget.TextView">
+        <item name="android:background">@drawable/roundrect_text</item>
+        <item name="android:backgroundTint">@color/BackgroundBlockText</item>
+        <item name="android:paddingHorizontal">4dp</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">13sp</item>
     </style>

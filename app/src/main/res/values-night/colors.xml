@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="EditTextBackgroundDark">#393E46</color>
+    <color name="BackgroundBlockText">#70393E46</color>
     <color name="UncheckedButton">#90393E46</color>
     <color name="EditTextFont">#BEBEBE</color>
     <color name="colorAccent">#FF9100</color>

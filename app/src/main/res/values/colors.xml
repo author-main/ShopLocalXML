@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="PrimaryDark">#222831</color>
+    <color name="BackgroundBlockText">#70393E46</color>
     <color name="BackgroundDark">#ff181E26</color>
     <color name="EditTextBackgroundDark">#393E46</color>
     <color name="UncheckedButton">#90393E46</color>
