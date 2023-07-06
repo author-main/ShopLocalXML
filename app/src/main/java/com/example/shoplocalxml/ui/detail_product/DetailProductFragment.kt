@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.EMPTY_STRING
+import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.WORD_RATE
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
@@ -23,12 +27,21 @@ import java.util.Calendar
 import java.util.Date
 
 class DetailProductFragment : Fragment() {
+    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+        FactoryViewModel(
+            this,
+            AppShopLocal.repository
+        )
+    })
+
     private lateinit var dataBinding: FragmentDetailProductBinding
-    private var onDetailContentListener: OnDetailContentListener? = null
+    //private var onDetailContentListener: OnDetailContentListener? = null
     private var product: Product = Product()
-    private var brand: String = EMPTY_STRING
+    private var brand = EMPTY_STRING//SharedViewModel.getProductBrend(product.brand)
+    private var actionSale = EMPTY_STRING//SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
+    //private var brand: String = EMPTY_STRING
     private var imageIndex: Int = 0
-    private var actionSale = EMPTY_STRING
+    //private var actionSale = EMPTY_STRING
     private var reviews = listOf<Review>()
 
 
@@ -74,46 +87,48 @@ class DetailProductFragment : Fragment() {
         dataBinding.textViewDateDelivery.text = textDate
     }
 
-    private fun setReviews(value: List<Review>) {
+    /*private fun setReviews(value: List<Review>) {
         reviews = value
-    }
+    }*/
 
     private fun setProduct(value: Product) {
        product = value
+       brand = SharedViewModel.getProductBrend(product.brand)
+       actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
     }
 
-    private fun setOnDetailContentListener(value: OnDetailContentListener){
+   /* private fun setOnDetailContentListener(value: OnDetailContentListener){
         onDetailContentListener = value
-    }
+    }*/
 
-    private fun setActionSale(value: String) {
+   /* private fun setActionSale(value: String) {
         actionSale = value
     }
 
     private fun setBrandName(value: String) {
         brand = value
-    }
+    }*/
 
     private fun setImageIndex(value: Int) {
         imageIndex = value
     }
 
     fun onClickReviews(){
-        onDetailContentListener?.onShowReviews()
+       // onDetailContentListener?.onShowReviews()
     }
 
     companion object {
         private var instance: DetailProductFragment? = null
         @JvmStatic
-        fun newInstance(product: Product, imageIndex: Int, brandName: String, actionSale: String, reviews: List<Review>,
-                        onDetailContentListener: OnDetailContentListener) =
+        fun newInstance(product: Product, imageIndex: Int/*, brandName: String, actionSale: String, reviews: List<Review>,
+                        onDetailContentListener: OnDetailContentListener*/) =
             DetailProductFragment().apply {
                 setProduct(product)
-                setBrandName(brandName)
                 setImageIndex(imageIndex)
+/*                setBrandName(brandName)
                 setActionSale(actionSale)
-                setReviews(reviews)
-                setOnDetailContentListener(onDetailContentListener)
+                setReviews(reviews)*/
+                //setOnDetailContentListener(onDetailContentListener)
                 instance = this
             }
 

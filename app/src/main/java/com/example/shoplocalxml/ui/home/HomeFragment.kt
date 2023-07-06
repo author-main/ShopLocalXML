@@ -782,9 +782,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 activity?.supportFragmentManager?.let {
                     hideFab()
                     val fragmentTransaction = it.beginTransaction()
-                    val brand = SharedViewModel.getProductBrend(product.brand)
-                    val actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
-                    val fragment = DetailProductFragment.newInstance(product, indexImage, brand, actionSale, reviews = listOf(),
+                    //val brand = SharedViewModel.getProductBrend(product.brand)
+                    //val actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
+                    val fragment = DetailProductFragment.newInstance(product, indexImage/*, brand, actionSale, reviews = listOf(),
                         object: OnDetailContentListener {
                             override fun onShowReviews() {
                                 log("click reviews...")
@@ -805,7 +805,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                             override fun onBuyOneClick() {
                                 TODO("Not yet implemented")
                             }
-                        }
+                        }*/
                         )
                     fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
                     fragmentTransaction.addToBackStack("DETAIL_FRAGMENT")
