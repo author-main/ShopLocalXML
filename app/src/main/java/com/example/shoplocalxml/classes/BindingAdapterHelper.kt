@@ -1,6 +1,9 @@
 package com.example.shoplocalxml.classes
 
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.BindingMethod
+import androidx.databinding.BindingMethods
 import androidx.databinding.InverseBindingAdapter
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.RatingView
@@ -25,8 +28,6 @@ object BindingAdapterHelper {
         return getInteger(view.text)
         //return Integer.parseInt(view.text.toString());
     }
-
-
 }
 
 

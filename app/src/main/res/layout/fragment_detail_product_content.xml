@@ -115,7 +115,7 @@
                 android:backgroundTint="@color/PrimaryDark"
                 android:clickable="true"
                 android:paddingVertical="8dp"
-                android:onClick="@{()->eventhandler.onClickReviews()}"
+                android:onClick="@{()->eventhandler.onShowReviews()}"
                 >
 
                 <ImageView
@@ -165,7 +165,9 @@
                 android:background="@drawable/background_button"
                 android:backgroundTint="@color/PrimaryDark"
                 android:clickable="true"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:onClick="@{()->eventhandler.onShowQuestions()}"
+                >
 
                 <ImageView
                     android:id="@+id/imageQuestions"

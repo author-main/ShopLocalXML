@@ -808,7 +808,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                         }*/
                         )
                     fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
-                    fragmentTransaction.addToBackStack("DETAIL_FRAGMENT")
+                    fragmentTransaction.addToBackStack(null)//"DETAIL_FRAGMENT")
                     fragmentTransaction.commit()
                 }
 
