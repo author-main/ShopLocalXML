@@ -5,9 +5,9 @@ import com.example.shoplocalxml.classes.Review
 interface OnDetailContentListener {
     fun onShowImage(index: Int)
     fun onShowReviews()
-    fun onShowBrand(id: Int)
+    fun onShowBrand()
     fun onShowReview(review: Review)
     fun onShowQuestions()
-    fun onAddCart(id: Int)
-    fun onBuyOneClick(id: Int)
+    fun onAddCart()
+    fun onBuyOneClick()
 }

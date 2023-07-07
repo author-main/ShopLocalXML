@@ -18,6 +18,9 @@ import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.getAfterWord
 import com.example.shoplocalxml.getStringArrayResource
+import com.example.shoplocalxml.isBlackFriday
+import com.example.shoplocalxml.isFriday
+import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.home.HomeFragment
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
@@ -92,6 +95,7 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     }*/
 
     private fun setProduct(value: Product) {
+       val blackFriday = isLastFriday()
        product = value
        brand = SharedViewModel.getProductBrend(product.brand)
        actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
@@ -125,11 +129,11 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         log("show questions...")
     }
 
-    override fun onAddCart(id: Int) {
-        log("add cart $id...")
+    override fun onAddCart() {
+        log("add cart ${product.id}...")
     }
 
-    override fun onBuyOneClick(id: Int) {
+    override fun onBuyOneClick() {
         TODO("Not yet implemented")
     }
 
@@ -137,8 +141,8 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         log("log image $index...")
     }
 
-    override fun onShowBrand(id: Int) {
-        log("log brand $id...")
+    override fun onShowBrand() {
+        log("log brand ${product.brand}...")
     }
 
     companion object {

@@ -29,6 +29,7 @@ import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.text.DecimalFormat
+import java.util.Calendar
 import kotlin.math.roundToInt
 
 
@@ -241,4 +242,13 @@ fun getAfterWord(count: Int?, what: Int): String {
         2,3,4 -> "$count ${aWord[1]}"
         else  -> "$count ${aWord[2]}"
     }
+}
+
+fun isLastFriday(): Boolean {
+    val calendar     = Calendar.getInstance()
+    val dayWeek      = calendar.get(Calendar.DAY_OF_WEEK)
+    val curMonth     = calendar.get(Calendar.MONTH)
+    calendar.add(Calendar.DAY_OF_MONTH, 7)
+    val nextMonth    = calendar.get(Calendar.MONTH)
+    return dayWeek == 6 && curMonth != nextMonth
 }
