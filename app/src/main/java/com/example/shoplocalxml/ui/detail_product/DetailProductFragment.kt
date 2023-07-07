@@ -125,11 +125,11 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         log("show questions...")
     }
 
-    override fun onAddCart() {
-        log("add cart...")
+    override fun onAddCart(id: Int) {
+        log("add cart $id...")
     }
 
-    override fun onBuyOneClick() {
+    override fun onBuyOneClick(id: Int) {
         TODO("Not yet implemented")
     }
 

@@ -8,6 +8,6 @@ interface OnDetailContentListener {
     fun onShowBrand(id: Int)
     fun onShowReview(review: Review)
     fun onShowQuestions()
-    fun onAddCart()
-    fun onBuyOneClick()
+    fun onAddCart(id: Int)
+    fun onBuyOneClick(id: Int)
 }

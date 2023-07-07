@@ -69,7 +69,7 @@
         android:clickable="true"
         android:orientation="vertical"
         android:paddingVertical="6dp"
-        android:onClick="@{()->eventhandler.onAddCart()}">
+        android:onClick="@{()->eventhandler.onAddCart(product.id)}">
 
         <TextView
             android:id="@+id/textView9"
