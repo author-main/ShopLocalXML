@@ -137,6 +137,10 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         log("log image $index...")
     }
 
+    override fun onShowBrand(id: Int) {
+        log("log brand $id...")
+    }
+
     companion object {
         private var instance: DetailProductFragment? = null
         @JvmStatic
