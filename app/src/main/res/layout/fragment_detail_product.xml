@@ -41,7 +41,9 @@
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:onClickImageItem = "@{(index) -> eventhandler.onShowImage(index)}"
+            >
 
         </com.example.shoplocalxml.ui.product_item.product_card.ProductCard>
 
@@ -66,7 +68,8 @@
         android:backgroundTint="@color/colorBrend"
         android:clickable="true"
         android:orientation="vertical"
-        android:paddingVertical="6dp">
+        android:paddingVertical="6dp"
+        android:onClick="@{()->eventhandler.onAddCart(product.id)}">
 
         <TextView
             android:id="@+id/textView9"

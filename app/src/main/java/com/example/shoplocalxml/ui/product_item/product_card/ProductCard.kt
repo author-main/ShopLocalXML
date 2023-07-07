@@ -1,28 +1,30 @@
 package com.example.shoplocalxml.ui.product_item.product_card
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.drawable.StateListDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
+import androidx.databinding.BindingMethod
+import androidx.databinding.BindingMethods
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
-import com.example.shoplocalxml.AppShopLocal
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Product
-import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.databinding.ProductCardBinding
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.ImagesAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnStateImagesListener
-import com.example.shoplocalxml.widthProductCard
+
+@BindingMethods(
+    value = [
+        BindingMethod(
+            type = ProductCard::class,
+            attribute = "app:onClickImageItem",
+            method = "setOnClickImageItem")]
+)
 
 class ProductCard: CardView {
    /* var discount: Int = 0
@@ -30,6 +32,17 @@ class ProductCard: CardView {
             field = value
             setDiscount(value)
         }*/
+
+    private var onClickImageItem: OnClickImageItem? = null
+
+    interface OnClickImageItem {
+        fun onClickImageItem(index: Int)
+    }
+
+    fun setOnClickImageItem(value: OnClickImageItem) {
+        onClickImageItem = value
+    }
+
     var reduceImage = false
        set(value)  {
            field = value
@@ -78,7 +91,7 @@ class ProductCard: CardView {
     }
 
     constructor(context: Context) : super(context) {}
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
 
@@ -153,6 +166,7 @@ class ProductCard: CardView {
 
             override fun onClick(index: Int) {
                 onClick?.invoke(index)
+                onClickImageItem?.onClickImageItem(index)
                 //onProductCardListener?.onClick(index)
             }
         })

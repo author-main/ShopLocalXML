@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 
-class DetailProductFragment : Fragment() {
+class DetailProductFragment : Fragment(), OnDetailContentListener {
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             this,
@@ -113,8 +113,32 @@ class DetailProductFragment : Fragment() {
         imageIndex = value
     }
 
-    fun onClickReviews(){
-       // onDetailContentListener?.onShowReviews()
+    override fun onShowReviews() {
+        log("show reviews...")
+    }
+
+    override fun onShowReview(review: Review) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onShowQuestions() {
+        log("show questions...")
+    }
+
+    override fun onAddCart(id: Int) {
+        log("add cart $id...")
+    }
+
+    override fun onBuyOneClick(id: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onShowImage(index: Int) {
+        log("log image $index...")
+    }
+
+    override fun onShowBrand(id: Int) {
+        log("log brand $id...")
     }
 
     companion object {

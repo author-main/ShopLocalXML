@@ -30,12 +30,62 @@
             app:countImages="3"
             app:intervalSymbol="3.dp"
             app:selectedIndex="1"
-            app:sizeSymbol="5.dp" />
+            app:sizeSymbol="5.dp" >
+
+        </com.example.shoplocalxml.ui.detail_product.ImageIndicator>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/PrimaryDark"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:id="@+id/buttonBrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_button"
+                    android:backgroundTint="@color/PrimaryDark"
+                    android:clickable="true"
+                    android:onClick="@{()->eventhandler.onShowBrand(product.brand)}">
+
+                    <TextView
+                        android:id="@+id/textViewBrand"
+                        style="@style/TextProduct_Brend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/roundrect_text"
+                        android:backgroundTint="@color/BackgroundBlockText"
+                        android:padding="4dp"
+                        android:text='@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getBrand()}' />
+                </LinearLayout>
+
+
+                <TextView
+                    style = "@style/TextProduct_Name"
+                    android:fontFamily="@font/roboto_light"
+                    android:id="@+id/textViewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{product.name}"
+/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <TextView
@@ -44,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:padding="2dp"
+                android:padding="4dp"
                 android:text='@{"-"+product.discount+"%"}'
                 android:visibility='@{product.discount == 0 ? View.GONE : View.VISIBLE}'
                 tools:text="@null" />
@@ -52,13 +102,13 @@
             <TextView
                 android:id="@+id/textViewPromotion"
                 style="@style/TextProduct_Promotion"
-                android:background = "@drawable/roundrect_text"
-                android:backgroundTint = "@color/PrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="4dp"
-                android:padding="3dp"
+                android:background="@drawable/roundrect_text"
+                android:backgroundTint="@color/PrimaryDark"
+                android:padding="4dp"
                 android:text='@{com.example.shoplocalxml.ui.detail_product.DetailProductFragment.getActionSale()}' />
 
         </LinearLayout>
@@ -115,7 +165,7 @@
                 android:backgroundTint="@color/PrimaryDark"
                 android:clickable="true"
                 android:paddingVertical="8dp"
-                android:onClick="@{()->eventhandler.onClickReviews()}"
+                android:onClick="@{()->eventhandler.onShowReviews()}"
                 >
 
                 <ImageView
@@ -165,7 +215,9 @@
                 android:background="@drawable/background_button"
                 android:backgroundTint="@color/PrimaryDark"
                 android:clickable="true"
-                android:paddingVertical="8dp">
+                android:paddingVertical="8dp"
+                android:onClick="@{()->eventhandler.onShowQuestions()}"
+                >
 
                 <ImageView
                     android:id="@+id/imageQuestions"
