@@ -42,5 +42,6 @@ const val BOUND_BESTSELLER = 10
 const val BOUND_ACTION     =  5
 const val WORD_REVIEW         = 0
 const val WORD_RATE           = 1
+const val FRIDAY_PERCENT      = 10
     //val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
 //const val SERVER_URL = "http://faceshot.ru"

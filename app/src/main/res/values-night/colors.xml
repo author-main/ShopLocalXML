@@ -14,5 +14,6 @@
     <color name="TextDescription">#FFEEEEEE</color>
     <color name="black_overlay">#66000000</color>
     <color name="colorDivider">#30FFFFFF</color>
+    <color name="BackgroundButtonOneClick">#FF1B4B95</color>
 
 </resources>

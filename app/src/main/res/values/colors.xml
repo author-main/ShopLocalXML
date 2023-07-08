@@ -20,4 +20,5 @@
     <color name="TextPrice">#FFEEEEEE</color>
     <color name="BgTextPrice">#FF009646</color>
     <color name="TextDescription">#FFEEEEEE</color>
+    <color name="BackgroundButtonOneClick">#FF1B4B95</color>
 </resources>

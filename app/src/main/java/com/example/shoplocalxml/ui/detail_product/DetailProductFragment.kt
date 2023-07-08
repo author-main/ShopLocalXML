@@ -1,14 +1,21 @@
 package com.example.shoplocalxml.ui.detail_product
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
+import android.graphics.Paint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.EMPTY_STRING
+import com.example.shoplocalxml.FRIDAY_PERCENT
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
@@ -17,15 +24,13 @@ import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.getAfterWord
+import com.example.shoplocalxml.getFormattedFloat
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
-import com.example.shoplocalxml.ui.home.HomeFragment
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
+
 
 class DetailProductFragment : Fragment(), OnDetailContentListener {
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
@@ -68,6 +73,26 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
                 dataBinding.detailProductContent.indicatorImages.selectedIndex = index
             }
         })
+        val textFriday = "-${FRIDAY_PERCENT}%"
+        dataBinding.detailProductContent.textPercentFriday.text = textFriday
+        dataBinding.detailProductContent.textProductPrice.paintFlags = dataBinding.detailProductContent.textProductPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+
+        val animation = ObjectAnimator.ofFloat(dataBinding.detailProductContent.textViewSale, View.ROTATION_Y, 0.0f, 360f)
+        animation.startDelay = 3000
+        animation.duration = 2400
+        //animation.repeatCount = ObjectAnimator.INFINITE
+        animation.interpolator = AccelerateDecelerateInterpolator()
+
+        animation.addListener(object: AnimatorListenerAdapter(){
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                Handler(Looper.getMainLooper()).postDelayed(
+                    Runnable { animation.start() }, 3000)
+            }
+        })
+        animation.start()
+
         dataBinding.product = product
         dataBinding.eventhandler = this
         setDateDelivery(System.currentTimeMillis())
@@ -92,8 +117,11 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         reviews = value
     }*/
 
+    private fun hideLayoutFriday(){
+        dataBinding.detailProductContent.layoutFriday.visibility = View.GONE
+    }
+
     private fun setProduct(value: Product) {
-       val blackFriday = isLastFriday()
        product = value
        brand = SharedViewModel.getProductBrend(product.brand)
        actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
@@ -172,5 +200,18 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
         @JvmStatic
         fun getCountQuestions() = "4"
+
+        @JvmStatic
+        fun getFinalPrice(): String {
+            val finalPrice = instance?.let {
+                val product = it.product
+                val percentFriday = if (isLastFriday()) FRIDAY_PERCENT else {
+                    instance?.hideLayoutFriday()
+                    0
+                }
+                getFormattedFloat(product.price - product.price * (product.discount + percentFriday) / 100f)
+            } ?: EMPTY_STRING
+            return finalPrice
+        }
     }
 }
