@@ -18,8 +18,6 @@ import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.getAfterWord
 import com.example.shoplocalxml.getStringArrayResource
-import com.example.shoplocalxml.isBlackFriday
-import com.example.shoplocalxml.isFriday
 import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.home.HomeFragment
