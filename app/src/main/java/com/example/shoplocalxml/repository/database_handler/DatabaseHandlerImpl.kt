@@ -3,6 +3,7 @@ package com.example.shoplocalxml.repository.database_handler
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
@@ -43,5 +44,10 @@ class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHan
     override suspend fun getCategories(): List<Category>? =
         withContext(Dispatchers.IO) {
             databaseApi.getCategories().body()
+        }
+
+    override suspend fun getReviewsProduct(id: Int, limit: Int): List<Review>? =
+        withContext(Dispatchers.IO) {
+            databaseApi.getReviewsProduct(id, limit).body()
         }
 }

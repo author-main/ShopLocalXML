@@ -4,6 +4,7 @@ import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.log
@@ -14,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 class DatabaseApiImpl {
     private val QUERY_REGUSER     = "reg_user"
@@ -77,4 +79,7 @@ class DatabaseApiImpl {
     suspend fun updateProductFavorite(token: String, idProduct: Int, favorite:Boolean){
         retrofitInstance.updateFavorite(token, idProduct, if (favorite) 1 else 0)
     }
+
+    suspend fun getReviewsProduct(id: Int, limit: Int): Response<List<Review>> =
+        retrofitInstance.getReviewsProduct(id, limit)
 }

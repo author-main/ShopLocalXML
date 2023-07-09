@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
 import com.example.shoplocalxml.classes.sort_filter.Filter
@@ -30,9 +31,18 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     var portionData = 0
     private val _products = MutableStateFlow<MutableList<Product>>(mutableListOf())
     val products = _products.asStateFlow()
-    private fun setProducts(value: MutableList<Product>) {
+    /*private fun setProducts(value: MutableList<Product>) {
         _products.value = value
-    }
+    }*/
+
+
+    /*private val _reviews = MutableStateFlow<MutableList<Review>>(mutableListOf())
+    val reviews = _reviews.asStateFlow()*/
+    /*private fun setReviews(value: MutableList<Review>) {
+        _reviews.value = value
+    }*/
+
+
 
     fun getListBrend(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -151,6 +161,15 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
+
+    fun getReviewsProduct(id: Int, limit: Int, updateData: (list: List<Review>) -> Unit) {
+        viewModelScope.launch {
+            repository.getReviewsProduct(id, limit)?.let{
+                //_reviews.value = it.toMutableList()
+                updateData(it)
+            }
+        }
+    }
 
     fun getProducts(page: Int, uploadAgain: Boolean  = false, onEmptyResult: ((Boolean)->Unit)? = null){//}, order: String) {
 //        uploadDataAgain = uploadAgain

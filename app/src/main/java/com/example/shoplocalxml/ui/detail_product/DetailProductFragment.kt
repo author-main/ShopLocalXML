@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FRIDAY_PERCENT
@@ -29,6 +30,7 @@ import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 
@@ -92,6 +94,14 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             }
         })
         animation.start()
+        sharedViewModel.getReviewsProduct(product.id, limit = 3) {
+            log(it)
+        }
+        /*lifecycleScope.launch {
+            sharedViewModel.reviews.collect {
+                log(it)
+            }
+        }*/
 
         dataBinding.product = product
         dataBinding.eventhandler = this

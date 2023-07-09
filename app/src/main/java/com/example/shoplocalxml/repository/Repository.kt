@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
+import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.encodeBase64
@@ -158,6 +159,8 @@ class Repository {
             databaseHandler.getSearchProducts(it, uuid, query64, page, order)
         }
 
+    suspend fun getReviewsProduct(id: Int, limit: Int): List<Review>? =
+            databaseHandler.getReviewsProduct(id, limit)
 
     suspend fun updateProductFavorite(idProduct: Int, favorite:Boolean) {
         token?.let {

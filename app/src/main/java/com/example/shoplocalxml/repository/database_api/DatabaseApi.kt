@@ -30,7 +30,7 @@ interface DatabaseApi {
                          @Query("token") token: String): Response<List<Product>>*/
 
     @GET("/api/get_reviews_product")
-    suspend fun getReviewProduct(@Query("id") id: Int): Response<List<Review>>
+    suspend fun getReviewsProduct(@Query("id") id: Int, @Query("limit") limit: Int): Response<List<Review>>
 
     @GET("/api/get_brands")
     suspend fun getBrends(): Response<List<Brend>>
