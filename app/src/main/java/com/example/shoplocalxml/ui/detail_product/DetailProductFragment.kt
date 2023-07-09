@@ -95,6 +95,7 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         })
         animation.start()
         sharedViewModel.getReviewsProduct(product.id, limit = 3) {
+            log(it)
             reviews = it
             dataBinding.invalidateAll()
         }
