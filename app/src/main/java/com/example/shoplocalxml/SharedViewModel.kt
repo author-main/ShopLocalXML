@@ -162,11 +162,11 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
 
-    fun getReviewsProduct(id: Int, limit: Int, updateData: (list: List<Review>) -> Unit) {
+    fun getReviewsProduct(id: Int, limit: Int, updateReviews: (list: List<Review>) -> Unit) {
         viewModelScope.launch {
             repository.getReviewsProduct(id, limit)?.let{
                 //_reviews.value = it.toMutableList()
-                updateData(it)
+                updateReviews(it)
             }
         }
     }
