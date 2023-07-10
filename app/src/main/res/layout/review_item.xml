@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="review"
+            type="com.example.shoplocalxml.classes.Review" />
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.detail_product.recyclerView_reviews.ReviewItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundrect_text"
+        android:backgroundTint="@color/BackgroundBlockText"
+        android:padding="8dp">
+
+
+        <TextView
+            android:id="@+id/textUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{review.username}"
+            android:textColor="@color/TextDescription"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:text="@{review.date}"
+            android:textColor="@color/EditTextFont"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textUserName" />
+
+        <com.example.shoplocalxml.custom_view.RatingView
+            android:id="@+id/ratingUser"
+            android:layout_width="wrap_content"
+            android:layout_height="14dp"
+            android:layout_gravity="center_horizontal"
+            app:count="@{review.countstar}"
+            app:intervalStar="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_light"
+            android:maxLines="7"
+            android:text="@{review.comment}"
+            android:textColor="@color/TextDescription"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textDateTime" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

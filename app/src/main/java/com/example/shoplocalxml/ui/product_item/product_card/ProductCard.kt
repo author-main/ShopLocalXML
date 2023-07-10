@@ -95,7 +95,7 @@ class ProductCard: CardView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
 
-
+    fun getRecyclerViewImages() = dataBinding.recyclerViewImages
 
     @JvmName("setProduct_")
     private fun setProduct(value: Product?) {

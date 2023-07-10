@@ -68,7 +68,10 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     ): View {
         dataBinding = FragmentDetailProductBinding.inflate(inflater, container, false)
         dataBinding.detailProductContent.indicatorImages.count = product.linkimages?.size ?: 0
-        dataBinding.detailProductContent.indicatorImages.selectedIndex = imageIndex
+        if (imageIndex > 0)
+            dataBinding.cardViewProductImages.getRecyclerViewImages().scrollToPosition(imageIndex)
+        else
+            dataBinding.detailProductContent.indicatorImages.selectedIndex = 0
         dataBinding.cardViewProductImages.visibleCardButton = false
         dataBinding.cardViewProductImages.product = product
         dataBinding.cardViewProductImages.setOnChangeSelectedItem(object: OnChangeSelectedItem{
@@ -178,6 +181,7 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     private fun setImageIndex(value: Int) {
         imageIndex = value
+        //dataBinding.cardViewProductImages.getRecyclerViewImages().scrollToPosition(value)
     }
 
     override fun onShowReviews() {

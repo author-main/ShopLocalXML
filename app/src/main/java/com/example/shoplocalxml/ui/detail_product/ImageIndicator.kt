@@ -53,6 +53,10 @@ class ImageIndicator: LinearLayout {
         }
         gravity = Gravity.CENTER_VERTICAL
         orientation = LinearLayout.HORIZONTAL
+        /*if (count > 0) {
+            initialized = false
+            setSelectedIndex(0)
+        }*/
     }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
     private val colorSymbol = context.getColor(R.color.EditTextBackgroundDark)
@@ -105,6 +109,7 @@ class ImageIndicator: LinearLayout {
 
     @JvmName("setCount_")
     private fun setCount(value: Int) {
+
         initialized = false
         this.removeAllViews()
         images.clear()
@@ -135,6 +140,10 @@ class ImageIndicator: LinearLayout {
         for (i in 0 until value) {
             addImageView(i)
         }
+      /* if (value > 0) {
+           initialized = false
+           selectedIndex = 0
+       }*/
     }
 
     private fun addImageView(index: Int) {
