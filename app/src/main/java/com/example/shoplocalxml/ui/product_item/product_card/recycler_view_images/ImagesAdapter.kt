@@ -83,11 +83,13 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
                         DEFAULT_BITMAP
                     }
 
-                    notifyDataSetChanged()
-                    //notifyItemChanged(i)
+                    //notifyDataSetChanged()
+                    notifyItemChanged(i)
                     countUploaded += 1
-                    if (countUploaded == images.size)
+                    if (countUploaded == images.size) {
                         onUploaded?.invoke()
+                        notifyDataSetChanged()
+                    }
                 }
             }
         }
