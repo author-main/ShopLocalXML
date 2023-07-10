@@ -31,6 +31,7 @@ import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.util.Calendar
 
 
@@ -94,11 +95,16 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             }
         })
         animation.start()
-        sharedViewModel.getReviewsProduct(product.id, limit = 3) {
-            log(it)
+        sharedViewModel.getReviewsProduct(product.id, limit = 2) {
+            //log(it)
             reviews = it
-            dataBinding.invalidateAll()
+            //dataBinding.invalidateAll()
+            val count = getReviewsCount()
+            dataBinding.detailProductContent.textRating.text =
+                getAfterWord(count, WORD_RATE)
+            dataBinding.detailProductContent.textCountReviews.text = count.toString()
         }
+        dataBinding.detailProductContent.textDescription.text = product.description
         /*lifecycleScope.launch {
             sharedViewModel.reviews.collect {
                 log(it)
@@ -111,6 +117,22 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         return dataBinding.root
     }
 
+
+    private fun getReviewsCount(): Int{
+        var count = 0
+        if (reviews.isNotEmpty()) {
+            val firstElement: String = reviews[0].username
+            val pos = firstElement.indexOf(">")
+            if (pos != -1) {
+                try {
+                    val countStr = firstElement.substring(1, pos)
+                    count = countStr.toInt()
+                    reviews[0].username = firstElement.substring(pos + 1)
+                } catch(_: Exception) {}
+            }
+        }
+        return count
+    }
 
     private fun setDateDelivery(date: Long){
         val arrayMonth = getStringArrayResource(R.array.month)
@@ -204,11 +226,11 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         @JvmStatic
         fun getActionSale() = instance?.actionSale ?: EMPTY_STRING
 
-        @JvmStatic
+/*        @JvmStatic
         fun getRating() = getAfterWord(instance?.reviews?.count(), WORD_RATE)
 
         @JvmStatic
-        fun getCountReviews() = instance?.reviews?.count().toString() ?: "0"
+        fun getCountReviews() = instance?.reviews?.count().toString() ?: "0"*/
 
         @JvmStatic
         fun getCountQuestions() = "4"
