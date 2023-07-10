@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="dialog"
-            type="com.example.shoplocalxml.ui.dialog.DialogRestore"/>
+            name="user"
+            type="com.example.shoplocalxml.classes.User"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="@+id/editTextMail" />
 
         <com.example.shoplocalxml.custom_view.EditTextExt
-            android:text="@={dialog.user.email}"
+            android:text="@={user.email}"
             android:id="@+id/editTextMail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="@+id/editTextPassword" />
 
         <com.example.shoplocalxml.custom_view.EditTextExt
-            android:text="@={dialog.user.password}"
+            android:text="@={user.password}"
             android:drawableEnd="@drawable/ic_showsym_off"
             android:id="@+id/editTextPassword"
             android:layout_width="0dp"

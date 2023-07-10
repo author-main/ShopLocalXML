@@ -25,13 +25,16 @@ import com.example.shoplocalxml.ui.login.OnUserListener
 class DialogRestore: DialogFragment() {
     private lateinit var dataBinding: DialogRestoreBinding
     private lateinit var dialog: AlertDialog
-    val user: ObservableField<User> = ObservableField<User>()
+    val user = User.getInstance()
+            //ObservableField<User> = ObservableField<User>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dataBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.dialog_restore, null, false)
-        user.set(User.getInstance())
-        dataBinding.dialog = this
+        //user.set(User.getInstance())
+        //dataBinding.dialog = this
+        //dataBinding.user = user.get()
+        dataBinding.user = user
 
         dataBinding.editTextPassword.onValidValue = {password ->
             password.length == 5
@@ -44,7 +47,7 @@ class DialogRestore: DialogFragment() {
 
         val email = arguments?.getString("email")
         email?.let{
-            user.get()?.email = it
+            user.email = it
         }
 
 
@@ -86,7 +89,7 @@ class DialogRestore: DialogFragment() {
         }
         if (verified) {
             dismiss()
-            user.get()?.let { (parentFragment as OnUserListener).onRestoreUser(it) }
+            (parentFragment as OnUserListener).onRestoreUser(user)
         }
     }
 }

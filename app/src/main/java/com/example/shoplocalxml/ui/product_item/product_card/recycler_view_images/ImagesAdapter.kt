@@ -66,7 +66,7 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
                 listImages.add(ImageItem(it, image = null))
             }
             images = listImages
-            notifyDataSetChanged()
+           // notifyDataSetChanged()
         //}
         CoroutineScope(Dispatchers.Main).launch {
             //for (item in images){
@@ -76,8 +76,6 @@ class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
                 val item = ImageItem(list[i], image = null)
                 images.add(item)*/
                 ImageDownloadManager.download(item.url, reduce = reduceImage) {
-
-
                     item.image = it ?: run {
                         item.default = true
                         DEFAULT_BITMAP
