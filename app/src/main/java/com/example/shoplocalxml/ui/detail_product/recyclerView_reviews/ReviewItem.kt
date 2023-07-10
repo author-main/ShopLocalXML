@@ -4,8 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.ReviewItemBinding
@@ -17,11 +20,11 @@ class ReviewItem: ConstraintLayout {
         val inflater = AppShopLocal.applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.review_item, this, true)
     }
-    private var review: Review? = null
-      /*  set(value) {
+    var review: Review? = null
+        set(value) {
             field = value
-            dataBinding.invalidateAll()
-        }*/
+            dataBinding.review = value
+        }
 
     private var onClickReview: OnClickReview? = null
     fun setOnClickReview(value: OnClickReview) {
@@ -47,5 +50,13 @@ class ReviewItem: ConstraintLayout {
     /*@JvmName("setReview_")
     private fun setReview(value: Review) {
         dataBinding.textUserName.t
+    }*/
+
+  /*  override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        val params = dataBinding.root.layoutParams
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        dataBinding.root.layoutParams = params
     }*/
 }

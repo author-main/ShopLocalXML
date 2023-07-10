@@ -79,7 +79,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
    // private lateinit var sharedViewModel: SharedViewModel
     private val adapter:ProductsAdapter by lazy {
        ProductsAdapter(context = requireContext())
-   }
+    }
 
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
        if (result.resultCode == Activity.RESULT_OK) {

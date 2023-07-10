@@ -14,6 +14,10 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FRIDAY_PERCENT
@@ -29,6 +33,8 @@ import com.example.shoplocalxml.getFormattedFloat
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.detail_product.recyclerView_reviews.ReviewsAdapter
+import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -42,6 +48,10 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             AppShopLocal.repository
         )
     })
+
+    private val adapter: ReviewsAdapter by lazy {
+        ReviewsAdapter(context = requireContext())
+    }
 
     private lateinit var dataBinding: FragmentDetailProductBinding
     //private var onDetailContentListener: OnDetailContentListener? = null
@@ -107,6 +117,10 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
                 getAfterWord(count, WORD_RATE)
             dataBinding.detailProductContent.textCountReviews.text = count.toString()
             dataBinding.detailProductContent.textCountUsersReviews.text = getAfterWord(count, WORD_RATE)
+            adapter.setReviews(it)
+            adapter.setOnClickReview {review ->
+                log(review.username)
+            }
         }
         dataBinding.detailProductContent.textDescription.text = product.description
         dataBinding.detailProductContent.ratingProduct.setCount(product.star)
@@ -120,6 +134,12 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         dataBinding.product = product
         dataBinding.eventhandler = this
         setDateDelivery(System.currentTimeMillis())
+
+        val manager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        dataBinding.detailProductContent.recyclerViewReviews.layoutManager = manager
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(dataBinding.detailProductContent.recyclerViewReviews)
+        dataBinding.detailProductContent.recyclerViewReviews.adapter = adapter
         return dataBinding.root
     }
 
