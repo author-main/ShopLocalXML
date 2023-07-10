@@ -23,14 +23,16 @@ import com.example.shoplocalxml.ui.login.OnUserListener
 class DialogReg: DialogFragment() {
     private lateinit var dataBinding: DialogRegBinding
     private lateinit var dialog: AlertDialog
-    val user: ObservableField<User> = ObservableField<User>()
+    val user = User.getInstance()//: ObservableField<User> = ObservableField<User>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dataBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.dialog_reg, null, false)
 
-        user.set(User.getInstance())
-        dataBinding.dialog = this
+        //user.set(User.getInstance())
+        //dataBinding.dialog = this
+        dataBinding.user = user
+
         dataBinding.editTextPassword.onValidValue = {password ->
             password.length == 5
         }
@@ -84,7 +86,7 @@ class DialogReg: DialogFragment() {
         }
         if (verified) {
             dismiss()
-            user.get()?.let { (parentFragment as OnUserListener).onRegisterUser(it) }
+            (parentFragment as OnUserListener).onRegisterUser(user)
         }
     }
 }
