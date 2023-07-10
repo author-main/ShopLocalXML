@@ -103,8 +103,11 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             dataBinding.detailProductContent.textRating.text =
                 getAfterWord(count, WORD_RATE)
             dataBinding.detailProductContent.textCountReviews.text = count.toString()
+            dataBinding.detailProductContent.textCountUsersReviews.text = getAfterWord(count, WORD_RATE)
         }
         dataBinding.detailProductContent.textDescription.text = product.description
+        dataBinding.detailProductContent.ratingProduct.setCount(product.star)
+        dataBinding.detailProductContent.textStarUsers.text = product.star.toString()
         /*lifecycleScope.launch {
             sharedViewModel.reviews.collect {
                 log(it)
