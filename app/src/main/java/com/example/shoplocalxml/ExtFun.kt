@@ -15,6 +15,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
 import android.util.TypedValue
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.annotation.ArrayRes
@@ -212,6 +213,13 @@ fun<T> getInteger(value: T) : Int {
     val height = ViewGroup.LayoutParams.WRAP_CONTENT
     dialog.window!!.setLayout(width, height)
 }*/
+
+fun setSizeDialog(dialog: AlertDialog, widthDP: Int = 0, heightDP: Int = 0){
+    val width: Int = if (widthDP == 0) ViewGroup.LayoutParams.MATCH_PARENT else widthDP.toPx
+    val height = if (heightDP == 0) ViewGroup.LayoutParams.WRAP_CONTENT
+        else heightDP.toPx
+    dialog.window!!.setLayout(width, height)
+}
 
 fun getReduceImageHash(url: String, reduce: Boolean) =
     if (!reduce) md5(url) else md5("${url}_")

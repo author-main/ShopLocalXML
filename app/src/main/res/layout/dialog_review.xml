@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="review"
+            type="com.example.shoplocalxml.classes.Review" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/scroolViewReview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        android:scrollbars="none">
+
+        <include
+            android:id="@+id/reviewContent"
+            layout="@layout/review_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:review="@{review}" />
+
+    </ScrollView>
+
+</layout>

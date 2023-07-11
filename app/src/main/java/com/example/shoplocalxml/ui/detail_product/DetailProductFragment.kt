@@ -3,6 +3,7 @@ package com.example.shoplocalxml.ui.detail_product
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.EMPTY_STRING
+import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.FRIDAY_PERCENT
 import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.R
@@ -34,8 +36,12 @@ import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.detail_product.recyclerView_reviews.ReviewsAdapter
+import com.example.shoplocalxml.ui.dialog.DialogRestore
+import com.example.shoplocalxml.ui.dialog.DialogReview
+import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.util.Calendar
@@ -119,7 +125,13 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             dataBinding.detailProductContent.textCountUsersReviews.text = getAfterWord(count, WORD_RATE)
             adapter.setReviews(it)
             adapter.setOnClickReview {review ->
-                log(review.username)
+                val dialogReview = DialogReview()
+                val gson = Gson()
+                val reviewJson = gson.toJson(review)
+                val bundle = Bundle()
+                bundle.putString("review", reviewJson)
+                dialogReview.arguments = bundle
+                dialogReview.show(childFragmentManager, null)
             }
         }
         dataBinding.detailProductContent.textDescription.text = product.description
@@ -221,7 +233,7 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     }
 
     override fun onBuyOneClick() {
-        TODO("Not yet implemented")
+        log("one click ${product.id}...")
     }
 
     override fun onShowImage(index: Int) {
