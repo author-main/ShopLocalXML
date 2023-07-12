@@ -35,10 +35,12 @@ import com.example.shoplocalxml.getFormattedFloat
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.isLastFriday
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.ui.detail_product.recyclerView_reviews.ReviewsAdapter
 import com.example.shoplocalxml.ui.dialog.DialogRestore
 import com.example.shoplocalxml.ui.dialog.DialogReview
 import com.example.shoplocalxml.ui.filter.FilterActivity
+import com.example.shoplocalxml.ui.image_viewer.ImageViewerActivity
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.google.gson.Gson
@@ -237,7 +239,14 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     }
 
     override fun onShowImage(index: Int) {
-        log("log image $index...")
+        product.linkimages?.get(index)?.let {link ->
+ //           if (!reduce) md5(url) else md5("${url}_")
+            val hash = md5(link)
+            val intent = Intent(requireContext(), ImageViewerActivity::class.java)
+            intent.putExtra("imagehash", hash)
+            startActivity(intent)
+        }
+        //intent.putExtra("imagehash", imagehash)
     }
 
     override fun onShowBrand() {
