@@ -1,18 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-<style name="ShapeAppearanceOverlay.App.rounded" parent="">
-    <item name="cornerFamily">rounded</item>
-    <item name="cornerSize">8dp</item>
-</style>
+    <style name="ShapeAppearanceOverlay.App.rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 
-<style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-    <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.rounded</item>
-    <item name="boxBackgroundColor">@color/EditTextBackgroundDark</item>
-    <!--<item name="boxStrokeColor">@color/boxstrokecolor</item>-->
-    <item name="boxStrokeWidth">1dp</item>
-    <item name="android:textColorHint">#ffff0000</item>
-    <item name="hintTextColor">#ffff0000</item>
-</style>
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.rounded</item>
+        <item name="boxBackgroundColor">@color/EditTextBackgroundDark</item>
+        <!--<item name="boxStrokeColor">@color/boxstrokecolor</item>-->
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="android:textColorHint">#ffff0000</item>
+        <item name="hintTextColor">#ffff0000</item>
+    </style>
 
 
     <style name="EditTextExt" parent="@android:style/Widget.EditText">
@@ -20,21 +20,21 @@
         <item name="android:textColorHint">#FF0000</item>
     </style>
 
-<style name="ButtonPasswordKey" parent="@android:style/Widget.Button">
-    <item name="android:layout_width">54dp</item>
-    <item name="android:layout_height">54dp</item>
-    <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
-    <item name="android:fontFamily">@font/roboto_light</item>
-    <item name="android:textSize">32sp</item>
-    <item name="android:textColor">@color/EditTextFont</item>
-    <item name="android:padding">0dp</item>
-    <item name="android:layout_marginHorizontal">10dp</item>
-    <item name="android:layout_marginVertical">2dp</item>
-    <item name="iconGravity">textStart</item>
-    <item name="iconPadding">0dp</item>
-    <item name="iconSize">24dp</item>
-    <item name="iconTint">@color/EditTextFont</item>
-</style>
+    <style name="ButtonPasswordKey" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">54dp</item>
+        <item name="android:layout_height">54dp</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/EditTextFont</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_marginHorizontal">10dp</item>
+        <item name="android:layout_marginVertical">2dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconSize">24dp</item>
+        <item name="iconTint">@color/EditTextFont</item>
+    </style>
 
 
     <style name="TextViewKeyE" parent="@android:style/Widget.TextView">
@@ -49,6 +49,7 @@
         <item name="android:text">@string/eCharPassword</item>
         <item name="android:textSize">23sp</item>
     </style>
+
     <style name="TextViewKeyF" parent="@style/TextViewKeyE">
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:text">@string/fCharPassword</item>
@@ -105,8 +106,6 @@
     <style name="CancelButton" parent="@style/ConfirmButton">
         <item name="android:backgroundTint">@color/EditTextBackgroundDark</item>
     </style>
-
-
 
 
     <style name="TextViewDialog" parent="@android:style/Widget.TextView">
@@ -204,6 +203,15 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/EditTextFont</item>
         <item name="android:backgroundTint">@color/EditTextBackgroundDark</item>
+    </style>
+
+    <style name="Widget.Theme.ShopLocalXML.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.ShopLocalXML.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 
