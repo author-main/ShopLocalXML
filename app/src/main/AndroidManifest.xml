@@ -24,7 +24,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_image_viewer"
-            android:theme="@style/Theme.ShopLocalXML.Fullscreen" />
+            android:theme="@style/Theme.AppCompat.transparent" />
         <activity
             android:name=".ui.filter.FilterActivity"
             android:exported="false" />

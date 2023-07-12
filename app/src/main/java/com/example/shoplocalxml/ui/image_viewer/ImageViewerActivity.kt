@@ -14,12 +14,14 @@ import android.widget.TextView
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
+import com.example.shoplocalxml.log
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class ImageViewerActivity : AppCompatActivity() {
+    private var srcImage: String? = null
     private lateinit var dataBinding: ActivityImageViewerBinding
 
 
@@ -50,6 +52,8 @@ class ImageViewerActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        srcImage = intent.getStringExtra("srcimage")
+        log(srcImage)
         dataBinding = ActivityImageViewerBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)

@@ -31,6 +31,7 @@ import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.getAfterWord
+import com.example.shoplocalxml.getCacheDirectory
 import com.example.shoplocalxml.getFormattedFloat
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.isLastFriday
@@ -241,9 +242,9 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     override fun onShowImage(index: Int) {
         product.linkimages?.get(index)?.let {link ->
  //           if (!reduce) md5(url) else md5("${url}_")
-            val hash = md5(link)
+            val srcimage = "${getCacheDirectory()}${md5(link)}"
             val intent = Intent(requireContext(), ImageViewerActivity::class.java)
-            intent.putExtra("imagehash", hash)
+            intent.putExtra("srcimage", srcimage)
             startActivity(intent)
         }
         //intent.putExtra("imagehash", imagehash)
