@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.image_viewer.ImageViewerActivity" />
+    </data>
+
+    <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/fullscreenBackgroundColor"
     android:backgroundTint="@color/BackgroundDark"
     android:theme="@style/ThemeOverlay.ShopLocalXML.FullscreenContainer"
-    tools:context=".ui.image_viewer.ImageViewerActivity" />
+    tools:context=".ui.image_viewer.ImageViewerActivity" >
+
+    <com.example.shoplocalxml.custom_view.ZoomImageView
+        android:id="@+id/imageZoomView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="8dp"
+        android:background="@drawable/ic_circle_border"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_close"
+        android:onClick="@{()->eventhandler.close()}"
+        />
+    </FrameLayout>
+</layout>

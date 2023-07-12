@@ -11,16 +11,17 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
+import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class ImageViewerActivity : AppCompatActivity() {
+    private lateinit var dataBinding: ActivityImageViewerBinding
 
-    private lateinit var binding: ActivityImageViewerBinding
 
     /*@SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -49,9 +50,14 @@ class ImageViewerActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityImageViewerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        dataBinding = ActivityImageViewerBinding.inflate(layoutInflater)
+        dataBinding.eventhandler = this
+        setContentView(dataBinding.root)
         supportActionBar?.hide()//setDisplayHomeAsUpEnabled(true)
+    }
+
+    fun close() {
+        finish()
     }
 
 }
