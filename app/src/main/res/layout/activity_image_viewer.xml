@@ -14,7 +14,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/BackgroundDark"
+        android:background="@color/white"
+        android:padding="16dp"
         tools:context=".ui.image_viewer.ImageViewerActivity">
 
         <com.example.shoplocalxml.custom_view.ZoomImageView
@@ -28,7 +29,6 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="top|end"
-            android:layout_margin="8dp"
             android:background="@drawable/ic_circle_border"
             android:onClick="@{()->eventhandler.close()}"
             android:padding="2dp"

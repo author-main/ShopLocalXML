@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.net.toUri
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
@@ -57,6 +58,7 @@ class ImageViewerActivity : AppCompatActivity() {
         dataBinding = ActivityImageViewerBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
+        dataBinding.imageZoomView.setImageURI(srcImage?.toUri())
         supportActionBar?.hide()//setDisplayHomeAsUpEnabled(true)
     }
 
