@@ -49,16 +49,19 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         if (drawable != null) {
             canvas.save()
             canvas.translate(posX, posY)
+            //matrix.postTranslate(posX, posY)
             matrix.postScale(
                 scale, scale,
                 pivotPointX,
                 pivotPointY
             )
+
             val bitmap = (drawable as BitmapDrawable).bitmap
             canvas.drawBitmap(
                 bitmap, matrix,
                 null
             )
+
             canvas.restore()
             matrix.reset()
         }
@@ -82,11 +85,12 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     }
 
     private fun getPivot(x: Float, y: Float){
-        val w = widthDrawable  * scale
+      /*  val w = widthDrawable  * scale
         val h = heightDrawable * scale
         log ("w = $w, h = $h")
-        /*pivotPointX = widthDrawable  * scale
-*/
+        pivotPointX = posX - x
+        pivotPointY = posY - y*/
+
     }
 
    /* override fun setImageURI(uri: Uri?) {
@@ -169,9 +173,11 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             }
             //scale = Math.max(0.05f, scale)
 
+            //int scrollX = (int) ((getScrollX() + scaleDetector.getFocusX()) * scaleDetector.getScaleFactor() - scaleDetector.getFocusX());
+
             getPivot(detector.focusX, detector.focusY)
-            /*pivotPointX = detector.focusX
-            pivotPointY = detector.focusY*/
+            pivotPointX = detector.focusX
+            pivotPointY = detector.focusY
 
 
             log("pivotX = $pivotPointX, pivotY = $pivotPointY")
