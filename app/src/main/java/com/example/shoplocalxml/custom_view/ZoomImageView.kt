@@ -23,8 +23,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     private var widthView = 0f
     private var heightView = 0f
 
-    private enum class ZoomMode {NONE, ZOOM, MOVE, CLICK}
-    private var mode = ZoomMode.NONE
+    /*private enum class ZoomMode {NONE, ZOOM, MOVE, CLICK}
+    private var mode = ZoomMode.NONE*/
     private val matrix = Matrix()
     private val minScale = 1f
     private val maxScale = 7f
@@ -153,11 +153,11 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
                 lastTouchX = event.x
                 lastTouchY = event.y
-                activePointerId = event.getPointerId(0)
+                //activePointerId = event.getPointerId(0)
                 //log(activePointerId)
             }
 
-            MotionEvent.ACTION_UP -> {
+/*            MotionEvent.ACTION_UP -> {
                 pivotPointX = 0f
                 pivotPointY = 0f
                 activePointerId = INVALID_POINTER_ID;
@@ -167,12 +167,12 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                pivotPointX = 0f
                pivotPointY = 0f
                 activePointerId = INVALID_POINTER_ID;
-           }
+           }*/
 
            MotionEvent.ACTION_MOVE -> {
-                val pointerIndex = event.findPointerIndex(activePointerId)
-                val x = event.getX(pointerIndex)
-                val y = event.getY(pointerIndex)
+                //val pointerIndex = event.findPointerIndex(activePointerId)
+                val x = event.x//.getX(pointerIndex)
+                val y = event.y//getY(pointerIndex)
                 if (!scaleDetector!!.isInProgress) {
                     val dx = x - lastTouchX
                     val dy = y - lastTouchY
@@ -207,6 +207,16 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 lastTouchX = x
                 lastTouchY = y
            }
+            /*MotionEvent.ACTION_POINTER_UP -> {
+                val pointerIndex = (event.action * MotionEvent.ACTION_POINTER_INDEX_MASK) shr MotionEvent.ACTION_POINTER_INDEX_SHIFT
+                val pointerId = event.getPointerId(pointerIndex);
+                if (pointerId == activePointerId) {
+                    val newPointerIndex = if (pointerIndex == 0) 1 else 0
+                    lastTouchX = event.getX(newPointerIndex);
+                    lastTouchY = event.getY(newPointerIndex);
+                    activePointerId = event.getPointerId(newPointerIndex)
+                }
+            }*/
         }
         return true
     }
@@ -214,10 +224,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
 
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+        /*override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
             mode = ZoomMode.ZOOM
             return true
-        }
+        }*/
 
         override fun onScale(detector: ScaleGestureDetector): Boolean {
             //var detectorScale = detector.scaleFactor
