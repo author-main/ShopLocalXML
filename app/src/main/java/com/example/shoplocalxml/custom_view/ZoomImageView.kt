@@ -39,7 +39,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         defStyleAttr
     )
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        //scaleType = ScaleType.MATRIX
         scaleDetector = ScaleGestureDetector(context, ScaleListener())
     }
 
