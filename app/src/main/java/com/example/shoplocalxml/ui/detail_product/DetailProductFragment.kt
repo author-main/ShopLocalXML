@@ -240,13 +240,25 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     }
 
     override fun onShowImage(index: Int) {
-        product.linkimages?.get(index)?.let {link ->
+        product.linkimages?.let{
+            val list = mutableListOf<String>()
+            it.forEach { link ->
+                list.add("${getCacheDirectory()}${md5(link)}")
+            }
+            val gson = Gson()
+            val extraList = gson.toJson(list)
+            val intent = Intent(requireContext(), ImageViewerActivity::class.java)
+            intent.putExtra("listimages", extraList)
+            intent.putExtra("startindex", index)
+            startActivity(intent)
+        }
+    /*    product.linkimages?.get(index)?.let {link ->
  //           if (!reduce) md5(url) else md5("${url}_")
             val srcimage = "${getCacheDirectory()}${md5(link)}"
             val intent = Intent(requireContext(), ImageViewerActivity::class.java)
             intent.putExtra("srcimage", srcimage)
             startActivity(intent)
-        }
+        }*/
         //intent.putExtra("imagehash", imagehash)
     }
 

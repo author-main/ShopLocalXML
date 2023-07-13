@@ -13,16 +13,21 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.classes.Brend
+import com.example.shoplocalxml.classes.Category
+import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class ImageViewerActivity : AppCompatActivity() {
-    private var srcImage: String? = null
+    //private var srcImage: String? = null
     private lateinit var dataBinding: ActivityImageViewerBinding
 
 
@@ -53,12 +58,16 @@ class ImageViewerActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        srcImage = intent.getStringExtra("srcimage")
-        log(srcImage)
+        val typeToken = object : TypeToken<List<String>>() {}.type
+        val gson    = Gson()
+        val extraListImages    = intent.getStringExtra("listimages")
+        val listImages = gson.fromJson<List<String>>(extraListImages, typeToken)
+        val startIndex = intent.getIntExtra("startindex", 0)
         dataBinding = ActivityImageViewerBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
-        dataBinding.imageZoomView.setImageURI(srcImage?.toUri())
+        val srcImage = listImages[startIndex]
+        dataBinding.imageZoomView.setImageURI(srcImage.toUri())
         supportActionBar?.hide()//setDisplayHomeAsUpEnabled(true)
     }
 
