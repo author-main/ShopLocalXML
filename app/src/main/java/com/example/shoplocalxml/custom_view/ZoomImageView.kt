@@ -46,14 +46,16 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         //super.onDraw(canvas)
         canvas.drawColor(Color.WHITE)
         if (drawable != null) {
-            canvas.save()
-            canvas.translate(posX, posY)
+            /*canvas.save()
+            canvas.translate(posX, posY)*/
             //matrix.postTranslate(posX, posY)
             matrix.postScale(
                 scale, scale,
                 pivotPointX,
                 pivotPointY
             )
+            //val dScale = widthDrawable * scale
+            matrix.postTranslate(posX, posY)
 
             val bitmap = (drawable as BitmapDrawable).bitmap
             canvas.drawBitmap(
@@ -61,7 +63,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 null
             )
 
-            canvas.restore()
+            //canvas.restore()
             matrix.reset()
         }
     }
@@ -86,9 +88,9 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     private fun getPivot(x: Float, y: Float){
       /*  val w = widthDrawable  * scale
         val h = heightDrawable * scale
-        log ("w = $w, h = $h")
-        pivotPointX = posX - x
-        pivotPointY = posY - y*/
+        log ("w = $w, h = $h")*/
+       /* pivotPointX = x
+        pivotPointY = y*/
 
     }
 
@@ -120,7 +122,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 lastTouchX = event.x
                 lastTouchY = event.y
                 activePointerId = event.getPointerId(0)
-                log(activePointerId)
+                //log(activePointerId)
             }
 
             MotionEvent.ACTION_UP -> {
