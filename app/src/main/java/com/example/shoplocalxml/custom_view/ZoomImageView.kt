@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.PointF
+import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -15,6 +16,7 @@ import com.example.shoplocalxml.log
 
 
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
+
     private var widthDrawable = 0f
     private var heightDrawable = 0f
 
@@ -54,9 +56,9 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             canvas.translate(posX, posY)*/
             //matrix.postTranslate(posX, posY)
             matrix.postScale(
-                scale, scale/*,
+                scale, scale,
                 pivotPointX,
-                pivotPointY*/
+                pivotPointY
             )
             matrix.postTranslate(posX, posY)
 
@@ -118,11 +120,37 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
 
 
+
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         scaleDetector?.onTouchEvent(event)
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+
+              /*  val pointX = event.x
+                val pointY = event.y
+                val w = widthDrawable  * scale
+                val h = heightDrawable * scale
+
+                val rect = RectF(
+                    posX,
+                    posY,
+                    posX + widthDrawable  * scale,
+                    posY + heightDrawable  * scale
+                )
+
+                if (rect.contains(pointX, pointY)) {
+                    pivotPointX = posX
+                    pivotPointY = posY
+                }*/
+
+
+               // log(rect)
+                /*pivotPointX = event.x + posX
+                pivotPointY = event.y + posY*/
+
+
                 lastTouchX = event.x
                 lastTouchY = event.y
                 activePointerId = event.getPointerId(0)
@@ -130,10 +158,14 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             }
 
             MotionEvent.ACTION_UP -> {
+                pivotPointX = 0f
+                pivotPointY = 0f
                 activePointerId = INVALID_POINTER_ID;
             }
 
            MotionEvent.ACTION_CANCEL -> {
+               pivotPointX = 0f
+               pivotPointY = 0f
                 activePointerId = INVALID_POINTER_ID;
            }
 
@@ -170,15 +202,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                     } else {
                         posY = dh / 2f
                     }
-
-                    /*if (posX < 0) posX = 0f
-                    if (posY < 0) posY = 0f*/
-                    log("$dw, $dh")
-                    log("$posX, $posY")
-
-                    //if (widthDrawable * scale)
-
-
                     invalidate();
                 }
                 lastTouchX = x
@@ -213,8 +236,11 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
             //getPivot(detector.focusX, detector.focusY)
             /*pivotPointX = detector.focusX
-            pivotPointY = detector.focusY
-*/
+            pivotPointY = detector.focusY*/
+          /*  var pivotX =  detector.focusX
+            var pivotY =  detector.focusY
+            log("$pivotX, $pivotY")*/
+
 
             //log("pivotX = $pivotPointX, pivotY = $pivotPointY")
 
