@@ -5,14 +5,18 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.PointF
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.MotionEvent.INVALID_POINTER_ID
 import android.view.ScaleGestureDetector
 import com.example.shoplocalxml.log
 
 
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
+    private var widthDrawable = 0f
+    private var heightDrawable = 0f
     private enum class ZoomMode {NONE, ZOOM, MOVE, CLICK}
     private var mode = ZoomMode.NONE
     private val matrix = Matrix()
@@ -26,6 +30,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     private var posY = 0f
     private var lastTouchX = 0f
     private var lastTouchY = 0f
+    private var activePointerId = INVALID_POINTER_ID
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -55,20 +60,23 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 null
             )
             canvas.restore()
+            matrix.reset()
         }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         val bitmap = (drawable as BitmapDrawable).bitmap
-        val width = bitmap.width
-        val height = bitmap.height
+        widthDrawable  = bitmap.width.toFloat()
+        heightDrawable = bitmap.height.toFloat()
         lastTouchX = 0f
         lastTouchY = 0f
         scale =
-            (w.toFloat() / width).coerceAtMost(h.toFloat() / height)
-        posX = (w  - width * scale) / 2f
-        posY = (h - height * scale) / 2f
+            (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
+        getPivot(
+            (w  - widthDrawable * scale) / 2f,
+            (h - heightDrawable * scale) / 2f
+        )
     }
 
    /* override fun setImageURI(uri: Uri?) {
@@ -94,27 +102,74 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         scaleDetector?.onTouchEvent(event)
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastTouchX = event.x
+                lastTouchY = event.y
+                activePointerId = event.getPointerId(0)
+                log(activePointerId)
+            }
+
+            MotionEvent.ACTION_UP -> {
+                activePointerId = INVALID_POINTER_ID;
+            }
+
+           MotionEvent.ACTION_CANCEL -> {
+                activePointerId = INVALID_POINTER_ID;
+           }
+
+           MotionEvent.ACTION_MOVE -> {
+                val pointerIndex = event.findPointerIndex(activePointerId)
+                val x = event.getX(pointerIndex)
+                val y = event.getY(pointerIndex)
+
+
+                if (!scaleDetector!!.isInProgress) {
+                    val dx = x - lastTouchX
+                    val dy = y - lastTouchY
+                    posX += dx
+                    posY += dy
+                    invalidate();
+                }
+                lastTouchX = x
+                lastTouchY = y
+           }
+        }
         return true
     }
 
+    private fun getPivot(x: Float, y: Float){
+
+    }
+
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        override fun onScale(detector: ScaleGestureDetector): Boolean {
-            //return super.onScale(detector)
+        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
             mode = ZoomMode.ZOOM
             return true
         }
 
-        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-            var detectorScale = detector.scaleFactor
-            val curScale = scale
-            scale *= detectorScale
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            //var detectorScale = detector.scaleFactor
+            //val curScale = scale
+            scale *= detector.scaleFactor
             if (scale > maxScale) {
                 scale = maxScale
-                detectorScale = maxScale / curScale
+                    //detectorScale = maxScale / curScale
             } else if (scale < minScale) {
                 scale = minScale
-                detectorScale = minScale / curScale
+                //detectorScale = minScale / curScale
             }
+            //scale = Math.max(0.05f, scale)
+
+            getPivot(detector.focusX, detector.focusY)
+            /*pivotPointX = detector.focusX
+            pivotPointY = detector.focusY*/
+
+
+            log("pivotX = $pivotPointX, pivotY = $pivotPointY")
+
+
+            invalidate()
 
 
           /*  var mScaleFactor = detector.scaleFactor
