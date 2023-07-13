@@ -14,7 +14,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_blue_A400"
         android:padding="16dp"
         tools:context=".ui.image_viewer.ImageViewerActivity">
 
