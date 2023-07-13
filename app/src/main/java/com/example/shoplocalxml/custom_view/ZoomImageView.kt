@@ -73,10 +73,20 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         lastTouchY = 0f
         scale =
             (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
+        posX = (w - widthDrawable * scale) / 2f
+        posY = (h - heightDrawable * scale) / 2f
         getPivot(
-            (w  - widthDrawable * scale) / 2f,
-            (h - heightDrawable * scale) / 2f
+            w/ 2f,
+            h/ 2f
         )
+    }
+
+    private fun getPivot(x: Float, y: Float){
+        val w = widthDrawable  * scale
+        val h = heightDrawable * scale
+        log ("w = $w, h = $h")
+        /*pivotPointX = widthDrawable  * scale
+*/
     }
 
    /* override fun setImageURI(uri: Uri?) {
@@ -138,9 +148,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         return true
     }
 
-    private fun getPivot(x: Float, y: Float){
 
-    }
 
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
         override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
