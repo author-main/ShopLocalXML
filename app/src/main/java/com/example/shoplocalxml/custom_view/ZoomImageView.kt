@@ -79,18 +79,19 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
         posX = (w - widthDrawable * scale) / 2f
         posY = (h - heightDrawable * scale) / 2f
-        getPivot(
-            w/ 2f,
-            h/ 2f
-        )
+        /*getPivot(
+            widthDrawable/ 2f,
+            heightDrawable/ 2f
+        )*/
     }
 
     private fun getPivot(x: Float, y: Float){
+        scale = 2f
       /*  val w = widthDrawable  * scale
         val h = heightDrawable * scale
         log ("w = $w, h = $h")*/
-       /* pivotPointX = x
-        pivotPointY = y*/
+        pivotPointX = posX - x
+        pivotPointY = posY - y
 
     }
 
