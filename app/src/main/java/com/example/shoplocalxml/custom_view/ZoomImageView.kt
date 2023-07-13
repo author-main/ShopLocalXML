@@ -17,6 +17,10 @@ import com.example.shoplocalxml.log
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     private var widthDrawable = 0f
     private var heightDrawable = 0f
+
+    private var widthView = 0f
+    private var heightView = 0f
+
     private enum class ZoomMode {NONE, ZOOM, MOVE, CLICK}
     private var mode = ZoomMode.NONE
     private val matrix = Matrix()
@@ -54,7 +58,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 pivotPointX,
                 pivotPointY
             )
-            //val dScale = widthDrawable * scale
             matrix.postTranslate(posX, posY)
 
             val bitmap = (drawable as BitmapDrawable).bitmap
@@ -70,6 +73,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        widthView = w.toFloat()
+        heightView = h.toFloat()
         val bitmap = (drawable as BitmapDrawable).bitmap
         widthDrawable  = bitmap.width.toFloat()
         heightDrawable = bitmap.height.toFloat()
@@ -79,20 +84,19 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
         posX = (w - widthDrawable * scale) / 2f
         posY = (h - heightDrawable * scale) / 2f
-        /*getPivot(
+        getPivot(
             widthDrawable/ 2f,
             heightDrawable/ 2f
-        )*/
+        )
     }
 
     private fun getPivot(x: Float, y: Float){
-        scale = 2f
-      /*  val w = widthDrawable  * scale
-        val h = heightDrawable * scale
-        log ("w = $w, h = $h")*/
-        pivotPointX = posX - x
-        pivotPointY = posY - y
 
+
+
+        //scale = 2f
+        pivotPointX = (widthView - widthDrawable) / 2f
+        pivotPointY = (heightView - heightDrawable) / 2f
     }
 
    /* override fun setImageURI(uri: Uri?) {
@@ -178,8 +182,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             //int scrollX = (int) ((getScrollX() + scaleDetector.getFocusX()) * scaleDetector.getScaleFactor() - scaleDetector.getFocusX());
 
             getPivot(detector.focusX, detector.focusY)
-            pivotPointX = detector.focusX
-            pivotPointY = detector.focusY
+            /*pivotPointX = detector.focusX
+            pivotPointY = detector.focusY*/
 
 
             log("pivotX = $pivotPointX, pivotY = $pivotPointY")
