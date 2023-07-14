@@ -16,7 +16,7 @@ import com.example.shoplocalxml.log
 
 
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
-
+    private val matrixDraw = Matrix()
     private var widthDrawable = 0f
     private var heightDrawable = 0f
 
@@ -52,24 +52,27 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         //super.onDraw(canvas)
         canvas.drawColor(Color.TRANSPARENT)
         if (drawable != null) {
+            /*val data = floatArrayOf()
+            matrix.getValues(data)*/
+            matrixDraw.set(matrix)
             /*canvas.save()
             canvas.translate(posX, posY)*/
-            //matrix.postTranslate(posX, posY)
-            matrix.postScale(
+            //matrixDraw.postTranslate(posX, posY)
+            /*matrix.postScale(
                 scale, scale,
                 pivotPointX,
                 pivotPointY
-            )
-            matrix.postTranslate(posX, posY)
+            )*/
+            matrixDraw.postTranslate(posX, posY)
 
             val bitmap = (drawable as BitmapDrawable).bitmap
             canvas.drawBitmap(
-                bitmap, matrix,
+                bitmap, matrixDraw,
                 null
             )
 
-            //canvas.restore()
-            matrix.reset()
+           // canvas.restore()
+            matrixDraw.reset()
         }
     }
 
@@ -86,10 +89,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
         posX = (w - widthDrawable * scale) / 2f
         posY = (h - heightDrawable * scale) / 2f
-       /* getPivot(
-            widthView/ 2f,
-            heightView/ 2f
-        )*/
+        matrix.reset()
+        matrix.postScale(
+            scale, scale
+        )
     }
 
   /*  private fun getPivot(x: Float, y: Float){
@@ -120,6 +123,22 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
 
 
+    private fun getPivots(x: Float, y: Float){
+        /*val sWidth  = widthDrawable  * scale
+        val sHeight = heightDrawable * scale*/
+        val pointX = (x  - posX) / scale
+        val pointY = (y  - posY) / scale
+     /*   if (pointX > widthDrawable) pointX = widthDrawable
+        if (pointX <0) pointX = 0f
+
+        if (pointY > heightDrawable) pointY = heightDrawable
+        if (pointY <0) pointY = 0f*/
+
+        pivotPointX = pointX
+        pivotPointY = pointY
+        log("scale = $scale, x = $pointX, y = $pointY")
+    }
+
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -149,7 +168,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                // log(rect)
                 /*pivotPointX = event.x + posX
                 pivotPointY = event.y + posY*/
-
+                getPivots(event.x, event.y)
 
                 lastTouchX = event.x
                 lastTouchY = event.y
@@ -157,16 +176,16 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 //log(activePointerId)
             }
 
-/*            MotionEvent.ACTION_UP -> {
+        /*    MotionEvent.ACTION_UP -> {
                 pivotPointX = 0f
                 pivotPointY = 0f
-                activePointerId = INVALID_POINTER_ID;
+                    // activePointerId = INVALID_POINTER_ID;
             }
 
            MotionEvent.ACTION_CANCEL -> {
                pivotPointX = 0f
                pivotPointY = 0f
-                activePointerId = INVALID_POINTER_ID;
+                   //   activePointerId = INVALID_POINTER_ID;
            }*/
 
            MotionEvent.ACTION_MOVE -> {
@@ -179,7 +198,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                     posX += dx
                     posY += dy
 
-                    val w = widthDrawable * scale
+                 /*   val w = widthDrawable * scale
                     val h = heightDrawable * scale
                     val dw = widthView  - w
                     val dh = heightView - h
@@ -201,7 +220,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                                 posY = dh
                     } else {
                         posY = dh / 2f
-                    }
+                    }*/
                     invalidate();
                 }
                 lastTouchX = x
@@ -224,14 +243,18 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
 
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        /*override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-            mode = ZoomMode.ZOOM
+
+        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+            //log("${detector.focusX}, ${detector.focusY}")
+                    //getPivots(detector.focusX, detector.focusY)
+            /*pivotPointX = detector.focusX
+            pivotPointY = detector.focusY*/
             return true
-        }*/
+        }
 
         override fun onScale(detector: ScaleGestureDetector): Boolean {
             //var detectorScale = detector.scaleFactor
-            //val curScale = scale
+            val curScale = scale
             scale *= detector.scaleFactor
             if (scale > maxScale) {
                 scale = maxScale
@@ -240,6 +263,17 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 scale = minScale
                 //detectorScale = minScale / curScale
             }
+
+           /* posX = posX / curScale * scale
+            posY = posY / curScale * scale*/
+            getPivots(detector.focusX, detector.focusY)
+            matrix.reset()
+            matrix.postScale(
+                scale, scale,
+                pivotPointX,
+                pivotPointY
+            )
+
             //scale = Math.max(0.05f, scale)
 
             //int scrollX = (int) ((getScrollX() + scaleDetector.getFocusX()) * scaleDetector.getScaleFactor() - scaleDetector.getFocusX());
@@ -247,9 +281,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             //getPivot(detector.focusX, detector.focusY)
             /*pivotPointX = detector.focusX
             pivotPointY = detector.focusY*/
-          /*  var pivotX =  detector.focusX
-            var pivotY =  detector.focusY
-            log("$pivotX, $pivotY")*/
+            //getPivots(detector.focusX, detector.focusY)
+            /*var pivotPointX =  detector.focusX
+            var pivotPointY =  detector.focusY
+            log("$pivotPointX, $pivotPointY")*/
 
 
             //log("pivotX = $pivotPointX, pivotY = $pivotPointY")
