@@ -9,6 +9,7 @@ import android.graphics.PointF
 import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
+import android.view.Display.Mode
 import android.view.MotionEvent
 import android.view.MotionEvent.INVALID_POINTER_ID
 import android.view.ScaleGestureDetector
@@ -25,8 +26,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     private var widthView = 0f
     private var heightView = 0f
 
-    /*private enum class ZoomMode {NONE, ZOOM, MOVE, CLICK}
-    private var mode = ZoomMode.NONE*/
+    private enum class ZoomMode {NONE, ZOOM, MOVE, CLICK}
+    private var mode = ZoomMode.NONE
     private val matrix = Matrix()
     private val minScale = 1f
     private val maxScale = 7f
@@ -55,8 +56,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         if (drawable != null) {
             /*val data = floatArrayOf()
             matrix.getValues(data)*/
-            /*matrixDraw.set(matrix)
-            matrixDraw.postTranslate(posX, posY)*/
+            matrixDraw.set(matrix)
+            matrixDraw.postTranslate(posX, posY)
 
             /*canvas.save()
             canvas.translate(posX, posY)*/
@@ -67,15 +68,14 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 pivotPointY
             )*/
 
-
             val bitmap = (drawable as BitmapDrawable).bitmap
             canvas.drawBitmap(
-                bitmap, matrix,
+                bitmap, matrixDraw,
                 null
             )
 
             //canvas.restore()
-            //matrixDraw.reset()
+            matrixDraw.reset()
         }
     }
 
@@ -92,10 +92,11 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
             (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
         posX = (w - widthDrawable * saveScale) / 2f
         posY = (h - heightDrawable * saveScale) / 2f
-        matrix.reset()
+
         matrix.postScale(
             saveScale, saveScale
         )
+        //matrix.postTranslate(posX, posY)
     }
 
   /*  private fun getPivot(x: Float, y: Float){
@@ -174,66 +175,30 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         scaleDetector?.onTouchEvent(event)
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-
-                imagePosX =  (event.x - posX) / saveScale
-                imagePosY =  (event.y - posY) / saveScale
-
-              /*  val pointX = event.x
-                val pointY = event.y
-                val w = widthDrawable  * scale
-                val h = heightDrawable * scale
-
-                val rect = RectF(
-                    posX,
-                    posY,
-                    posX + widthDrawable  * scale,
-                    posY + heightDrawable  * scale
-                )
-
-                if (rect.contains(pointX, pointY)) {
-                    pivotPointX = posX
-                    pivotPointY = posY
-                }*/
-
-
-               // log(rect)
-                /*pivotPointX = event.x + posX
-                pivotPointY = event.y + posY*/
-               // getPivots(event.x, event.y)
-
+                mode = ZoomMode.MOVE
                 lastTouchX = event.x
                 lastTouchY = event.y
-                //activePointerId = event.getPointerId(0)
-                //log(activePointerId)
             }
 
-        /*    MotionEvent.ACTION_UP -> {
-                pivotPointX = 0f
-                pivotPointY = 0f
-                    // activePointerId = INVALID_POINTER_ID;
+            MotionEvent.ACTION_UP -> {
+                mode = ZoomMode.NONE
             }
-
-           MotionEvent.ACTION_CANCEL -> {
-               pivotPointX = 0f
-               pivotPointY = 0f
-                   //   activePointerId = INVALID_POINTER_ID;
-           }*/
 
            MotionEvent.ACTION_MOVE -> {
-                //val pointerIndex = event.findPointerIndex(activePointerId)
-                val x = event.x//.getX(pointerIndex)
-                val y = event.y//getY(pointerIndex)
-                if (!scaleDetector!!.isInProgress) {
-                    val dx = x - lastTouchX
-                    val dy = y - lastTouchY
-                    posX += dx
-                    posY += dy
-
-                    normalizeBounds()
-                    invalidate();
+                if (mode == ZoomMode.MOVE) {
+                    val x = event.x//.getX(pointerIndex)
+                    val y = event.y//getY(pointerIndex)
+                    if (!scaleDetector!!.isInProgress) {
+                        val dx = x - lastTouchX
+                        val dy = y - lastTouchY
+                        posX += dx
+                        posY += dy
+//                        normalizeBounds()
+                        invalidate();
+                    }
+                    lastTouchX = x
+                    lastTouchY = y
                 }
-                lastTouchX = x
-                lastTouchY = y
            }
             /*MotionEvent.ACTION_POINTER_UP -> {
                 val pointerIndex = (event.action * MotionEvent.ACTION_POINTER_INDEX_MASK) shr MotionEvent.ACTION_POINTER_INDEX_SHIFT
@@ -254,10 +219,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
         override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-            //log("${detector.focusX}, ${detector.focusY}")
-                    //getPivots(detector.focusX, detector.focusY)
-            /*pivotPointX = detector.focusX
-            pivotPointY = detector.focusY*/
+            mode = ZoomMode.ZOOM
             return true
         }
 
@@ -284,22 +246,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
 
 /*
-It's old, but this may help someone else.
-
-Below TouchImageView class supports both zooming in/out on either pinch or double tap
-
-import android.content.Context;
-import android.graphics.Matrix;
-import android.graphics.PointF;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
-import android.widget.ImageView;
-
 public class TouchImageView extends ImageView implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     Matrix matrix;
@@ -529,5 +475,66 @@ public class TouchImageView extends ImageView implements GestureDetector.OnGestu
         if (trans < minTrans)
             return -trans + minTrans;
         if (trans > maxTrans)
+            return -trans + maxTrans;
+        return 0;
+    }
+
+    float getFixDragTrans(float delta, float viewSize, float contentSize) {
+        if (contentSize <= viewSize) {
+            return 0;
+        }
+        return delta;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        viewWidth = MeasureSpec.getSize(widthMeasureSpec);
+        viewHeight = MeasureSpec.getSize(heightMeasureSpec);
+
+        //
+        // Rescales image on rotation
+        //
+        if (oldMeasuredHeight == viewWidth && oldMeasuredHeight == viewHeight
+                || viewWidth == 0 || viewHeight == 0)
+            return;
+        oldMeasuredHeight = viewHeight;
+        oldMeasuredWidth = viewWidth;
+
+        if (saveScale == 1) {
+            // Fit to screen.
+            float scale;
+
+            Drawable drawable = getDrawable();
+            if (drawable == null || drawable.getIntrinsicWidth() == 0
+                    || drawable.getIntrinsicHeight() == 0)
+                return;
+            int bmWidth = drawable.getIntrinsicWidth();
+            int bmHeight = drawable.getIntrinsicHeight();
+
+            Log.d("bmSize", "bmWidth: " + bmWidth + " bmHeight : " + bmHeight);
+
+            float scaleX = (float) viewWidth / (float) bmWidth;
+            float scaleY = (float) viewHeight / (float) bmHeight;
+            scale = Math.min(scaleX, scaleY);
+            matrix.setScale(scale, scale);
+
+            // Center the image
+            float redundantYSpace = (float) viewHeight
+                    - (scale * (float) bmHeight);
+            float redundantXSpace = (float) viewWidth
+                    - (scale * (float) bmWidth);
+            redundantYSpace /= (float) 2;
+            redundantXSpace /= (float) 2;
+
+            matrix.postTranslate(redundantXSpace, redundantYSpace);
+
+            origWidth = viewWidth - 2 * redundantXSpace;
+            origHeight = viewHeight - 2 * redundantYSpace;
+            setImageMatrix(matrix);
+        }
+        fixTrans();
+    }
+}
 
  */
