@@ -56,8 +56,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         if (drawable != null) {
             /*val data = floatArrayOf()
             matrix.getValues(data)*/
-            matrixDraw.set(matrix)
-            matrixDraw.postTranslate(posX, posY)
+           /* matrixDraw.set(matrix)
+            matrixDraw.postTranslate(posX, posY)*/
 
             /*canvas.save()
             canvas.translate(posX, posY)*/
@@ -70,12 +70,12 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
             val bitmap = (drawable as BitmapDrawable).bitmap
             canvas.drawBitmap(
-                bitmap, matrixDraw,
+                bitmap, matrix,
                 null
             )
 
             //canvas.restore()
-            matrixDraw.reset()
+                //matrixDraw.reset()
         }
     }
 
@@ -90,13 +90,16 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         lastTouchY = 0f
         saveScale =
             (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
-        posX = (w - widthDrawable * saveScale) / 2f
-        posY = (h - heightDrawable * saveScale) / 2f
+        /*posX = (w - widthDrawable * saveScale) / 2f
+        posY = (h - heightDrawable * saveScale) / 2f*/
 
         matrix.postScale(
             saveScale, saveScale
         )
-        //matrix.postTranslate(posX, posY)
+        matrix.postTranslate(
+            (w - widthDrawable * saveScale) / 2f,
+            (h - heightDrawable * saveScale) / 2f
+        )
     }
 
   /*  private fun getPivot(x: Float, y: Float){
@@ -170,9 +173,15 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     }
 
 
+    private fun normalizeMove(delta: Float, sizeView: Float, sizeContent: Float): Float {
+        return if (sizeView >= sizeContent) 0f else delta
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         scaleDetector?.onTouchEvent(event)
+        val currX = event.x
+        val currY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 mode = ZoomMode.MOVE
@@ -186,18 +195,27 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
            MotionEvent.ACTION_MOVE -> {
                 if (mode == ZoomMode.MOVE) {
-                    val x = event.x//.getX(pointerIndex)
-                    val y = event.y//getY(pointerIndex)
-                    if (!scaleDetector!!.isInProgress) {
-                        val dx = x - lastTouchX
-                        val dy = y - lastTouchY
-                        posX += dx
-                        posY += dy
-//                        normalizeBounds()
+                    /*val x = event.x//.getX(pointerIndex)
+                    val y = event.y//getY(pointerIndex)*/
+                    //if (!scaleDetector!!.isInProgress) {
+                        val dx = currX - lastTouchX
+                        val dy = currY - lastTouchY
+
+/*                        posX += normalizeMove(dx, widthView, widthDrawable * saveScale )
+                        posY += normalizeMove(dy, heightView, heightDrawable * saveScale )*/
+
+                        val nX = normalizeMove(dx, widthView, widthDrawable * saveScale )
+                        val nY = normalizeMove(dy, heightView, heightDrawable * saveScale )
+                        log("nX = $nX, ny = $nY")
+                        matrix.postTranslate(
+                            nX,
+                            nY
+                        )
                         invalidate();
-                    }
-                    lastTouchX = x
-                    lastTouchY = y
+                        lastTouchX = currX
+                        lastTouchY = currY
+                 //   }
+
                 }
            }
             /*MotionEvent.ACTION_POINTER_UP -> {
@@ -478,6 +496,7 @@ public class TouchImageView extends ImageView implements GestureDetector.OnGestu
             return -trans + maxTrans;
         return 0;
     }
+
 
     float getFixDragTrans(float delta, float viewSize, float contentSize) {
         if (contentSize <= viewSize) {
