@@ -14,9 +14,12 @@ import android.view.MotionEvent
 import android.view.MotionEvent.INVALID_POINTER_ID
 import android.view.ScaleGestureDetector
 import com.example.shoplocalxml.log
+import kotlin.math.abs
 
 
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
+    private val clickOffset = 3
+    private var startTouch = PointF(0f, 0f)
     private var imagePosX = 0f
     private var imagePosY = 0f
     private val matrixDraw = Matrix()
@@ -187,10 +190,20 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
                 mode = ZoomMode.MOVE
                 lastTouchX = event.x
                 lastTouchY = event.y
+                startTouch.x = event.x
+                startTouch.y = event.y
+            }
+
+            MotionEvent.ACTION_POINTER_UP -> {
+                mode = ZoomMode.NONE
             }
 
             MotionEvent.ACTION_UP -> {
                 mode = ZoomMode.NONE
+                val xDiff = abs (currX - startTouch.x)
+                val yDiff = abs (currY - startTouch.y)
+                if (xDiff < clickOffset && yDiff < clickOffset)
+                    performClick();
             }
 
            MotionEvent.ACTION_MOVE -> {
@@ -206,7 +219,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
 
                         val nX = normalizeMove(dx, widthView, widthDrawable * saveScale )
                         val nY = normalizeMove(dy, heightView, heightDrawable * saveScale )
-                        log("nX = $nX, ny = $nY")
+                       // log("nX = $nX, ny = $nY")
                         matrix.postTranslate(
                             nX,
                             nY
