@@ -13,6 +13,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
+import android.view.VelocityTracker
 import com.example.shoplocalxml.log
 import kotlin.math.abs
 
@@ -38,6 +39,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private var scaleDetector   = ScaleGestureDetector(context, ScaleListener())
     private var lastTouchX = 0f
     private var lastTouchY = 0f
+
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -82,16 +84,28 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         )
     }
 
+    private fun getTranslatePos(): PointF {
+        val matrixValue = FloatArray(9)
+        matrix.getValues(matrixValue);
+        return PointF (matrixValue[Matrix.MTRANS_X], // извлекаем из matrix перемещение x, y
+                       matrixValue[Matrix.MTRANS_Y]
+               )
+    }
+
+
     private fun limitMove(delta: Float, sizeView: Float, sizeContent: Float) =
         if (sizeView >= sizeContent) 0f else delta
 
     private fun limitTranslate() {
-        val matrixValue = FloatArray(9)
+       /* val matrixValue = FloatArray(9)
         matrix.getValues(matrixValue);
         val mX = matrixValue[Matrix.MTRANS_X] // извлекаем из matrix перемещение x, y
-        val mY = matrixValue[Matrix.MTRANS_Y]
-        val x = placeBound(mX, widthView,  widthDrawable  * saveScale)
-        val y = placeBound(mY, heightView, heightDrawable * saveScale)
+        val mY = matrixValue[Matrix.MTRANS_Y]*/
+        val transPos = getTranslatePos()
+        /*val x = placeBound(mX, widthView,  widthDrawable  * saveScale)
+        val y = placeBound(mY, heightView, heightDrawable * saveScale)*/
+        val x = placeBound(transPos.x, widthView,  widthDrawable  * saveScale)
+        val y = placeBound(transPos.y, heightView, heightDrawable * saveScale)
         if (x != 0f || y!=0f)
             matrix.postTranslate(x, y);
     }
@@ -216,10 +230,11 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
         val origScale = saveScale
-        val aMatrix = FloatArray(9)
+        /*val aMatrix = FloatArray(9)
         matrix.getValues(aMatrix)
         val curX = aMatrix[Matrix.MTRANS_X]
-        val curY = aMatrix[Matrix.MTRANS_Y]
+        val curY = aMatrix[Matrix.MTRANS_Y]*/
+        val transPos = getTranslatePos()
         saveScale = if (saveScale == maxScale)
             minScale
         else
@@ -227,7 +242,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         matrix.reset()
         val centerX = (widthView - widthDrawable   * saveScale) / 2f
         val centerY = (heightView - heightDrawable * saveScale) / 2f
-        animDoubleZoom = DoubleTapAnimator(PointF(curX, curY), PointF(centerX, centerY), origScale, saveScale)
+        //animDoubleZoom = DoubleTapAnimator(PointF(curX, curY), PointF(centerX, centerY), origScale, saveScale)
+        animDoubleZoom = DoubleTapAnimator(transPos, PointF(centerX, centerY), origScale, saveScale)
         handlerUI.post(
             animDoubleZoom!!
         )
