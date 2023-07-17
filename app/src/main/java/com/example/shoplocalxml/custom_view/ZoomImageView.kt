@@ -10,6 +10,7 @@ import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.Display.Mode
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.MotionEvent.INVALID_POINTER_ID
 import android.view.ScaleGestureDetector
@@ -17,7 +18,7 @@ import com.example.shoplocalxml.log
 import kotlin.math.abs
 
 
-class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
+class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     private val clickOffset = 3
     private var startTouch = PointF(0f, 0f)
     private var imagePosX = 0f
@@ -35,7 +36,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     private val minScale = 1f
     private val maxScale = 7f
     private var saveScale    = 1f
-    private var scaleDetector: ScaleGestureDetector? = null
+    private var gestureDetector = GestureDetector(context, this)
+    private var scaleDetector   = ScaleGestureDetector(context, ScaleListener())
     private var pivotPointX = 0f
     private var pivotPointY = 0f
     private var posX = 0f
@@ -50,8 +52,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
         defStyleAttr
     )
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        scaleDetector = ScaleGestureDetector(context, ScaleListener())
+        //scaleDetector = ScaleGestureDetector(context, ScaleListener())
     }
+
+
 
      override fun onDraw(canvas: Canvas) {
         //super.onDraw(canvas)
@@ -246,6 +250,52 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView {
     }
 
 
+    override fun onDown(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onShowPress(e: MotionEvent) {
+
+    }
+
+    override fun onSingleTapUp(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onScroll(
+        e1: MotionEvent,
+        e2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        return false
+    }
+
+    override fun onLongPress(e: MotionEvent) {
+
+    }
+
+    override fun onFling(
+        e1: MotionEvent,
+        e2: MotionEvent,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        return false
+    }
+
+
+    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDoubleTap(e: MotionEvent): Boolean {
+        return false
+    }
+
+    override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+        return false
+    }
 
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
