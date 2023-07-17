@@ -248,19 +248,19 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         private val startScale: Float,
         private val endScale:   Float
     ): Runnable{
-        var scale = startScale
-        var x = startTrans.x
-        var y = startTrans.y
-        private var fraction = 10f
-        private var stepScale = 0.1f
-        private var stepX = 0.1f
-        private var stepY = 0.1f
-        init {
-            stepScale = (endScale - startScale) / fraction
-            stepX = (endTrans.x - startTrans.x) / fraction
-            stepY = (endTrans.y - startTrans.y) / fraction
+        private var scale = startScale
+        private var x = startTrans.x
+        private var y = startTrans.y
+        private val fraction = 10f
+        private var stepScale = (endScale - startScale) / fraction
+        private var stepX = (endTrans.x - startTrans.x) / fraction
+        private var stepY = (endTrans.y - startTrans.y) / fraction
+        /*init {
+            stepScale   = (endScale - startScale) / fraction
+            stepX       = (endTrans.x - startTrans.x) / fraction
+            stepY       = (endTrans.y - startTrans.y) / fraction
             matrix.reset()
-        }
+        }*/
         override fun run() {
             scale   += stepScale
             var rangeFrom = 0f
