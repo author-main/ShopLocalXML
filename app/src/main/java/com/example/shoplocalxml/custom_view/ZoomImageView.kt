@@ -18,11 +18,11 @@ import com.example.shoplocalxml.log
 import kotlin.math.abs
 
 
-class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
     private val clickOffset = 3
     private var startTouch = PointF(0f, 0f)
-    private var imagePosX = 0f
-    private var imagePosY = 0f
+    /*private var imagePosX = 0f
+    private var imagePosY = 0f*/
     private val matrixDraw = Matrix()
     private var widthDrawable = 0f
     private var heightDrawable = 0f
@@ -36,7 +36,9 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private val minScale = 1f
     private val maxScale = 7f
     private var saveScale    = 1f
-    private var gestureDetector = GestureDetector(context, this)
+    private var gestureDetector = GestureDetector(context, this).apply {
+        setOnDoubleTapListener(this@ZoomImageView)
+    }
     private var scaleDetector   = ScaleGestureDetector(context, ScaleListener())
     private var pivotPointX = 0f
     private var pivotPointY = 0f
@@ -53,6 +55,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     )
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         //scaleDetector = ScaleGestureDetector(context, ScaleListener())
+        //gestureDetector.setOnDoubleTapListener(this)
     }
 
 
@@ -186,7 +189,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        scaleDetector?.onTouchEvent(event)
+        scaleDetector.onTouchEvent(event)
+        gestureDetector.onTouchEvent(event)
         val currX = event.x
         val currY = event.y
         when (event.action) {
@@ -290,6 +294,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     }
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
+        log("doubleTap...")
         return false
     }
 
