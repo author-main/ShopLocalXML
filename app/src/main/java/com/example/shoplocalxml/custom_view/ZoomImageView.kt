@@ -199,13 +199,19 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                         tracker.computeCurrentVelocity(1000, MAX_FLING_VELOCITY)
                         val velocityY: Float = tracker.getYVelocity(pointerId)
                         val velocityX: Float = tracker.getXVelocity(pointerId)
+                        log("$velocityX, $velocityY")
                         if (abs(velocityY) > MIN_FLING_VELOCITY || abs(velocityX) > MIN_FLING_VELOCITY) {
                             val transPos = getTranslatePos()
                             transFlingX = transPos.x
                             transFlingY = transPos.y
+                            val maxX = abs(widthView    - widthDrawable * saveScale)  - lastTouchX
+                            val maxY = abs(heightView   - heightDrawable * saveScale) - lastTouchY
+                            val transScale = maxX / maxY
+                            log("$maxX, $maxY, $transScale")
+
                             val valueHolder = FloatValueHolder()
                             flingAnimX = FlingAnimation(valueHolder).apply {
-                                setMaxValue(abs(widthView - widthDrawable * saveScale))
+                             //   setMaxValue(abs(widthView - widthDrawable * saveScale))
                                 setStartVelocity(velocityX)
                                 setStartValue(0f)
                                 addUpdateListener { _, value, _ ->
@@ -222,7 +228,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                                 start()
                             }
                             flingAnimY = FlingAnimation(valueHolder).apply {
-                                setMaxValue(abs(heightView - heightDrawable * saveScale))
+                            //    setMaxValue(abs(heightView - heightDrawable * saveScale))
                                 setStartVelocity(velocityY)
                                 setStartValue(0f)
                                 addUpdateListener { _, value, _ ->
