@@ -126,13 +126,13 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     }
 
 
-    private fun updateMatrixFling(){
+  /*  private fun updateMatrixFling(){
         matrix.reset()
         matrix.postScale(saveScale, saveScale)
         matrix.postTranslate(transFlingX, transFlingY)
         limitTranslate()
         invalidate()
-    }
+    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -197,7 +197,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         e2: MotionEvent,
         velocityX: Float,
         velocityY: Float
-    ): Boolean {return false}
+    ): Boolean {
+        log("${e1.x}, ${e1.y} - ${e2.x}, ${e2.y}")
+        return false
+    }
     override fun onSingleTapConfirmed(e: MotionEvent): Boolean {return false}
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
