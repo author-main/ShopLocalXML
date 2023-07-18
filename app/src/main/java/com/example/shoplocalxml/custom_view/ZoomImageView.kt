@@ -23,8 +23,6 @@ import kotlin.math.abs
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
     private var transFlingX = 0f
     private var transFlingY = 0f
-    private val MIN_FLING_VELOCITY = 50f
-    private val MAX_FLING_VELOCITY = 300f
     private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
     private val clickOffset = 3
@@ -45,11 +43,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private var scaleDetector   = ScaleGestureDetector(context, ScaleListener())
     private var lastTouchX = 0f
     private var lastTouchY = 0f
-
-    private var velocityTracker : VelocityTracker? = null
-    private var flingAnimX: FlingAnimation? = null
-    private var flingAnimY: FlingAnimation? = null
-
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -108,11 +101,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         val transPos = getTranslatePos()
         val x = placeBound(transPos.x, widthView,  widthDrawable  * saveScale)
         val y = placeBound(transPos.y, heightView, heightDrawable * saveScale)
-        if (x != 0f || y!=0f) {
-            flingAnimX?.cancel()
-            flingAnimY?.cancel()
+        if (x != 0f || y!=0f)
             matrix.postTranslate(x, y)
-        }
     }
 
     private fun placeBound(value: Float, viewSize: Float, contentSize: Float): Float {
@@ -146,18 +136,12 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (velocityTracker == null)
-            velocityTracker = VelocityTracker.obtain()
-        velocityTracker?.addMovement(event)
-
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
         val currX = event.x
         val currY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                flingAnimX?.cancel()
-                flingAnimY?.cancel()
                 mode = ZoomMode.MOVE
                 lastTouchX = event.x
                 lastTouchY = event.y
@@ -167,27 +151,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
             MotionEvent.ACTION_POINTER_UP -> {
                 mode = ZoomMode.NONE
-
-                velocityTracker?.let { tracker ->
-                    tracker.computeCurrentVelocity(1000, MAX_FLING_VELOCITY)
-                    val upIndex: Int = event.actionIndex
-                    val id1: Int = event.getPointerId(upIndex)
-                    val x1 = tracker.getXVelocity(id1)
-                    val y1 = tracker.getYVelocity(id1)
-                    for (i in 0 until event.pointerCount) {
-                        if (i == upIndex) continue
-                        val id2: Int = event.getPointerId(i)
-                        val x = x1 * tracker.getXVelocity(id2)
-                        val y = y1 * tracker.getYVelocity(id2)
-                        val dot = x + y
-                        if (dot < 0) {
-                            tracker.clear()
-                            break
-                        }
-                    }
-                }
-
-
             }
 
             MotionEvent.ACTION_UP -> {
@@ -195,65 +158,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 val xDiff = abs (currX - startTouch.x)
                 val yDiff = abs (currY - startTouch.y)
                 if (xDiff < clickOffset && yDiff < clickOffset)
-                    performClick() else {
-
-                    velocityTracker?.let { tracker ->
-                        val pointerId: Int = event.getPointerId(0)
-                        tracker.computeCurrentVelocity(1000, MAX_FLING_VELOCITY)
-                        val velocityY: Float = tracker.getYVelocity(pointerId)
-                        val velocityX: Float = tracker.getXVelocity(pointerId)
-                        if (abs(velocityY) > MIN_FLING_VELOCITY || abs(velocityX) > MIN_FLING_VELOCITY) {
-                            val transPos = getTranslatePos()
-                            transFlingX = transPos.x
-                            transFlingY = transPos.y
-                           /* val maxX = abs(abs(widthView    - widthDrawable * saveScale)  - lastTouchX)
-                            val maxY = abs(abs(heightView   - heightDrawable * saveScale) - lastTouchY)
-                            val transScale = maxX / maxY
-                            log("$maxX, $maxY, $transScale")*/
-
-                            val valueHolder = FloatValueHolder()
-                            flingAnimX = FlingAnimation(valueHolder).apply {
-                             //   setMaxValue(abs(widthView - widthDrawable * saveScale))
-                                setStartVelocity(velocityX)
-                                setStartValue(0f)
-                                addUpdateListener { _, value, _ ->
-                                    transFlingX += value
-                                   // log("fling X = $value")
-                                    updateMatrixFling()
-
-                                    //updateDrawMatrix()
-                                    //listener.onZoom(mScaling, mRotation, mTranslationX to mTranslationY, mPivotX to mPivotY)
-                                }
-                                addEndListener { _, _, _, _ ->
-                                    updateMatrixFling()
-                                }
-                                start()
-                            }
-                            flingAnimY = FlingAnimation(valueHolder).apply {
-                            //    setMaxValue(abs(heightView - heightDrawable * saveScale))
-                                setStartVelocity(velocityY)
-                                setStartValue(0f)
-                                addUpdateListener { _, value, _ ->
-                                    //transPos.y = translateY + value
-                                    transFlingY += value
-                                    updateMatrixFling()
-                                    //updateDrawMatrix()
-                                    //listener.onZoom(mScaling, mRotation, mTranslationX to mTranslationY, mPivotX to mPivotY)
-                                }
-                                addEndListener { _, _, _, _ ->
-                                    updateMatrixFling()
-                                }
-                                start()
-                            }
-                        }
-                        tracker.recycle()
-                        velocityTracker = null
-                    }
-
-
-
-
-                }
+                    performClick()
             }
 
            MotionEvent.ACTION_MOVE -> {
