@@ -24,7 +24,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private var transFlingX = 0f
     private var transFlingY = 0f
     private val MIN_FLING_VELOCITY = 50f
-    private val MAX_FLING_VELOCITY = 8000f
+    private val MAX_FLING_VELOCITY = 200f
     private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
     private val clickOffset = 3
@@ -205,6 +205,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                             transFlingY = transPos.y
                             val valueHolder = FloatValueHolder()
                             flingAnimX = FlingAnimation(valueHolder).apply {
+                                setMaxValue(abs(widthView - widthDrawable * saveScale))
                                 setStartVelocity(velocityX)
                                 setStartValue(0f)
                                 addUpdateListener { _, value, _ ->
@@ -221,6 +222,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                                 start()
                             }
                             flingAnimY = FlingAnimation(valueHolder).apply {
+                                setMaxValue(abs(heightView - heightDrawable * saveScale))
                                 setStartVelocity(velocityY)
                                 setStartValue(0f)
                                 addUpdateListener { _, value, _ ->
