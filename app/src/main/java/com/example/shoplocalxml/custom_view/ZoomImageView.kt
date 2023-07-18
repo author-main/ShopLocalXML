@@ -24,7 +24,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private var transFlingX = 0f
     private var transFlingY = 0f
     private val MIN_FLING_VELOCITY = 50f
-    private val MAX_FLING_VELOCITY = 200f
+    private val MAX_FLING_VELOCITY = 300f
     private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
     private val clickOffset = 3
@@ -104,12 +104,15 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private fun limitMove(delta: Float, sizeView: Float, sizeContent: Float) =
         if (sizeView >= sizeContent) 0f else delta
 
-    private fun limitTranslate() {
+    private fun limitTranslate(){
         val transPos = getTranslatePos()
         val x = placeBound(transPos.x, widthView,  widthDrawable  * saveScale)
         val y = placeBound(transPos.y, heightView, heightDrawable * saveScale)
-        if (x != 0f || y!=0f)
-            matrix.postTranslate(x, y);
+        if (x != 0f || y!=0f) {
+            flingAnimX?.cancel()
+            flingAnimY?.cancel()
+            matrix.postTranslate(x, y)
+        }
     }
 
     private fun placeBound(value: Float, viewSize: Float, contentSize: Float): Float {
@@ -199,15 +202,14 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                         tracker.computeCurrentVelocity(1000, MAX_FLING_VELOCITY)
                         val velocityY: Float = tracker.getYVelocity(pointerId)
                         val velocityX: Float = tracker.getXVelocity(pointerId)
-                        log("$velocityX, $velocityY")
                         if (abs(velocityY) > MIN_FLING_VELOCITY || abs(velocityX) > MIN_FLING_VELOCITY) {
                             val transPos = getTranslatePos()
                             transFlingX = transPos.x
                             transFlingY = transPos.y
-                            val maxX = abs(widthView    - widthDrawable * saveScale)  - lastTouchX
-                            val maxY = abs(heightView   - heightDrawable * saveScale) - lastTouchY
+                           /* val maxX = abs(abs(widthView    - widthDrawable * saveScale)  - lastTouchX)
+                            val maxY = abs(abs(heightView   - heightDrawable * saveScale) - lastTouchY)
                             val transScale = maxX / maxY
-                            log("$maxX, $maxY, $transScale")
+                            log("$maxX, $maxY, $transScale")*/
 
                             val valueHolder = FloatValueHolder()
                             flingAnimX = FlingAnimation(valueHolder).apply {
