@@ -200,6 +200,22 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
         fun onAnimateStep() {
 
+            fun getOffset(curTrans: Float, trans: Float, maxOffset: Float): Float {
+                return if (trans > 0) {   // -> сдвиг вправо
+                    val deltaX = abs(curTrans) - trans
+                    if (deltaX > 0)
+                        trans
+                    else
+                        -curTrans
+                } else {
+                    val offsetX = abs(curTrans + trans)
+                    if (offsetX < maxOffset)
+                        trans
+                    else
+                        - (maxOffset + curTrans)
+                }
+            }
+
             val curTime = System.currentTimeMillis()
             val percentTime = (curTime - startTime).toFloat() / (endTime - startTime).toFloat()
             val percentDistance: Float = animateInterpolator
@@ -207,8 +223,26 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
             val tdX = percentDistance * dx
             val tdY = percentDistance * dy
 
-            val curDx = 0f
-            val curDy = 0f
+
+
+            val curDx = getOffset(posTrans.x, tdX, maxOffsetX)
+            val curDy = getOffset(posTrans.y, tdY, maxOffsetY)
+
+
+          /*  curDx = if (tdX > 0) {   // -> сдвиг вправо
+                val offsetX = abs(posTrans.x) - tdX
+                if (offsetX > 0)
+                    tdX
+                else
+                    -posTrans.x
+            } else {
+                val offsetX = abs(posTrans.x + tdX)
+                if (offsetX < maxOffsetX)
+                    tdX
+                else
+                    - (maxOffsetX + posTrans.x)
+            }*/
+
 
 
         //    if (curDx != 0f || curDy != 0f) {
