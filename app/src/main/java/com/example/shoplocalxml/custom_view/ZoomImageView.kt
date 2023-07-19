@@ -183,7 +183,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
     private fun onAnimateMove(dx: Float, dy: Float, duration: Long) {
         val animateStart = Matrix(matrix)
-        val animateInterpolator = DecelerateInterpolator()//OvershootInterpolator()
+        val animateInterpolator = //DecelerateInterpolator()
+             OvershootInterpolator()
         val startTime = System.currentTimeMillis()
         val endTime = startTime + duration
 
@@ -234,7 +235,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         if (w <= widthView)
             totalDx = 0f
         else {
-          /*  val curTrans = getTranslatePos()
+            val curTrans = getTranslatePos()
             val maxOffset = w - widthView
             val direction = if (totalDx < 0) - 1 else 1
             val offset = abs(curTrans.x + totalDx)
@@ -243,7 +244,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 totalDx = maxOffset - abs(curTrans.x)
                 log("$totalDx")
 
-            }*/
+            }
 
          /*   if (offset >= maxOffset) {
                 totalDx = direction * (maxOffset - abs(curTrans.x))
