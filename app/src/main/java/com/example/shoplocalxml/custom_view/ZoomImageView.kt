@@ -17,6 +17,7 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import com.example.shoplocalxml.log
 import kotlin.math.abs
+import kotlin.math.max
 
 
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
@@ -189,34 +190,40 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         val startTime = System.currentTimeMillis()
         val endTime = startTime + duration
 
+
+        val w = widthDrawable  * saveScale
+        val h = heightDrawable * saveScale
+        val maxOffsetX = (w - widthView).toFloat().coerceAtLeast(0f)
+        val maxOffsetY = (h - heightView).toFloat().coerceAtLeast(0f)
+
+
         fun onAnimateStep() {
             val curTime = System.currentTimeMillis()
             val percentTime = (curTime - startTime).toFloat() / (endTime - startTime).toFloat()
-
-            val w = widthDrawable  * saveScale
-            val h = heightDrawable * saveScale
-            val maxOffsetX = (w - widthView).toFloat().coerceAtLeast(0f)
-            val maxOffsetY = (h - heightView).toFloat().coerceAtLeast(0f)
-
             val percentDistance: Float = animateInterpolator
                 .getInterpolation(percentTime)
-            val curDx = if (maxOffsetX > 0f) {
-                /*val direction = if (dx < 0) -1 else 1
-                val delta = percentDistance * dx
-                val offsetX = abs(posTrans.x) + abs(delta)
-                if (offsetX > maxOffsetX) {
-                    direction * maxOffsetX - abs(posTrans.x)
-                } else*/
-                percentDistance * dx
-            } else 0f
-            val curDy = if (maxOffsetY > 0f) {
-                percentDistance * dy
-            } else 0f
-            matrix.set(animateStart)
-            matrix.postTranslate(curDx, curDy);
-            invalidate();
-            if (percentTime < 1.0f)
-                post { onAnimateStep() }
+            val tdX = percentDistance * dx
+            val tdY = percentDistance * dy
+            val offsetX = posTrans.x + tdX
+            val offsetY = posTrans.y + tdY
+
+
+            val curDx = if (abs(offsetX) > maxOffsetX) {
+                val direction = if (tdX < 0) -1 else 1
+                direction * (maxOffsetX - abs(posTrans.x))
+            } else tdX
+
+            val curDy = if (abs(offsetY) > maxOffsetY) {
+                0f
+            } else tdY
+
+        //    if (curDx != 0f || curDy != 0f) {
+                matrix.set(animateStart)
+                matrix.postTranslate(curDx, curDy);
+                invalidate();
+                if (percentTime < 1.0f)
+                    post { onAnimateStep() }
+       //     }
         }
 
         post {
