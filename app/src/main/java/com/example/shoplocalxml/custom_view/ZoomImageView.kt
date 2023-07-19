@@ -209,9 +209,13 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
 
             val curDx = if (abs(offsetX) > maxOffsetX) {
+                log("limit...")
                 val direction = if (tdX < 0) -1 else 1
                 direction * (maxOffsetX - abs(posTrans.x))
             } else tdX
+
+
+            log("$maxOffsetX, $curDx")
 
             val curDy = if (abs(offsetY) > maxOffsetY) {
                 0f
@@ -225,6 +229,9 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                     post { onAnimateStep() }
        //     }
         }
+
+        if (maxOffsetX == 0f && maxOffsetY == 0f)
+            return
 
         post {
             onAnimateStep()
