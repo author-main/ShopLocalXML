@@ -7,7 +7,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.PointF
+import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -59,13 +61,22 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
 
     override fun setImageURI(uri: Uri?) {
-        val widthBorder = 3.toPx
+        val widthBorder = 5.toPx
         super.setImageURI(uri)
-        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth + widthBorder * 2, drawable.intrinsicHeight + widthBorder * 2, Bitmap.Config.ARGB_8888)
+        val sourceBitmap = (drawable as BitmapDrawable).bitmap
+        val bitmap = Bitmap.createBitmap(sourceBitmap.width + widthBorder * 2, sourceBitmap.height + widthBorder * 2, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.RED)
+        canvas.drawColor(Color.WHITE)//.WColorDrawable(0xE0FFFFFF.toInt()).color)
+        canvas.drawBitmap(sourceBitmap,
+            Rect(0,0, sourceBitmap.width, sourceBitmap.height),
+            Rect(widthBorder, widthBorder, bitmap.width - widthBorder, bitmap.height - widthBorder),
+            null
+        )
+    /*    val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth + widthBorder * 2, drawable.intrinsicHeight + widthBorder * 2, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        canvas.drawColor(ColorDrawable(0xE0FFFFFF.toInt()).color)
         drawable.setBounds(widthBorder, widthBorder, bitmap.width - widthBorder, bitmap.height - widthBorder)
-        drawable.draw(canvas)
+        drawable.draw(canvas)*/
         setImageDrawable(BitmapDrawable(resources, bitmap))
      }
 
