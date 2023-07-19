@@ -2,11 +2,13 @@ package com.example.shoplocalxml.custom_view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.PointF
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -15,14 +17,17 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.toPx
 import kotlin.math.abs
 import kotlin.math.max
 
 
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
-    private var transFlingX = 0f
-    private var transFlingY = 0f
+ /*   private var transFlingX = 0f
+    private var transFlingY = 0f*/
     private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
     private val clickOffset = 3
@@ -52,7 +57,19 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     )
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
 
-     override fun onDraw(canvas: Canvas) {
+
+    override fun setImageURI(uri: Uri?) {
+        val widthBorder = 3.toPx
+        super.setImageURI(uri)
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth + widthBorder * 2, drawable.intrinsicHeight + widthBorder * 2, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        canvas.drawColor(Color.RED)
+        drawable.setBounds(widthBorder, widthBorder, bitmap.width - widthBorder, bitmap.height - widthBorder)
+        drawable.draw(canvas)
+        setImageDrawable(BitmapDrawable(resources, bitmap))
+     }
+
+    override fun onDraw(canvas: Canvas) {
         canvas.drawColor(Color.TRANSPARENT)
         if (drawable != null) {
             val bitmap = (drawable as BitmapDrawable).bitmap
@@ -62,6 +79,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
             )
         }
     }
+
+
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
