@@ -13,9 +13,8 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
-import android.view.VelocityTracker
-import androidx.dynamicanimation.animation.FlingAnimation
-import androidx.dynamicanimation.animation.FloatValueHolder
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import com.example.shoplocalxml.log
 import kotlin.math.abs
 
@@ -182,6 +181,33 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     }
 
 
+    private fun onAnimateMove(dx: Float, dy: Float, duration: Long) {
+        val animateStart = Matrix(matrix)
+        val animateInterpolator = DecelerateInterpolator()//OvershootInterpolator()
+        val startTime = System.currentTimeMillis()
+        val endTime = startTime + duration
+
+        fun onAnimateStep() {
+            val curTime = System.currentTimeMillis()
+            val percentTime = (curTime - startTime).toFloat() / (endTime - startTime).toFloat()
+            val percentDistance: Float = animateInterpolator
+                .getInterpolation(percentTime)
+            val curDx = percentDistance * dx
+            val curDy = percentDistance * dy
+            matrix.set(animateStart)
+            matrix.postTranslate(curDx, curDy);
+            invalidate();
+            if (percentTime < 1.0f)
+                post { onAnimateStep() }
+        }
+
+        post { onAnimateStep() }
+    }
+
+
+
+
+
     override fun onDown(e: MotionEvent): Boolean {return false}
     override fun onShowPress(e: MotionEvent) {}
     override fun onSingleTapUp(e: MotionEvent): Boolean {return false}
@@ -198,8 +224,47 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         velocityX: Float,
         velocityY: Float
     ): Boolean {
-        log("${e1.x}, ${e1.y} - ${e2.x}, ${e2.y}")
-        return false
+//        log("${e1.x}, ${e1.y} - ${e2.x}, ${e2.y}")
+        val distanceTimeFactor = 0.4f
+        var totalDx = (distanceTimeFactor * velocityX/2)
+        var totalDy = (distanceTimeFactor * velocityY/2)
+
+        val w = widthDrawable * saveScale
+        val h = heightDrawable * saveScale
+        if (w <= widthView)
+            totalDx = 0f
+        else {
+          /*  val curTrans = getTranslatePos()
+            val maxOffset = w - widthView
+            val direction = if (totalDx < 0) - 1 else 1
+            val offset = abs(curTrans.x + totalDx)
+            if (offset > maxOffset) {
+                //log("$maxOffset,  ${curTrans.x + totalDx}")
+                totalDx = maxOffset - abs(curTrans.x)
+                log("$totalDx")
+
+            }*/
+
+         /*   if (offset >= maxOffset) {
+                totalDx = direction * (maxOffset - abs(curTrans.x))
+            }
+            log(totalDx)*/
+            //if (abs(curTrans.x) )
+        }
+
+        if (h <= heightView)
+            totalDy = 0f else {
+
+        }
+
+       // log("$totalDx, $totalDy")
+
+
+
+
+        onAnimateMove(totalDx, totalDy,
+            (1000 * distanceTimeFactor).toLong())
+        return true
     }
     override fun onSingleTapConfirmed(e: MotionEvent): Boolean {return false}
 
