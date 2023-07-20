@@ -404,10 +404,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
             matrix.postScale(scale, scale)
             matrix.postTranslate(x, y)
             invalidate()
-
-
-
-            postOnAnimation(this)
+            post(this)
+            //postOnAnimation(this)
         }
     }
 
