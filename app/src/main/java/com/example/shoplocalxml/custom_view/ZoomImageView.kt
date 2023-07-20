@@ -71,7 +71,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
             Bitmap.Config.ARGB_8888
         )
         val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.WHITE)//.WColorDrawable(0xE0FFFFFF.toInt()).color)
+        canvas.drawColor(Color.WHITE)//ColorDrawable(0x90FFFFFF.toInt()).color)
         canvas.drawBitmap(
             sourceBitmap,
             Rect(0, 0, sourceBitmap.width, sourceBitmap.height),
