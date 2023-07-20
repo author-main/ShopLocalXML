@@ -60,25 +60,25 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
 
 
- /*   override fun setImageURI(uri: Uri?) {
+    override fun setImageURI(uri: Uri?) {
         val widthBorder = 5.toPx
         super.setImageURI(uri)
         val sourceBitmap = (drawable as BitmapDrawable).bitmap
-        val bitmap = Bitmap.createBitmap(sourceBitmap.width + widthBorder * 2, sourceBitmap.height + widthBorder * 2, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(
+            sourceBitmap.width + widthBorder * 2,
+            sourceBitmap.height + widthBorder * 2,
+            Bitmap.Config.ARGB_8888
+        )
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.WHITE)//.WColorDrawable(0xE0FFFFFF.toInt()).color)
-        canvas.drawBitmap(sourceBitmap,
-            Rect(0,0, sourceBitmap.width, sourceBitmap.height),
+        canvas.drawBitmap(
+            sourceBitmap,
+            Rect(0, 0, sourceBitmap.width, sourceBitmap.height),
             Rect(widthBorder, widthBorder, bitmap.width - widthBorder, bitmap.height - widthBorder),
             null
         )
-    /*    val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth + widthBorder * 2, drawable.intrinsicHeight + widthBorder * 2, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        canvas.drawColor(ColorDrawable(0xE0FFFFFF.toInt()).color)
-        drawable.setBounds(widthBorder, widthBorder, bitmap.width - widthBorder, bitmap.height - widthBorder)
-        drawable.draw(canvas)*/
         setImageDrawable(BitmapDrawable(resources, bitmap))
-     }*/
+    }
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawColor(Color.TRANSPARENT)
@@ -235,20 +235,16 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
         fun onAnimateStep() {
 
-            fun getOffset(curTrans: Float, trans: Float, minPos: Float, maxOffset: Float): Float {
-                val curPos = curTrans + trans
-                if (curPos > minPos) {
+            fun getOffset(curTrans: Float, deltaTrans: Float, minPos: Float, maxOffset: Float): Float {
+                val calcTrans = curTrans + deltaTrans
+                if (calcTrans > minPos) {
                     return minPos - curTrans
+                } else {
+                    if (maxOffset == 0f) return 0f
+                    if (abs(calcTrans) > maxOffset )
+                        return - (maxOffset + curTrans)
                 }
-            /*    else {
-                    if (abs(curPos) > maxOffset ) {
-                        return if (maxOffset == 0f)
-                                0f//minPos
-                            else
-                            -(curTrans + maxOffset)
-                    }
-                }*/
-                return trans
+                return deltaTrans
             }
             val curTime = System.currentTimeMillis()
             val percentTime = (curTime - startTime).toFloat() / (endTime - startTime).toFloat()
@@ -367,9 +363,14 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         private var stepScale = (endScale - startScale) / fraction
         private var stepX = (endTrans.x - startTrans.x) / fraction
         private var stepY = (endTrans.y - startTrans.y) / fraction
-
         override fun run() {
+
             scale   += stepScale
+            x       += stepX
+            y       += stepY
+
+
+
             var rangeFrom = startScale
             var rangeTo   = endScale
             /*if (startScale < endScale) {
@@ -380,16 +381,26 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 rangeFrom = endScale
                 rangeTo   = startScale
             }
-            if (scale  !in rangeFrom..rangeTo) {
+
+            if ((scale*1000).toInt() !in (rangeFrom*1000).toInt()..(rangeTo*1000).toInt()){
                 stopZoomAnimate()
                 return
             }
-            x       += stepX
-            y       += stepY
+
+
+           /* if (scale  !in rangeFrom..rangeTo) {
+                stopZoomAnimate()
+                return
+            }*/
+
+
             matrix.reset()
             matrix.postScale(scale, scale)
             matrix.postTranslate(x, y)
             invalidate()
+
+
+
             postOnAnimation(this)
         }
     }
