@@ -60,7 +60,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
 
 
-    override fun setImageURI(uri: Uri?) {
+ /*   override fun setImageURI(uri: Uri?) {
         val widthBorder = 5.toPx
         super.setImageURI(uri)
         val sourceBitmap = (drawable as BitmapDrawable).bitmap
@@ -78,7 +78,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         drawable.setBounds(widthBorder, widthBorder, bitmap.width - widthBorder, bitmap.height - widthBorder)
         drawable.draw(canvas)*/
         setImageDrawable(BitmapDrawable(resources, bitmap))
-     }
+     }*/
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawColor(Color.TRANSPARENT)
