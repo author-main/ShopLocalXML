@@ -31,7 +31,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
  /*   private var transFlingX = 0f
     private var transFlingY = 0f*/
     private var flingAnimate = false
-    private val handlerUI = Handler(Looper.getMainLooper())
+//    private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
     private val clickOffset = 3
     private var startTouch = PointF(0f, 0f)
@@ -341,7 +341,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         val centerX = (widthView - widthDrawable   * saveScale) / 2f
         val centerY = (heightView - heightDrawable * saveScale) / 2f
         animDoubleZoom = DoubleTapAnimator(transPos, PointF(centerX, centerY), origScale, saveScale)
-        handlerUI.post(
+        //handlerUI.
+        post(
             animDoubleZoom!!
         )
         return false
@@ -349,7 +350,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
     private fun stopZoomAnimate(){
         animDoubleZoom?.let {
-            handlerUI.removeCallbacks(it)
+            //handlerUI.
+            removeCallbacks(it)
             animDoubleZoom = null
         }
     }
