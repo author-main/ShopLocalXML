@@ -238,16 +238,14 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
             fun getOffset(curTrans: Float, trans: Float, minPos: Float, maxOffset: Float): Float {
                 val curPos = curTrans + trans
                 if (curPos > minPos) {
-                    log("$curPos, $minPos")
                     return minPos - curTrans
                 }
                 else {
-                    //log ("$curPos, $maxOffset")
                     if (abs(curPos) > maxOffset ) {
-
-                        val result = -(curTrans + maxOffset)
-                       // log("$curTrans, $maxOffset, $result")
-                        return result
+                        return if (maxOffset == 0f)
+                                0f//minPos
+                            else
+                            -(curTrans + maxOffset)
                     }
                 }
                 return trans
