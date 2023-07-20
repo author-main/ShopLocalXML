@@ -240,14 +240,14 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 if (curPos > minPos) {
                     return minPos - curTrans
                 }
-                else {
+            /*    else {
                     if (abs(curPos) > maxOffset ) {
                         return if (maxOffset == 0f)
                                 0f//minPos
                             else
                             -(curTrans + maxOffset)
                     }
-                }
+                }*/
                 return trans
             }
             val curTime = System.currentTimeMillis()
