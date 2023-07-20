@@ -30,6 +30,7 @@ import kotlin.math.max
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
  /*   private var transFlingX = 0f
     private var transFlingY = 0f*/
+    private var flingAnimate = false
     private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
     private val clickOffset = 3
@@ -172,6 +173,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         val currY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                flingAnimate = false
                 mode = ZoomMode.MOVE
                 lastTouchX = event.x
                 lastTouchY = event.y
@@ -278,8 +280,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
         //    if (curDx != 0f || curDy != 0f) {
                 matrix.set(animateStart)
-                matrix.postTranslate(curDx, curDy);
-                invalidate();
+                matrix.postTranslate(curDx, curDy)
+                invalidate()
+                if (!flingAnimate)
+                    return
                 if (percentTime < 1.0f)
                     post { onAnimateStep() }
        //     }
@@ -289,7 +293,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         if (maxOffsetX == 0f && maxOffsetY == 0f)
             return
 
-
+        flingAnimate = true
         post {
             onAnimateStep()
         }
