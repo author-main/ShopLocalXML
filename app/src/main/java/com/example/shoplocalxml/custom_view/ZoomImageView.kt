@@ -236,11 +236,11 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         fun onAnimateStep() {
 
             fun getOffset(curTrans: Float, deltaTrans: Float, minPos: Float, maxOffset: Float): Float {
+                if (maxOffset == 0f) return 0f
                 val calcTrans = curTrans + deltaTrans
                 if (calcTrans > minPos) {
                     return minPos - curTrans
                 } else {
-                    if (maxOffset == 0f) return 0f
                     if (abs(calcTrans) > maxOffset )
                         return - (maxOffset + curTrans)
                 }
