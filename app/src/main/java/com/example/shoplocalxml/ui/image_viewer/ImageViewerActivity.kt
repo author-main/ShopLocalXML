@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
@@ -19,6 +20,7 @@ import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer.ImageViewerAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -66,8 +68,12 @@ class ImageViewerActivity : AppCompatActivity() {
         dataBinding = ActivityImageViewerBinding.inflate(layoutInflater)
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
+
+        val adapter = ImageViewerAdapter(baseContext, listImages, startIndex)
+
         val srcImage = listImages[startIndex]
         dataBinding.imageZoomView.setImageURI(srcImage.toUri())
+
         supportActionBar?.hide()//setDisplayHomeAsUpEnabled(true)
     }
 

@@ -7,12 +7,22 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.custom_view.ZoomImageView
 
-class ImageViewerAdapter (val context: Context, private val images: List<String> = listOf()): RecyclerView.Adapter<ImageViewerAdapter.ViewHolder>(){
+class ImageViewerAdapter (val context: Context, private val images: List<String> = listOf(), private val startIndex: Int = 0): RecyclerView.Adapter<ImageViewerAdapter.ViewHolder>(){
     // images: список изображений в cache (полный путь + hash)
-    var recyclerView: RecyclerView? = null
+    /*var startIndexItem: Int = 0
+        set(value) {
+            field = value
+            setStartItem(value)
+        }*/
+    private var recyclerView: RecyclerView? = null
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
+        setStartItem()
+    }
+
+    private fun setStartItem() {
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
