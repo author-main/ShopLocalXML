@@ -25,11 +25,15 @@ import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 
 
-class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
+open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
  /*   private var transFlingX = 0f
     private var transFlingY = 0f*/
+    val isNotScale
+     get() = getZoomState()
+
     private var flingAnimate = false
 //    private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
@@ -60,6 +64,11 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     )
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
 
+    private fun roundScale(value: Float) =
+        (value * 1000).toInt()
+
+    private fun getZoomState() =
+        roundScale(minScale) == roundScale(saveScale)
 
     override fun setImageURI(uri: Uri?) {
         val widthBorder = 5.toPx
@@ -388,7 +397,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 rangeTo   = startScale
             }
 
-            if ((scale*1000).toInt() !in (rangeFrom*1000).toInt()..(rangeTo*1000).toInt()){
+            if (roundScale(scale) !in roundScale(rangeFrom)..roundScale(rangeTo)){
                 stopZoomAnimate()
                 return
             }
