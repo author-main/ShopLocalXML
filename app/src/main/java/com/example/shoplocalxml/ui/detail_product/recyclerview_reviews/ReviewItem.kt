@@ -1,14 +1,10 @@
-package com.example.shoplocalxml.ui.detail_product.recyclerView_reviews
+package com.example.shoplocalxml.ui.detail_product.recyclerview_reviews
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.databinding.ReviewItemBinding

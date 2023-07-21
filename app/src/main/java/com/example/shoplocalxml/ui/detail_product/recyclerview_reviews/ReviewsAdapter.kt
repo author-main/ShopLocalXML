@@ -1,15 +1,11 @@
-package com.example.shoplocalxml.ui.detail_product.recyclerView_reviews
+package com.example.shoplocalxml.ui.detail_product.recyclerview_reviews
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
-import com.example.shoplocalxml.ui.product_item.ProductItem
-import com.example.shoplocalxml.ui.product_item.ProductsAdapter
-import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 
 class ReviewsAdapter (val context: Context, private var reviews: List<Review> = listOf()): RecyclerView.Adapter<ReviewsAdapter.ViewHolder>(){
 
