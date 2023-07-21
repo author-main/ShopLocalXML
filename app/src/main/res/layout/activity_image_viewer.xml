@@ -29,10 +29,12 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="top|end"
-            android:background="@drawable/ic_circle_border"
+            android:background="@drawable/ic_circle"
+            android:backgroundTint="@color/BackgroundBlockText"
             android:onClick="@{()->eventhandler.close()}"
             android:padding="2dp"
             android:scaleType="centerInside"
+            android:tint="@color/TextDescription"
             app:srcCompat="@drawable/ic_close" />
     </FrameLayout>
 </layout>
