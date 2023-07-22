@@ -72,7 +72,9 @@ class ImageViewerActivity : AppCompatActivity() {
         dataBinding.eventhandler = this
         setContentView(dataBinding.root)
 
-        val adapter = ImageViewerAdapter(baseContext, listImages, startIndex)
+        val adapter = ImageViewerAdapter(baseContext, listImages, startIndex) {
+
+        }
         val manager = GridLayoutManager(baseContext, 1, GridLayoutManager.HORIZONTAL, false)
         dataBinding.recyclerViewImageViewer.layoutManager = manager
         val snapHelper: SnapHelper = LinearSnapHelper()
