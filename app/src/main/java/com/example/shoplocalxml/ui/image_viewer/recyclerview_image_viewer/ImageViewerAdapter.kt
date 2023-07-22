@@ -1,15 +1,19 @@
 package com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.shoplocalxml.custom_view.ZoomImageView
 import com.example.shoplocalxml.log
 
 class ImageViewerAdapter (val context: Context, private val images: List<String> = listOf(), private val startIndex: Int = 0, val onChangeSelectedItem: (Int) -> Unit): RecyclerView.Adapter<ImageViewerAdapter.ViewHolder>(){
-    private var isNotScaleItem = false
+    private var isScaledItem = false
     private var selectedIndex = 0
     // images: список изображений в cache (полный путь + hash)
     /*var startIndexItem: Int = 0
@@ -18,11 +22,36 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
             setStartItem(value)
         }*/
     private var recyclerView: RecyclerView? = null
+    @SuppressLint("ClickableViewAccessibility")
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
         setStartItem()
         selectedIndex = startIndex
+
+       /* this.recyclerView!!.addOnItemTouchListener(object: OnItemTouchListener{
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                log(isScaledItem)
+                rv.
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+
+            }
+        })*/
+
+        /*recyclerView.setOnTouchListener(OnTouchListener { _, _ ->
+            log(isScaledItem)
+            recyclerView.suppressLayout(isScaledItem)
+            false
+        }
+
+        )*/
+
         recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -50,7 +79,10 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = ZoomImageView(context)
-        return ImageViewerAdapter.ViewHolder(view)
+        return ImageViewerAdapter.ViewHolder(view) {
+            isScaledItem = it
+            recyclerView?.suppressLayout(isScaledItem)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -60,15 +92,15 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
     override fun getItemCount() =
         images.count()
 
-    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {//, val onClick: (ZoomImageView) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val view: View, val onScaleImage: (Boolean) -> Unit) : RecyclerView.ViewHolder(view) {
         fun bind(value: String) {
             val item = view as ZoomImageView
             val lparams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             item.layoutParams = lparams
             item.setImageURI(value.toUri())
-           /* item.setOnClickListener {
-                onClick(item)
-            }*/
+            item.setOnScaleImage {
+                 onScaleImage(it)
+            }
         }
     }
 

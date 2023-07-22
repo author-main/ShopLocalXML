@@ -29,8 +29,14 @@ import kotlin.math.min
 
 
 open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
-    val isNotScale
-        get() = getScaleState()
+    private var onScaleImage: ((Boolean) -> Unit)? = null
+    fun setOnScaleImage(value: (Boolean)-> Unit) {
+        onScaleImage = value
+    }
+
+
+   /* val isNotScale
+        get() = getScaleState()*/
     private var flingAnimate = false
 //    private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
@@ -64,8 +70,8 @@ open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureD
     private fun roundScale(value: Float) =
         (value * 1000).toInt()
 
-    private fun getScaleState() =
-        roundScale(minScale) == roundScale(saveScale)
+    private fun isScaledImage() =
+        roundScale(minScale) != roundScale(saveScale)
 
     override fun setImageURI(uri: Uri?) {
         val widthBorder = 5.toPx
@@ -179,6 +185,7 @@ open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureD
         val currY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                onScaleImage?.invoke(isScaledImage())
                 flingAnimate = false
                 mode = ZoomMode.MOVE
                 lastTouchX = event.x
