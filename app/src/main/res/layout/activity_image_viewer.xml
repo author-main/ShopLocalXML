@@ -14,15 +14,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
+        android:background="@android:color/white"
         android:padding="16dp"
         tools:context=".ui.image_viewer.ImageViewerActivity">
 
-        <com.example.shoplocalxml.custom_view.ZoomImageView
-            android:id="@+id/imageZoomView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewImageViewer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_height="match_parent" />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -30,11 +29,11 @@
             android:layout_height="24dp"
             android:layout_gravity="top|end"
             android:background="@drawable/ic_circle"
-            android:backgroundTint="@color/BackgroundBlockText"
+            android:backgroundTint="@android:color/white"
             android:onClick="@{()->eventhandler.close()}"
             android:padding="2dp"
             android:scaleType="centerInside"
-            android:tint="@color/TextDescription"
+            android:tint="@color/PrimaryDark"
             app:srcCompat="@drawable/ic_close" />
     </FrameLayout>
 </layout>

@@ -13,6 +13,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
@@ -70,9 +73,15 @@ class ImageViewerActivity : AppCompatActivity() {
         setContentView(dataBinding.root)
 
         val adapter = ImageViewerAdapter(baseContext, listImages, startIndex)
+        val manager = GridLayoutManager(baseContext, 1, GridLayoutManager.HORIZONTAL, false)
+        dataBinding.recyclerViewImageViewer.layoutManager = manager
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(dataBinding.recyclerViewImageViewer)
+        dataBinding.recyclerViewImageViewer.adapter = adapter
 
-        val srcImage = listImages[startIndex]
-        dataBinding.imageZoomView.setImageURI(srcImage.toUri())
+
+       /* val srcImage = listImages[startIndex]
+        dataBinding.imageZoomView.setImageURI(srcImage.toUri())*/
 
         supportActionBar?.hide()//setDisplayHomeAsUpEnabled(true)
     }

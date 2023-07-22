@@ -21,8 +21,8 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.image_viewer.ImageViewerActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.transparent"/>
+            android:exported="false"/>
+            <!--android:theme="@style/Theme.AppCompat.transparent"/>-->
 
 
         <activity
