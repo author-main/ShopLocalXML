@@ -22,7 +22,7 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
     }
 
     private fun setStartItem() {
-
+        recyclerView?.scrollToPosition(startIndex)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
