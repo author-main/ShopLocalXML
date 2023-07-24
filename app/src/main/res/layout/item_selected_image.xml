@@ -15,6 +15,7 @@
         android:id="@+id/cardViewSelectedItem"
         android:layout_width="54dp"
         android:layout_height="64dp"
+        android:foreground="@drawable/background_selected_image"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp">
 
