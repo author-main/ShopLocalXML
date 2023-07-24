@@ -104,6 +104,23 @@ open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureD
         }
     }
 
+    fun setOriginalScale(): Boolean{
+       if (roundScale(saveScale) != roundScale(minScale)) {
+            saveScale = minScale
+            matrix.reset()
+            matrix.postScale(
+                saveScale, saveScale
+            )
+            matrix.postTranslate(
+                (widthView - widthDrawable * saveScale) / 2f,
+                (heightView - heightDrawable * saveScale) / 2f
+            )
+          //  invalidate()
+           return true
+        }
+        return false
+    }
+
 
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

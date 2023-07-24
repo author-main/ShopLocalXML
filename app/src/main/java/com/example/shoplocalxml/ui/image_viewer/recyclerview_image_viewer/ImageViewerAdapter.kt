@@ -80,11 +80,18 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
 
     fun showItem(index: Int){
         selectedIndex = index
-        setVisibledItem()
+        setVisibledItem(0)
     }
 
-    private fun setVisibledItem() {
+    private fun setVisibledItem(prevIndex: Int = -1) {
         handleEvent = false
+        if (prevIndex != -1) {
+           val item = recyclerView?.getChildAt(prevIndex) as ZoomImageView
+          if (item.setOriginalScale()) {
+              isScaledItem = false
+              recyclerView?.suppressLayout(false)
+          }
+        }
         recyclerView?.scrollToPosition(selectedIndex)
         handleEvent = true
     }
