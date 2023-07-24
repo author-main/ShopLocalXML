@@ -87,6 +87,7 @@ class ImageViewerActivity : AppCompatActivity() {
         val adapterSelectedImages = SelectedImagesAdapter(baseContext, listImages, startIndex) {
 
         }
+
         val managerSelectedImages = GridLayoutManager(baseContext, 1, GridLayoutManager.HORIZONTAL, false)
         dataBinding.recyclerViewSelectedImages.layoutManager = managerSelectedImages
         dataBinding.recyclerViewSelectedImages.adapter = adapterSelectedImages

@@ -23,6 +23,10 @@ class SelectedImageItem: CardView {
     fun setItemIndex(value: Int) {
         index = value
     }
+
+    fun isSelectedItem(index: Int) =
+        this.index == index && isSelected
+
     private val dataBinding: ItemSelectedImageBinding = run {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.item_selected_image, this, true)
@@ -38,10 +42,13 @@ class SelectedImageItem: CardView {
     constructor(context: Context) : super(context) {
         isSelected = false
         dataBinding.imageViewSelected.setOnClickListener {
+           // isSelected = !isSelected
             if (!isSelected) {
                 isSelected = true
                 onClick?.invoke(index)
             }
+            /*else
+                isSelected = false*/
         }
     }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {

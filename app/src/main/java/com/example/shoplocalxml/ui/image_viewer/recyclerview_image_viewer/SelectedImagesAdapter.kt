@@ -5,16 +5,22 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoplocalxml.classes.Review
-import com.example.shoplocalxml.ui.detail_product.recyclerview_reviews.ReviewItem
-import com.example.shoplocalxml.ui.detail_product.recyclerview_reviews.ReviewsAdapter
+import com.example.shoplocalxml.log
 
-class SelectedImagesAdapter (val context: Context, private val linkImages: List<String> = listOf(), private var startIndex: Int, private val onSelectItem: (Int) -> Unit): RecyclerView.Adapter<SelectedImagesAdapter.ViewHolder>(){
+class SelectedImagesAdapter (val context: Context, private val linkImages: List<String> = listOf(), private var selectedIndex: Int, private val onSelectItem: (Int) -> Unit): RecyclerView.Adapter<SelectedImagesAdapter.ViewHolder>(){
+    var recyclerView: RecyclerView? = null
 
-    class ViewHolder(private val view: View, val onClick: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+    }
+
+    inner class ViewHolder(val view: View, val onClick: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
         fun bindItem(value: String, index: Int){
             val item = view as SelectedImageItem
             item.setItemIndex(index)
+            if (index == selectedIndex)
+                item.isSelected = true
             item.linkImage = value
             item.setOnCLickListener {
                 onClick(it)
@@ -29,7 +35,32 @@ class SelectedImagesAdapter (val context: Context, private val linkImages: List<
     ): SelectedImagesAdapter.ViewHolder {
         val view = SelectedImageItem(context)
         return ViewHolder(view) {
-            onSelectItem(it)
+            if (it != selectedIndex) {
+                unselectItem(selectedIndex)
+                selectedIndex = it
+                onSelectItem(it)
+                //log("selected $it...")
+            }
+        }
+    }
+
+    private fun unselectItem(value: Int) {
+        recyclerView?.let{
+            for ( i in 0..it.childCount) {
+
+                val item = it.getChildAt(i) as SelectedImageItem
+
+
+                /*val holder =
+                    it.getChildViewHolder(it.getChildAt(i)) as ViewHolder
+                val item = holder.view as SelectedImageItem*/
+                if (item.isSelectedItem(selectedIndex)) {
+                    item.isSelected = false
+                    //notifyItemChanged(i)
+                    break
+                }
+            }
+
         }
     }
 
