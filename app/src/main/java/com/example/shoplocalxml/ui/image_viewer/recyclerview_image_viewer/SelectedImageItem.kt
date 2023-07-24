@@ -27,6 +27,15 @@ class SelectedImageItem: CardView {
     fun isSelectedItem(index: Int) =
         this.index == index && isSelected
 
+    fun changedSelectedIndex(index: Int) : Boolean {
+        var result = false
+        if (this.index == index) {
+            isSelected = true
+            result = true
+        }
+        return result
+    }
+
     private val dataBinding: ItemSelectedImageBinding = run {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.item_selected_image, this, true)

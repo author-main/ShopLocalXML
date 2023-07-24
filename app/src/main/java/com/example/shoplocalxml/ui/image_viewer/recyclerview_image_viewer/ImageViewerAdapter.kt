@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.shoplocalxml.custom_view.ZoomImageView
 import com.example.shoplocalxml.log
 
-class ImageViewerAdapter (val context: Context, private val images: List<String> = listOf(), private val startIndex: Int = 0, val onChangeSelectedItem: (Int) -> Unit): RecyclerView.Adapter<ImageViewerAdapter.ViewHolder>(){
+class ImageViewerAdapter (val context: Context, private val images: List<String> = listOf(), private val startIndex: Int = 0): RecyclerView.Adapter<ImageViewerAdapter.ViewHolder>(){
+    private var handleEvent = true
     private var isScaledItem = false
     private var selectedIndex = 0
     // images: список изображений в cache (полный путь + hash)
@@ -21,14 +22,17 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
             field = value
             setStartItem(value)
         }*/
+    private var onChangeSelectedItem: ((Int) -> Unit)? = null
+    fun setOnChangeSelectedItem(value: (Int) -> Unit) {
+        onChangeSelectedItem = value
+    }
     private var recyclerView: RecyclerView? = null
     @SuppressLint("ClickableViewAccessibility")
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
-        setStartItem()
         selectedIndex = startIndex
-
+        setVisibledItem()
        /* this.recyclerView!!.addOnItemTouchListener(object: OnItemTouchListener{
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 log(isScaledItem)
@@ -59,13 +63,14 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                if (!handleEvent) return
                 val offset = recyclerView.computeHorizontalScrollOffset()
                 val extent = recyclerView.computeHorizontalScrollExtent()
                 if (offset % extent == 0) {
                     val index = offset / extent
                     if (index != selectedIndex) {
                         selectedIndex = index
-                        onChangeSelectedItem(index)
+                        onChangeSelectedItem?.invoke(index)
                     }
                 }
             }
@@ -73,8 +78,15 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
 
     }
 
-    private fun setStartItem() {
-        recyclerView?.scrollToPosition(startIndex)
+    fun showItem(index: Int){
+        selectedIndex = index
+        setVisibledItem()
+    }
+
+    private fun setVisibledItem() {
+        handleEvent = false
+        recyclerView?.scrollToPosition(selectedIndex)
+        handleEvent = true
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

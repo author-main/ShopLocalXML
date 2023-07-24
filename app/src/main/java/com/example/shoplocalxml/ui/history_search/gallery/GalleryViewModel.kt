@@ -1,4 +1,4 @@
-package com.example.shoplocalxml.ui.gallery
+package com.example.shoplocalxml.ui.history_search.gallery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
