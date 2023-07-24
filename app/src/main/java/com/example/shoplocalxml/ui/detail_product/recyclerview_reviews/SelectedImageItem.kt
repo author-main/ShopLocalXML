@@ -12,6 +12,12 @@ import com.example.shoplocalxml.databinding.ItemSelectedImageBinding
 
 
 class SelectedImageItem: CardView {
+    private var index = -1
+    var onClick: ((Int) -> Unit)? = null
+    private fun setOnCLickListener(index: Int, onClick: (Int) -> Unit) {
+        this.onClick = onClick
+        this.index   = index
+    }
     private val dataBinding: ItemSelectedImageBinding = run {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.item_selected_image, this, true)
@@ -35,6 +41,10 @@ class SelectedImageItem: CardView {
 
     init {
         isSelected = false
+        dataBinding.imageViewSelected.setOnClickListener {
+            isSelected = !isSelected
+            onClick?.invoke(index)
+        }
     }
 
     private fun setLinkImageItem(value: String?) {
