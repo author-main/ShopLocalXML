@@ -23,4 +23,5 @@
         <attr name="sizeSymbol" format="dimension" />
         <attr name="intervalSymbol" format="dimension" />
     </declare-styleable>
+
 </resources>
