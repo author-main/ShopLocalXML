@@ -24,6 +24,7 @@ import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer.ImageViewerAdapter
+import com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer.SelectedImagesAdapter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -80,6 +81,17 @@ class ImageViewerActivity : AppCompatActivity() {
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(dataBinding.recyclerViewImageViewer)
         dataBinding.recyclerViewImageViewer.adapter = adapter
+
+
+
+        val adapterSelectedImages = SelectedImagesAdapter(baseContext, listImages, startIndex) {
+
+        }
+        val managerSelectedImages = GridLayoutManager(baseContext, 1, GridLayoutManager.HORIZONTAL, false)
+        dataBinding.recyclerViewSelectedImages.layoutManager = managerSelectedImages
+        dataBinding.recyclerViewSelectedImages.adapter = adapterSelectedImages
+
+
 
 
        /* val srcImage = listImages[startIndex]

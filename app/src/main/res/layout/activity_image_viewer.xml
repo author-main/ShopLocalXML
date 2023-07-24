@@ -14,9 +14,32 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/BackgroundDark"
         android:padding="16dp"
         tools:context=".ui.image_viewer.ImageViewerActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewImageViewer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSelectedImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"/>
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -30,27 +53,6 @@
             android:scaleType="centerInside"
             android:tint="@color/PrimaryDark"
             app:srcCompat="@drawable/ic_close" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewImageViewer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewSelectedImages"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:paddingVertical="8dp" />
-
-        </LinearLayout>
 
     </FrameLayout>
 </layout>

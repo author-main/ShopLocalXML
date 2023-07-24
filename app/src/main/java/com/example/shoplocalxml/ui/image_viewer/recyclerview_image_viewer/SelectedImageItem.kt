@@ -1,13 +1,13 @@
-package com.example.shoplocalxml.ui.detail_product.recyclerview_reviews
+package com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
-import com.example.shoplocalxml.DEFAULT_BITMAP
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.ItemSelectedImageBinding
 
 
@@ -35,16 +35,7 @@ class SelectedImageItem: CardView {
         }
 
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-    }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
-    init {
+    constructor(context: Context) : super(context) {
         isSelected = false
         dataBinding.imageViewSelected.setOnClickListener {
             if (!isSelected) {
@@ -53,6 +44,14 @@ class SelectedImageItem: CardView {
             }
         }
     }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+
+    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     private fun setLinkImageItem(value: String?) {
         value?.let {
