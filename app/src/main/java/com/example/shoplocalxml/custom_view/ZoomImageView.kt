@@ -450,8 +450,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
         override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-           if (minScale != maxScale)
-                mode = ZoomMode.ZOOM
+           if (minScale != maxScale) {
+               mode = ZoomMode.ZOOM
+               //onScaleImage?.invoke(isScaledImage())
+           }
             return true
         }
 
