@@ -197,7 +197,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (minScale == maxScale) return true
-
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
         val currX = event.x
@@ -451,7 +450,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
         override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-            if (minScale != maxScale)
+           if (minScale != maxScale)
                 mode = ZoomMode.ZOOM
             return true
         }
