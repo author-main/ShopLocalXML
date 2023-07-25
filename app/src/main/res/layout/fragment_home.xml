@@ -7,11 +7,8 @@
     <data>
         <variable
             name="eventhandler"
-            type="com.example.shoplocalxml.ui.home.HomeViewModel"/>
+            type="com.example.shoplocalxml.ui.home.HomeFragment"/>
     </data>
-
-
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -60,7 +57,16 @@
 
                 <include
                     android:id="@+id/includeButtonMessage"
-                    layout="@layout/message_button" />
+                    layout="@layout/message_button"/>
+
+
+                <include
+                    android:id="@+id/includeDetailProductButtons"
+                    layout="@layout/product_detail_buttons"
+                    app:eventhandler = "@{eventhandler}"
+                    android:visibility="gone"
+                    />
+
             </LinearLayout>
 
 

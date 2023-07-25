@@ -23,8 +23,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -43,21 +41,18 @@ import com.example.shoplocalxml.OnFabListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
-import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.Order
 import com.example.shoplocalxml.classes.sort_filter.Sort
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
-import com.example.shoplocalxml.databinding.FragmentDetailProductBinding
 import com.example.shoplocalxml.databinding.FragmentHomeBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.detail_product.DetailProductFragment
-import com.example.shoplocalxml.ui.detail_product.OnDetailContentListener
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
@@ -68,6 +63,7 @@ import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 import com.example.shoplocalxml.vibrate
+import com.example.shoplocalxml.visibility
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -124,19 +120,49 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
 
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
-        homeViewModel.modeSearchProduct.observe(viewLifecycleOwner) {
-           if (it == HomeViewModel.Companion.HomeMode.NULL) {
+        homeViewModel.modeFragment.observe(viewLifecycleOwner) {
+
+            val visibility = if (it != HomeViewModel.Companion.HomeMode.MAIN)
+                View.VISIBLE else View.GONE
+            dataBinding.buttonBack.visibility = visibility
+
+           when (it) {
+               HomeViewModel.Companion.HomeMode.NULL -> sharedViewModel.closeApp()
+               HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL -> {
+                   setVisibleDetailProductActionbarButtons(true)
+                   val favorite = DetailProductFragment.favorite
+                   setDetailProductFavoriteButtonIcon(
+                       favorite
+                   )
+                   setVisibleUserMessageButton(false)
+               }
+               HomeViewModel.Companion.HomeMode.MAIN -> {
+                   setVisibleDetailProductActionbarButtons(false)
+                   setVisibleUserMessageButton(true)
+               }
+               else -> {
+
+               }
+           }
+
+
+
+
+
+         /*  if (it == HomeViewModel.Companion.HomeMode.NULL) {
                sharedViewModel.closeApp()
            } else {
                val visible = if (it != HomeViewModel.Companion.HomeMode.MAIN)
                    View.VISIBLE else View.GONE
                dataBinding.buttonBack.visibility = visible
-           }
+           }*/
             /*if (it == HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
                 dataBinding.editTextSearchQuery.borderColor = applicationContext.getColor(R.color.colorBrend)
             else
                 dataBinding.editTextSearchQuery.borderColor = Color.TRANSPARENT*/
         }
+
+        dataBinding.eventhandler = this
 
         dataBinding.editTextSearchQuery.doAfterTextChanged {
             searchHistoryPanel?.setSearchQuery(it.toString())
@@ -459,7 +485,31 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         //sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
     }
 
+    private fun setVisibleDetailProductActionbarButtons(value: Boolean){
+        dataBinding.includeDetailProductButtons.layoutDetailProductButtons.visibility = value.visibility
+    }
+
+    private fun setDetailProductFavoriteButtonIcon(favorite: Byte?) {
+        favorite?.let {
+            dataBinding.includeDetailProductButtons.buttonFavorite.setImageResource(
+                if (it > 0) R.drawable.ic_favorite
+                else R.drawable.ic_favorite_bs
+            )
+        }
+    }
+
+    private fun setVisibleUserMessageButton(value: Boolean){
+        dataBinding.includeButtonMessage.buttonMessage.visibility = value.visibility
+        if (value)
+            showUnreadMessage(27)
+    }
+
+
+   /* private fun getVisibilityFromBoolean(value: Boolean) =
+        if (value) View.VISIBLE else View.GONE*/
+
     private fun showUnreadMessage(count: Int) {
+        //dataBinding.includeButtonMessage.layoutMessageCount.visibility = View.VISIBLE
         if (count > 0) {
             val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
             layoutMessageCount.alpha = 0f
@@ -518,7 +568,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             activity?.supportFragmentManager?.popBackStack()
         }
         hideSearchHistoryPanel()
-        val mode = homeViewModel.modeSearchProduct.value//homeViewModel.getStackMode()
+        val mode = homeViewModel.modeFragment.value//homeViewModel.getStackMode()
         if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN) {
             dataBinding.editTextSearchQuery.text?.clear()
             if (mode == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
@@ -717,7 +767,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     )
                 }
             } else
-                updateProductsWhenFilterChanges(homeViewModel.modeSearchProduct.value!!)
+                updateProductsWhenFilterChanges(homeViewModel.modeFragment.value!!)
         }
     }
 
@@ -775,9 +825,28 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     }
 
+    fun clickDetailProductFavoriteButton(){
+        DetailProductFragment.favorite?.let{
+            val favorite: Byte =
+                if (it > 0) 0
+                else 1
+            setDetailProductFavoriteButtonIcon(favorite)
+            DetailProductFragment.favorite = favorite
+            val idProduct = DetailProductFragment.id!!
+            val favoriteProduct = favorite > 0
+            sharedViewModel.updateProductFavorite(idProduct, favoriteProduct)
+            (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).updateProductFavorite(idProduct, favoriteProduct)
+        }
+    }
+
+    fun clickDetailProductShareButton(){
+        log("click share button...")
+    }
+
+
     private fun openDetailProductFragment(idProduct: Int, indexImage: Int) {
         sharedViewModel.products.value.find { it.id == idProduct } ?.let{product ->
-            homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
+            //homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
             //val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
                 activity?.supportFragmentManager?.let {
                     hideFab()
@@ -811,6 +880,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     fragmentTransaction.addToBackStack(null)//"DETAIL_FRAGMENT")
                     fragmentTransaction.commit()
                 }
+            homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
 
 
         }

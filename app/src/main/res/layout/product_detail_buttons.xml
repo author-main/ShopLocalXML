@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="eventhandler"
+            type="com.example.shoplocalxml.ui.home.HomeFragment"/>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layoutDetailProductButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/buttonFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/EditTextFont"
+            app:srcCompat="@drawable/ic_favorite_bs"
+            android:onClick="@{()->eventhandler.clickDetailProductFavoriteButton()}"
+            />
+
+        <ImageButton
+            android:id="@+id/buttonShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:tint="@color/EditTextFont"
+            app:srcCompat="@drawable/ic_share"
+            android:onClick="@{()->eventhandler.clickDetailProductShareButton()}"
+            />
+    </LinearLayout>
+</layout>

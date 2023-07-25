@@ -15,6 +15,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
 import android.util.TypedValue
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
@@ -33,6 +34,9 @@ import java.text.DecimalFormat
 import java.util.Calendar
 import kotlin.math.roundToInt
 
+
+val Boolean.visibility: Int
+    get() = if (this) View.VISIBLE else View.GONE
 
 val Float.toPx: Float
     get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, Resources.getSystem().displayMetrics)

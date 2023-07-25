@@ -28,7 +28,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
+class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
     private var onScaleImage: ((Boolean) -> Unit)? = null
     fun setOnScaleImage(value: (Boolean)-> Unit) {
         onScaleImage = value
@@ -132,8 +132,8 @@ open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureD
         heightDrawable = bitmap.height.toFloat()
         lastTouchX = 0f
         lastTouchY = 0f
-        saveScale =
-            (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
+        val calcScale = (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
+        saveScale = if (calcScale > maxScale) maxScale else calcScale
         minScale = saveScale
 
         matrix.postScale(
@@ -196,6 +196,8 @@ open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureD
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (minScale == maxScale) return true
+
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
         val currX = event.x
@@ -361,6 +363,8 @@ open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureD
     override fun onSingleTapConfirmed(e: MotionEvent): Boolean {return false}
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
+        if (minScale == maxScale) return true
+
         val origScale = saveScale
         val transPos = getTranslatePos()
         saveScale = if (saveScale == maxScale)
@@ -447,11 +451,13 @@ open class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureD
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
         override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-            mode = ZoomMode.ZOOM
+            if (minScale != maxScale)
+                mode = ZoomMode.ZOOM
             return true
         }
 
         override fun onScale(detector: ScaleGestureDetector): Boolean {
+            if (minScale == maxScale) return true
 
             var scaleFactor = detector.scaleFactor
             val origScale = saveScale

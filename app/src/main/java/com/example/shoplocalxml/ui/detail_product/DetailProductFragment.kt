@@ -44,12 +44,24 @@ import java.util.Calendar
 
 
 class DetailProductFragment : Fragment(), OnDetailContentListener {
+
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             this,
             AppShopLocal.repository
         )
     })
+
+    override fun onDestroy() {
+        instance = null
+        super.onDestroy()
+    }
+
+    /*private var onDetailProductButtonsListener: OnDetailProductButtonsListener? = null
+    fun setOnDetailProductButtonsListener(value: OnDetailProductButtonsListener) {
+        onDetailProductButtonsListener = value
+    }*/
+
 
     private val adapter: ReviewsAdapter by lazy {
         ReviewsAdapter(context = requireContext())
@@ -261,6 +273,17 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     companion object {
         private var instance: DetailProductFragment? = null
+        var favorite: Byte? = null
+            set(value) {
+                field = value
+                instance?.product?.favorite = value!!
+            }
+            get() =
+                instance?.product?.favorite
+
+        val id: Int?
+            get() = instance?.product?.id
+
         @JvmStatic
         fun newInstance(product: Product, imageIndex: Int/*, brandName: String, actionSale: String, reviews: List<Review>,
                         onDetailContentListener: OnDetailContentListener*/) =
