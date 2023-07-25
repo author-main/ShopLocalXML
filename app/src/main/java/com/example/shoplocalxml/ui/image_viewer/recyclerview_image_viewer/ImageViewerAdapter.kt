@@ -101,6 +101,7 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
         return ImageViewerAdapter.ViewHolder(view) {
             isScaledItem = it
             recyclerView?.suppressLayout(isScaledItem)
+            //log(isScaledItem)
         }
     }
 
