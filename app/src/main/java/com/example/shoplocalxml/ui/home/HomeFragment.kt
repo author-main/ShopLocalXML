@@ -111,7 +111,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         /*val displaySize = getDisplaySize()
         val widthProductItemCard = (displaySize.width - 16.toPx * 3) / 2*/
         homeViewModel =
-           ViewModelProvider(this)[HomeViewModel::class.java]
+           ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
 
      /*   sharedViewModel = run {
@@ -622,7 +622,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
                     displaySearchResult = false
                 } else {
-
+                    homeViewModel.removeStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
+                    activity?.supportFragmentManager?.popBackStack()
                 }
             }
             return displaySearchResult
@@ -654,7 +655,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }// else
             if (requestDetailProduct(isEmpty))
                 homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
-            log(homeViewModel.modeFragment.value)
+            //log(homeViewModel.modeFragment.value)
         }
 
 
@@ -913,6 +914,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 }
             homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
         }
+
+
+
 
 
 

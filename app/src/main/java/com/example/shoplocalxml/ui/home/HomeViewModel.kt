@@ -7,6 +7,7 @@ import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
+import com.example.shoplocalxml.log
 import java.lang.Exception
 import java.util.Stack
 
@@ -53,6 +54,11 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
         }
         return _modeFragment.value!!
     }
+
+    fun removeStackMode(value: HomeMode) {
+        stackMode.remove(value)
+    }
+
     fun pushStackMode(value: HomeMode) {
         if (value == _modeFragment.value)
             return
@@ -83,6 +89,7 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
             SEARCH_QUERY,
             SEARCH_RESULT,
             PRODUCT_DETAIL,
+            IMAGE_VIEWER,
             NULL
         }
     }

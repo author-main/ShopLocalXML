@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
@@ -36,6 +37,7 @@ import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.ui.detail_product.recyclerview_reviews.ReviewsAdapter
 import com.example.shoplocalxml.ui.dialog.DialogReview
+import com.example.shoplocalxml.ui.home.HomeViewModel
 import com.example.shoplocalxml.ui.image_viewer.ImageViewerActivity
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.google.gson.Gson
@@ -44,6 +46,8 @@ import java.util.Calendar
 
 
 class DetailProductFragment : Fragment(), OnDetailContentListener {
+
+    private lateinit var homeViewModel: HomeViewModel
 
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
@@ -80,6 +84,8 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        homeViewModel =
+            ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 /*        arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -250,6 +256,7 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             it.forEach { link ->
                 list.add("${getCacheDirectory()}${md5(link)}")
             }
+            homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.IMAGE_VIEWER)
             val gson = Gson()
             val extraList = gson.toJson(list)
             val intent = Intent(requireContext(), ImageViewerActivity::class.java)
@@ -269,6 +276,13 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     override fun onShowBrand() {
         log("log brand ${product.brand}...")
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.IMAGE_VIEWER)
+            homeViewModel.popStackMode()
     }
 
     companion object {
@@ -325,4 +339,8 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             return finalPrice
         }
     }
+
+
+
+
 }
