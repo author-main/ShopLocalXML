@@ -486,7 +486,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun setVisibleDetailProductActionbarButtons(value: Boolean){
-        dataBinding.includeDetailProductButtons.layoutDetailProductButtons.visibility = value.visibility
+        val visibility = value.visibility
+        val view = dataBinding.includeDetailProductButtons.layoutDetailProductButtons
+        if (view.visibility != visibility)
+            view.visibility = visibility
     }
 
     private fun setDetailProductFavoriteButtonIcon(favorite: Byte?) {
@@ -499,9 +502,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun setVisibleUserMessageButton(value: Boolean){
-        dataBinding.includeButtonMessage.buttonMessage.visibility = value.visibility
-        if (value)
-            showUnreadMessage(27)
+        val visibility = value.visibility
+        val view = dataBinding.includeButtonMessage.buttonMessage
+        if (view.visibility != visibility) {
+            view.visibility = visibility
+            if (value)
+                showUnreadMessage(27)
+        }
     }
 
 
@@ -564,12 +571,21 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun performBack(){
-        if (homeViewModel.currentMode() == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
+        val mode = homeViewModel.modeFragment.value
+       // if (homeViewModel.currentMode() == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
+        if (mode == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
             activity?.supportFragmentManager?.popBackStack()
         }
         hideSearchHistoryPanel()
-        val mode = homeViewModel.modeFragment.value//homeViewModel.getStackMode()
-        if (homeViewModel.popStackMode() == HomeViewModel.Companion.HomeMode.MAIN) {
+        //val mode = homeViewModel.modeFragment.value//homeViewModel.getStackMode()
+
+        val curMode = homeViewModel.popStackMode()
+
+        if (curMode == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
+            dataBinding.editTextSearchQuery.text?.clear()
+        }
+
+        if (curMode == HomeViewModel.Companion.HomeMode.MAIN) {
             dataBinding.editTextSearchQuery.text?.clear()
             if (mode == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
                 val dataMode = homeViewModel.getData(HomeViewModel.Companion.HomeMode.MAIN)
@@ -598,6 +614,19 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun searchProducts(query: String){
+        fun requestDetailProduct(emptyResult: Boolean): Boolean {
+            var displaySearchResult = true
+           // if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
+            if (homeViewModel.existStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)) {
+                if (emptyResult) {
+                    homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
+                    displaySearchResult = false
+                } else {
+
+                }
+            }
+            return displaySearchResult
+        }
         //log(homeViewModel.modeSearchProduct.value)
         /*val firstVisibled = try {
             (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
@@ -623,7 +652,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)*/
                 showNoProductInfo()
             }// else
+            if (requestDetailProduct(isEmpty))
                 homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+            log(homeViewModel.modeFragment.value)
         }
 
 
@@ -881,8 +912,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     fragmentTransaction.commit()
                 }
             homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
-
-
         }
 
 

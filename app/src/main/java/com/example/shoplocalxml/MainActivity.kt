@@ -318,7 +318,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
                     (it as OnBackPressed).backPressed()
                 }
             } ?: run {
-                log("product_detail")
+                //log("product_detail")
             }
         }
     }

@@ -41,6 +41,9 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
         }
     }*/
 
+    fun existStackMode(value: HomeMode) =
+        stackMode.search(value) != -1
+
     fun popStackMode(): HomeMode{
         try {
             stackMode.pop()
@@ -62,7 +65,7 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
             stackMode.push(value)
         }
     }
-    fun currentMode() = stackMode.peek()
+    //fun currentMode() = stackMode.peek()
 
     /*private fun setOrderQuery(value: String) {
         orderQuery = value
