@@ -62,6 +62,7 @@ import com.example.shoplocalxml.ui.product_item.DividerItemCardDecoration
 import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
+import com.example.shoplocalxml.ui.user_messages.UserMessagesActivity
 import com.example.shoplocalxml.vibrate
 import com.example.shoplocalxml.visibility
 import com.google.gson.Gson
@@ -299,16 +300,17 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
 
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
-            //val orderQuery = sharedViewModel.getQueryOrder()
-            sharedViewModel.getProducts(1)//, orderQuery)
+            val intent = Intent(requireContext(), UserMessagesActivity::class.java)
+            startActivity(intent)
         }
 
-        val wrapper: Context = ContextThemeWrapper(requireContext(), com.example.shoplocalxml.R.style.PopupMenu)
+        val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.PopupMenu)
         val popupMenu = androidx.appcompat.widget.PopupMenu(wrapper, dataBinding.includePanelOrderFilter.buttonSort)
-        val sortItems = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)
+        val sortItems = getStringArrayResource(R.array.sort_items)
         setTextButtonOrder(sharedViewModel.sortProduct)
         for (i in sortItems.indices){
-            val item = popupMenu.menu.add(sortItems[i]).setOnMenuItemClickListener {
+//            val item =
+            popupMenu.menu.add(sortItems[i]).setOnMenuItemClickListener {
                 menuOrderClick(i)
                 true
             }
@@ -425,10 +427,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
             }
         }
-
-
         return dataBinding.root
     }
+
+
 
 
     private fun performRecognize(value: String){
@@ -481,8 +483,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     override fun onStart() {
         super.onStart()
         showUnreadMessage(27)
-        //log("fragmenthome start...")
-        //sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
     }
 
     private fun setVisibleDetailProductActionbarButtons(value: Boolean){
@@ -712,14 +712,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private fun setTextButtonOrder(sortOrder: SortOrder) {
         /*val order = sharedViewModel.sortProduct.order
         val sort  = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sharedViewModel.sortProduct.sort.value]*/
-        val text = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sortOrder.sort.value]
+        val text = getStringArrayResource(R.array.sort_items)[sortOrder.sort.value]
 
         dataBinding.includePanelOrderFilter.buttonSort.text = text
         val sizeIcon = 24.toPx
         if (sortOrder.order == Order.DESCENDING) {
             val drawable = AppCompatResources.getDrawable(
                 requireContext(),
-                com.example.shoplocalxml.R.drawable.ic_sort
+                R.drawable.ic_sort
             )?.toBitmap(sizeIcon, sizeIcon, Bitmap.Config.ARGB_8888)
             drawable?.let { srcBitmap ->
                 val matrix = Matrix()
@@ -737,7 +737,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             dataBinding.includePanelOrderFilter.buttonSort.setCompoundDrawablesWithIntrinsicBounds(
                 AppCompatResources.getDrawable(
                     requireContext(),
-                    com.example.shoplocalxml.R.drawable.ic_sort
+                    R.drawable.ic_sort
                 ),
                 null,
                 null,
@@ -908,7 +908,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                             }
                         }*/
                         )
-                    fragmentTransaction.add(com.example.shoplocalxml.R.id.layoutRoot, fragment)
+                    fragmentTransaction.add(R.id.layoutRoot, fragment)
                     fragmentTransaction.addToBackStack(null)//"DETAIL_FRAGMENT")
                     fragmentTransaction.commit()
                 }

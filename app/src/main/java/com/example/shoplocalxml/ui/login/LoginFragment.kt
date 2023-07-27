@@ -30,12 +30,8 @@ import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.vibrate
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
+    private var logged_in = false
     //private lateinit var sharedViewModel: SharedViewModel
     /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
@@ -170,6 +166,7 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
                             //activity?.viewModelStore?.clear()
                             DialogProgress.hide()
                             (it as OnOpenShopListener).openShop()
+                            logged_in = true
                         }
                     }
                 } else {
@@ -219,5 +216,11 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
 
     override fun backPressed() {
         sharedViewModel.closeApp()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        if (logged_in)
+            sharedViewModel.getProducts(1)
     }
 }
