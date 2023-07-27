@@ -259,18 +259,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
 
 
-     /*   dataBinding.buttonUpdateProduct.setOnClickListener {
-            sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
-        }*/
-
-
-
-
-        //
-
-        //dataBinding.cardProduct.
-
-       /* sharedViewModel.run {
+        /* sharedViewModel.run {
             val errorMessage = "download error..."
             downloadImage("file.txt", true, ) { bitmap ->
                 if (bitmap == null)
