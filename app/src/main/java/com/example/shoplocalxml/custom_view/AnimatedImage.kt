@@ -22,9 +22,9 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var animator: ValueAnimator? = null
     private var gradientBitmap: Bitmap? = null
-    constructor(context: Context) : super(context) {}
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     init {
         animator = ValueAnimator().apply {
             //startDelay = 50

@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class BottomSheetProductMenu(
-    private val onProductItemMenuListener: (itemMenu: BottomSheetProductMenu.Companion.MenuItemProduct, idProduct: Int, favorite: Boolean) -> Unit): BottomSheetDialogFragment(), View.OnClickListener {
+    private val onProductItemMenuListener: (itemMenu: MenuItemProduct, idProduct: Int, favorite: Boolean) -> Unit): BottomSheetDialogFragment(), View.OnClickListener {
     //private val dataBinding: BottomsheetProductBinding = DataBindingUtil.inflate(layoutInflater, R.layout.bottomsheet_product, null, false)
     private lateinit var dataBinding: BottomsheetProductBinding
     private var idProduct: Int = -1

@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 data class ImageItem(var url: String, var image: Bitmap?, var default: Boolean = false){}
 
-class ImagesAdapter(): RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
+class ImagesAdapter: RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     var reduceImage = false
     private val handlerUI = Handler(Looper.getMainLooper())
     private var countUploaded = 0

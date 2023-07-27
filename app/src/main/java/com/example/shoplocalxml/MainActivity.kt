@@ -370,15 +370,15 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
         else bottomNavigationView.visibility = View.GONE
     }
 
-    override fun onStop() {
+    /*override fun onStop() {
         super.onStop()
       //  log("activity onstop....")
-    }
+    }*/
 
-    override fun onStart() {
+  /*  override fun onStart() {
         super.onStart()
        // log("activity onstart....")
-    }
+    }*/
 
 
     fun setFabVisibility(value: Boolean) {

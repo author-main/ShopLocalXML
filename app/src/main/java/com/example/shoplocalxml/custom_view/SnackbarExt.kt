@@ -60,7 +60,7 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
         textView.typeface = font
         textView.textSize = 14f
         textView.letterSpacing = 0f
-        textView.setTextColor(applicationContext.getColor(com.example.shoplocalxml.R.color.EditTextFont))
+        textView.setTextColor(applicationContext.getColor(R.color.EditTextFont))
         snackbar.show()
     }
     fun setAction(text: String) {
@@ -69,9 +69,9 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
     companion object {
         lateinit var instance: Snackbar
         enum class SnackbarType(val color: Int) {
-            INFO(applicationContext.getColor(com.example.shoplocalxml.R.color.EditTextBackgroundDark)),
-            WARNING(applicationContext.getColor(com.example.shoplocalxml.R.color.colorAccent)),
-            ERROR(applicationContext.getColor(com.example.shoplocalxml.R.color.EditTextBorderErrorDark))
+            INFO(applicationContext.getColor(R.color.EditTextBackgroundDark)),
+            WARNING(applicationContext.getColor(R.color.colorAccent)),
+            ERROR(applicationContext.getColor(R.color.EditTextBorderErrorDark))
         }
         fun hideSnackbar(){
             if (this::instance.isInitialized)

@@ -42,7 +42,7 @@ class ImageIndicator: LinearLayout {
             setSelectedIndex(field)
         }
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         context.obtainStyledAttributes(attrs, R.styleable.ImageIndicator).run {
             sizeSym = getDimensionPixelSize(R.styleable.ImageIndicator_sizeSymbol, 8.toPx)
@@ -52,13 +52,13 @@ class ImageIndicator: LinearLayout {
             recycle()
         }
         gravity = Gravity.CENTER_VERTICAL
-        orientation = LinearLayout.HORIZONTAL
+        orientation = HORIZONTAL
         /*if (count > 0) {
             initialized = false
             setSelectedIndex(0)
         }*/
     }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     private val colorSymbol = context.getColor(R.color.EditTextBackgroundDark)
     private val selectedColorSymbol = context.getColor(R.color.colorBrend)
 

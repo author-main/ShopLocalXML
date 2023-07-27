@@ -21,9 +21,9 @@ class RecyclerViewImages(context: Context,
     }*/
    init {
         addOnScrollListener(object: OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            /*override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-            }
+            }*/
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -107,7 +107,7 @@ class RecyclerViewImages(context: Context,
         (adapter as ImagesAdapter).setOnClickItem {
             onStateImagesListener?.onClick(it)
         }
-        (adapter as ImagesAdapter).setOnUploaded {
+        adapter.setOnUploaded {
             onStateImagesListener?.uploaded()
         }
     }

@@ -1,6 +1,5 @@
 package com.example.shoplocalxml.classes.sort_filter
 
-import com.example.shoplocalxml.ANY_VALUE
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 
 data class Filter(

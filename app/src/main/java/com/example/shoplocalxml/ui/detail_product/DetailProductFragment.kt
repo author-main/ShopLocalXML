@@ -38,6 +38,7 @@ import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.ui.detail_product.recyclerview_reviews.ReviewsAdapter
 import com.example.shoplocalxml.ui.dialog.DialogReview
 import com.example.shoplocalxml.ui.home.HomeViewModel
+import com.example.shoplocalxml.ui.home.OnStackModeListener
 import com.example.shoplocalxml.ui.image_viewer.ImageViewerActivity
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.google.gson.Gson
@@ -55,6 +56,17 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             AppShopLocal.repository
         )
     })
+
+
+/*    override fun onPushStackMode(value: HomeViewModel.Companion.HomeMode) {
+        homeViewModel.pushStackMode(value)
+    }
+
+
+    override fun onPopStackMode() {
+        log("pop stackmode...")
+        homeViewModel.popStackMode()
+    }*/
 
     override fun onDestroy() {
         instance = null
@@ -124,7 +136,7 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
                 Handler(Looper.getMainLooper()).postDelayed(
-                    Runnable { animation.start() }, 3000)
+                    { animation.start() }, 3000)
             }
         })
         animation.start()
@@ -183,6 +195,9 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
                 } catch(_: Exception) {}
             }
         }
+        if (count == 0)
+            dataBinding.detailProductContent.cardViewReviews.visibility = View.GONE
+
         return count
     }
 
@@ -262,6 +277,16 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             val intent = Intent(requireContext(), ImageViewerActivity::class.java)
             intent.putExtra("listimages", extraList)
             intent.putExtra("startindex", index)
+            /*intent.putExtra("stackmode_listener", object: OnStackModeListener{
+                override fun onPushStackMode(value: HomeViewModel.Companion.HomeMode) {
+                    homeViewModel.pushStackMode(value)
+                }
+
+                override fun onPopStackMode() {
+                    homeViewModel.popStackMode()
+                }
+            })*/
+
             startActivity(intent)
         }
     /*    product.linkimages?.get(index)?.let {link ->

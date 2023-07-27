@@ -57,9 +57,9 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
         )*/
 
         recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            /*override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-            }
+            }*/
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -98,7 +98,7 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = ZoomImageView(context)
-        return ImageViewerAdapter.ViewHolder(view) {
+        return ViewHolder(view) {
             isScaledItem = it
             recyclerView?.suppressLayout(isScaledItem)
             //log(isScaledItem)

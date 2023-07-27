@@ -227,9 +227,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         return listProduct
     }
 
-    override fun onCleared() {
+    /*override fun onCleared() {
         super.onCleared()
-    }
+    }*/
 
 
     fun getProductFromId(id: Int) =

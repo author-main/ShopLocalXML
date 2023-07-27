@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
@@ -23,6 +24,8 @@ import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.databinding.ActivityImageViewerBinding
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.home.HomeViewModel
+import com.example.shoplocalxml.ui.home.OnStackModeListener
 import com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer.ImageViewerAdapter
 import com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer.SelectedImagesAdapter
 import com.google.gson.Gson
@@ -33,8 +36,8 @@ import com.google.gson.reflect.TypeToken
  * status bar and navigation/system bar) with user interaction.
  */
 class ImageViewerActivity : AppCompatActivity() {
-    //private var srcImage: String? = null
     private lateinit var dataBinding: ActivityImageViewerBinding
+    //private var onStackModeListener: OnStackModeListener? = null
 
 
     /*@SuppressLint("InlinedApi")
@@ -100,6 +103,7 @@ class ImageViewerActivity : AppCompatActivity() {
     }
 
     fun close() {
+       // onStackModeListener?.onPopStackMode()
         finish()
     }
 

@@ -226,9 +226,9 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     }
 
 
-    override fun performClick(): Boolean {
+/*    override fun performClick(): Boolean {
         return super.performClick()
-    }
+    }*/
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -237,8 +237,8 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
             event?.let {
                 if (it.action == MotionEvent.ACTION_DOWN) {
                     //performClick()
-                    drawableEnd?.let { icon ->
-                        val bounds = icon.bounds;
+                    drawableEnd?.let { _ ->
+                        //val bounds = icon.bounds;
                         val x = event.x.toInt()
                         val y = event.y.toInt()
                         val placeBounds = Rect().apply {
@@ -418,7 +418,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
         icon?.setTint(tintDrawable)
     }
 
-    override fun setCompoundDrawablesRelative(
+    /*override fun setCompoundDrawablesRelative(
         start: Drawable?,
         top: Drawable?,
         end: Drawable?,
@@ -426,7 +426,7 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
     ) {
         //getDrawableRight(end)
         super.setCompoundDrawablesRelative(start, top, end, bottom)
-    }
+    }*/
 
     fun validateValue(): Boolean{
         val correct =

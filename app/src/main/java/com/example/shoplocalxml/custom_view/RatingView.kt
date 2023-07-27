@@ -34,7 +34,7 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
     //private val minSize = getMinSize()
 
     init {
-            setLayerType(View.LAYER_TYPE_SOFTWARE, null) // удаления участка canvas
+            setLayerType(LAYER_TYPE_SOFTWARE, null) // удаления участка canvas
             context.obtainStyledAttributes(attrs, R.styleable.RatingView).run {
                 val attrTintColor = getColor(R.styleable.RatingView_tintStar, -1)
                 val attrTintBackgroundColor = getColor(R.styleable.RatingView_tintBackgroundStar, -1)

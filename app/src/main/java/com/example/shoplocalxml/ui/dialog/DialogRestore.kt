@@ -83,7 +83,7 @@ class DialogRestore: DialogFragment() {
         var verified = true
         dataBinding.root.allViews.forEach { v ->
             if (v is EditTextExt) {
-                if (!(v as EditTextExt).validateValue())
+                if (!v.validateValue())
                     verified = false
             }
         }

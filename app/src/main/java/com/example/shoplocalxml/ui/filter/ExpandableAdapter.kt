@@ -132,7 +132,7 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
                         childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value
                         //log("click checkbox $groupPosition, $childPosition")
                     }
-                    it.layoutChildItemRoot?.setOnClickListener {view ->
+                    it.layoutChildItemRoot?.setOnClickListener {_ ->
                         val value = !it.selectedChildItem!!.isChecked
                         it.selectedChildItem!!.isChecked = value
                         childItems[groupItems[groupPosition].id]?.get(childPosition)?.selected = value

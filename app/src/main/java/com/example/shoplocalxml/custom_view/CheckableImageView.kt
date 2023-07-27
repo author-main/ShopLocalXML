@@ -44,7 +44,7 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         onChecked = value
     }*/
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val drawable = attrs?.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", -1)
         drawable?.let{
@@ -72,7 +72,7 @@ class CheckableImageView : AppCompatImageView, Checkable, View.OnClickListener {
         }
         setOnClickListener(this)
     }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     override fun onCreateDrawableState(extraSpace: Int): IntArray {
         val drawableState = super.onCreateDrawableState(extraSpace + 1)
         if (isChecked) mergeDrawableStates(drawableState, CHECKED_STATE_SET)

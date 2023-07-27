@@ -65,7 +65,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         attrs,
         defStyleAttr
     )
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     private fun roundScale(value: Float) =
         (value * 1000).toInt()
@@ -257,8 +257,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
         val w = widthDrawable  * saveScale
         val h = heightDrawable * saveScale
-        val maxOffsetX = (w - widthView).toFloat().coerceAtLeast(0f)
-        val maxOffsetY = (h - heightView).toFloat().coerceAtLeast(0f)
+        val maxOffsetX = (w - widthView).coerceAtLeast(0f)
+        val maxOffsetY = (h - heightView).coerceAtLeast(0f)
 
         val minPosX = ((widthView  - w) / 2f).coerceAtLeast(0f)
         val minPosY = ((heightView - h) / 2f).coerceAtLeast(0f)

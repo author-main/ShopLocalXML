@@ -53,7 +53,7 @@ class Repository {
      */
     fun onLogin(email: String, password: String, finger: Boolean, performAction: ()-> Unit, action: (result: Boolean) -> Unit) {
         //log("connected ${isConnectedNet()}...")
-        accessHandler.onLogin(email, password, finger, performAction) { it ->
+        accessHandler.onLogin(email, password, finger, performAction) {
             token = it
             val result = it != null
             if (result) {

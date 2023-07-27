@@ -62,7 +62,7 @@ fun deleteFile(file: File) {
 }
 
 fun createDirectory(value: String): Boolean {
-    val dir: File = File(value)
+    val dir = File(value)
     return if (!dir.exists()) {
         try {
             dir.mkdirs()

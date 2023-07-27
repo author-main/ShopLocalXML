@@ -55,13 +55,13 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
         val recyclerView: RecyclerView = layoutHistorySearch.findViewById(R.id.recyclerViewSearch)
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
-        val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_top)
+        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_top)
         parent.addView(layoutHistorySearch)
         layoutHistorySearch.startAnimation(animation)
     }
 
     fun hide(){
-        val animation = AnimationUtils.loadAnimation(applicationContext, com.example.shoplocalxml.R.anim.slide_in_right)
+        val animation = AnimationUtils.loadAnimation(applicationContext, R.anim.slide_in_right)
         layoutHistorySearch.startAnimation(animation)
         parent.removeView(layoutHistorySearch)
     }

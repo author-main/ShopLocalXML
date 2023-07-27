@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.classes.Review
+import com.example.shoplocalxml.ui.home.HomeViewModel
 
 class ReviewsAdapter (val context: Context, private var reviews: List<Review> = listOf()): RecyclerView.Adapter<ReviewsAdapter.ViewHolder>(){
 
@@ -19,7 +20,7 @@ class ReviewsAdapter (val context: Context, private var reviews: List<Review> = 
         viewType: Int
     ): ViewHolder {
         val view = ReviewItem(context)
-        return ReviewsAdapter.ViewHolder(view, onClickReview)
+        return ViewHolder(view, onClickReview)
     }
 
     override fun onBindViewHolder(
