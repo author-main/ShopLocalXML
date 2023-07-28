@@ -11,11 +11,11 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/mainLayoutMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/BackgroundDark"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
         android:paddingBottom="16dp">
 
     </LinearLayout>

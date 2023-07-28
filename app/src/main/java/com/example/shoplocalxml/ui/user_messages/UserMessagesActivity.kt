@@ -1,8 +1,11 @@
 package com.example.shoplocalxml.ui.user_messages
 
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
+import com.example.shoplocalxml.getStringResource
 
 
 class UserMessagesActivity: AppCompatActivity() {
@@ -11,6 +14,10 @@ class UserMessagesActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataBinding = ActivityUserMessagesBinding.inflate(layoutInflater)
+
+        HeaderTitle(dataBinding.mainLayoutMessages, getStringResource(R.string.text_usermessages)){
+            finish()
+        }
         setContentView(dataBinding.root)
         supportActionBar?.hide()
 

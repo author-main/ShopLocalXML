@@ -23,6 +23,7 @@ import com.example.shoplocalxml.getInteger
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
+import com.example.shoplocalxml.ui.user_messages.HeaderTitle
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -44,6 +45,12 @@ class FilterActivity : AppCompatActivity() {
         dataBinding.filter = filter
         setContentView(dataBinding.root)
         supportActionBar?.hide()
+
+        HeaderTitle(dataBinding.layoutMainFilter, getStringResource(R.string.text_filter)){
+            finish()
+            //performClickButtonBack()
+        }
+
         dataBinding.expListViewFilter.setAdapter(
             getExpandableAdapter()
         )
@@ -175,9 +182,9 @@ class FilterActivity : AppCompatActivity() {
         perform(filter)
     }
 
-    fun performClickButtonBack(){
+    /*private fun performClickButtonBack(){
         finish()
-    }
+    }*/
 
 
     private fun updateStateButtonMode(mode: ProductsAdapter.Companion.ItemViewMode){

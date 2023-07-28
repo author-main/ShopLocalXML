@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/PrimaryDark"
         android:padding="8dp">
-
         <TextView
             android:id="@+id/textTitle"
             android:layout_width="wrap_content"
@@ -15,7 +14,6 @@
             android:layout_gravity="center"
             android:text="@null"
             android:textColor="@color/TextDescription" />
-
         <ImageView
             android:id="@+id/buttonBack"
             android:layout_width="24dp"
@@ -25,4 +23,3 @@
             app:tint="@color/EditTextFont"
             app:srcCompat="@drawable/ic_arrow_back"/>
 </FrameLayout>
-</layout>
