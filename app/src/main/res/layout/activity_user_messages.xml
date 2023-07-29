@@ -15,8 +15,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/BackgroundDark"
-        android:orientation="vertical"
-        android:paddingBottom="16dp">
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layoutContentMessages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BackgroundDark"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewInformation"
+            style = "@style/ContentCardView">
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
     </LinearLayout>
 </layout>
