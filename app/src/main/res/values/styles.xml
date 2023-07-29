@@ -5,16 +5,6 @@
         <item name="cornerSize">8dp</item>
     </style>
 
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.rounded</item>
-        <item name="boxBackgroundColor">@color/EditTextBackgroundDark</item>
-        <!--<item name="boxStrokeColor">@color/boxstrokecolor</item>-->
-        <item name="boxStrokeWidth">1dp</item>
-        <item name="android:textColorHint">#ffff0000</item>
-        <item name="hintTextColor">#ffff0000</item>
-    </style>
-
-
     <style name="EditTextExt" parent="@android:style/Widget.EditText">
         <!--<item name="android:textColorHint">#70BEBEBE</item>-->
         <item name="android:textColorHint">#FF0000</item>
@@ -224,5 +214,13 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
+
+    <style name="ContentCardView" parent="CardView">
+        <item name="contentPadding">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">@color/PrimaryDark</item>
+        <item name="cardCornerRadius">8dp</item>
+    </style>
 
 </resources>
