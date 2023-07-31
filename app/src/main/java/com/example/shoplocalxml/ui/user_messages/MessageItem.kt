@@ -79,7 +79,7 @@ class MessageItem: ConstraintLayout {
         private var instance: MessageItem? = null
         @JvmStatic
         fun getMessageIcon(): Int {
-            /*val USER_MESSAGE_NORMAL           = 0
+          /*val USER_MESSAGE_NORMAL           = 0
             val USER_MESSAGE_DELIVERY         = 1
             val USER_MESSAGE_DISCOUNT         = 2
             val USER_MESSAGE_GIFT             = 3  */
