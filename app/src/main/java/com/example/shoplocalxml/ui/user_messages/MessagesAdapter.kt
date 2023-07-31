@@ -33,11 +33,10 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
             val item = view as MessageItem
             item.message = message
             item.setOnClickListener {
-                if (message.read == 1) message.read = 0 else message.read = 1
-                if (message.read == 1) {
+                if (message.read == 0) {
+                    message.read = 1
                     item.updateReadState(message.read)
-                    onMessageItemListener?.onClick(adapterPosition)
-                    //log(listMessages)
+                    onMessageItemListener?.onClick(message.id)
                 }
             }
         }

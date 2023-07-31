@@ -85,6 +85,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
        }
    }
 
+    private val resultMessagesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            updateMessages(result.data)
+    }
+
 
 
 
@@ -935,7 +939,22 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val messagesJson = gson.toJson(messages)
         val intent = Intent(requireContext(), UserMessagesActivity::class.java)
         intent.putExtra("messages", messagesJson)
-        startActivity(intent)
+        resultMessagesLauncher.launch(intent)
+        //startActivity(intent)
+    }
+
+    private fun updateMessages(intent: Intent?){
+        intent?.let { data ->
+            val readMessages   = data.getStringExtra("read_messages")
+            val deleteMessages = data.getStringExtra("delete_messages")
+            readMessages?.let{messages ->
+                log(messages)
+            }
+
+            deleteMessages?.let{messages ->
+
+            }
+        }
     }
 
     /* override fun onStop() {
