@@ -6,6 +6,7 @@ import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.log
 import com.google.gson.GsonBuilder
@@ -14,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -82,4 +84,7 @@ class DatabaseApiImpl {
 
     suspend fun getReviewsProduct(id: Int, limit: Int): Response<List<Review>> =
         retrofitInstance.getReviewsProduct(id, limit)
+
+    suspend fun getMessages(token: String, requestCount: Int): Response<List<UserMessage>> =
+        retrofitInstance.getMessages(token, requestCount)
 }

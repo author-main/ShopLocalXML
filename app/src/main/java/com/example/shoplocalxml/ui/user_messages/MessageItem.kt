@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingMethod
 import androidx.databinding.BindingMethods
@@ -14,17 +15,22 @@ import com.example.shoplocalxml.custom_view.CheckableImageView
 import com.example.shoplocalxml.databinding.MessageItemBinding
 import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.getStringArrayResource
+import com.example.shoplocalxml.log
 
 /*@BindingMethods(
     BindingMethod(type = MessageItem::class, attribute = "app:onClickItem",  method = "setOnClickItem"),
     BindingMethod(type = MessageItem::class, attribute = "app:onDeleteItem", method = "setOnDeleteItem")
 )*/
 class MessageItem: ConstraintLayout {
+/*    private var onMessageItemListener: OnMessageItemListener? = null
+    fun setOnMessageItemListener(value: OnMessageItemListener) {
+        onMessageItemListener = value
+    }*/
     var message: UserMessage = UserMessage()
-      /*  set(value) {
+        set(value) {
             field = value
-            setMessage(value)
-        }*/
+            setUserMessage(value)
+        }
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -41,7 +47,7 @@ class MessageItem: ConstraintLayout {
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
 
- /*   interface OnClickItem {
+   /* interface OnClickItem {
         fun onClickItem(index: Int)
     }
 
@@ -68,18 +74,23 @@ class MessageItem: ConstraintLayout {
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.message_item, this, true)
         dataBinding.message      = message
         dataBinding.eventhandler = this
-        instance = this
     }
 
-/*    private fun setMessage(value: UserMessage) {
+    private fun setUserMessage(value: UserMessage) {
+        dataBinding.message = value
+        dataBinding.invalidateAll()
+    }
 
-    }*/
+    fun updateReadState(value: Int) {
+        message.read = value
+        dataBinding.invalidateAll()
+    }
 
     companion object {
-        private var instance: MessageItem? = null
+
         @JvmStatic
-        fun getMessageIcon(): Int {
-            /*val USER_MESSAGE_NORMAL           = 0
+        fun getMessageIcon(message: UserMessage): Int {
+          /*val USER_MESSAGE_NORMAL           = 0
             val USER_MESSAGE_DELIVERY         = 1
             val USER_MESSAGE_DISCOUNT         = 2
             val USER_MESSAGE_GIFT             = 3  */
@@ -89,17 +100,12 @@ class MessageItem: ConstraintLayout {
                 R.drawable.ic_discount,
                 R.drawable.ic_gift
             )
-            return instance?.let{
-                drawable[it.message.type]
-            } ?: drawable[0]
-
+            return drawable[message.type]
         }
         @JvmStatic
-        fun getMessageTitle(): String {
+        fun getMessageTitle(message: UserMessage): String {
             val title = getStringArrayResource(R.array.typemessage)
-            return instance?.let{
-                title[it.message.type]
-            } ?: title[0]
+            return title[message.type]
         }
     }
 

@@ -4,6 +4,7 @@ import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
+import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
@@ -13,6 +14,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHandler {
+
+    override suspend fun getMessages(token: String, requestCount: Int): List<UserMessage>? =
+        withContext(Dispatchers.IO) {
+            databaseApi.getMessages(token, requestCount)?.body()
+        }
+
 
     override suspend fun getSearchProducts(
         token: String,
