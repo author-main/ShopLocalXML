@@ -4,8 +4,10 @@ import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
+import com.example.shoplocalxml.classes.UserMessage
 
 interface DatabaseHandler {
+    suspend fun getMessages(token: String, requestCount: Int): List<UserMessage>?
     suspend fun getProducts(token: String, page: Int, order: String): List<Product>?
     suspend fun getSearchProducts(token: String, uuid: String, searchQuery:String, page: Int, order: String): List<Product>?
     suspend fun getReviewsProduct(id: Int, limit: Int): List<Review>?

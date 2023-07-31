@@ -7,6 +7,7 @@ import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.isConnectedNet
@@ -173,5 +174,11 @@ class Repository {
 
     suspend fun getCategories(): List<Category>? =
         databaseHandler.getCategories()
+
+    suspend fun getMessages(requestCount: Int): List<UserMessage>? =
+        token?.let {
+            databaseHandler.getMessages(it, requestCount)
+        }
+
 
 }

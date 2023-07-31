@@ -41,6 +41,7 @@ import com.example.shoplocalxml.OnFabListener
 import com.example.shoplocalxml.OnSpeechRecognizer
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.Order
 import com.example.shoplocalxml.classes.sort_filter.Sort
@@ -289,8 +290,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
 
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
-            val intent = Intent(requireContext(), UserMessagesActivity::class.java)
-            startActivity(intent)
+            //showUserMessages()
+            sharedViewModel.getMessages()
         }
 
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.PopupMenu)
@@ -345,9 +346,15 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
 
 
-
+        lifecycleScope.launch {
+            sharedViewModel.messages.collect {
+                if (it.size > 0)
+                    showUserMessages(it)
+            }
+        }
 
         lifecycleScope.launch {
+
             sharedViewModel.products.collect {
                 val visibility = if (it.size > 0) View.VISIBLE else View.GONE
                 dataBinding.includePanelOrderFilter.panelOrderFilter.visibility = visibility
@@ -921,6 +928,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             intent.putExtra("brand", brand)
             activity?.startActivity(intent)
         }*/
+    }
+
+    private fun showUserMessages(messages: MutableList<UserMessage>){
+        val gson = Gson()
+        val messagesJson = gson.toJson(messages)
+        val intent = Intent(requireContext(), UserMessagesActivity::class.java)
+        intent.putExtra("messages", messagesJson)
+        startActivity(intent)
     }
 
     /* override fun onStop() {

@@ -6,6 +6,7 @@ import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
+import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
 import com.example.shoplocalxml.classes.sort_filter.Filter
@@ -34,6 +35,10 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     /*private fun setProducts(value: MutableList<Product>) {
         _products.value = value
     }*/
+
+
+    private val _messages = MutableStateFlow<MutableList<UserMessage>>(mutableListOf())
+    val messages = _messages.asStateFlow()
 
 
     /*private val _reviews = MutableStateFlow<MutableList<Review>>(mutableListOf())
@@ -199,6 +204,19 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
 
             /*if (resultQuery.isNullOrEmpty())
                 onEmptyResult?.invoke(true)*/
+        }
+    }
+
+
+    fun getMessages(requestCount: Boolean = false){
+        if (processQuery) return
+        processQuery = true
+        val valueRequestCount = if (requestCount) 1 else 0
+        viewModelScope.launch {
+            _messages.value = repository.getMessages(valueRequestCount)?.let {listMessages ->
+                listMessages.toMutableList()
+            } ?: mutableListOf()
+            processQuery = false
         }
     }
 
