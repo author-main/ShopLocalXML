@@ -3,7 +3,10 @@ package com.example.shoplocalxml.ui.user_messages
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingMethod
@@ -16,6 +19,7 @@ import com.example.shoplocalxml.databinding.MessageItemBinding
 import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.toPx
 
 /*@BindingMethods(
     BindingMethod(type = MessageItem::class, attribute = "app:onClickItem",  method = "setOnClickItem"),
@@ -74,6 +78,11 @@ class MessageItem: ConstraintLayout {
             DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.message_item, this, true)
         dataBinding.message      = message
         dataBinding.eventhandler = this
+
+        layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
     }
 
     private fun setUserMessage(value: UserMessage) {

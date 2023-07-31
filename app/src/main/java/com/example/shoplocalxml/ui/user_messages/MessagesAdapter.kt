@@ -31,6 +31,10 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
     class ViewHolder(private val view: View, private val onMessageItemListener: OnMessageItemListener?): RecyclerView.ViewHolder(view) {
         fun bind(message: UserMessage) {
             val item = view as MessageItem
+            /*val lparams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            item.layoutParams = lparams*/
+
+
             item.message = message
             item.setOnClickListener {
                 if (message.read == 0) {

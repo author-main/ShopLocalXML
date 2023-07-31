@@ -11,61 +11,64 @@
             name="eventhandler"
             type="com.example.shoplocalxml.ui.user_messages.MessageItem"/>
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageMessage"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@{com.example.shoplocalxml.ui.user_messages.MessageItem.getMessageIcon(message)}"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:singleLine="true"
-        android:text="@{com.example.shoplocalxml.ui.user_messages.MessageItem.getMessageTitle(message)}"
-        android:textColor="@color/TextDescription"
-        android:textSize="13sp"
-        app:layout_constraintStart_toEndOf="@id/imageMessage"/>
+        <ImageView
+            android:id="@+id/imageMessage"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@{com.example.shoplocalxml.ui.user_messages.MessageItem.getMessageIcon(message)}" />
 
-    <ImageView
-        android:id="@+id/imageRead"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textTitle"
-        app:layout_constraintStart_toEndOf="@+id/textTitle"
-        app:layout_constraintTop_toTopOf="@+id/textTitle"
-        android:src="@drawable/ic_check_on"
-        android:visibility="@{message.read > 0 ? View.VISIBLE : View.INVISIBLE}"/>
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:singleLine="true"
+            android:text="@{com.example.shoplocalxml.ui.user_messages.MessageItem.getMessageTitle(message)}"
+            android:textColor="@color/TextDescription"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@id/imageMessage" />
 
-    <TextView
-        android:id="@+id/textMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_light"
-        android:text="@{message.message}"
-        android:textColor="@color/EditTextFont"
-        android:textSize="13sp"
-        app:layout_constraintStart_toStartOf="@+id/textTitle"
-        app:layout_constraintTop_toBottomOf="@id/textTitle" />
+        <ImageView
+            android:id="@+id/imageRead"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_check_on"
+            android:visibility="@{message.read > 0 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/textTitle"
+            app:layout_constraintStart_toEndOf="@+id/textTitle"
+            app:layout_constraintTop_toTopOf="@+id/textTitle" />
 
-    <TextView
-        android:id="@+id/textDateTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="0.8"
-        android:fontFamily="@font/roboto_light"
-        android:text="@{message.date}"
-        android:textColor="@color/EditTextFont"
-        android:textSize="11sp"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:text="@{message.message}"
+            android:textColor="@color/EditTextFont"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textTitle"
+            app:layout_constraintTop_toBottomOf="@id/textTitle" />
+
+        <TextView
+            android:id="@+id/textDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:fontFamily="@font/roboto_light"
+            android:text="@{message.date}"
+            android:textColor="@color/EditTextFont"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
