@@ -11,6 +11,7 @@ import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -42,6 +43,7 @@ class UserMessagesActivity: AppCompatActivity() {
             false
         )
         dataBinding.recyclerViewMessages.layoutManager = manager
+        dataBinding.recyclerViewMessages.addItemDecoration(DividerItemRowDecoration())
         dataBinding.recyclerViewMessages.adapter = adapter
 
         /*dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())

@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textTitle"
         app:layout_constraintStart_toEndOf="@+id/textTitle"
         app:layout_constraintTop_toTopOf="@+id/textTitle"
-        app:srcCompat="@drawable/ic_check_on"
+        android:src="@drawable/ic_check_on"
         android:visibility="@{message.read > 0 ? View.VISIBLE : View.INVISIBLE}"/>
 
     <TextView

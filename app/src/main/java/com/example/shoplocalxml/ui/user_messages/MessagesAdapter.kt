@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.classes.UserMessage
+import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.ProductItem
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 
@@ -31,6 +32,14 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
         fun bind(message: UserMessage) {
             val item = view as MessageItem
             item.message = message
+            item.setOnClickListener {
+                if (message.read == 1) message.read = 0 else message.read = 1
+                if (message.read == 1) {
+                    item.updateReadState(message.read)
+                    onMessageItemListener?.onClick(adapterPosition)
+                    //log(listMessages)
+                }
+            }
         }
     }
 }

@@ -17,11 +17,15 @@ import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.getStringArrayResource
 import com.example.shoplocalxml.log
 
-@BindingMethods(
+/*@BindingMethods(
     BindingMethod(type = MessageItem::class, attribute = "app:onClickItem",  method = "setOnClickItem"),
     BindingMethod(type = MessageItem::class, attribute = "app:onDeleteItem", method = "setOnDeleteItem")
-)
+)*/
 class MessageItem: ConstraintLayout {
+/*    private var onMessageItemListener: OnMessageItemListener? = null
+    fun setOnMessageItemListener(value: OnMessageItemListener) {
+        onMessageItemListener = value
+    }*/
     var message: UserMessage = UserMessage()
         set(value) {
             field = value
@@ -43,7 +47,7 @@ class MessageItem: ConstraintLayout {
     ) : super(context, attrs, defStyleAttr, defStyleRes)
 
 
-    interface OnClickItem {
+   /* interface OnClickItem {
         fun onClickItem(index: Int)
     }
 
@@ -61,7 +65,7 @@ class MessageItem: ConstraintLayout {
 
     fun setOnDeleteItem(value: OnDeleteItem) {
         onDeleteItem = value
-    }
+    }*/
 
     private lateinit var dataBinding: MessageItemBinding
     init {
@@ -74,6 +78,11 @@ class MessageItem: ConstraintLayout {
 
     private fun setUserMessage(value: UserMessage) {
         dataBinding.message = value
+        dataBinding.invalidateAll()
+    }
+
+    fun updateReadState(value: Int) {
+        message.read = value
         dataBinding.invalidateAll()
     }
 

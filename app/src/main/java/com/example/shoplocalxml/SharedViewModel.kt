@@ -213,9 +213,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         processQuery = true
         val valueRequestCount = if (requestCount) 1 else 0
         viewModelScope.launch {
-            _messages.value = repository.getMessages(valueRequestCount)?.let {listMessages ->
-                listMessages.toMutableList()
-            } ?: mutableListOf()
+            _messages.value.clear()
+            _messages.value =
+                repository.getMessages(valueRequestCount)?.toMutableList() ?: mutableListOf()
             processQuery = false
         }
     }
