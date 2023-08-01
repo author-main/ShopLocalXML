@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken
 
 
 class UserMessagesActivity: AppCompatActivity() {
+    private lateinit var adapter: MessagesAdapter
     private val listRead = mutableListOf<Int>()
     private val listDeleted = mutableListOf<Int>()
     private lateinit var dataBinding: ActivityUserMessagesBinding
@@ -51,7 +52,7 @@ class UserMessagesActivity: AppCompatActivity() {
         val gson    = Gson()
         val data   = intent.getStringExtra("messages")
         val messages = gson.fromJson<List<UserMessage>>(data, typeToken).toMutableList()
-        val adapter = MessagesAdapter(baseContext, messages)
+        adapter = MessagesAdapter(baseContext, messages)
         adapter.setOnMessageItemListener(object: OnMessageItemListener{
             override fun onClick(index: Int) {
                 listRead.add(index)
@@ -140,7 +141,7 @@ class UserMessagesActivity: AppCompatActivity() {
 
     private fun setSwipeItem(){
         //dataBinding.recyclerViewMessages
-        val itemTouchCallback = object: SimpleCallback(0, LEFT or RIGHT){
+        val itemTouchCallback = object: SimpleCallback(0, LEFT) {//or RIGHT){
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -150,7 +151,9 @@ class UserMessagesActivity: AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
+                val deletedPosition = viewHolder.adapterPosition
+                val deletedItem = adapter.getItem(deletedPosition)
+                //log("deleted = $deletedItem")
             }
         }
 

@@ -28,6 +28,14 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
         return listMessages.size
     }
 
+   /* override fun getItemId(position: Int): Long {
+        return listMessages[position].id.toLong()
+    }*/
+
+
+    fun getItem(position: Int): UserMessage =
+        listMessages[position]
+
     class ViewHolder(private val view: View, private val onMessageItemListener: OnMessageItemListener?): RecyclerView.ViewHolder(view) {
         fun bind(message: UserMessage) {
             val item = view as MessageItem
