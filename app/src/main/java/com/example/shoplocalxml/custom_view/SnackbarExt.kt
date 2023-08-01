@@ -100,10 +100,7 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
         snackbarActionTextView.typeface = fontActionView
         snackbarActionTextView.letterSpacing =  0.0f
         snackbarActionTextView.transformationMethod = null
-        //snackbarActionTextView.setTypeface(fontActionView, Typeface.)
-
-        //snackbar.setActionTextColor(applicationContext.getColor(R.color.colorBrend))
-
+        //snackbarActionTextView.setTypeface(fontActionView, Typeface.Bold)
         snackbar.show()
     }
     fun setAction(text: String) {
