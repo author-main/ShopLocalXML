@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
@@ -66,6 +68,35 @@ class UserMessagesActivity: AppCompatActivity() {
         )
         dataBinding.recyclerViewMessages.layoutManager = manager
         dataBinding.recyclerViewMessages.addItemDecoration(DividerItemRowDecoration())
+
+     /*   val itemTouchHelperCallback =
+            object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                   /* noteViewModel.delete(noteAdapter.getNoteAt(viewHolder.adapterPosition))
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.note_deleted),
+                        Toast.LENGTH_SHORT
+                    ).show()*/
+                }
+
+            }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(dataBinding.recyclerViewMessages)*/
+
+        setSwipeItem()
+
         dataBinding.recyclerViewMessages.adapter = adapter
 
         /*dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
@@ -104,6 +135,10 @@ class UserMessagesActivity: AppCompatActivity() {
             intent.putExtra("delete_messages", joinDeleted)
         }
         setResult(RESULT_OK, intent)
+    }
+
+    private fun setSwipeItem(){
+        //dataBinding.recyclerViewMessages
     }
 
 }
