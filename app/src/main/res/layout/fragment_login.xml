@@ -16,6 +16,7 @@
         android:gravity="center_vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".ui.login.LoginFragment">
@@ -109,7 +110,6 @@
             <com.example.shoplocalxml.custom_view.EditTextExt
                 android:id="@+id/editTextEmailAddress"
                 style="@style/EditTextExt"
-                app:lossFocusOutside="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="48dp"
@@ -121,7 +121,8 @@
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAuth" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewAuth"
+                app:lossFocusOutside="true" />
 
             <TableLayout
                 android:id="@+id/layoutNumButtons"

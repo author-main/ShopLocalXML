@@ -2,6 +2,7 @@ package com.example.shoplocalxml.ui.user_messages
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.UserMessage
+import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
@@ -153,6 +155,19 @@ class UserMessagesActivity: AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val deletedPosition = viewHolder.adapterPosition
                 val deletedItem = adapter.getItem(deletedPosition)
+                val snackBar = SnackbarExt(
+                    dataBinding.root,
+                    //window.decorView.rootView,
+                    getString(R.string.text_delete_usermessages)) {
+                }
+                snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
+                snackBar.setAction(getString(R.string.button_cancel))
+                snackBar.show()
+
+                /*val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
+                snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
+                snackbarExt.show()*/
+
                 //log("deleted = $deletedItem")
             }
         }

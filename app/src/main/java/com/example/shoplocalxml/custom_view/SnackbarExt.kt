@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -12,7 +13,6 @@ import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.toPx
 import com.google.android.material.snackbar.Snackbar
-import java.security.AccessController.getContext
 
 
 class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
@@ -21,7 +21,8 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
             setTypeSnackbar(value)
             field = value
         }
-    private val snackbar = Snackbar.make(view, text,
+    private val snackbar = Snackbar.make(
+        view, text,
         Snackbar.LENGTH_LONG)
     private val onClickListener: View.OnClickListener = View.OnClickListener { onClick() }
 
@@ -48,11 +49,40 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
         }
         snackbar.setActionTextColor(actionTextColor)
         snackbarView.setPadding(8.toPx, 0, 8.toPx, 0 )
+
+
+
+
         val params: CoordinatorLayout.LayoutParams = snackbarView.layoutParams as CoordinatorLayout.LayoutParams
         params.width = ViewGroup.LayoutParams.WRAP_CONTENT
         params.gravity = Gravity.BOTTOM + Gravity.CENTER_HORIZONTAL
-        snackbarView.layoutParams = params;
+        params.bottomMargin = 16.toPx
+        snackbarView.layoutParams = params
+
+
+
+        /*val params = Layout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        params.bottomMargin = 16.toPx
+//        params.width = ViewGroup.LayoutParams.WRAP_CONTENT
+        params.gravity = Gravity.BOTTOM + Gravity.CENTER_HORIZONTAL
+        snackbarView.layoutParams = params*/
+
+
+        /*layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )*/
+
+
         setTypeSnackbar(type)
+
+        val id = com.google.android.material.R.id.snackbar_action
+        val button = snackbarView.findViewById<Button>(id)
+        //button.background =  ColorDrawable(Color.RED)
+
         val idTextView = com.google.android.material.R.id.snackbar_text
         val textView = snackbarView.findViewById<TextView>(idTextView)
         textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -61,6 +91,19 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
         textView.textSize = 14f
         textView.letterSpacing = 0f
         textView.setTextColor(applicationContext.getColor(R.color.EditTextFont))
+
+        val snackbarActionTextView =
+            snackbar.view.findViewById<View>(com.google.android.material.R.id.snackbar_action) as TextView
+        snackbarActionTextView.setTextColor(applicationContext.getColor(R.color.colorBrend))
+        val fontActionView = applicationContext.resources.getFont(R.font.robotocondensed_regular)
+        //snackbarActionTextView.textSize = 13f
+        snackbarActionTextView.typeface = fontActionView
+        snackbarActionTextView.letterSpacing =  0.0f
+        snackbarActionTextView.transformationMethod = null
+        //snackbarActionTextView.setTypeface(fontActionView, Typeface.)
+
+        //snackbar.setActionTextColor(applicationContext.getColor(R.color.colorBrend))
+
         snackbar.show()
     }
     fun setAction(text: String) {

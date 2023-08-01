@@ -11,7 +11,7 @@
             type="com.example.shoplocalxml.ui.filter.FilterActivity"/>
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/mainLayoutMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -91,5 +91,5 @@
 
     </LinearLayout>
 
-    </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
