@@ -91,7 +91,6 @@ class SnackbarExt(view: View, text: String, onClick: ()->Unit = {}) {
         textView.textSize = 14f
         textView.letterSpacing = 0f
         textView.setTextColor(applicationContext.getColor(R.color.EditTextFont))
-
         val snackbarActionTextView =
             snackbar.view.findViewById<View>(com.google.android.material.R.id.snackbar_action) as TextView
         snackbarActionTextView.setTextColor(applicationContext.getColor(R.color.colorBrend))
