@@ -1,16 +1,29 @@
 package com.example.shoplocalxml.ui.user_messages
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Bitmap.Config
+import android.graphics.Bitmap.createBitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.Brend
@@ -20,9 +33,12 @@ import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
+import com.example.shoplocalxml.vibrate
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.lang.Math.abs
 
 
 class UserMessagesActivity: AppCompatActivity() {
@@ -144,6 +160,20 @@ class UserMessagesActivity: AppCompatActivity() {
     private fun setSwipeItem(){
         //dataBinding.recyclerViewMessages
         val itemTouchCallback = object: SimpleCallback(0, LEFT) {//or RIGHT){
+            private var limit = false
+            private val dp24 = 24.toPx
+            private val p = Paint(Paint.ANTI_ALIAS_FLAG)
+            val icon = run {
+                val drawable = VectorDrawableCompat.create(resources,
+                    R.drawable.ic_close,
+                    baseContext.theme
+                )
+                drawable?.setTint(baseContext.getColor(R.color.TextDescription))
+                drawable?.toBitmap()
+            }
+            /*val icon: Bitmap =
+                BitmapFactory.decodeResource(resources,
+                        R.drawable.ic_close)*/
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -169,6 +199,126 @@ class UserMessagesActivity: AppCompatActivity() {
                 snackbarExt.show()*/
 
                 //log("deleted = $deletedItem")
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+
+                fun drawBackground(rect: RectF){
+                    p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
+                    c.drawRect(rect, p)
+                }
+
+                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    val itemView = viewHolder.itemView
+                    val height = itemView.bottom - itemView.top
+                    val widthBackground = itemView.height
+                    //val width = height / 3
+                    if (dX < 0) {
+                        //val left = itemView.width.toFloat()
+                        val deltaX = if (kotlin.math.abs(dX) <= widthBackground) {
+                            limit = false
+                            dX
+                            } else {
+                                if (!limit) {
+                                    vibrate(100)
+                                }
+                                limit = true
+                                -widthBackground.toFloat()
+                            }
+                       // if (kotlin.math.abs(dX) <= widthBackground) {
+                           // p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
+                            val leftBackground = itemView.width.toFloat() + deltaX
+                            val background = RectF(
+                                leftBackground,
+                                itemView.top.toFloat(),
+                                itemView.width.toFloat(),
+                                itemView.bottom.toFloat()
+                            )
+                            //c.drawRect(background, p)
+
+                            drawBackground(background)
+
+                            icon?.let{
+                                val left_dest   = (itemView.width - widthBackground) + (widthBackground - dp24) / 2f
+                                val top_dest    = itemView.top + (widthBackground - dp24) / 2f
+                                val right_dest  = left_dest + dp24
+                                val bottom_dest = top_dest + dp24
+
+                               /* val delta = (leftBackground - left_dest - dp24).toInt()
+                                log (delta)*/
+                               /* val left_src   = (leftBackground - left_dest)
+                                                .toInt()
+                                    //(itemView.width - widthBackground) + (widthBackground - dp24) / 2
+                                //leftBackground + (widthBackground - dp24) / 2f
+                                val top_src    = 0
+                                val right_src  = dp24
+                                val bottom_src = dp24*/
+
+                               // p.color = Color.RED
+                            //    val icon_dest = RectF(left_dest, top_dest, right_dest, bottom_dest)
+                                //val icon_src = Rect(left_src, top_src, right_src, bottom_src)
+                              //  if (left_dest > leftBackground)
+
+                                //c.drawBitmap(icon, null, icon_dest, p)
+
+                                /*var delta = leftBackground - left_dest
+                                if (delta < 0) delta = 0f
+                                if (delta <= dp24) {*/
+                                    c.drawBitmap(icon,
+                                        left_dest, top_dest, p)
+                                    val rect = RectF(
+                                        (itemView.width - widthBackground).toFloat(),
+                                        itemView.top.toFloat(),
+                                        leftBackground,
+                                        itemView.bottom.toFloat()
+                                    )
+                                    //log(background)
+                                    p.color = baseContext.getColor(R.color.BackgroundDark)
+                                    c.drawRect(rect, p)
+
+                             //   if (deltaX > - widthBackground)
+                                super.onChildDraw(
+                                    c,
+                                    recyclerView,
+                                    viewHolder,
+                                    deltaX,
+                                    dY,
+                                    actionState,
+                                    isCurrentlyActive
+                                )
+
+
+
+                            }
+                        /*    val icon_dest = RectF(itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width)
+                            c.drawBitmap(icon,null,icon_dest,p)*/
+
+                            /*icon = BitmapFactory.decodeResource(getResources(), R.drawable.delete);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p)*/
+                        }
+                    }
+
+
+
+                    /*super.onChildDraw(
+                        c,
+                        recyclerView,
+                        viewHolder,
+                        dX,
+                        dY,
+                        actionState,
+                        isCurrentlyActive
+                    )*/
+               // }
             }
         }
 

@@ -12,10 +12,14 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/BackgroundDark">
+
+    <LinearLayout
         android:id="@+id/mainLayoutMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/BackgroundDark"
         android:orientation="vertical">
 
     <LinearLayout
@@ -90,6 +94,6 @@
             android:layout_marginTop="8dp" />
 
     </LinearLayout>
-
+    </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
