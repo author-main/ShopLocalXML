@@ -185,6 +185,7 @@ class UserMessagesActivity: AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val deletedPosition = viewHolder.adapterPosition
                 val deletedItem = adapter.getItem(deletedPosition)
+                adapter.removeItem(deletedPosition)
                 val snackBar = SnackbarExt(
                     dataBinding.root,
                     //window.decorView.rootView,
@@ -224,9 +225,12 @@ class UserMessagesActivity: AppCompatActivity() {
                     if (dX < 0) {
                         //val left = itemView.width.toFloat()
                         val deltaX = if (kotlin.math.abs(dX) <= widthBackground) {
+                            log("less...")
                             limit = false
                             dX
-                            } else {
+                        }
+                            else {
+                            log("else less...")
                                 if (!limit) {
                                     vibrate(100)
                                 }
@@ -252,26 +256,6 @@ class UserMessagesActivity: AppCompatActivity() {
                                 val right_dest  = left_dest + dp24
                                 val bottom_dest = top_dest + dp24
 
-                               /* val delta = (leftBackground - left_dest - dp24).toInt()
-                                log (delta)*/
-                               /* val left_src   = (leftBackground - left_dest)
-                                                .toInt()
-                                    //(itemView.width - widthBackground) + (widthBackground - dp24) / 2
-                                //leftBackground + (widthBackground - dp24) / 2f
-                                val top_src    = 0
-                                val right_src  = dp24
-                                val bottom_src = dp24*/
-
-                               // p.color = Color.RED
-                            //    val icon_dest = RectF(left_dest, top_dest, right_dest, bottom_dest)
-                                //val icon_src = Rect(left_src, top_src, right_src, bottom_src)
-                              //  if (left_dest > leftBackground)
-
-                                //c.drawBitmap(icon, null, icon_dest, p)
-
-                                /*var delta = leftBackground - left_dest
-                                if (delta < 0) delta = 0f
-                                if (delta <= dp24) {*/
                                     c.drawBitmap(icon,
                                         left_dest, top_dest, p)
                                     val rect = RectF(
@@ -280,11 +264,11 @@ class UserMessagesActivity: AppCompatActivity() {
                                         leftBackground,
                                         itemView.bottom.toFloat()
                                     )
-                                    //log(background)
+
                                     p.color = baseContext.getColor(R.color.BackgroundDark)
                                     c.drawRect(rect, p)
 
-                             //   if (deltaX > - widthBackground)
+
                                 super.onChildDraw(
                                     c,
                                     recyclerView,

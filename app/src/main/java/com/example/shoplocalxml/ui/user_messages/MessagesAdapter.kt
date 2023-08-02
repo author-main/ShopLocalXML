@@ -15,6 +15,12 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
         onMessageItemListener = value
     }
 
+
+    fun removeItem(position: Int) {
+        listMessages.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = MessageItem(context)
         return ViewHolder(view, onMessageItemListener)
