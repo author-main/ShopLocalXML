@@ -189,27 +189,6 @@ class UserMessagesActivity: AppCompatActivity() {
                 BitmapFactory.decodeResource(resources,
                         R.drawable.ic_close)*/
 
-            override fun onChildDrawOver(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder?,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                log("draw over...")
-                super.onChildDrawOver(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-            }
-
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -233,7 +212,8 @@ class UserMessagesActivity: AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val deletedPosition = viewHolder.adapterPosition
+                removeItem(viewHolder)
+               /* val deletedPosition = viewHolder.adapterPosition
                 val deletedItem = adapter.getItem(deletedPosition)
                 adapter.removeItem(deletedPosition)
                 val snackBar = SnackbarExt(
@@ -243,7 +223,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 }
                 snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
                 snackBar.setAction(getString(R.string.button_cancel))
-                snackBar.show()
+                snackBar.show()*/
 
 
                 /*val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
@@ -263,7 +243,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
-                log("draw...")
+             //   log("draw...")
 
                 fun drawBackground(rect: RectF){
                     p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
@@ -286,11 +266,11 @@ class UserMessagesActivity: AppCompatActivity() {
                             //log("else less...")
                                 if (!limit) {
                                     vibrate(100)
+                                    //removeItem(viewHolder)
                                     //log((viewHolder.itemView as MessageItem).message)
                                     //removeItem(viewHolder)
                                 }
                                 limit = true
-
                                 -widthBackground.toFloat()
                             }
                        // if (kotlin.math.abs(dX) <= widthBackground) {
@@ -324,7 +304,6 @@ class UserMessagesActivity: AppCompatActivity() {
                                     p.color = baseContext.getColor(R.color.BackgroundDark)
                                     c.drawRect(rect, p)
 
-
                                 super.onChildDraw(
                                     c,
                                     recyclerView,
@@ -332,12 +311,8 @@ class UserMessagesActivity: AppCompatActivity() {
                                     deltaX,
                                     dY,
                                     actionState,
-                                    limit//isCurrentlyActive
+                                    isCurrentlyActive
                                 )
-                              /*  if (limit)
-                                    removeItem(viewHolder)*/
-
-
 
                             }
                         /*    val icon_dest = RectF(itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width)
@@ -361,6 +336,11 @@ class UserMessagesActivity: AppCompatActivity() {
                         isCurrentlyActive
                     )*/
                // }
+            }
+
+            override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
+                //log ((viewHolder.itemView.height / viewHolder.itemView.width).toFloat())
+                return viewHolder.itemView.height.toFloat() / viewHolder.itemView.width.toFloat()
             }
         }
 
