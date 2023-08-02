@@ -160,6 +160,21 @@ class UserMessagesActivity: AppCompatActivity() {
     private fun setSwipeItem(){
         //dataBinding.recyclerViewMessages
         val itemTouchCallback = object: SimpleCallback(0, LEFT) {//or RIGHT){
+            private var removed = false
+          /*  private var deletedPosition = -1
+            private fun removeItem() {
+            //val deletedPosition = viewHolder.adapterPosition
+            adapter.removeItem(deletedPosition)
+            val snackBar = SnackbarExt(
+                dataBinding.root,
+                //window.decorView.rootView,
+                getString(R.string.text_delete_usermessages)) {
+            }
+            snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
+            snackBar.setAction(getString(R.string.button_cancel))
+            snackBar.show()
+            }
+*/
             private var limit = false
             private val dp24 = 24.toPx
             private val p = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -182,7 +197,23 @@ class UserMessagesActivity: AppCompatActivity() {
                 return false
             }
 
+
+          /*  fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+                val deletedPosition = viewHolder.adapterPosition
+                val deletedItem = adapter.getItem(deletedPosition)
+                adapter.removeItem(deletedPosition)
+                val snackBar = SnackbarExt(
+                    dataBinding.root,
+                    getString(R.string.text_delete_usermessages)) {
+                }
+                snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
+                snackBar.setAction(getString(R.string.button_cancel))
+                snackBar.show()
+            }*/
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                if (removed) log("removed...")
+                removed = false
                 val deletedPosition = viewHolder.adapterPosition
                 val deletedItem = adapter.getItem(deletedPosition)
                 adapter.removeItem(deletedPosition)
@@ -194,6 +225,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
                 snackBar.setAction(getString(R.string.button_cancel))
                 snackBar.show()
+
 
                 /*val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_login_error))
                 snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
@@ -225,16 +257,19 @@ class UserMessagesActivity: AppCompatActivity() {
                     if (dX < 0) {
                         //val left = itemView.width.toFloat()
                         val deltaX = if (kotlin.math.abs(dX) <= widthBackground) {
-                            log("less...")
+                           // log("less...")
                             limit = false
                             dX
                         }
                             else {
-                            log("else less...")
+                            //log("else less...")
                                 if (!limit) {
                                     vibrate(100)
+                                    removed = true
+                                    //log((viewHolder.itemView as MessageItem).message)
                                 }
                                 limit = true
+
                                 -widthBackground.toFloat()
                             }
                        // if (kotlin.math.abs(dX) <= widthBackground) {
