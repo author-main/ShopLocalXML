@@ -160,7 +160,6 @@ class UserMessagesActivity: AppCompatActivity() {
     private fun setSwipeItem(){
         //dataBinding.recyclerViewMessages
         val itemTouchCallback = object: SimpleCallback(0, LEFT) {//or RIGHT){
-            private var removed = false
           /*  private var deletedPosition = -1
             private fun removeItem() {
             //val deletedPosition = viewHolder.adapterPosition
@@ -212,8 +211,6 @@ class UserMessagesActivity: AppCompatActivity() {
             }*/
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                if (removed) log("removed...")
-                removed = false
                 val deletedPosition = viewHolder.adapterPosition
                 val deletedItem = adapter.getItem(deletedPosition)
                 adapter.removeItem(deletedPosition)
@@ -265,7 +262,6 @@ class UserMessagesActivity: AppCompatActivity() {
                             //log("else less...")
                                 if (!limit) {
                                     vibrate(100)
-                                    removed = true
                                     //log((viewHolder.itemView as MessageItem).message)
                                 }
                                 limit = true
