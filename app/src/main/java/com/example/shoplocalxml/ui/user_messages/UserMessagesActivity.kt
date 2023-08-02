@@ -188,6 +188,28 @@ class UserMessagesActivity: AppCompatActivity() {
             /*val icon: Bitmap =
                 BitmapFactory.decodeResource(resources,
                         R.drawable.ic_close)*/
+
+            override fun onChildDrawOver(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder?,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                log("draw over...")
+                super.onChildDrawOver(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -197,7 +219,7 @@ class UserMessagesActivity: AppCompatActivity() {
             }
 
 
-          /*  fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+            fun removeItem(viewHolder: RecyclerView.ViewHolder) {
                 val deletedPosition = viewHolder.adapterPosition
                 val deletedItem = adapter.getItem(deletedPosition)
                 adapter.removeItem(deletedPosition)
@@ -208,7 +230,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
                 snackBar.setAction(getString(R.string.button_cancel))
                 snackBar.show()
-            }*/
+            }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val deletedPosition = viewHolder.adapterPosition
@@ -231,6 +253,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 //log("deleted = $deletedItem")
             }
 
+
             override fun onChildDraw(
                 c: Canvas,
                 recyclerView: RecyclerView,
@@ -240,6 +263,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 actionState: Int,
                 isCurrentlyActive: Boolean
             ) {
+                log("draw...")
 
                 fun drawBackground(rect: RectF){
                     p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
@@ -263,6 +287,7 @@ class UserMessagesActivity: AppCompatActivity() {
                                 if (!limit) {
                                     vibrate(100)
                                     //log((viewHolder.itemView as MessageItem).message)
+                                    //removeItem(viewHolder)
                                 }
                                 limit = true
 
@@ -307,8 +332,10 @@ class UserMessagesActivity: AppCompatActivity() {
                                     deltaX,
                                     dY,
                                     actionState,
-                                    isCurrentlyActive
+                                    limit//isCurrentlyActive
                                 )
+                              /*  if (limit)
+                                    removeItem(viewHolder)*/
 
 
 
