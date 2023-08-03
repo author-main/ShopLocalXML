@@ -518,8 +518,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     private fun showUnreadMessage() {
         fun animateCountMessages(count: Int) {
+            val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
             if (countUnreadMessages > 0) {
-                val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
                 layoutMessageCount.alpha = 0f
                 layoutMessageCount.clearAnimation()
 
@@ -563,7 +563,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     delay(300)
                     layoutMessageCount.bringToFront()
                 }
-        }
+            } else {
+                layoutMessageCount.alpha = 0f
+            }
 
 
         //dataBinding.includeButtonMessage.layoutMessageCount.visibility = View.VISIBLE
@@ -957,14 +959,15 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private fun updateMessages(intent: Intent?){
         intent?.let { data ->
             val readMessages   = data.getStringExtra("read_messages")
-            val deleteMessages = data.getStringExtra("delete_messages")
-            readMessages?.let{messages ->
-                log(messages)
+            readMessages?.let {
+               val elements = it.split(',')
+               countUnreadMessages -= elements.size
             }
 
-            deleteMessages?.let{messages ->
-                log(messages)
-            }
+            val deleteMessages = data.getStringExtra("delete_messages")
+            sharedViewModel.updateMessages(readMessages, deleteMessages)
+            /*log(readMessages)
+            log(deleteMessages)*/
         }
     }
 

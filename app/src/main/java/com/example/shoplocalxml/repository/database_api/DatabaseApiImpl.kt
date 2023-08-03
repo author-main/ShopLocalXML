@@ -82,6 +82,17 @@ class DatabaseApiImpl {
         retrofitInstance.updateFavorite(token, idProduct, if (favorite) 1 else 0)
     }
 
+
+    suspend fun updateMessages(token: String, join_read: String?, join_deleted: String?){
+        val read_messages: String    = join_read ?: "x"
+        val deleted_messages: String = join_deleted ?: "x"
+        /*log(token)
+        log (read_messages)
+        log(deleted_messages)*/
+        retrofitInstance.updateMessages(token, read_messages, deleted_messages)
+    }
+
+
     suspend fun getReviewsProduct(id: Int, limit: Int): Response<List<Review>> =
         retrofitInstance.getReviewsProduct(id, limit)
 

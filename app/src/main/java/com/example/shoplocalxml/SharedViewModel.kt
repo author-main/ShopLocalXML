@@ -226,6 +226,14 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
+    fun updateMessages(joinread: String?, joindeleted: String?){
+        if (joinread != null || joindeleted != null) {
+            viewModelScope.launch {
+                repository.updateMessages(joinread, joindeleted)
+            }
+        }
+    }
+
     fun updateProductFavorite(idProduct: Int, value: Boolean){
         viewModelScope.launch {
             _products.value.find { it.id == idProduct }?.apply {
