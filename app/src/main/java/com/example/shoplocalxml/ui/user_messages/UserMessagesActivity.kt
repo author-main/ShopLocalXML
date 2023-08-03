@@ -26,6 +26,11 @@ import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
 import com.example.shoplocalxml.vibrate
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class UserMessagesActivity: AppCompatActivity() {
@@ -204,6 +209,7 @@ class UserMessagesActivity: AppCompatActivity() {
                         listDeleted.find { it == deletedItem.id}?.let{
                             listDeleted.remove(it)
                         }
+                        (viewHolder as MessagesAdapter.ViewHolder).changeBackgroundColor(applicationContext.getColor(R.color.BackgroundDark))
                         adapter.restoreItem(deletedPosition, deletedItem)
                     }
                 snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
@@ -212,7 +218,12 @@ class UserMessagesActivity: AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                removeItem(viewHolder)
+                (viewHolder as MessagesAdapter.ViewHolder).changeBackgroundColor(applicationContext.getColor(R.color.EditTextBorderErrorDark))
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(300)
+                    removeItem(viewHolder)
+                }
+
                /* val deletedPosition = viewHolder.adapterPosition
                 val deletedItem = adapter.getItem(deletedPosition)
                 adapter.removeItem(deletedPosition)

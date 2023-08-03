@@ -95,6 +95,10 @@ class MessageItem: ConstraintLayout {
         dataBinding.invalidateAll()
     }
 
+    fun changeBackgroundColor(color: Int) {
+        dataBinding.layoutMainMessageItem.setBackgroundColor(color)
+    }
+
     companion object {
 
         @JvmStatic
