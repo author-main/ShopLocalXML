@@ -75,6 +75,7 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
    // private lateinit var sharedViewModel: SharedViewModel
+    private var updateCountMessage = false
     private var countUnreadMessages = 0
     private val adapter:ProductsAdapter by lazy {
        ProductsAdapter(context = requireContext())
@@ -481,10 +482,23 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         (activity as OnBottomNavigationListener).setVisibilityBottomNavigation(true)
     }
 
-    override fun onStart() {
-        super.onStart()
-        showUnreadMessage()
+    override fun onResume() {
+        super.onResume()
+        if (updateCountMessage) {
+            updateCountMessage = false
+            showUnreadMessage(countUnreadMessages)
+        } else
+            showUnreadMessage()
     }
+
+    /*override fun onStart() {
+        super.onStart()
+        if (updateCountMessage) {
+            updateCountMessage = false
+            showUnreadMessage(countUnreadMessages)
+        } else
+            showUnreadMessage()
+    }*/
 
     private fun setVisibleDetailProductActionbarButtons(value: Boolean){
         val visibility = value.visibility
@@ -516,7 +530,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
    /* private fun getVisibilityFromBoolean(value: Boolean) =
         if (value) View.VISIBLE else View.GONE*/
 
-    private fun showUnreadMessage() {
+    private fun showUnreadMessage(updateCount: Int = -1) {
         fun animateCountMessages(count: Int) {
             val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
             if (countUnreadMessages > 0) {
@@ -572,9 +586,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
         }
 
-        sharedViewModel.getMessages(true) {
-            countUnreadMessages = it
-            animateCountMessages(countUnreadMessages)
+        if (updateCount != -1) {
+            animateCountMessages(updateCount)
+        } else {
+            sharedViewModel.getMessages(true) {
+                countUnreadMessages = it
+                animateCountMessages(countUnreadMessages)
+            }
         }
 
     }
@@ -960,8 +978,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         intent?.let { data ->
             val readMessages   = data.getStringExtra("read_messages")
             readMessages?.let {
+               updateCountMessage = true
                val elements = it.split(',')
                countUnreadMessages -= elements.size
+                log(countUnreadMessages)
             }
 
             val deleteMessages = data.getStringExtra("delete_messages")
