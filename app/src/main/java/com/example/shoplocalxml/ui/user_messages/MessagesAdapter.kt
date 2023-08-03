@@ -16,11 +16,23 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
     }
 
 
+    fun restoreItem(index: Int, message: UserMessage) {
+        listMessages.add(index, message)
+        notifyItemInserted(index)
+        //notifyItemRangeChanged(index, itemCount)
+    }
+
     fun removeItem(position: Int) {
+        onMessageItemListener?.onDelete(listMessages[position].id)
         listMessages.removeAt(position)
-       // log(listMessages)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position, itemCount)
+        //notifyItemRangeChanged(position, itemCount)
+        /*listMessages.find { it.id == position }?.let {
+            //it.deleted = true
+            listMessages.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }*/
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,6 +45,9 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
     }
 
     override fun getItemCount(): Int {
+        /*val count = listMessages.count {
+            !it.deleted
+        }*/
         return listMessages.size
     }
 

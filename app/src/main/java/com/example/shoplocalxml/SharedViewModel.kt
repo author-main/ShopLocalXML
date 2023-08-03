@@ -208,14 +208,20 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
 
-    fun getMessages(requestCount: Boolean = false){
+    fun getMessages(requestCount: Boolean = false, actionCount: ((Int) -> Unit)? = null){
         if (processQuery) return
         processQuery = true
         val valueRequestCount = if (requestCount) 1 else 0
         viewModelScope.launch {
-            _messages.value.clear()
-            _messages.value =
-                repository.getMessages(valueRequestCount)?.toMutableList() ?: mutableListOf()
+            val listMessages = repository.getMessages(valueRequestCount)?.toMutableList() ?: mutableListOf()
+            if (requestCount) {
+                val count = if (listMessages.size > 0) listMessages[0].id else 0
+                actionCount?.invoke(count)
+            } else {
+                _messages.value.clear()
+                _messages.value = listMessages
+                    //repository.getMessages(valueRequestCount)?.toMutableList() ?: mutableListOf()
+            }
             processQuery = false
         }
     }

@@ -1,33 +1,21 @@
 package com.example.shoplocalxml.ui.user_messages
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Bitmap.Config
-import android.graphics.Bitmap.createBitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
 import android.graphics.RectF
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
-import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.classes.Brend
-import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
@@ -38,7 +26,6 @@ import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
 import com.example.shoplocalxml.vibrate
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.lang.Math.abs
 
 
 class UserMessagesActivity: AppCompatActivity() {
@@ -72,13 +59,16 @@ class UserMessagesActivity: AppCompatActivity() {
         val messages = gson.fromJson<List<UserMessage>>(data, typeToken).toMutableList()
         adapter = MessagesAdapter(baseContext, messages)
         adapter.setOnMessageItemListener(object: OnMessageItemListener{
-            override fun onClick(index: Int) {
-                listRead.add(index)
+            override fun onClick(id: Int) {
+                listRead.add(id)
                 //log(listRead)
             }
 
-            override fun onDelete(index: Int) {
-
+            override fun onDelete(id: Int) {
+                listRead.find { it == id } ?.let {
+                    listRead.remove(it)
+                }
+                listDeleted.add(id)
             }
         })
         val manager = LinearLayoutManager(
@@ -154,12 +144,14 @@ class UserMessagesActivity: AppCompatActivity() {
             val joinDeleted = listDeleted.joinToString(",")
             intent.putExtra("delete_messages", joinDeleted)
         }
+
         setResult(RESULT_OK, intent)
     }
 
     private fun setSwipeItem(){
         //dataBinding.recyclerViewMessages
         val itemTouchCallback = object: SimpleCallback(0, LEFT) {//or RIGHT){
+
           /*  private var deletedPosition = -1
             private fun removeItem() {
             //val deletedPosition = viewHolder.adapterPosition
@@ -182,7 +174,7 @@ class UserMessagesActivity: AppCompatActivity() {
                     R.drawable.ic_close,
                     baseContext.theme
                 )
-                drawable?.setTint(baseContext.getColor(R.color.TextDescription))
+                drawable?.setTint(baseContext.getColor(R.color.EditTextFont))
                 drawable?.toBitmap()
             }
             /*val icon: Bitmap =
@@ -199,13 +191,21 @@ class UserMessagesActivity: AppCompatActivity() {
 
 
             fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+                //val position = viewHolder.adapterPosition
                 val deletedPosition = viewHolder.adapterPosition
+                //deletedPosition = adapter.getItem(position).id
                 val deletedItem = adapter.getItem(deletedPosition)
+                deletedItem.read = 0
                 adapter.removeItem(deletedPosition)
+
                 val snackBar = SnackbarExt(
                     dataBinding.root,
                     getString(R.string.text_delete_usermessages)) {
-                }
+                        listDeleted.find { it == deletedItem.id}?.let{
+                            listDeleted.remove(it)
+                        }
+                        adapter.restoreItem(deletedPosition, deletedItem)
+                    }
                 snackBar.type = SnackbarExt.Companion.SnackbarType.INFO
                 snackBar.setAction(getString(R.string.button_cancel))
                 snackBar.show()
@@ -234,6 +234,9 @@ class UserMessagesActivity: AppCompatActivity() {
             }
 
 
+
+
+
             override fun onChildDraw(
                 c: Canvas,
                 recyclerView: RecyclerView,
@@ -244,11 +247,22 @@ class UserMessagesActivity: AppCompatActivity() {
                 isCurrentlyActive: Boolean
             ) {
              //   log("draw...")
+            /* fun drawBackground(rectBackground: RectF){
+                   canvas?.let {canvas_ ->
+                       val color_from = baseContext.getColor(R.color.BackgroundDark)
+                       val color_to = baseContext.getColor(R.color.EditTextBorderErrorDark)
+                       val animator = ValueAnimator.ofObject(ArgbEvaluator(), color_from, color_to)
+                       animator.duration = 150
+                       animator.addUpdateListener {
+                           p.color = it.animatedValue as Int
+                           canvas_.drawRect(rectBackground!!, p)
+                       }
+                       animator.start()
+                   }
 
-                fun drawBackground(rect: RectF){
-                    p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
-                    c.drawRect(rect, p)
-                }
+
+             }*/
+
 
                 if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     val itemView = viewHolder.itemView
@@ -257,6 +271,11 @@ class UserMessagesActivity: AppCompatActivity() {
                     //val width = height / 3
                     if (dX < 0) {
                         //val left = itemView.width.toFloat()
+
+
+
+
+
                         val deltaX = if (kotlin.math.abs(dX) <= widthBackground) {
                            // log("less...")
                             limit = false
@@ -269,6 +288,7 @@ class UserMessagesActivity: AppCompatActivity() {
                                     //removeItem(viewHolder)
                                     //log((viewHolder.itemView as MessageItem).message)
                                     //removeItem(viewHolder)
+
                                 }
                                 limit = true
                                 -widthBackground.toFloat()
@@ -276,16 +296,19 @@ class UserMessagesActivity: AppCompatActivity() {
                        // if (kotlin.math.abs(dX) <= widthBackground) {
                            // p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
                             val leftBackground = itemView.width.toFloat() + deltaX
-                            val background = RectF(
+                            val rectBackground = RectF(
                                 leftBackground,
                                 itemView.top.toFloat(),
                                 itemView.width.toFloat(),
                                 itemView.bottom.toFloat()
                             )
+                            c.clipRect(rectBackground)
                             //c.drawRect(background, p)
-
-                            drawBackground(background)
-
+                            if (limit) {
+                                p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
+                                c.drawRect(rectBackground, p)
+                            }
+                            //drawBackground(rectBackground)
                             icon?.let{
                                 val left_dest   = (itemView.width - widthBackground) + (widthBackground - dp24) / 2f
                                 val top_dest    = itemView.top + (widthBackground - dp24) / 2f
@@ -294,7 +317,7 @@ class UserMessagesActivity: AppCompatActivity() {
 
                                     c.drawBitmap(icon,
                                         left_dest, top_dest, p)
-                                    val rect = RectF(
+                                   /* val rect = RectF(
                                         (itemView.width - widthBackground).toFloat(),
                                         itemView.top.toFloat(),
                                         leftBackground,
@@ -302,7 +325,7 @@ class UserMessagesActivity: AppCompatActivity() {
                                     )
 
                                     p.color = baseContext.getColor(R.color.BackgroundDark)
-                                    c.drawRect(rect, p)
+                                    c.drawRect(rect, p)*/
 
                                 super.onChildDraw(
                                     c,

@@ -75,6 +75,7 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
    // private lateinit var sharedViewModel: SharedViewModel
+    private var countUnreadMessages = 0
     private val adapter:ProductsAdapter by lazy {
        ProductsAdapter(context = requireContext())
     }
@@ -482,7 +483,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     override fun onStart() {
         super.onStart()
-        showUnreadMessage(27)
+        showUnreadMessage()
     }
 
     private fun setVisibleDetailProductActionbarButtons(value: Boolean){
@@ -507,7 +508,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         if (view.visibility != visibility) {
             view.visibility = visibility
             if (value)
-                showUnreadMessage(27)
+                showUnreadMessage()
         }
     }
 
@@ -515,53 +516,63 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
    /* private fun getVisibilityFromBoolean(value: Boolean) =
         if (value) View.VISIBLE else View.GONE*/
 
-    private fun showUnreadMessage(count: Int) {
+    private fun showUnreadMessage() {
+        fun animateCountMessages(count: Int) {
+            if (countUnreadMessages > 0) {
+                val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
+                layoutMessageCount.alpha = 0f
+                layoutMessageCount.clearAnimation()
+
+                val textMessageCount = dataBinding.includeButtonMessage.textMessageCount
+                textMessageCount.text = count.toString()
+                textMessageCount.alpha = 0f
+
+                val imageMessage = dataBinding.includeButtonMessage.imageMessage
+                imageMessage.bringToFront()
+
+                val imageMessageCount = dataBinding.includeButtonMessage.imageMessageCount
+                val center = imageMessageCount.width / 2f
+                val animScale = ScaleAnimation(
+                    0F, 1F, 0F, 1F,
+                    center, center
+                )
+                animScale.duration = 400
+
+                val animTranslater = TranslateAnimation(-5f, 5f, 0f,0f)
+                animTranslater.duration = 30
+                animTranslater.repeatCount = 7
+                animTranslater.repeatMode = ValueAnimator.REVERSE
+
+                val animScale1 = ScaleAnimation(
+                    1F, 0.56F, 1F, 0.56F,
+                    32.toPx.toFloat(), 0f
+                )
+                animScale1.duration = 300
+                animScale1.fillAfter = true
+
+                layoutMessageCount.alpha = 1f
+                imageMessageCount.alpha  = 1f
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    imageMessageCount.startAnimation(animScale)
+                    delay(500)
+                    imageMessage.startAnimation(animTranslater)
+                    delay(350)
+                    textMessageCount.alpha = 1f
+                    layoutMessageCount.startAnimation(animScale1)
+                    delay(300)
+                    layoutMessageCount.bringToFront()
+                }
+        }
+
+
         //dataBinding.includeButtonMessage.layoutMessageCount.visibility = View.VISIBLE
-        if (count > 0) {
-            val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
-            layoutMessageCount.alpha = 0f
-            layoutMessageCount.clearAnimation()
 
-            val textMessageCount = dataBinding.includeButtonMessage.textMessageCount
-            textMessageCount.text = count.toString()
-            textMessageCount.alpha = 0f
+        }
 
-            val imageMessage = dataBinding.includeButtonMessage.imageMessage
-            imageMessage.bringToFront()
-
-            val imageMessageCount = dataBinding.includeButtonMessage.imageMessageCount
-            val center = imageMessageCount.width / 2f
-            val animScale = ScaleAnimation(
-                0F, 1F, 0F, 1F,
-                center, center
-            )
-            animScale.duration = 400
-
-            val animTranslater = TranslateAnimation(-5f, 5f, 0f,0f)
-            animTranslater.duration = 30
-            animTranslater.repeatCount = 7
-            animTranslater.repeatMode = ValueAnimator.REVERSE
-
-            val animScale1 = ScaleAnimation(
-                1F, 0.56F, 1F, 0.56F,
-                32.toPx.toFloat(), 0f
-            )
-            animScale1.duration = 300
-            animScale1.fillAfter = true
-
-            layoutMessageCount.alpha = 1f
-            imageMessageCount.alpha  = 1f
-
-            CoroutineScope(Dispatchers.Main).launch {
-                imageMessageCount.startAnimation(animScale)
-                delay(500)
-                imageMessage.startAnimation(animTranslater)
-                delay(350)
-                textMessageCount.alpha = 1f
-                layoutMessageCount.startAnimation(animScale1)
-                delay(300)
-                layoutMessageCount.bringToFront()
-            }
+        sharedViewModel.getMessages(true) {
+            countUnreadMessages = it
+            animateCountMessages(countUnreadMessages)
         }
 
     }
@@ -952,7 +963,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
 
             deleteMessages?.let{messages ->
-
+                log(messages)
             }
         }
     }
