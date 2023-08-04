@@ -70,9 +70,11 @@ class UserMessagesActivity: AppCompatActivity() {
             }
 
             override fun onDelete(id: Int) {
-                listRead.find { it == id } ?.let {
+                /*listRead.find { it == id } ?.let {
                     listRead.remove(it)
-                }
+                }*/
+                if (!adapter.isReadItem(id))
+                    listRead.add(id)
                 listDeleted.add(id)
             }
         })
@@ -206,8 +208,11 @@ class UserMessagesActivity: AppCompatActivity() {
                 val snackBar = SnackbarExt(
                     dataBinding.root,
                     getString(R.string.text_delete_usermessages)) {
-                        listDeleted.find { it == deletedItem.id}?.let{
-                            listDeleted.remove(it)
+                        listRead.find{it == deletedItem.id}?.let{item ->
+                            listRead.remove(item)
+                        }
+                        listDeleted.find { it == deletedItem.id}?.let{item ->
+                            listDeleted.remove(item)
                         }
                         (viewHolder as MessagesAdapter.ViewHolder).changeBackgroundColor(applicationContext.getColor(R.color.BackgroundDark))
                         adapter.restoreItem(deletedPosition, deletedItem)
