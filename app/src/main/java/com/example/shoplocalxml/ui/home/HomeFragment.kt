@@ -75,6 +75,7 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
    // private lateinit var sharedViewModel: SharedViewModel
+    //private var scrollPosition = 0
     private var updateCountMessage = false
     private var countUnreadMessages = 0
     private val adapter:ProductsAdapter by lazy {
@@ -121,6 +122,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         homeViewModel =
            ViewModelProvider(requireActivity())[HomeViewModel::class.java]
 
+        homeViewModel.setOnChangeMode {
+            if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.MAIN)    {
+                //log("save data...")
+                saveHomeViewProductState()
+            }
+        }
+
 
      /*   sharedViewModel = run {
             val factory = FactoryViewModel(this, repository)
@@ -129,6 +137,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel.modeFragment.observe(viewLifecycleOwner) {
+           /* val scrollPosition = try {
+                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+            } catch(_: Exception) {-1}
+            log("scroll position $scrollPosition")
+            homeViewModel.getPrevMode()*/
+            //log(it)
 
             val visibility = if (it != HomeViewModel.Companion.HomeMode.MAIN)
                 View.VISIBLE else View.GONE
@@ -296,8 +310,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
 
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
-            //showUserMessages()
-            sharedViewModel.getMessages()
+            sharedViewModel.getMessages() {
+                showUserMessages(it)
+            }
         }
 
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.PopupMenu)
@@ -352,12 +367,18 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
 
 
-        lifecycleScope.launch {
+        //log("on create...")
+
+      /*  lifecycleScope.launch {
+
             sharedViewModel.messages.collect {
-                if (it.size > 0)
+                log("collect messages...")
+                if (it.size > 0) {
+                    //log("show user messages...")
                     showUserMessages(it)
+                }
             }
-        }
+        }*/
 
         lifecycleScope.launch {
 
@@ -386,7 +407,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     }*/
 
 
+
                     (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.uploadDataAgain)//, sharedViewModel.portionData)
+                    //log("set products...")
 
 
 
@@ -487,8 +510,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         if (updateCountMessage) {
             updateCountMessage = false
             showUnreadMessage(countUnreadMessages)
-        } else
+        } else {
             showUnreadMessage()
+        }
     }
 
     /*override fun onStart() {
@@ -590,7 +614,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             animateCountMessages(updateCount)
         } else {
             sharedViewModel.getMessages(true) {
-                countUnreadMessages = it
+                //log("request count...")
+                val count = if (it.size > 0) it[0].id else 0
+                countUnreadMessages = count
                 animateCountMessages(countUnreadMessages)
             }
         }
@@ -625,13 +651,15 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     if (changedViewMode)
                         getLayoutManagerRecyclerViewProductHome(data.filter.viewmode)
                     sharedViewModel.restoreDataMode(data.portionData, data.sort, data.filter, data.products)
+                    log("restored scroll ${data.scrollPosition}")
                     if (data.scrollPosition != -1) {
                         dataBinding.recyclerViewProductHome.scrollToPosition(
                             data.scrollPosition
                         )
                     }
                 }
-                homeViewModel.removeData(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+                //homeViewModel.removeData(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
+                homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
             }
         }
 
@@ -642,6 +670,30 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         dataBinding.editTextSearchQuery.clearFocus()
         val imm = applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(dataBinding.editTextSearchQuery.windowToken, 0)
+    }
+
+
+    private fun getRecyclerViewProductsScrollPosition(): Int {
+        return try {
+            (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+            //findFirstVisibleItemPosition()
+        } catch(_: Exception) {-1}
+    }
+
+    private fun saveHomeViewProductState(){
+        /*val scrollPosition = try {
+            (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+        } catch(_: Exception) {-1}*/
+        val scrollPosition = getRecyclerViewProductsScrollPosition()
+        //log("scrollPosition = $scrollPosition")
+        homeViewModel.saveData(
+            HomeViewModel.Companion.HomeMode.MAIN,
+            sharedViewModel.sortProduct.copy(),
+            sharedViewModel.filterProduct.copy(),
+            sharedViewModel.portionData,
+            sharedViewModel.products.value.toList(),
+            scrollPosition
+        )
     }
 
     private fun searchProducts(query: String){
@@ -659,21 +711,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
             return displaySearchResult
         }
-        //log(homeViewModel.modeSearchProduct.value)
-        /*val firstVisibled = try {
-            (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-        } catch(_:Exception) {-1}*/
-        //homeViewModel.searchQuery = query
-        homeViewModel.saveData(
-            HomeViewModel.Companion.HomeMode.MAIN,
-            sharedViewModel.sortProduct.copy(),
-            sharedViewModel.filterProduct.copy(),
-            sharedViewModel.portionData,
-            sharedViewModel.products.value.toList(),
-            try {
-                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-            } catch(_:Exception) {-1}
-        )
+        //saveHomeViewProductState()
         sharedViewModel.getSearchProducts(query, page = 1, uploadAgain = true) {isEmpty ->
             homeViewModel.searchQuery = query
             if (isEmpty) {
@@ -908,6 +946,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
 
     private fun openDetailProductFragment(idProduct: Int, indexImage: Int) {
+
+
+
         sharedViewModel.products.value.find { it.id == idProduct } ?.let{product ->
             //homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
             //val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
@@ -943,6 +984,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     fragmentTransaction.addToBackStack(null)//"DETAIL_FRAGMENT")
                     fragmentTransaction.commit()
                 }
+
+
             homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
         }
 
@@ -966,6 +1009,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun showUserMessages(messages: MutableList<UserMessage>){
+        homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.USER_MESSAGES)
         val gson = Gson()
         val messagesJson = gson.toJson(messages)
         val intent = Intent(requireContext(), UserMessagesActivity::class.java)
@@ -975,13 +1019,15 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun updateMessages(intent: Intent?){
+        homeViewModel.popStackMode()
+        updateCountMessage = true
         intent?.let { data ->
             val readMessages   = data.getStringExtra("read_messages")
             readMessages?.let {
-               updateCountMessage = true
+               //updateCountMessage = true
                val elements = it.split(',')
                countUnreadMessages -= elements.size
-                log(countUnreadMessages)
+                //log(countUnreadMessages)
             }
 
             val deleteMessages = data.getStringExtra("delete_messages")

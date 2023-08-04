@@ -37,8 +37,8 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }*/
 
 
-    private val _messages = MutableStateFlow<MutableList<UserMessage>>(mutableListOf())
-    val messages = _messages.asStateFlow()
+    /*private val _messages = MutableStateFlow<MutableList<UserMessage>>(mutableListOf())
+    val messages = _messages.asStateFlow()*/
 
 
     /*private val _reviews = MutableStateFlow<MutableList<Review>>(mutableListOf())
@@ -55,11 +55,11 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    fun getListCategory(){
+  /*  fun getListCategory(){
         viewModelScope.launch(Dispatchers.IO) {
             listCategory =  repository.getCategories() ?: listOf()
         }
-    }
+    }*/
 
 
     fun getFilterData(action: (value: Boolean) -> Unit){
@@ -123,6 +123,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     }
 
     private fun updateDataAfterQuery(list: List<Product>, uploadAgain: Boolean) {
+            //log("update products...")
             val updateList = updateHostLink(list)
             if (uploadAgain) {
                 ImageDownloadManager.cancelAll()
@@ -207,21 +208,13 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-
-    fun getMessages(requestCount: Boolean = false, actionCount: ((Int) -> Unit)? = null){
+    fun getMessages(requestCount: Boolean = false, action: ((MutableList<UserMessage>) -> Unit)? = null){
         if (processQuery) return
         processQuery = true
         val valueRequestCount = if (requestCount) 1 else 0
         viewModelScope.launch {
             val listMessages = repository.getMessages(valueRequestCount)?.toMutableList() ?: mutableListOf()
-            if (requestCount) {
-                val count = if (listMessages.size > 0) listMessages[0].id else 0
-                actionCount?.invoke(count)
-            } else {
-                _messages.value.clear()
-                _messages.value = listMessages
-                    //repository.getMessages(valueRequestCount)?.toMutableList() ?: mutableListOf()
-            }
+            action?.invoke(listMessages)
             processQuery = false
         }
     }

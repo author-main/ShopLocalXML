@@ -1,5 +1,6 @@
 package com.example.shoplocalxml.ui.home
 
+import android.graphics.Point
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,10 @@ import java.util.Stack
 
 class HomeViewModel : ViewModel() {
 data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>, var scrollPosition: Int)
+    private var onChangeMode: (() -> Unit)? = null
+    fun setOnChangeMode(value: () -> Unit) {
+        onChangeMode = value
+    }
     var searchQuery = EMPTY_STRING
     private val hashDataMode = hashMapOf<HomeMode, DataMode>()
     fun saveData(mode: HomeMode, sort: SortOrder, filter: Filter, portionData: Int, products: List<Product>, scrollPosition: Int){
@@ -30,7 +35,7 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
     private val stackMode = Stack<HomeMode>().apply {
         push(HomeMode.MAIN)
     }
-    private val _modeFragment = MutableLiveData<HomeMode>(HomeMode.MAIN)
+    private val _modeFragment = MutableLiveData(HomeMode.MAIN)
     val modeFragment: LiveData<HomeMode> = _modeFragment
 
   /*  fun getStackMode(): HomeMode{
@@ -44,6 +49,12 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
 
     fun existStackMode(value: HomeMode) =
         stackMode.search(value) != -1
+
+
+   /* fun getPrevMode(): HomeMode{
+        log(stackMode.size)
+        return HomeMode.NULL
+    }*/
 
     fun popStackMode(): HomeMode{
         try {
@@ -60,6 +71,7 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
     }
 
     fun pushStackMode(value: HomeMode) {
+        onChangeMode?.invoke()
         if (value == _modeFragment.value)
             return
         _modeFragment.value = value
@@ -90,6 +102,7 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
             SEARCH_RESULT,
             PRODUCT_DETAIL,
             IMAGE_VIEWER,
+            USER_MESSAGES,
             NULL
         }
     }
