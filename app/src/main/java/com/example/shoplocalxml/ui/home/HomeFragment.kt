@@ -559,13 +559,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         fun animateCountMessages(count: Int) {
             val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
             val imageMessageCount = dataBinding.includeButtonMessage.imageMessageCount
+            layoutMessageCount.clearAnimation()
             layoutMessageCount.alpha = 0f
             imageMessageCount.alpha  = 0f
             imageMessageCount.drawable.setTint(requireContext().getColor(R.color.colorDiscount))
             if (countUnreadMessages > 0) {
                 layoutMessageCount.alpha = 0f
-                layoutMessageCount.clearAnimation()
-
                 val textMessageCount = dataBinding.includeButtonMessage.textMessageCount
                 textMessageCount.text = count.toString()
                 textMessageCount.alpha = 0f
