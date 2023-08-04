@@ -657,8 +657,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     sharedViewModel.restoreDataMode(data.portionData, data.sort, data.filter, data.products)
                     log("restored scroll ${data.scrollPosition}")
                     if (data.scrollPosition != -1) {
-                        dataBinding.recyclerViewProductHome.scrollToPosition(
-                            data.scrollPosition
+
+                        (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(
+                            data.scrollPosition,
+                            0
                         )
                     }
                 }
@@ -679,8 +681,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     private fun getRecyclerViewProductsScrollPosition(): Int {
         return try {
-            (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
-            //findFirstVisibleItemPosition()
+            (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstCompletelyVisibleItemPosition()
         } catch(_: Exception) {-1}
     }
 
