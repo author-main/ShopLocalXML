@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -557,6 +558,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private fun showUnreadMessage(updateCount: Int = -1) {
         fun animateCountMessages(count: Int) {
             val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
+            val imageMessageCount = dataBinding.includeButtonMessage.imageMessageCount
+            layoutMessageCount.alpha = 0f
+            imageMessageCount.alpha  = 0f
+            imageMessageCount.drawable.setTint(requireContext().getColor(R.color.colorDiscount))
             if (countUnreadMessages > 0) {
                 layoutMessageCount.alpha = 0f
                 layoutMessageCount.clearAnimation()
@@ -568,7 +573,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 val imageMessage = dataBinding.includeButtonMessage.imageMessage
                 imageMessage.bringToFront()
 
-                val imageMessageCount = dataBinding.includeButtonMessage.imageMessageCount
+
                 val center = imageMessageCount.width / 2f
                 val animScale = ScaleAnimation(
                     0F, 1F, 0F, 1F,
@@ -590,7 +595,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
                 layoutMessageCount.alpha = 1f
                 imageMessageCount.alpha  = 1f
-
                 CoroutineScope(Dispatchers.Main).launch {
                     imageMessageCount.startAnimation(animScale)
                     delay(500)
@@ -601,9 +605,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     delay(300)
                     layoutMessageCount.bringToFront()
                 }
-            } else {
+            } /*else {
                 layoutMessageCount.alpha = 0f
-            }
+            }*/
 
 
         //dataBinding.includeButtonMessage.layoutMessageCount.visibility = View.VISIBLE
