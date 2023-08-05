@@ -65,18 +65,13 @@ class UserMessagesActivity: AppCompatActivity() {
         adapter = MessagesAdapter(baseContext, messages)
         adapter.setOnMessageItemListener(object: OnMessageItemListener{
             override fun onClick(id: Int) {
-                // Без обновления данных на сервере (убрать для обновления на сервере)
-                /*
                 listRead.add(id)
-                */
             }
 
             override fun onDelete(id: Int) {
-              // Без обновления данных на сервере (убрать для обновления на сервере)
-              /*  if (!adapter.isReadItem(id))
+              if (!adapter.isReadItem(id))
                         listRead.add(id)
                 listDeleted.add(id)
-              */
             }
         })
         val manager = LinearLayoutManager(

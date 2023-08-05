@@ -1028,16 +1028,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         intent?.let { data ->
             val readMessages   = data.getStringExtra("read_messages")
             readMessages?.let {
-               //updateCountMessage = true
                val elements = it.split(',')
                countUnreadMessages -= elements.size
-                //log(countUnreadMessages)
             }
-
             val deleteMessages = data.getStringExtra("delete_messages")
-            sharedViewModel.updateMessages(readMessages, deleteMessages)
-            /*log(readMessages)
-            log(deleteMessages)*/
+            // Без обновления данных на сервере (убрать для обновления на сервере)
+            /*
+                    sharedViewModel.updateMessages(readMessages, deleteMessages)
+            */
         }
     }
 
