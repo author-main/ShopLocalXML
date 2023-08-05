@@ -66,15 +66,11 @@ class UserMessagesActivity: AppCompatActivity() {
         adapter.setOnMessageItemListener(object: OnMessageItemListener{
             override fun onClick(id: Int) {
                 listRead.add(id)
-                //log(listRead)
             }
 
             override fun onDelete(id: Int) {
-                /*listRead.find { it == id } ?.let {
-                    listRead.remove(it)
-                }*/
-                if (!adapter.isReadItem(id))
-                    listRead.add(id)
+              if (!adapter.isReadItem(id))
+                        listRead.add(id)
                 listDeleted.add(id)
             }
         })
@@ -202,7 +198,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 val deletedPosition = viewHolder.adapterPosition
                 //deletedPosition = adapter.getItem(position).id
                 val deletedItem = adapter.getItem(deletedPosition)
-                deletedItem.read = 0
+                //deletedItem.read = 0
                 adapter.removeItem(deletedPosition)
 
                 val snackBar = SnackbarExt(

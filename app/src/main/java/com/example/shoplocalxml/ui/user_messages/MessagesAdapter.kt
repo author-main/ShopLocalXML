@@ -18,6 +18,9 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
         onMessageItemListener = value
     }
 
+    init{
+        log(listMessages)
+    }
 
     fun restoreItem(index: Int, message: UserMessage) {
         listMessages.add(index, message)
@@ -26,7 +29,9 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
     }
 
     fun isReadItem(id: Int): Boolean {
+        //log(listMessages)
         listMessages.find { it.id == id }?.let {item ->
+//            log("id = $id, isRead = ${item.read}")
             return item.read > 0
         }  ?: return false
     }
@@ -81,12 +86,14 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
             item.layoutParams = lparams*/
             item.message = message
             item.setOnClickListener {
+                //log("unread...")
                 if (message.read == 0) {
                     message.read = 1
                     item.updateReadState(message.read)
                     onMessageItemListener?.onClick(message.id)
                 }
             }
+            //log("item read = ${item.message.read}")
         }
     }
 }
