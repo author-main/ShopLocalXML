@@ -65,17 +65,18 @@ class UserMessagesActivity: AppCompatActivity() {
         adapter = MessagesAdapter(baseContext, messages)
         adapter.setOnMessageItemListener(object: OnMessageItemListener{
             override fun onClick(id: Int) {
+                // Без обновления данных на сервере (убрать для обновления на сервере)
+                /*
                 listRead.add(id)
-                //log(listRead)
+                */
             }
 
             override fun onDelete(id: Int) {
-                /*listRead.find { it == id } ?.let {
-                    listRead.remove(it)
-                }*/
-                if (!adapter.isReadItem(id))
-                    listRead.add(id)
+              // Без обновления данных на сервере (убрать для обновления на сервере)
+              /*  if (!adapter.isReadItem(id))
+                        listRead.add(id)
                 listDeleted.add(id)
+              */
             }
         })
         val manager = LinearLayoutManager(
@@ -202,7 +203,7 @@ class UserMessagesActivity: AppCompatActivity() {
                 val deletedPosition = viewHolder.adapterPosition
                 //deletedPosition = adapter.getItem(position).id
                 val deletedItem = adapter.getItem(deletedPosition)
-                deletedItem.read = 0
+                //deletedItem.read = 0
                 adapter.removeItem(deletedPosition)
 
                 val snackBar = SnackbarExt(
