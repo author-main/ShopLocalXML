@@ -1,8 +1,13 @@
 package com.example.shoplocalxml.ui.notifications
 
+import android.Manifest
+import android.R
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.pm.PackageManager
 import android.graphics.Color
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.classes.UserMessage
@@ -13,19 +18,30 @@ class MessagesNotification(private val messages: List<UserMessage>) {
         const val NOTIFICATION_ID = 101
         const val CHANNEL_ID = "APP_SHOPLOCAL"
     }
+    private val notificationManager = NotificationManagerCompat.from(applicationContext)
+    private val builder             = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
     init {
-        val notificationManager = NotificationManagerCompat.from(applicationContext)
         val channel = NotificationChannel(
-            CHANNEL_ID, "My channel",
+            CHANNEL_ID, "ShopLocal",
             NotificationManager.IMPORTANCE_HIGH
         )
         channel.description = "My channel description"
         channel.enableLights(true)
         channel.lightColor = Color.RED
         channel.enableVibration(false)
+        notificationManager.createNotificationChannel(channel)
+        builder.setContentTitle("Title")
+               .setContentText("Notification text")
+              //.setSmallIcon(R.mipmap.ic_launcher)
 
     }
-    fun notify(){
 
+    fun notifyMessages(){
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        )
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 }
