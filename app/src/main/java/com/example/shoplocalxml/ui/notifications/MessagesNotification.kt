@@ -25,7 +25,7 @@ class MessagesNotification(private val messages: List<UserMessage>) {
             CHANNEL_ID, "ShopLocal",
             NotificationManager.IMPORTANCE_HIGH
         )
-        //channel.description = "My channel description"
+        channel.description = "My channel description"
         channel.enableLights(true)
         channel.lightColor = Color.RED
         channel.enableVibration(false)
