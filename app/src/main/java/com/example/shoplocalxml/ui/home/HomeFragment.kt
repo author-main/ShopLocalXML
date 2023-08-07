@@ -58,6 +58,7 @@ import com.example.shoplocalxml.ui.detail_product.DetailProductFragment
 import com.example.shoplocalxml.ui.filter.FilterActivity
 import com.example.shoplocalxml.ui.history_search.OnSearchHistoryListener
 import com.example.shoplocalxml.ui.history_search.SearchHistoryPanel
+import com.example.shoplocalxml.ui.notifications.MessagesNotification
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu
 import com.example.shoplocalxml.ui.product_item.BottomSheetProductMenu.Companion.MenuItemProduct
 import com.example.shoplocalxml.ui.product_item.DividerItemCardDecoration
@@ -453,6 +454,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
             }
         }
+        val messagesNotification = MessagesNotification(requireContext())
+        messagesNotification.notifyMessages(listOf())
         return dataBinding.root
     }
 

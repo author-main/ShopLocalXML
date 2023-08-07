@@ -1,10 +1,12 @@
 package com.example.shoplocalxml
 
+import android.Manifest
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
 import android.speech.RecognizerIntent
@@ -21,6 +23,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.marginBottom
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
@@ -114,6 +118,13 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
                     (it as OnFabListener).onFabClick()                }
             }
         }
+
+        if (ActivityCompat.checkSelfPermission(baseContext, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            log("not granted...")
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),101);
+        }
+
+
     }
 
 
