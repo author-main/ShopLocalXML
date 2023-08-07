@@ -39,9 +39,9 @@ class MessagesNotification(val context: Context) {
 
     fun notifyMessages(messages: List<UserMessage>){
         this.messages = messages
-        if (ActivityCompat.checkSelfPermission(context,
+      /*  if (ActivityCompat.checkSelfPermission(context,
                                                Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-        )
+        )*/
             notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 }

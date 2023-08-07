@@ -124,6 +124,21 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),101);
         }
 
+        /*val requestPermission =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+
+            }
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermission.launch(Manifest.permission.ACCESS_NOTIFICATION_POLICY)
+        }*/
+
+
+
 
     }
 

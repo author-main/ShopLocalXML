@@ -454,7 +454,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
             }
         }
-        val messagesNotification = MessagesNotification(requireContext())
+        val messagesNotification = MessagesNotification(applicationContext)
         messagesNotification.notifyMessages(listOf())
         return dataBinding.root
     }
