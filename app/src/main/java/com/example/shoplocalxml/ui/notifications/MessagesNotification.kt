@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.UserMessage
 
 
@@ -33,15 +34,16 @@ class MessagesNotification(val context: Context) {
         notificationManager.createNotificationChannel(channel)
         builder.setContentTitle("Title")
                .setContentText("Notification text")
-              //.setSmallIcon(R.mipmap.ic_launcher)
+              .setSmallIcon(R.mipmap.ic_launcher)
 
     }
 
     fun notifyMessages(messages: List<UserMessage>){
         this.messages = messages
-      /*  if (ActivityCompat.checkSelfPermission(context,
+       if (ActivityCompat.checkSelfPermission(context,
                                                Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-        )*/
-            notificationManager.notify(NOTIFICATION_ID, builder.build())
+        )
+           notificationManager.notify(NOTIFICATION_ID, builder.build())
+
     }
 }

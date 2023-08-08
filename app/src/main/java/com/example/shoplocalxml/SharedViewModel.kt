@@ -208,6 +208,18 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
+
+    fun getUnreadDeliveryMessages(action: ((MutableList<UserMessage>) -> Unit)? = null){
+        val requestUnreadDelivery = 2
+        if (processQuery) return
+        processQuery = true
+        viewModelScope.launch {
+            val listMessages = repository.getMessages(requestUnreadDelivery)?.toMutableList() ?: mutableListOf()
+            action?.invoke(listMessages)
+            processQuery = false
+        }
+    }
+
     fun getMessages(requestCount: Boolean = false, action: ((MutableList<UserMessage>) -> Unit)? = null){
         if (processQuery) return
         processQuery = true

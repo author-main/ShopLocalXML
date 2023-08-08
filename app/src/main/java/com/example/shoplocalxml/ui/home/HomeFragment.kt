@@ -454,11 +454,24 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
             }
         }
-        val messagesNotification = MessagesNotification(applicationContext)
-        messagesNotification.notifyMessages(listOf())
+        /*val messagesNotification = MessagesNotification(applicationContext)
+        messagesNotification.notifyMessages(listOf())*/
+        getUnreadDeliveryMessages()
         return dataBinding.root
     }
 
+
+    private fun getUnreadDeliveryMessages(){
+        lifecycleScope.launch {
+            sharedViewModel.getUnreadDeliveryMessages {
+                if (it.isNotEmpty()) {
+                    val messagesNotification = MessagesNotification(requireActivity())
+                    messagesNotification.notifyMessages(it)
+                }
+            }
+
+        }
+    }
 
 
 

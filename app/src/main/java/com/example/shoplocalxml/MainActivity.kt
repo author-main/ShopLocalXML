@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
         if (ActivityCompat.checkSelfPermission(baseContext, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             log("not granted...")
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),101);
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS),101)
         }
 
         /*val requestPermission =
