@@ -52,8 +52,7 @@ class MessagesNotification(val context: Context) {
                 .setContentText("Notification text")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentInfo(getStringResource(R.string.messages_contentinfo))
-                //.setGroup(GROUP_KEY)
-                .setGroup(CHANNEL_GROUP_ID)
+                .setGroup(GROUP_KEY)
                 .setGroupSummary(true)
             notificationManagerGroup.notify(NOTIFICATION_GROUP_ID, builderGroup.build())
         }
@@ -67,24 +66,30 @@ class MessagesNotification(val context: Context) {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
             )*/
-        if (permissionGranted())
-        {
+        if (permissionGranted()) {
 
-            val notificationManager = NotificationManagerCompat.from(context)
+
+            /*val notificationManager = NotificationManagerCompat.from(context)
             notificationManager.createNotificationChannel(channel)
-            val builder             = NotificationCompat.Builder(context, CHANNEL_ID)
+            val builder             = NotificationCompat.Builder(context, CHANNEL_ID)*/
 //            builder.setContentTitle("Title")
-            for (i in messages.indices) {
-                    builder.setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentInfo(getStringResource(R.string.messages_contentinfo))
+            NotificationManagerCompat.from(context).apply {
+                for (i in messages.indices) {
+                    val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                       // .setContentInfo(getStringResource(R.string.messages_contentinfo))
                         .setContentTitle("Sender $i")
                         .setContentText("Subject text $i")
-                        .setGroup(CHANNEL_GROUP_ID)
+                        .setGroup(GROUP_KEY)
                         .setGroupSummary(true)
-                    notificationManager.notify(NOTIFICATION_ID, builder.build())
+                        .build()
+                    notify(NOTIFICATION_ID, notification)
+
+                    //notificationManager.notify(NOTIFICATION_ID, builder.build())
                 }
 
             }
+        }
     }
 
     private fun permissionGranted() =
