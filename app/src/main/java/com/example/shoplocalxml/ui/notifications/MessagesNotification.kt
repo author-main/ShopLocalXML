@@ -14,6 +14,7 @@ import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.getStringResource
+import com.example.shoplocalxml.log
 
 
 class MessagesNotification(val context: Context) {
@@ -26,36 +27,43 @@ class MessagesNotification(val context: Context) {
         const val CHANNEL_GROUP_ID  = "APP_CHANEL_GROUP_ID"
     }
 
-    private val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
+  /*  private val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
         CHANNEL_GROUP_ID,
         GROUP_NAME
-    )
+    )*/
 
-    private val channel: NotificationChannel = NotificationChannel(
+   /* private val channel: NotificationChannel = NotificationChannel(
         CHANNEL_ID, "ShopLocal",
         NotificationManager.IMPORTANCE_HIGH
-    )
+    )*/
     private var messages = listOf<UserMessage>()
     /*private val notificationManager = NotificationManagerCompat.from(context)
     private val builder             = NotificationCompat.Builder(context, CHANNEL_ID)*/
     init {
-        channel.description = "My channel description"
+       /* channel.description = "My channel description"
         channel.enableLights(true)
         channel.lightColor = Color.RED
         channel.enableVibration(false)
-        channel.group = CHANNEL_GROUP_ID
+        channel.group = CHANNEL_GROUP_ID*/
         if (permissionGranted()) {
+            val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
+                CHANNEL_GROUP_ID,
+                GROUP_NAME
+            )
+            log("channel name = ${channelGroup.id}")
             val notificationManagerGroup = NotificationManagerCompat.from(context)
             notificationManagerGroup.createNotificationChannelGroup(channelGroup)
-            val builderGroup = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
-            builderGroup.setContentTitle("Title")
+            val notification = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
+                .setContentTitle("Title")
                 .setContentText("Notification text")
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true)
                 .setContentInfo(getStringResource(R.string.messages_contentinfo))
-                //.setGroup(GROUP_KEY)
-                .setGroup(CHANNEL_GROUP_ID)
+                .setGroup(GROUP_KEY)
                 .setGroupSummary(true)
-            notificationManagerGroup.notify(NOTIFICATION_GROUP_ID, builderGroup.build())
+                .build()
+
+            notificationManagerGroup.notify(NOTIFICATION_GROUP_ID, notification)
         }
 
     }
@@ -67,24 +75,41 @@ class MessagesNotification(val context: Context) {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
             )*/
-        if (permissionGranted())
-        {
+        if (permissionGranted()) {
+            val channel = NotificationChannel(
+                CHANNEL_ID, "ShopLocal",
+                NotificationManager.IMPORTANCE_HIGH
+            )
 
-            val notificationManager = NotificationManagerCompat.from(context)
+            channel.description = "My channel description"
+            channel.enableLights(true)
+            channel.lightColor = Color.RED
+            channel.enableVibration(false)
+            channel.group = CHANNEL_GROUP_ID
+
+
+            /*val notificationManager = NotificationManagerCompat.from(context)
             notificationManager.createNotificationChannel(channel)
-            val builder             = NotificationCompat.Builder(context, CHANNEL_ID)
+            val builder             = NotificationCompat.Builder(context, CHANNEL_ID)*/
 //            builder.setContentTitle("Title")
-            for (i in messages.indices) {
-                    builder.setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentInfo(getStringResource(R.string.messages_contentinfo))
+            NotificationManagerCompat.from(context).apply {
+                for (i in messages.indices) {
+                    val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                       // .setContentInfo(getStringResource(R.string.messages_contentinfo))
                         .setContentTitle("Sender $i")
                         .setContentText("Subject text $i")
-                        .setGroup(CHANNEL_GROUP_ID)
-                        .setGroupSummary(true)
-                    notificationManager.notify(NOTIFICATION_ID, builder.build())
+                        .setGroup(GROUP_KEY)
+                        .setGroupSummary(false)
+                        //.setChannelId(CHANNEL_ID)
+                        .build()
+                    notify(NOTIFICATION_ID, notification)
+
+                    //notificationManager.notify(NOTIFICATION_ID, builder.build())
                 }
 
             }
+        }
     }
 
     private fun permissionGranted() =
