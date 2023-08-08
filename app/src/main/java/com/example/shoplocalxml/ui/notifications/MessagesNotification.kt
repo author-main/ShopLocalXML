@@ -95,7 +95,6 @@ class MessagesNotification(val context: Context) {
                         .setContentTitle("Sender $i")
                         .setContentText("Subject text $i")
                         .setGroup(GROUP_KEY)
-                        .setGroupSummary(false)
                         .setChannelId(CHANNEL_ID)
                         .build()
                     notify(NOTIFICATION_ID, notification)
