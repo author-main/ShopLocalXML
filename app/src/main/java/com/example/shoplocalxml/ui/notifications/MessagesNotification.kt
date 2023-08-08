@@ -22,7 +22,7 @@ class MessagesNotification(val context: Context) {
         const val GROUP_KEY  = "SHOPLOCAL_KEY_GROUPMESSAGES"
         const val GROUP_NAME = "SHOPLOCAL_NAME_GROUPMESSAGES"
         const val NOTIFICATION_ID = 101
-        const val NOTIFICATION_GROUP_ID = 102
+        const val NOTIFICATION_GROUP_ID = -101
         const val CHANNEL_ID        = "APP_CHANEL_ID"
         const val CHANNEL_GROUP_ID  = "APP_CHANEL_GROUP_ID"
     }
@@ -50,17 +50,17 @@ class MessagesNotification(val context: Context) {
                 CHANNEL_GROUP_ID,
                 GROUP_NAME
             )
-            log("channel name = ${channelGroup.id}")
+           // log("channel name = ${channelGroup.id}")
             val notificationManagerGroup = NotificationManagerCompat.from(context)
             notificationManagerGroup.createNotificationChannelGroup(channelGroup)
             val notification = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
                 .setContentTitle("Title")
                 .setContentText("Notification text")
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true)
                 .setContentInfo(getStringResource(R.string.messages_contentinfo))
                 .setGroup(GROUP_KEY)
                 .setGroupSummary(true)
+                .setChannelId(CHANNEL_GROUP_ID)
                 .build()
 
             notificationManagerGroup.notify(NOTIFICATION_GROUP_ID, notification)
@@ -87,11 +87,6 @@ class MessagesNotification(val context: Context) {
             channel.enableVibration(false)
             channel.group = CHANNEL_GROUP_ID
 
-
-            /*val notificationManager = NotificationManagerCompat.from(context)
-            notificationManager.createNotificationChannel(channel)
-            val builder             = NotificationCompat.Builder(context, CHANNEL_ID)*/
-//            builder.setContentTitle("Title")
             NotificationManagerCompat.from(context).apply {
                 for (i in messages.indices) {
                     val notification = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -101,13 +96,10 @@ class MessagesNotification(val context: Context) {
                         .setContentText("Subject text $i")
                         .setGroup(GROUP_KEY)
                         .setGroupSummary(false)
-                        //.setChannelId(CHANNEL_ID)
+                        .setChannelId(CHANNEL_ID)
                         .build()
                     notify(NOTIFICATION_ID, notification)
-
-                    //notificationManager.notify(NOTIFICATION_ID, builder.build())
                 }
-
             }
         }
     }
