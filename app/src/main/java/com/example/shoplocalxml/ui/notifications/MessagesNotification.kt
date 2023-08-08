@@ -37,67 +37,53 @@ class MessagesNotification(val context: Context) {
         NotificationManager.IMPORTANCE_HIGH
     )*/
     private var messages = listOf<UserMessage>()
-    /*private val notificationManager = NotificationManagerCompat.from(context)
-    private val builder             = NotificationCompat.Builder(context, CHANNEL_ID)*/
-    init {
-       /* channel.description = "My channel description"
-        channel.enableLights(true)
-        channel.lightColor = Color.RED
-        channel.enableVibration(false)
-        channel.group = CHANNEL_GROUP_ID*/
-        if (permissionGranted()) {
-            val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
-                CHANNEL_GROUP_ID,
-                GROUP_NAME
-            )
-           // log("channel name = ${channelGroup.id}")
-            val notificationManagerGroup = NotificationManagerCompat.from(context)
-            notificationManagerGroup.createNotificationChannelGroup(channelGroup)
-            val notification = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
-                .setContentTitle("Title")
-                .setContentText("Notification text")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentInfo(getStringResource(R.string.messages_contentinfo))
-                .setGroup(GROUP_KEY)
-                .setGroupSummary(true)
-                .setChannelId(CHANNEL_GROUP_ID)
-                .build()
-
-            notificationManagerGroup.notify(NOTIFICATION_GROUP_ID, notification)
-        }
-
-    }
 
     fun notifyMessages(messages: List<UserMessage>){
             this.messages = messages
-            /*if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            )*/
+
         if (permissionGranted()) {
+
+
+                val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
+                    CHANNEL_GROUP_ID,
+                    GROUP_NAME
+                )
+                val notificationManager = NotificationManagerCompat.from(context)
+                notificationManager.createNotificationChannelGroup(channelGroup)
+                val notificationGroup = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
+                    .setContentTitle("Title")
+                    .setContentText("Notification text")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentInfo(getStringResource(R.string.messages_contentinfo))
+                    .setGroup(GROUP_KEY)
+                    .setGroupSummary(true)
+                    .setChannelId(CHANNEL_GROUP_ID)
+                    .build()
+                notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
+
+
+
             val channel = NotificationChannel(
                 CHANNEL_ID, "ShopLocal",
                 NotificationManager.IMPORTANCE_HIGH
             )
-
             channel.description = "My channel description"
             channel.enableLights(true)
             channel.lightColor = Color.RED
             channel.enableVibration(false)
             channel.group = CHANNEL_GROUP_ID
+            notificationManager.createNotificationChannel(channel)
 
-            NotificationManagerCompat.from(context).apply {
+           notificationManager.apply {
                 for (i in messages.indices) {
-                    val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                    val notificationMessage = NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                       // .setContentInfo(getStringResource(R.string.messages_contentinfo))
                         .setContentTitle("Sender $i")
                         .setContentText("Subject text $i")
                         .setGroup(GROUP_KEY)
                         .setChannelId(CHANNEL_ID)
                         .build()
-                    notify(NOTIFICATION_ID, notification)
+                    notify(NOTIFICATION_ID, notificationMessage)
                 }
             }
         }
