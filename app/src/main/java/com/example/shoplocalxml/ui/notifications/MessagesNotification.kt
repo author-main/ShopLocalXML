@@ -21,11 +21,13 @@ class MessagesNotification(val context: Context) {
         const val GROUP_KEY  = "SHOPLOCAL_KEY_GROUPMESSAGES"
         const val GROUP_NAME = "SHOPLOCAL_NAME_GROUPMESSAGES"
         const val NOTIFICATION_ID = 101
-        const val CHANNEL_ID = "APP_SHOPLOCAL"
+        const val NOTIFICATION_GROUP_ID = 102
+        const val CHANNEL_ID        = "APP_CHANEL_ID"
+        const val CHANNEL_GROUP_ID  = "APP_CHANEL_GROUP_ID"
     }
 
     private val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
-        CHANNEL_ID,
+        CHANNEL_GROUP_ID,
         GROUP_NAME
     )
 
@@ -41,33 +43,53 @@ class MessagesNotification(val context: Context) {
         channel.enableLights(true)
         channel.lightColor = Color.RED
         channel.enableVibration(false)
-/*        val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.createNotificationChannel(channel)
-        val builder             = NotificationCompat.Builder(context, CHANNEL_ID)
-        builder.setContentTitle("Title")
-               .setContentText("Notification text")
-               .setSmallIcon(R.mipmap.ic_launcher)
-               /*.setContentInfo(getStringResource(R.string.messages_contentinfo))
-               .setGroup(GROUP_KEY)
-               .setGroupSummary(true)*/*/
+        channel.group = CHANNEL_GROUP_ID
+        if (permissionGranted()) {
+            val notificationManagerGroup = NotificationManagerCompat.from(context)
+            notificationManagerGroup.createNotificationChannelGroup(channelGroup)
+            val builderGroup = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
+            builderGroup.setContentTitle("Title")
+                .setContentText("Notification text")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentInfo(getStringResource(R.string.messages_contentinfo))
+                //.setGroup(GROUP_KEY)
+                .setGroup(CHANNEL_GROUP_ID)
+                .setGroupSummary(true)
+            notificationManagerGroup.notify(NOTIFICATION_GROUP_ID, builderGroup.build())
+        }
 
     }
 
     fun notifyMessages(messages: List<UserMessage>){
             this.messages = messages
-            if (ActivityCompat.checkSelfPermission(
+            /*if (ActivityCompat.checkSelfPermission(
                     context,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
-            ) {
-              /*  messages.forEach {
+            )*/
+        if (permissionGranted())
+        {
+
+            val notificationManager = NotificationManagerCompat.from(context)
+            notificationManager.createNotificationChannel(channel)
+            val builder             = NotificationCompat.Builder(context, CHANNEL_ID)
+//            builder.setContentTitle("Title")
+            for (i in messages.indices) {
                     builder.setSmallIcon(R.mipmap.ic_launcher)
                         .setContentInfo(getStringResource(R.string.messages_contentinfo))
-                        .setGroup(GROUP_KEY)
+                        .setContentTitle("Sender $i")
+                        .setContentText("Subject text $i")
+                        .setGroup(CHANNEL_GROUP_ID)
                         .setGroupSummary(true)
                     notificationManager.notify(NOTIFICATION_ID, builder.build())
-                }*/
+                }
 
             }
     }
+
+    private fun permissionGranted() =
+        ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
 }
