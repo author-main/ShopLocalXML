@@ -23,7 +23,7 @@ class MessagesNotification(val context: Context) {
 
         const val GROUP_KEY = "GROUP_KEY"
         const val GROUP_NAME = "GROUP_MESSAGES"
-        const val NOTIFICATION_ID = 101
+        //const val NOTIFICATION_ID = 101
         const val NOTIFICATION_GROUP_ID = -101
         const val CHANNEL_ID  = "CHANNEL_ID"
         const val CHANNEL_GROUP_ID  = "CHANNEL_GROUP_ID"
@@ -58,16 +58,16 @@ class MessagesNotification(val context: Context) {
                     .setContentTitle("Title")
                     .setContentText("Notification text")
                     .setSmallIcon(R.mipmap.ic_launcher)
-                 //   .setContentInfo(getStringResource(R.string.messages_contentinfo))
+                    .setContentInfo(getStringResource(R.string.messages_contentinfo))
                     .setGroup(GROUP_KEY)
                     .setGroupSummary(true)
                     .setChannelId(CHANNEL_GROUP_ID)
                     .build()
-                notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
+                //notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
 
 
 
-          /*  val channel = NotificationChannel(
+            val channel = NotificationChannel(
                 CHANNEL_ID, "ShopLocal",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
@@ -80,16 +80,17 @@ class MessagesNotification(val context: Context) {
 
            notificationManager.apply {
                 for (i in messages.indices) {
+                    val notificationId = 1000 + messages[i].id
                     val notificationMessage = NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Sender $i")
                         .setContentText("Subject text $i")
                         .setGroup(GROUP_KEY)
-                        //.setChannelId(CHANNEL_ID)
+                        .setChannelId(CHANNEL_ID)
                         .build()
-                    notify(NOTIFICATION_ID, notificationMessage)
+                    notify(notificationId, notificationMessage)
                 }
-            }*/
+            }
         }
     }
 
@@ -99,6 +100,7 @@ class MessagesNotification(val context: Context) {
             Manifest.permission.POST_NOTIFICATIONS
         ) == PackageManager.PERMISSION_GRANTED
 }
+
 
 /*
 import android.app.NotificationChannel;
