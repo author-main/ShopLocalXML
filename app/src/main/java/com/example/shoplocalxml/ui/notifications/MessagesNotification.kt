@@ -22,12 +22,12 @@ class MessagesNotification(val context: Context) {
     companion object {
 
         const val GROUP_KEY = "GROUP_KEY"
-        const val GROUP_NAME = "GROUP_MESSAGES"
+        //const val GROUP_NAME = "GROUP_MESSAGES"
         const val NOTIFICATION_ID = 101
         const val NOTIFICATION_GROUP_ID = -101
         const val CHANNEL_ID  = "CHANNEL_ID"
         const val CHANNEL_NAME  = "CHANNEL_NAME"
-        const val CHANNEL_GROUP_ID  = "CHANNEL_GROUP_ID"
+       // const val CHANNEL_GROUP_ID  = "CHANNEL_GROUP_ID"
 
     }
 
@@ -62,19 +62,19 @@ class MessagesNotification(val context: Context) {
                 channel.enableLights(true)
                 channel.lightColor = Color.RED
                 channel.enableVibration(false)
-                channel.group = CHANNEL_GROUP_ID
+                //channel.group = CHANNEL_GROUP_ID
 
                 //notificationManager.createNotificationChannelGroup(channelGroup)
                 notificationManager.createNotificationChannel(channel)
 
-                val notificationGroup = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
+                val notificationGroup = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setContentTitle("Title")
                     .setContentText("Notification text")
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentInfo(getStringResource(R.string.messages_contentinfo))
                     .setGroup(GROUP_KEY)
                     .setGroupSummary(true)
-                    .setChannelId(CHANNEL_ID)
+                    //.setChannelId(CHANNEL_ID)
                     .build()
 
            notificationManager.apply {
@@ -85,7 +85,7 @@ class MessagesNotification(val context: Context) {
                         .setContentTitle("Sender $i")
                         .setContentText("Subject text $i")
                         .setGroup(GROUP_KEY)
-                        .setChannelId(CHANNEL_ID)
+                        //.setChannelId(CHANNEL_ID)
                         .build()
                     notify(notificationId, notificationMessage)
                 }
