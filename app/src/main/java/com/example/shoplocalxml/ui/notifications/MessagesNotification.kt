@@ -49,10 +49,10 @@ class MessagesNotification(val context: Context) {
 
                 val notificationManager = NotificationManagerCompat.from(context)
 
-                val channelGroup = NotificationChannelGroup(
+               /* val channelGroup = NotificationChannelGroup(
                     CHANNEL_GROUP_ID,
                     GROUP_NAME
-                )
+                )*/
 
                 val channel = NotificationChannel(
                     CHANNEL_ID, CHANNEL_NAME,
@@ -64,7 +64,7 @@ class MessagesNotification(val context: Context) {
                 channel.enableVibration(false)
                 channel.group = CHANNEL_GROUP_ID
 
-                notificationManager.createNotificationChannelGroup(channelGroup)
+                //notificationManager.createNotificationChannelGroup(channelGroup)
                 notificationManager.createNotificationChannel(channel)
 
                 val notificationGroup = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
@@ -74,7 +74,7 @@ class MessagesNotification(val context: Context) {
                     .setContentInfo(getStringResource(R.string.messages_contentinfo))
                     .setGroup(GROUP_KEY)
                     .setGroupSummary(true)
-                    .setChannelId(CHANNEL_GROUP_ID)
+                    .setChannelId(CHANNEL_ID)
                     .build()
 
            notificationManager.apply {
