@@ -26,6 +26,7 @@ class MessagesNotification(val context: Context) {
         //const val NOTIFICATION_ID = 101
         const val NOTIFICATION_GROUP_ID = -101
         const val CHANNEL_ID  = "CHANNEL_ID"
+        const val CHANNEL_NAME  = "CHANNEL_NAME"
         const val CHANNEL_GROUP_ID  = "CHANNEL_GROUP_ID"
 
     }
@@ -63,12 +64,12 @@ class MessagesNotification(val context: Context) {
                     .setGroupSummary(true)
                     .setChannelId(CHANNEL_GROUP_ID)
                     .build()
-                //notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
+                notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
 
 
 
             val channel = NotificationChannel(
-                CHANNEL_ID, "ShopLocal",
+                CHANNEL_ID, CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.description = "My channel description"
