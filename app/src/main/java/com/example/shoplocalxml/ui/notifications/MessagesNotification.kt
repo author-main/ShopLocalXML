@@ -64,7 +64,7 @@ class MessagesNotification(val context: Context) {
                     .setGroupSummary(true)
                     .setChannelId(CHANNEL_GROUP_ID)
                     .build()
-                notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
+               // notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
 
 
 
@@ -92,6 +92,7 @@ class MessagesNotification(val context: Context) {
                     notify(notificationId, notificationMessage)
                 }
             }
+            notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
         }
     }
 
