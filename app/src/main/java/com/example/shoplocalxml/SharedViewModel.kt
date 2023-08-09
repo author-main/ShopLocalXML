@@ -214,9 +214,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         if (processQuery) return
         processQuery = true
         viewModelScope.launch {
+            processQuery = false
             val listMessages = repository.getMessages(requestUnreadDelivery)?.toMutableList() ?: mutableListOf()
             action?.invoke(listMessages)
-            processQuery = false
         }
     }
 
@@ -225,9 +225,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         processQuery = true
         val valueRequestCount = if (requestCount) 1 else 0
         viewModelScope.launch {
+            processQuery = false
             val listMessages = repository.getMessages(valueRequestCount)?.toMutableList() ?: mutableListOf()
             action?.invoke(listMessages)
-            processQuery = false
         }
     }
 
