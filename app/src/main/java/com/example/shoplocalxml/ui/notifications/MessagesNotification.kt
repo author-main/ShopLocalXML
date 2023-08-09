@@ -47,13 +47,25 @@ class MessagesNotification(val context: Context) {
 
         if (permissionGranted()) {
 
-                val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
+                val notificationManager = NotificationManagerCompat.from(context)
+
+                val channelGroup = NotificationChannelGroup(
                     CHANNEL_GROUP_ID,
                     GROUP_NAME
                 )
 
-                val notificationManager = NotificationManagerCompat.from(context)
+                val channel = NotificationChannel(
+                    CHANNEL_ID, CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
+                channel.description = "My channel description"
+                channel.enableLights(true)
+                channel.lightColor = Color.RED
+                channel.enableVibration(false)
+                channel.group = CHANNEL_GROUP_ID
+
                 notificationManager.createNotificationChannelGroup(channelGroup)
+                notificationManager.createNotificationChannel(channel)
 
                 val notificationGroup = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
                     .setContentTitle("Title")
@@ -64,20 +76,6 @@ class MessagesNotification(val context: Context) {
                     .setGroupSummary(true)
                     .setChannelId(CHANNEL_GROUP_ID)
                     .build()
-               // notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
-
-
-
-            val channel = NotificationChannel(
-                CHANNEL_ID, CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            channel.description = "My channel description"
-            channel.enableLights(true)
-            channel.lightColor = Color.RED
-            channel.enableVibration(false)
-            channel.group = CHANNEL_GROUP_ID
-            notificationManager.createNotificationChannel(channel)
 
            notificationManager.apply {
                 for (i in messages.indices) {
