@@ -23,7 +23,7 @@ class MessagesNotification(val context: Context) {
 
         const val GROUP_KEY = "GROUP_KEY"
         const val GROUP_NAME = "GROUP_MESSAGES"
-        //const val NOTIFICATION_ID = 101
+        const val NOTIFICATION_ID = 101
         const val NOTIFICATION_GROUP_ID = -101
         const val CHANNEL_ID  = "CHANNEL_ID"
         const val CHANNEL_NAME  = "CHANNEL_NAME"
@@ -79,7 +79,7 @@ class MessagesNotification(val context: Context) {
 
            notificationManager.apply {
                 for (i in messages.indices) {
-                    val notificationId = 1000 + messages[i].id
+                    val notificationId = NOTIFICATION_ID + messages[i].id
                     val notificationMessage = NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Sender $i")
@@ -89,8 +89,9 @@ class MessagesNotification(val context: Context) {
                         .build()
                     notify(notificationId, notificationMessage)
                 }
+                notify(NOTIFICATION_GROUP_ID, notificationGroup)
             }
-            notificationManager.notify(NOTIFICATION_GROUP_ID, notificationGroup)
+
         }
     }
 
