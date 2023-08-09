@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.pm.PackageManager
 import android.graphics.Color
 import androidx.core.app.ActivityCompat
@@ -19,12 +20,14 @@ import com.example.shoplocalxml.log
 
 class MessagesNotification(val context: Context) {
     companion object {
-        const val GROUP_KEY  = "SHOPLOCAL_KEY_GROUPMESSAGES"
-        const val GROUP_NAME = "SHOPLOCAL_NAME_GROUPMESSAGES"
+
+        const val GROUP_KEY = "GROUP_KEY"
+        const val GROUP_NAME = "GROUP_MESSAGES"
         const val NOTIFICATION_ID = 101
         const val NOTIFICATION_GROUP_ID = -101
-        const val CHANNEL_ID        = "APP_CHANEL_ID"
-        const val CHANNEL_GROUP_ID  = "APP_CHANEL_GROUP_ID"
+        const val CHANNEL_ID  = "CHANNEL_ID"
+        const val CHANNEL_GROUP_ID  = "CHANNEL_GROUP_ID"
+
     }
 
   /*  private val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
@@ -43,13 +46,14 @@ class MessagesNotification(val context: Context) {
 
         if (permissionGranted()) {
 
-
                 val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
                     CHANNEL_GROUP_ID,
                     GROUP_NAME
                 )
+
                 val notificationManager = NotificationManagerCompat.from(context)
                 notificationManager.createNotificationChannelGroup(channelGroup)
+
                 val notificationGroup = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
                     .setContentTitle("Title")
                     .setContentText("Notification text")
@@ -63,9 +67,9 @@ class MessagesNotification(val context: Context) {
 
 
 
-            val channel = NotificationChannel(
+          /*  val channel = NotificationChannel(
                 CHANNEL_ID, "ShopLocal",
-                NotificationManager.IMPORTANCE_HIGH
+                NotificationManager.IMPORTANCE_DEFAULT
             )
             channel.description = "My channel description"
             channel.enableLights(true)
@@ -81,11 +85,11 @@ class MessagesNotification(val context: Context) {
                         .setContentTitle("Sender $i")
                         .setContentText("Subject text $i")
                         .setGroup(GROUP_KEY)
-                        .setChannelId(CHANNEL_ID)
+                        //.setChannelId(CHANNEL_ID)
                         .build()
                     notify(NOTIFICATION_ID, notificationMessage)
                 }
-            }
+            }*/
         }
     }
 
