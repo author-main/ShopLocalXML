@@ -92,7 +92,7 @@ class MessagesNotification(val context: Context) {
             val notificationGroup = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle("ShopLocal")
                 .setContentText(getStringResource(R.string.messages_contentinfo))
-                .setSmallIcon(R.drawable.ic_delivery)
+                .setSmallIcon(R.drawable.ic_delivery_notify)
                 .setContentInfo(getStringResource(R.string.messages_contentinfo))
                 .setGroup(GROUP_KEY)
                 .setGroupSummary(true)
@@ -114,7 +114,7 @@ class MessagesNotification(val context: Context) {
                     val pendingIntentMessage = PendingIntent.getActivity(context, notificationId, intentMessage,
                         PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
                     val notificationMessage = NotificationCompat.Builder(context, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_delivery)
+                        .setSmallIcon(R.drawable.ic_delivery_notify)
                         .setContentTitle(messages[i].date)
                         .setContentText(messages[i].message)
                         .setGroup(GROUP_KEY)
