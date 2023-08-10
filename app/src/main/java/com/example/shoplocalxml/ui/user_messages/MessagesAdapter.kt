@@ -45,9 +45,10 @@ class MessagesAdapter(private val context: Context, private var listMessages: Mu
     }
 
     fun removeItem(position: Int) {
-        onMessageItemListener?.onDelete(listMessages[position].id)
+        val id = listMessages[position].id
         listMessages.removeAt(position)
         notifyItemRemoved(position)
+        onMessageItemListener?.onDelete(id)
         //notifyItemRangeChanged(position, itemCount)
         /*listMessages.find { it.id == position }?.let {
             //it.deleted = true

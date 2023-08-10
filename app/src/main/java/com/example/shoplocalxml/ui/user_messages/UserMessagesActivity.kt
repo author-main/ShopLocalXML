@@ -72,8 +72,12 @@ class UserMessagesActivity: AppCompatActivity() {
 
             override fun onDelete(id: Int) {
               if (!adapter.isReadItem(id))
-                        listRead.add(id)
+                  listRead.add(id)
                 listDeleted.add(id)
+                if (adapter.itemCount == 0) {
+                    performClose()
+                    finish()
+                }
             }
         })
         val manager = LinearLayoutManager(
