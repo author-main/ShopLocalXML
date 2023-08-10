@@ -384,6 +384,14 @@ class UserMessagesActivity: AppCompatActivity() {
 
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        val typeToken = object : TypeToken<List<UserMessage>>() {}.type
+        val gson    = Gson()
+        val data   = intent.getStringExtra("messages")
+        val messages = gson.fromJson<List<UserMessage>>(data, typeToken).toMutableList()
+        adapter.setMessages(messages)
+    }
 }
 
 /*

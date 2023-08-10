@@ -4,7 +4,10 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationChannelGroup
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import androidx.core.app.ActivityCompat
@@ -15,100 +18,115 @@ import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.ui.user_messages.UserMessagesActivity
+import com.google.gson.Gson
 
 
 class MessagesNotification(val context: Context) {
     companion object {
-        const val GROUP_KEY  = "SHOPLOCAL_KEY_GROUPMESSAGES"
-        const val GROUP_NAME = "SHOPLOCAL_NAME_GROUPMESSAGES"
+
+        const val GROUP_KEY = "GROUP_KEY"
+        //const val GROUP_NAME = "GROUP_MESSAGES"
         const val NOTIFICATION_ID = 101
-        const val NOTIFICATION_GROUP_ID = 102
-        const val CHANNEL_ID        = "APP_CHANEL_ID"
-        const val CHANNEL_GROUP_ID  = "APP_CHANEL_GROUP_ID"
+        const val NOTIFICATION_GROUP_ID = -101
+        const val CHANNEL_ID  = "CHANNEL_ID"
+        const val CHANNEL_NAME  = "CHANNEL_NAME"
+        // const val CHANNEL_GROUP_ID  = "CHANNEL_GROUP_ID"
+
     }
 
-  /*  private val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
-        CHANNEL_GROUP_ID,
-        GROUP_NAME
-    )*/
+    /*  private val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
+          CHANNEL_GROUP_ID,
+          GROUP_NAME
+      )*/
 
-   /* private val channel: NotificationChannel = NotificationChannel(
-        CHANNEL_ID, "ShopLocal",
-        NotificationManager.IMPORTANCE_HIGH
-    )*/
+    /* private val channel: NotificationChannel = NotificationChannel(
+         CHANNEL_ID, "ShopLocal",
+         NotificationManager.IMPORTANCE_HIGH
+     )*/
     private var messages = listOf<UserMessage>()
-    /*private val notificationManager = NotificationManagerCompat.from(context)
-    private val builder             = NotificationCompat.Builder(context, CHANNEL_ID)*/
-    init {
-       /* channel.description = "My channel description"
-        channel.enableLights(true)
-        channel.lightColor = Color.RED
-        channel.enableVibration(false)
-        channel.group = CHANNEL_GROUP_ID*/
-        if (permissionGranted()) {
-            val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
-                CHANNEL_GROUP_ID,
-                GROUP_NAME
-            )
-            log("channel name = ${channelGroup.id}")
-            val notificationManagerGroup = NotificationManagerCompat.from(context)
-            notificationManagerGroup.createNotificationChannelGroup(channelGroup)
-            val notification = NotificationCompat.Builder(context, CHANNEL_GROUP_ID)
-                .setContentTitle("Title")
-                .setContentText("Notification text")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true)
-                .setContentInfo(getStringResource(R.string.messages_contentinfo))
-                .setGroup(GROUP_KEY)
-                .setGroupSummary(true)
-                .build()
-
-            notificationManagerGroup.notify(NOTIFICATION_GROUP_ID, notification)
-        }
-
-    }
 
     fun notifyMessages(messages: List<UserMessage>){
-            this.messages = messages
-            /*if (ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            )*/
-        if (permissionGranted()) {
-            val channel = NotificationChannel(
-                CHANNEL_ID, "ShopLocal",
-                NotificationManager.IMPORTANCE_HIGH
-            )
+        this.messages = messages
 
-            channel.description = "My channel description"
+        if (permissionGranted() && messages.isNotEmpty()) {
+
+            val notificationManager = NotificationManagerCompat.from(context)
+
+            /* val channelGroup = NotificationChannelGroup(
+                 CHANNEL_GROUP_ID,
+                 GROUP_NAME
+             )*/
+
+            val channel = NotificationChannel(
+                CHANNEL_ID, CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            channel.description = getStringResource(R.string.messages_contentinfo)
             channel.enableLights(true)
             channel.lightColor = Color.RED
             channel.enableVibration(false)
-            channel.group = CHANNEL_GROUP_ID
+            //channel.group = CHANNEL_GROUP_ID
+
+            //notificationManager.createNotificationChannelGroup(channelGroup)
 
 
-            /*val notificationManager = NotificationManagerCompat.from(context)
+            val intent = Intent(context, UserMessagesActivity::class.java)
+            val gson = Gson()
+            var messagesJson = gson.toJson(messages)
+            intent.putExtra("messages", messagesJson)
+            intent.putExtra("index",    -1)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent,
+            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+
+            /*val intentMessage = Intent(context, UserMessagesActivity::class.java)
+            intent.putExtra("index",    -1)
+            val pendingIntentMessage = PendingIntent.getActivity(context, 0, intent,
+                PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)*/
+
+
             notificationManager.createNotificationChannel(channel)
-            val builder             = NotificationCompat.Builder(context, CHANNEL_ID)*/
-//            builder.setContentTitle("Title")
-            NotificationManagerCompat.from(context).apply {
+
+            val notificationGroup = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setContentTitle("ShopLocal")
+                .setContentText(getStringResource(R.string.messages_contentinfo))
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentInfo(getStringResource(R.string.messages_contentinfo))
+                .setGroup(GROUP_KEY)
+                .setGroupSummary(true)
+                //.setChannelId(CHANNEL_ID)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
+
+            notificationManager.apply {
+                val listOneMessage = mutableListOf<UserMessage>()
                 for (i in messages.indices) {
-                    val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+                    val notificationId = NOTIFICATION_ID + messages[i].id
+                    val intentMessage = Intent(context, UserMessagesActivity::class.java)
+                    listOneMessage.clear()
+                    listOneMessage.add(messages[i])
+                    messagesJson = gson.toJson(listOneMessage)
+                    intentMessage.putExtra("messages", messagesJson)
+                    val pendingIntentMessage = PendingIntent.getActivity(context, notificationId, intentMessage,
+                        PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+                    val notificationMessage = NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                       // .setContentInfo(getStringResource(R.string.messages_contentinfo))
-                        .setContentTitle("Sender $i")
-                        .setContentText("Subject text $i")
+                        .setContentTitle(messages[i].date)
+                        .setContentText(messages[i].message)
                         .setGroup(GROUP_KEY)
-                        .setGroupSummary(false)
                         //.setChannelId(CHANNEL_ID)
+                        .setContentIntent(pendingIntentMessage)
+                        .setAutoCancel(true)
                         .build()
-                    notify(NOTIFICATION_ID, notification)
-
-                    //notificationManager.notify(NOTIFICATION_ID, builder.build())
+                    notify(notificationId, notificationMessage)
                 }
-
+                listOneMessage.clear()
+                notify(NOTIFICATION_GROUP_ID, notificationGroup)
             }
+
         }
     }
 
