@@ -78,6 +78,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
    // private lateinit var sharedViewModel: SharedViewModel
     //private var scrollPosition = 0
+    private var isShowNotifications = false
     private var updateCountMessage = false
     private var countUnreadMessages = 0
     private val adapter:ProductsAdapter by lazy {
@@ -464,7 +465,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private fun getUnreadDeliveryMessages(){
         lifecycleScope.launch {
             sharedViewModel.getUnreadDeliveryMessages {
-                if (it.isNotEmpty()) {
+                if (it.isNotEmpty() && !isShowNotifications) {
+                    isShowNotifications = true
+                    //log("show notifications")
                     val messagesNotification = MessagesNotification(requireActivity())
                     messagesNotification.notifyMessages(it)
                 }
@@ -528,10 +531,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             updateCountMessage = false
             showUnreadMessage(countUnreadMessages)
         } else {
-
                 showUnreadMessage()
-
-
         }
     }
 
