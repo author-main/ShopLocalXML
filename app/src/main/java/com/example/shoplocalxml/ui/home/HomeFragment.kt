@@ -314,6 +314,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
             sharedViewModel.getMessages() {
+                MessagesNotification.clear()
                 showUserMessages(it)
             }
         }
@@ -468,7 +469,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 if (it.isNotEmpty() && !isShowNotifications) {
                     isShowNotifications = true
                     //log("show notifications")
-                    val messagesNotification = MessagesNotification(requireActivity())
+                    val messagesNotification = MessagesNotification.getInstance()
                     messagesNotification.notifyMessages(it)
                 }
             }
