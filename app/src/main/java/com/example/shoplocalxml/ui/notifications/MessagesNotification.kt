@@ -93,7 +93,6 @@ class MessagesNotification(val context: Context) {
                 .setContentTitle("ShopLocal")
                 .setContentText(getStringResource(R.string.messages_contentinfo))
                 .setSmallIcon(R.drawable.ic_delivery)
-                .setBadgeIconType(R.drawable.ic_delivery)
                 .setContentInfo(getStringResource(R.string.messages_contentinfo))
                 .setGroup(GROUP_KEY)
                 .setGroupSummary(true)
