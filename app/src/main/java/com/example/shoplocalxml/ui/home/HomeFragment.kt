@@ -456,7 +456,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
         /*val messagesNotification = MessagesNotification(applicationContext)
         messagesNotification.notifyMessages(listOf())*/
-        getUnreadDeliveryMessages()
+        //getUnreadDeliveryMessages()
         return dataBinding.root
     }
 
@@ -528,7 +528,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             updateCountMessage = false
             showUnreadMessage(countUnreadMessages)
         } else {
-            showUnreadMessage()
+
+                showUnreadMessage()
+
+
         }
     }
 
@@ -637,6 +640,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 val count = if (it.size > 0) it[0].id else 0
                 countUnreadMessages = count
                 animateCountMessages(countUnreadMessages)
+                getUnreadDeliveryMessages()
             }
         }
 
