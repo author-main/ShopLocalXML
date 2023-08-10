@@ -87,54 +87,8 @@ class UserMessagesActivity: AppCompatActivity() {
         )
         dataBinding.recyclerViewMessages.layoutManager = manager
         dataBinding.recyclerViewMessages.addItemDecoration(DividerItemRowDecoration())
-
-     /*   val itemTouchHelperCallback =
-            object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                   /* noteViewModel.delete(noteAdapter.getNoteAt(viewHolder.adapterPosition))
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(R.string.note_deleted),
-                        Toast.LENGTH_SHORT
-                    ).show()*/
-                }
-
-            }
-
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(dataBinding.recyclerViewMessages)*/
-
         setSwipeItem()
-
         dataBinding.recyclerViewMessages.adapter = adapter
-
-        /*dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
-        dataBinding.recyclerViewProductHome.itemAnimator = null*/
-
-        /*val textView = TextView(this)
-        textView.text = "adsfadsfasdf"
-        textView.textSize = 20f
-        textView.setTypeface(null, Typeface.NORMAL)
-        textView.layoutParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        textView.gravity = Gravity.CENTER
-        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        supportActionBar?.customView = textView
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.PrimaryDark)))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)*/
     }
 
 
