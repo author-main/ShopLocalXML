@@ -75,7 +75,7 @@ class MessagesNotification(val context: Context) {
             val gson = Gson()
             var messagesJson = gson.toJson(messages)
             intent.putExtra("messages", messagesJson)
-            intent.putExtra("index",    -1)
+            intent.putExtra("notification",    1)
             val pendingIntent = PendingIntent.getActivity(context, 0, intent,
             PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -110,6 +110,7 @@ class MessagesNotification(val context: Context) {
                     listOneMessage.add(messages[i])
                     messagesJson = gson.toJson(listOneMessage)
                     intentMessage.putExtra("messages", messagesJson)
+                    intentMessage.putExtra("notification",    1)
                     val pendingIntentMessage = PendingIntent.getActivity(context, notificationId, intentMessage,
                         PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
                     val notificationMessage = NotificationCompat.Builder(context, CHANNEL_ID)

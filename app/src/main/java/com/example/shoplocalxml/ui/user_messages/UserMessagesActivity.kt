@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
@@ -62,6 +63,7 @@ class UserMessagesActivity: AppCompatActivity() {
         val gson    = Gson()
         val data   = intent.getStringExtra("messages")
         val messages = gson.fromJson<List<UserMessage>>(data, typeToken).toMutableList()
+        setVisibilityInformationCard(intent.getIntExtra("notification", 0))
         adapter = MessagesAdapter(baseContext, messages)
         adapter.setOnMessageItemListener(object: OnMessageItemListener{
             override fun onClick(id: Int) {
@@ -384,12 +386,19 @@ class UserMessagesActivity: AppCompatActivity() {
 
     }
 
+    private fun setVisibilityInformationCard(value: Int){
+        if (value == 1)
+            dataBinding.cardViewInformation.visibility = View.GONE
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        dataBinding.cardViewInformation.visibility = View.GONE
         val typeToken = object : TypeToken<List<UserMessage>>() {}.type
         val gson    = Gson()
         val data   = intent.getStringExtra("messages")
         val messages = gson.fromJson<List<UserMessage>>(data, typeToken).toMutableList()
+        setVisibilityInformationCard(intent.getIntExtra("notification", 0))
         adapter.setMessages(messages)
     }
 }
