@@ -20,15 +20,11 @@ import com.example.shoplocalxml.log
 
 class MessagesNotification(val context: Context) {
     companion object {
-
         const val GROUP_KEY = "GROUP_KEY"
-        //const val GROUP_NAME = "GROUP_MESSAGES"
         const val NOTIFICATION_ID = 101
         const val NOTIFICATION_GROUP_ID = -101
         const val CHANNEL_ID  = "CHANNEL_ID"
         const val CHANNEL_NAME  = "CHANNEL_NAME"
-        // const val CHANNEL_GROUP_ID  = "CHANNEL_GROUP_ID"
-
     }
 
     /*  private val channelGroup: NotificationChannelGroup = NotificationChannelGroup(
