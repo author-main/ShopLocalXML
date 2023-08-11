@@ -469,15 +469,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 if (it.isNotEmpty() && !isShowNotifications) {
                     isShowNotifications = true
                     //log("show notifications")
-                    val messagesNotification = MessagesNotification.getInstance()
-                    messagesNotification.notifyMessages(it)
+                    MessagesNotification.getInstance()
+                    MessagesNotification.notifyMessages(it)
                 }
             }
 
         }
     }
-
-
 
     private fun performRecognize(value: String){
         showSearchHistoryPanel(start = value)
