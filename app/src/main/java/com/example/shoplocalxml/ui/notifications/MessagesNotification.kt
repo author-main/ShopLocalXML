@@ -53,10 +53,10 @@ class MessagesNotification() {
          CHANNEL_ID, "ShopLocal",
          NotificationManager.IMPORTANCE_HIGH
      )*/
-    private var messages = listOf<UserMessage>()
+    //private var messages = listOf<UserMessage>()
 
     private fun notifyMessages(messages: List<UserMessage>){
-        this.messages = messages
+        //this.messages = messages
 
         if (permissionGranted() && messages.isNotEmpty()) {
 
