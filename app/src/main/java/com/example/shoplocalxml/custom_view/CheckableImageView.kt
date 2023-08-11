@@ -6,15 +6,12 @@ import android.graphics.drawable.StateListDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Checkable
-import androidx.annotation.ColorRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingMethod
 import androidx.databinding.BindingMethods
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.ui.product_item.product_card.ProductCard
 
 @BindingMethods(BindingMethod(type = CheckableImageView::class, attribute = "app:onChecked", method = "setOnCheckedListener")/*,
     BindingMethod(type = CheckableImageView::class, attribute = "app:onChecked", method = "setOnChecked")*/

@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
@@ -62,6 +63,7 @@ class UserMessagesActivity: AppCompatActivity() {
         val gson    = Gson()
         val data   = intent.getStringExtra("messages")
         val messages = gson.fromJson<List<UserMessage>>(data, typeToken).toMutableList()
+        setVisibilityInformationCard(intent.getIntExtra("notification", 0))
         adapter = MessagesAdapter(baseContext, messages)
         adapter.setOnMessageItemListener(object: OnMessageItemListener{
             override fun onClick(id: Int) {
@@ -70,8 +72,12 @@ class UserMessagesActivity: AppCompatActivity() {
 
             override fun onDelete(id: Int) {
               if (!adapter.isReadItem(id))
-                        listRead.add(id)
+                  listRead.add(id)
                 listDeleted.add(id)
+                if (adapter.itemCount == 0) {
+                    performClose()
+                    finish()
+                }
             }
         })
         val manager = LinearLayoutManager(
@@ -81,54 +87,8 @@ class UserMessagesActivity: AppCompatActivity() {
         )
         dataBinding.recyclerViewMessages.layoutManager = manager
         dataBinding.recyclerViewMessages.addItemDecoration(DividerItemRowDecoration())
-
-     /*   val itemTouchHelperCallback =
-            object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                   /* noteViewModel.delete(noteAdapter.getNoteAt(viewHolder.adapterPosition))
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(R.string.note_deleted),
-                        Toast.LENGTH_SHORT
-                    ).show()*/
-                }
-
-            }
-
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(dataBinding.recyclerViewMessages)*/
-
         setSwipeItem()
-
         dataBinding.recyclerViewMessages.adapter = adapter
-
-        /*dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
-        dataBinding.recyclerViewProductHome.itemAnimator = null*/
-
-        /*val textView = TextView(this)
-        textView.text = "adsfadsfasdf"
-        textView.textSize = 20f
-        textView.setTypeface(null, Typeface.NORMAL)
-        textView.layoutParams =
-            LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-        textView.gravity = Gravity.CENTER
-        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        supportActionBar?.customView = textView
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.PrimaryDark)))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)*/
     }
 
 
@@ -384,6 +344,21 @@ class UserMessagesActivity: AppCompatActivity() {
 
     }
 
+    private fun setVisibilityInformationCard(value: Int){
+        if (value == 1)
+            dataBinding.cardViewInformation.visibility = View.GONE
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        dataBinding.cardViewInformation.visibility = View.GONE
+        val typeToken = object : TypeToken<List<UserMessage>>() {}.type
+        val gson    = Gson()
+        val data   = intent.getStringExtra("messages")
+        val messages = gson.fromJson<List<UserMessage>>(data, typeToken).toMutableList()
+        setVisibilityInformationCard(intent.getIntExtra("notification", 0))
+        adapter.setMessages(messages)
+    }
 }
 
 /*

@@ -12,15 +12,15 @@ import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.ProductItem
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 
-class MessagesAdapter(private val context: Context, private val listMessages: MutableList<UserMessage> = mutableListOf()): RecyclerView.Adapter<MessagesAdapter.ViewHolder>() {
+class MessagesAdapter(private val context: Context, private var listMessages: MutableList<UserMessage> = mutableListOf()): RecyclerView.Adapter<MessagesAdapter.ViewHolder>() {
     private var onMessageItemListener: OnMessageItemListener? = null
     fun setOnMessageItemListener(value: OnMessageItemListener) {
         onMessageItemListener = value
     }
 
-    init{
+    /*init{
         log(listMessages)
-    }
+    }*/
 
     fun restoreItem(index: Int, message: UserMessage) {
         listMessages.add(index, message)
@@ -36,10 +36,19 @@ class MessagesAdapter(private val context: Context, private val listMessages: Mu
         }  ?: return false
     }
 
+    fun setMessages(list: MutableList<UserMessage>){
+        notifyItemRangeRemoved(0, itemCount)
+        listMessages.clear()
+        listMessages = list
+        log(list)
+        notifyItemRangeChanged(0, itemCount)
+    }
+
     fun removeItem(position: Int) {
-        onMessageItemListener?.onDelete(listMessages[position].id)
+        val id = listMessages[position].id
         listMessages.removeAt(position)
         notifyItemRemoved(position)
+        onMessageItemListener?.onDelete(id)
         //notifyItemRangeChanged(position, itemCount)
         /*listMessages.find { it.id == position }?.let {
             //it.deleted = true
