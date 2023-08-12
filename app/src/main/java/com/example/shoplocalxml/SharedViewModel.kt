@@ -8,18 +8,13 @@ import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
-import com.example.shoplocalxml.classes.image_downloader.ImageDownloaderImpl
 import com.example.shoplocalxml.classes.sort_filter.Filter
-import com.example.shoplocalxml.classes.sort_filter.Order
-import com.example.shoplocalxml.classes.sort_filter.Sort
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
 import com.example.shoplocalxml.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.math.abs
 
 class SharedViewModel(private val repository: Repository): ViewModel() {
