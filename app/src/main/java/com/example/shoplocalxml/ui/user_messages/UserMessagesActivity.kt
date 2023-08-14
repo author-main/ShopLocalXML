@@ -234,8 +234,6 @@ class UserMessagesActivity: AppCompatActivity() {
 
 
              }*/
-
-
                 if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     val itemView = viewHolder.itemView
                     val height = itemView.bottom - itemView.top

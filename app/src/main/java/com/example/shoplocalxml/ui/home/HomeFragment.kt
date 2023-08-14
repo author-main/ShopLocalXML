@@ -491,8 +491,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_QUERY)
         if (isNotShowSearchPanel()) {
             val items = sharedViewModel.getSearchHistoryItems()
-       /*     if (items.isEmpty())
-                return*/
             searchHistoryPanel =
                 SearchHistoryPanel(dataBinding.layoutRoot, object : OnSearchHistoryListener {
                     override fun clearSearchHistory() {

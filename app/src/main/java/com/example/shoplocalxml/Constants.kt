@@ -1,14 +1,9 @@
 package com.example.shoplocalxml
 
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.icu.text.DecimalFormatSymbols
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.AppShopLocal.Companion.repository
 
 enum class TypeRequest {
     USER_LOGIN,
