@@ -115,12 +115,15 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private var searchHistoryPanel: SearchHistoryPanel? = null
     private lateinit var dataBinding: FragmentHomeBinding
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        /*val displaySize = getDisplaySize()
+
+         /*val displaySize = getDisplaySize()
         val widthProductItemCard = (displaySize.width - 16.toPx * 3) / 2*/
         homeViewModel =
            ViewModelProvider(requireActivity())[HomeViewModel::class.java]
