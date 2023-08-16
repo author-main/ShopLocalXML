@@ -18,11 +18,19 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DatabaseApiImpl {
+//@Singleton
+class DatabaseApiImpl {//@Inject constructor(private val retrofitInstance: DatabaseApi) {
     private val QUERY_REGUSER     = "reg_user"
     private val QUERY_LOGINUSER   = "login_user"
     private val QUERY_RESTOREUSER = "restore_user"
+
+
+    /*@Inject
+    @Singleton
+    lateinit var retrofitInstance: DatabaseApi*/
     private val retrofitInstance: DatabaseApi
     init{
         val gson = GsonBuilder()

@@ -12,6 +12,7 @@ import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.isConnectedNet
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
@@ -20,6 +21,7 @@ import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
+import javax.inject.Inject
 
 class Repository {
     /**
@@ -101,6 +103,8 @@ class Repository {
     /**
      * databaseHandler обрабатывает запросы к БД
      */
+    /*@Inject
+    lateinit var databaseHandler: DatabaseHandler*/
     private val databaseHandler: DatabaseHandler    = DatabaseHandlerImpl(databaseApi)
 
     /**
