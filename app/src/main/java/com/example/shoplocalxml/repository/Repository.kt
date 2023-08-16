@@ -184,7 +184,7 @@ class Repository {
             databaseHandler.getMessages(it, requestCount)
         }
 
-    suspend fun updateMessages(join_read: String?, join_deleted: String?) {
+    suspend fun updateMessages(join_read: String, join_deleted: String) {
         token?.let {
             databaseHandler.updateMessages(it, join_read, join_deleted)
         }

@@ -21,7 +21,7 @@ class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHan
         }
 
 
-    override suspend fun updateMessages(token: String, join_read: String?, join_deleted: String?) {
+    override suspend fun updateMessages(token: String, join_read: String, join_deleted: String) {
         withContext(Dispatchers.IO) {
             databaseApi.updateMessages(token, join_read, join_deleted)
         }

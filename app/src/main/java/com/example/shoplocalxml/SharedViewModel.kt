@@ -229,7 +229,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
     fun updateMessages(joinread: String?, joindeleted: String?){
         if (joinread != null || joindeleted != null) {
             viewModelScope.launch {
-                repository.updateMessages(joinread, joindeleted)
+                repository.updateMessages(joinread ?: "x", joindeleted ?: "x")
             }
         }
     }

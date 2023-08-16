@@ -91,13 +91,13 @@ class DatabaseApiImpl {//@Inject constructor(private val retrofitInstance: Datab
     }
 
 
-    suspend fun updateMessages(token: String, join_read: String?, join_deleted: String?){
-        val read_messages: String    = join_read ?: "x"
-        val deleted_messages: String = join_deleted ?: "x"
+    suspend fun updateMessages(token: String, join_read: String, join_deleted: String){
+        /*val read_messages: String    = join_read ?: "x"
+        val deleted_messages: String = join_deleted ?: "x"*/
         /*log(token)
         log (read_messages)
         log(deleted_messages)*/
-        retrofitInstance.updateMessages(token, read_messages, deleted_messages)
+        retrofitInstance.updateMessages(token, join_read, join_deleted)
     }
 
 
