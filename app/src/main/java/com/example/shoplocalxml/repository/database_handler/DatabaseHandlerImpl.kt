@@ -17,7 +17,7 @@ class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHan
 
     override suspend fun getMessages(token: String, requestCount: Int): List<UserMessage>? =
         withContext(Dispatchers.IO) {
-            databaseApi.getMessages(token, requestCount)?.body()
+            databaseApi.getMessages(token, requestCount).body()
         }
 
 
