@@ -22,8 +22,11 @@ import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class Repository {
+@Singleton
+class Repository @Inject constructor(private val accessHandler: AccessHandler,
+    private val databaseHandler: DatabaseHandler){
     /**
      * shopUser - данные текущего пользователя
      */
@@ -36,13 +39,13 @@ class Repository {
      */
     private var token: String? = null
 
-    private val databaseApi = DatabaseApiImpl()
+   // private val databaseApi = DatabaseApiImpl()
 
     /**
      * accessHandler отвечает за обработку запросов пользователя
      * onLogin, onRestore, onRegister
      */
-    private var accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
+   // private var accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
 
     /**
      * Запрос пользователя на вход в систему
@@ -105,7 +108,7 @@ class Repository {
      */
     /*@Inject
     lateinit var databaseHandler: DatabaseHandler*/
-    private val databaseHandler: DatabaseHandler    = DatabaseHandlerImpl(databaseApi)
+   // private val databaseHandler: DatabaseHandler    = DatabaseHandlerImpl(databaseApi)
 
     /**
      * Установить FragmentActivity для BiometricPrompt

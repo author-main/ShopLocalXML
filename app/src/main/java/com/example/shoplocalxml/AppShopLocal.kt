@@ -8,16 +8,19 @@ import androidx.lifecycle.ViewModel
 import com.example.shoplocalxml.dagger.AppComponent
 import com.example.shoplocalxml.dagger.DaggerAppComponent
 import com.example.shoplocalxml.repository.Repository
+import javax.inject.Inject
+import javax.inject.Singleton
 
 class AppShopLocal: Application() {
     private lateinit var appComponent: AppComponent
-    private lateinit var repository: Repository
+    @Inject
+    lateinit var repository: Repository
     init{
         instance = this
     }
     override fun onCreate() {
         super.onCreate()
-        repository = Repository()
+        //repository = Repository()
         appComponent = DaggerAppComponent.create()
             /*.factory().create(
                 applicationInfo.dataDir + "/cache/",

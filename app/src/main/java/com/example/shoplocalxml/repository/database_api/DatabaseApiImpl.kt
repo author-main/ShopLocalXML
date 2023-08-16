@@ -21,17 +21,13 @@ import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//@Singleton
-class DatabaseApiImpl {//@Inject constructor(private val retrofitInstance: DatabaseApi) {
+class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
     private val QUERY_REGUSER     = "reg_user"
     private val QUERY_LOGINUSER   = "login_user"
     private val QUERY_RESTOREUSER = "restore_user"
 
 
-    /*@Inject
-    @Singleton
-    lateinit var retrofitInstance: DatabaseApi*/
-    private val retrofitInstance: DatabaseApi
+    /*private val retrofitInstance: DatabaseApi
     init{
         val gson = GsonBuilder()
             .setLenient()
@@ -41,7 +37,7 @@ class DatabaseApiImpl {//@Inject constructor(private val retrofitInstance: Datab
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         retrofitInstance = retrofit.create(DatabaseApi::class.java)
-    }
+    }*/
 
     private suspend fun queryUser(query: String, user: User): Response<User> {
         return retrofitInstance.queryUser(user, query)
