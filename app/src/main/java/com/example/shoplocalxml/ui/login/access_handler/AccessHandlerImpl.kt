@@ -17,8 +17,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.net.PasswordAuthentication
+import javax.inject.Inject
 
-class AccessHandlerImpl(private val databaseApi: DatabaseApiImpl): AccessHandler {
+class AccessHandlerImpl @Inject constructor(private val databaseApi: DatabaseApiImpl): AccessHandler {
     override var passwordStorage: PasswordStorage? = PasswordStorageImpl()
     private var fingerPrint: FingerPrint? = null
     override fun setActivityFingerPrint(activity: FragmentActivity) {

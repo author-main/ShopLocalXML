@@ -16,6 +16,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import javax.inject.Scope
 import javax.inject.Singleton
 
 @[Singleton Component(modules = [DatabaseModule::class, BindsModule::class])]
@@ -50,7 +51,7 @@ class DatabaseModule {
     }
 
 
-    @[Singleton Provides]
+  /*  @[Provides]
     fun provideAccessHandlerImpl(databaseApiImpl: DatabaseApiImpl): AccessHandlerImpl {
         return AccessHandlerImpl(databaseApiImpl)
     }
@@ -58,7 +59,7 @@ class DatabaseModule {
     @[Singleton Provides]
     fun provideDatabaseHandlerImpl(databaseApiImpl: DatabaseApiImpl): DatabaseHandlerImpl {
         return DatabaseHandlerImpl(databaseApiImpl)
-    }
+    }*/
 }
 
 @Module
@@ -69,3 +70,6 @@ interface BindsModule {
     @Binds
     fun bind_DatabaseHandlerImpl_to_DatabaseHandler(databaseHandlerImpl: DatabaseHandlerImpl): DatabaseHandler
 }
+
+/*@Scope
+annotation class LoginScope*/

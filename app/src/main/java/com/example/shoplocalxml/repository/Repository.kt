@@ -26,7 +26,7 @@ import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(private val accessHandler: AccessHandler,
-    private val databaseHandler: DatabaseHandler){
+                                     private val databaseHandler: DatabaseHandler){
     /**
      * shopUser - данные текущего пользователя
      */
