@@ -32,6 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.Math.abs
 
 
 class UserMessagesActivity: AppCompatActivity() {
@@ -236,7 +237,9 @@ class UserMessagesActivity: AppCompatActivity() {
              }*/
                 if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     val itemView = viewHolder.itemView
-                    val height = itemView.bottom - itemView.top
+                    val alpha = (kotlin.math.abs(dX) / itemView.height)
+                    //log("alpha = $alpha")
+                    //val height = itemView.bottom - itemView.top
                     val widthBackground = itemView.height
                     //val width = height / 3
                     if (dX < 0) {
