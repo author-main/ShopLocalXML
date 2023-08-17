@@ -9,6 +9,7 @@ import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
+import com.example.shoplocalxml.dagger.AppScope
 import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.isConnectedNet
 import com.example.shoplocalxml.log
@@ -22,11 +23,11 @@ import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@AppScope
 class Repository @Inject constructor(private val accessHandler: AccessHandler,
-                                     private val databaseHandler: DatabaseHandler){
+                                     private val databaseHandler: DatabaseHandler,
+                                     private val searchQueryStorage: SearchQueryStorage){
     /**
      * shopUser - данные текущего пользователя
      */
@@ -129,23 +130,23 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
     }
 
     fun getSearchHistoryItems(): List<String> =
-        SearchQueryStorage.getInstance().getQueries()
+        searchQueryStorage.getQueries()
 
 
     fun addSearchHistoryItem(value: String) {
-        SearchQueryStorage.getInstance().put(value)
+        searchQueryStorage.put(value)
     }
 
     fun deleteSearchHistoryItem(value: String) {
-        SearchQueryStorage.getInstance().remove(value)
+        searchQueryStorage.remove(value)
     }
 
     fun saveSearchHistory() {
-        SearchQueryStorage.getInstance().saveQueries()
+        searchQueryStorage.saveQueries()
     }
 
     fun clearSearchHistory() {
-        SearchQueryStorage.getInstance().removeAllQueries()
+        searchQueryStorage.removeAllQueries()
     }
 
    /* fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){

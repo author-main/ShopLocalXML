@@ -6,6 +6,8 @@ import com.example.shoplocalxml.fileExists
 import java.io.*
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /*enum class SearchState {
     SEARCH_NONE,
@@ -13,7 +15,8 @@ import java.util.concurrent.Executors
     SEARCH_RESULT
 }*/
 
-class SearchQueryStorage: SearchQueryStorageInterface {
+//@Singleton
+class SearchQueryStorage @Inject constructor(): SearchQueryStorageInterface {
     private var changed = false
     private val listSQ = mutableListOf<String>()
 
@@ -104,14 +107,12 @@ class SearchQueryStorage: SearchQueryStorageInterface {
         deleteFile(fileNameStorage)
     }
 
-    companion object {
+  /*  companion object {
         private lateinit var instance: SearchQueryStorage
         fun getInstance(): SearchQueryStorage {
             if (!this::instance.isInitialized)
                 instance = SearchQueryStorage()
             return instance
         }
-
-    }
-
+    }*/
 }

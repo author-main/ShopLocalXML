@@ -6,6 +6,8 @@ import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl
+import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
+import com.example.shoplocalxml.ui.history_search.SearchQueryStorageInterface
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import com.google.gson.GsonBuilder
@@ -19,7 +21,7 @@ import retrofit2.create
 import javax.inject.Scope
 import javax.inject.Singleton
 
-@[Singleton Component(modules = [DatabaseModule::class, BindsModule::class])]
+@[AppScope Component(modules = [DatabaseModule::class, BindsModule::class])]
 interface AppComponent {
     fun injectApplication(appShopLocal: AppShopLocal)
 }
@@ -38,7 +40,7 @@ class DatabaseModule {
         return retrofit.create()
     }*/
 
-    @[Singleton Provides]
+    @[Provides]
     fun provideDatabaseApiImpl(): DatabaseApiImpl {
         val gson = GsonBuilder()
             .setLenient()
@@ -69,7 +71,11 @@ interface BindsModule {
 
     @Binds
     fun bind_DatabaseHandlerImpl_to_DatabaseHandler(databaseHandlerImpl: DatabaseHandlerImpl): DatabaseHandler
+
+    @Binds
+    fun bind_SearchQueryStorageImpl_to_SearchQueryStorage(searchQueryStorageImpl: SearchQueryStorage): SearchQueryStorageInterface
 }
 
-/*@Scope
-annotation class LoginScope*/
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class AppScope
