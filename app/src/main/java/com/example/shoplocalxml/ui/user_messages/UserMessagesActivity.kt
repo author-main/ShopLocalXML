@@ -11,12 +11,14 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.toColor
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.example.shoplocalxml.R
+import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
@@ -132,6 +134,8 @@ class UserMessagesActivity: AppCompatActivity() {
 */
             private var limit = false
             private val dp24 = 24.toPx
+            //private var paintColor = applicationContext.getColor(R.color.EditTextBorderErrorDark)
+            private val color = applicationContext.getColor(R.color.EditTextBorderErrorDark).toColor().toArgb()
             private val p = Paint(Paint.ANTI_ALIAS_FLAG)
             val icon = run {
                 val drawable = VectorDrawableCompat.create(resources,
@@ -237,10 +241,11 @@ class UserMessagesActivity: AppCompatActivity() {
              }*/
                 if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                     val itemView = viewHolder.itemView
-                    val alpha = (kotlin.math.abs(dX) / itemView.height)
+
                     //log("alpha = $alpha")
                     //val height = itemView.bottom - itemView.top
                     val widthBackground = itemView.height
+                    //val alpha = (kotlin.math.abs(dX) / widthBackground.toFloat())
                     //val width = height / 3
                     if (dX < 0) {
                         //val left = itemView.width.toFloat()
@@ -277,10 +282,17 @@ class UserMessagesActivity: AppCompatActivity() {
                             )
                             c.clipRect(rectBackground)
                             //c.drawRect(background, p)
-                            if (limit) {
+                            val alpha = (kotlin.math.abs(dX) / widthBackground.toFloat()).coerceAtMost(1f)
+                         //   log("alpha = $alpha")
+
+                        /*    if (limit) {
                                 p.color = applicationContext.getColor(R.color.EditTextBorderErrorDark)
                                 c.drawRect(rectBackground, p)
-                            }
+                            }*/
+                            p.color = color.alpha(alpha)
+                            c.drawRect(rectBackground, p)
+
+
                             //drawBackground(rectBackground)
                             icon?.let{
                                 val left_dest   = (itemView.width - widthBackground) + (widthBackground - dp24) / 2f
