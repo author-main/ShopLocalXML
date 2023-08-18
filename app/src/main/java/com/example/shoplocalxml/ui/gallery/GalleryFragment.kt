@@ -1,4 +1,4 @@
-package com.example.shoplocalxml.ui.history_search.gallery
+package com.example.shoplocalxml.ui.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater
