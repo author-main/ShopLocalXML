@@ -13,10 +13,11 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.FileReader
 import java.io.IOException
+import javax.inject.Inject
 
 data class ImageCacheItem (var timestamp: Long, var size: Long)
 
-class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
+class ImageCacheDriveImpl @Inject constructor(override val maxCacheSize: Int): ImageCacheDrive {
     private val fileJournal         = File(CACHE_DIR + "imgcache.lst")
     private val fileJournalTemp     = File(CACHE_DIR + "imgcache.tmp")
     private val fileJournalBackup   = File(CACHE_DIR + "imgcache.bck")

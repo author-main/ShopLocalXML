@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.dagger.AppComponent
 import com.example.shoplocalxml.dagger.DaggerAppComponent
 import com.example.shoplocalxml.repository.Repository
@@ -21,7 +22,11 @@ class AppShopLocal: Application() {
     override fun onCreate() {
         super.onCreate()
         //repository = Repository()
-        appComponent = DaggerAppComponent.create()
+        appComponent = DaggerAppComponent.factory().create(
+            CACHE_DIR,
+            128,
+            32
+        )
             /*.factory().create(
                 applicationInfo.dataDir + "/cache/",
                 8

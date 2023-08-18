@@ -16,8 +16,13 @@ import com.example.shoplocalxml.log
 import com.example.shoplocalxml.md5
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
+import javax.inject.Inject
 
 class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
+/*class ImageDownloadManager @Inject constructor(
+        private val cacheDrive  : ImageCacheDrive,
+        private val cacheMemory : ImageCacheMemory
+    ): DefaultLifecycleObserver {*/
     private val cacheDrive  : ImageCacheDrive   = ImageCacheDriveImpl (MAX_DRIVE_CACHESIZE)
     private val cacheMemory : ImageCacheMemory  = ImageCacheMemoryImpl(MAX_MEMORY_CACHESIZE)
     private var processClearTask = false
@@ -111,6 +116,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         cancelAll()
     }*/
 
+    @Synchronized
     private fun existCache(url: String): Boolean{
         val hash = md5(url)
         val existCacheMemory =  cacheMemory.get(hash) != null

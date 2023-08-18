@@ -37,6 +37,7 @@ import com.example.shoplocalxml.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Locale
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
@@ -44,6 +45,10 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
     private var animatedFabShow = false
     private var animatedFabHide = false
     private lateinit var binding: ActivityMainBinding
+
+    /*@Inject
+    lateinit var imageDownloadManager: ImageDownloadManager*/
+
     private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
             this,
