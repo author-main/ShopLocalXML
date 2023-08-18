@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.example.shoplocalxml.CACHE_DIR
 import com.example.shoplocalxml.EXT_TEMPFILE
+import com.example.shoplocalxml.dagger.AppScope
 import com.example.shoplocalxml.deleteFile
 import com.example.shoplocalxml.getReduceImageHash
 import com.example.shoplocalxml.log
@@ -17,7 +18,6 @@ import com.example.shoplocalxml.md5
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import javax.inject.Inject
-
 class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 /*class ImageDownloadManager @Inject constructor(
         private val cacheDrive  : ImageCacheDrive,
@@ -116,7 +116,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         cancelAll()
     }*/
 
-    @Synchronized
+//    @Synchronized
     private fun existCache(url: String): Boolean{
         val hash = md5(url)
         val existCacheMemory =  cacheMemory.get(hash) != null
@@ -131,7 +131,6 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 /*        private val instance:ImageDownloadManager by lazy {
             ImageDownloadManager()
         }*/
-
         private val instance =
             ImageDownloadManager()
 
