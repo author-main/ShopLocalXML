@@ -32,7 +32,8 @@ interface AppComponent {
     fun injectApplication(appShopLocal: AppShopLocal)
     @Component.Factory
     interface ImageCache{
-        fun create(@[BindsInstance PathCache] pathDriveCache: String,
+        //fun create(@[BindsInstance PathCache] pathDriveCache: String,
+        fun create(@BindsInstance pathDriveCache: String,
                    @[BindsInstance DriveCacheSize] driveCacheSize: Int,
                    @[BindsInstance MemoryCacheSize] memoryCacheSize: Int
         ): AppComponent
@@ -99,9 +100,9 @@ interface BindsModule {
 @Retention(AnnotationRetention.RUNTIME)
 annotation class AppScope
 
-@Qualifier
+/*@Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class PathCache
+annotation class PathCache*/
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
