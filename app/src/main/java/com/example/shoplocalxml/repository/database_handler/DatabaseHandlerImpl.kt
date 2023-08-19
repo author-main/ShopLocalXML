@@ -12,16 +12,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DatabaseHandlerImpl(private val databaseApi: DatabaseApiImpl): DatabaseHandler {
+class DatabaseHandlerImpl @Inject constructor(private val databaseApi: DatabaseApiImpl): DatabaseHandler {
 
     override suspend fun getMessages(token: String, requestCount: Int): List<UserMessage>? =
         withContext(Dispatchers.IO) {
-            databaseApi.getMessages(token, requestCount)?.body()
+            databaseApi.getMessages(token, requestCount).body()
         }
 
 
-    override suspend fun updateMessages(token: String, join_read: String?, join_deleted: String?) {
+    override suspend fun updateMessages(token: String, join_read: String, join_deleted: String) {
         withContext(Dispatchers.IO) {
             databaseApi.updateMessages(token, join_read, join_deleted)
         }

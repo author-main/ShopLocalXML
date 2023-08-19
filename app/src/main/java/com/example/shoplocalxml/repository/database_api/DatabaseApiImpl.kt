@@ -18,12 +18,16 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DatabaseApiImpl {
+class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
     private val QUERY_REGUSER     = "reg_user"
     private val QUERY_LOGINUSER   = "login_user"
     private val QUERY_RESTOREUSER = "restore_user"
-    private val retrofitInstance: DatabaseApi
+
+
+    /*private val retrofitInstance: DatabaseApi
     init{
         val gson = GsonBuilder()
             .setLenient()
@@ -33,7 +37,7 @@ class DatabaseApiImpl {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         retrofitInstance = retrofit.create(DatabaseApi::class.java)
-    }
+    }*/
 
     private suspend fun queryUser(query: String, user: User): Response<User> {
         return retrofitInstance.queryUser(user, query)
@@ -83,13 +87,13 @@ class DatabaseApiImpl {
     }
 
 
-    suspend fun updateMessages(token: String, join_read: String?, join_deleted: String?){
-        val read_messages: String    = join_read ?: "x"
-        val deleted_messages: String = join_deleted ?: "x"
+    suspend fun updateMessages(token: String, join_read: String, join_deleted: String){
+        /*val read_messages: String    = join_read ?: "x"
+        val deleted_messages: String = join_deleted ?: "x"*/
         /*log(token)
         log (read_messages)
         log(deleted_messages)*/
-        retrofitInstance.updateMessages(token, read_messages, deleted_messages)
+        retrofitInstance.updateMessages(token, join_read, join_deleted)
     }
 
 

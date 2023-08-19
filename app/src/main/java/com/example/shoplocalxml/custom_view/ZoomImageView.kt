@@ -9,24 +9,13 @@ import android.graphics.Matrix
 import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.animation.DecelerateInterpolator
-import android.view.animation.OvershootInterpolator
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.drawable.toDrawable
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
-
 
 class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
     private var onScaleImage: ((Boolean) -> Unit)? = null
@@ -147,7 +136,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
     private fun getTranslatePos(): PointF {
         val matrixValue = FloatArray(9)
-        matrix.getValues(matrixValue);
+        matrix.getValues(matrixValue)
         return PointF (matrixValue[Matrix.MTRANS_X], // извлекаем из matrix перемещение x, y
                        matrixValue[Matrix.MTRANS_Y]
                )
@@ -166,8 +155,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     }
 
     private fun placeBound(value: Float, viewSize: Float, contentSize: Float): Float {
-        var offsetFrom = 0f
-        var offsetTo   = 0f
+        val offsetFrom: Float
+        val offsetTo: Float
 
         if (contentSize <= viewSize) {
             offsetFrom = 0f
@@ -218,8 +207,8 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
             MotionEvent.ACTION_UP -> {
                 mode = ZoomMode.NONE
-                val xDiff = abs (currX - startTouch.x)
-                val yDiff = abs (currY - startTouch.y)
+                val xDiff = kotlin.math.abs(currX - startTouch.x)
+                val yDiff = kotlin.math.abs(currY - startTouch.y)
                 if (xDiff < clickOffset && yDiff < clickOffset)
                     performClick()
             }
@@ -274,7 +263,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 if (calcTrans > minPos) {
                     return minPos - curTrans
                 } else {
-                    if (abs(calcTrans) > maxOffset )
+                    if (kotlin.math.abs(calcTrans) > maxOffset )
                         return - (maxOffset + curTrans)
                 }
                 return deltaTrans
@@ -338,14 +327,14 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     override fun onShowPress(e: MotionEvent) {}
     override fun onSingleTapUp(e: MotionEvent): Boolean {return false}
     override fun onScroll(
-        e1: MotionEvent,
+        e1: MotionEvent?,
         e2: MotionEvent,
         distanceX: Float,
         distanceY: Float
     ): Boolean {return false}
     override fun onLongPress(e: MotionEvent) {}
     override fun onFling(
-        e1: MotionEvent,
+        e1: MotionEvent?,
         e2: MotionEvent,
         velocityX: Float,
         velocityY: Float

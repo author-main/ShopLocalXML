@@ -1,7 +1,9 @@
 package com.example.shoplocalxml.classes.image_downloader
 
-import com.example.shoplocalxml.CACHE_DIR
+//import com.example.shoplocalxml.CACHE_DIR
 import com.example.shoplocalxml.EXT_TEMPFILE
+import com.example.shoplocalxml.dagger.DriveCacheSize
+//import com.example.shoplocalxml.dagger.PathCache
 import com.example.shoplocalxml.deleteFile
 import com.example.shoplocalxml.deleteFiles
 import com.example.shoplocalxml.fileExists
@@ -13,13 +15,19 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.FileReader
 import java.io.IOException
+import javax.inject.Inject
 
 data class ImageCacheItem (var timestamp: Long, var size: Long)
 
-class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
-    private val fileJournal         = File(CACHE_DIR + "imgcache.lst")
+//class ImageCacheDriveImpl @Inject constructor(@PathCache override val path: String,  @DriveCacheSize override val maxCacheSize: Int): ImageCacheDrive {
+class ImageCacheDriveImpl @Inject constructor(override val path: String,  @DriveCacheSize override val maxCacheSize: Int): ImageCacheDrive {
+    /*private val fileJournal         = File(CACHE_DIR + "imgcache.lst")
     private val fileJournalTemp     = File(CACHE_DIR + "imgcache.tmp")
-    private val fileJournalBackup   = File(CACHE_DIR + "imgcache.bck")
+    private val fileJournalBackup   = File(CACHE_DIR + "imgcache.bck")*/
+
+    private val fileJournal         = File(path + "imgcache.lst")
+    private val fileJournalTemp     = File(path + "imgcache.tmp")
+    private val fileJournalBackup   = File(path + "imgcache.bck")
     private var cacheSize = 0L
     private val MAX_CACHESIZE = maxCacheSize * 1024 * 1024 // 128Mb максимальный размер кэша на устройстве
     private val hashMap = LinkedHashMap<String, ImageCacheItem>(0, 0.75f, true)
@@ -30,7 +38,8 @@ class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
 
     private fun getJournalItems() {
         hashMap.clear()
-        deleteFiles(CACHE_DIR, EXT_TEMPFILE)
+        //deleteFiles(CACHE_DIR, EXT_TEMPFILE)
+        deleteFiles(path, EXT_TEMPFILE)
         if (!fileExists(fileJournal)) {
             if (fileExists(fileJournalBackup))
                 renameFile(fileJournalBackup, fileJournal)
@@ -75,7 +84,8 @@ class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
 
     private fun deleteCacheFiles(){
         cacheSize = 0L
-        deleteFiles(CACHE_DIR)
+        //deleteFiles(CACHE_DIR)
+        deleteFiles(path)
     }
 
     @Synchronized
@@ -119,7 +129,8 @@ class ImageCacheDriveImpl(override val maxCacheSize: Int): ImageCacheDrive {
         //log("put journal item...")
     }
 
-    private fun getFilename(value: String)  = "$CACHE_DIR$value"
+    //private fun getFilename(value: String)  = "$CACHE_DIR$value"
+    private fun getFilename(value: String)  = "$path$value"
 
     private fun saveJournalItems(){
         val fileText = StringBuffer()

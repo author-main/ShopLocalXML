@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal
+import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
 import com.example.shoplocalxml.DEFAULT_BITMAP
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
@@ -75,7 +76,7 @@ class ImagesAdapter: RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
            /* for (i in list.indices) {
                 val item = ImageItem(list[i], image = null)
                 images.add(item)*/
-                ImageDownloadManager.download(item.url, reduce = reduceImage) {
+                imageDownloadManager.download(item.url, reduce = reduceImage) {
                     item.image = it ?: run {
                         item.default = true
                         DEFAULT_BITMAP

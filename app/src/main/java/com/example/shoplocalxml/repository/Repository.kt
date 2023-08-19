@@ -9,9 +9,11 @@ import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
+import com.example.shoplocalxml.dagger.AppScope
 import com.example.shoplocalxml.encodeBase64
 import com.example.shoplocalxml.isConnectedNet
 import com.example.shoplocalxml.log
+import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
@@ -20,8 +22,12 @@ import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
+import javax.inject.Inject
 
-class Repository {
+@AppScope
+class Repository @Inject constructor(private val accessHandler: AccessHandler,
+                                     private val databaseHandler: DatabaseHandler,
+                                     private val searchQueryStorage: SearchQueryStorage){
     /**
      * shopUser - данные текущего пользователя
      */
@@ -34,13 +40,13 @@ class Repository {
      */
     private var token: String? = null
 
-    private val databaseApi = DatabaseApiImpl()
+   // private val databaseApi = DatabaseApiImpl()
 
     /**
      * accessHandler отвечает за обработку запросов пользователя
      * onLogin, onRestore, onRegister
      */
-    private var accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
+   // private var accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
 
     /**
      * Запрос пользователя на вход в систему
@@ -101,7 +107,9 @@ class Repository {
     /**
      * databaseHandler обрабатывает запросы к БД
      */
-    private val databaseHandler: DatabaseHandler    = DatabaseHandlerImpl(databaseApi)
+    /*@Inject
+    lateinit var databaseHandler: DatabaseHandler*/
+   // private val databaseHandler: DatabaseHandler    = DatabaseHandlerImpl(databaseApi)
 
     /**
      * Установить FragmentActivity для BiometricPrompt
@@ -122,23 +130,23 @@ class Repository {
     }
 
     fun getSearchHistoryItems(): List<String> =
-        SearchQueryStorage.getInstance().getQueries()
+        searchQueryStorage.getQueries()
 
 
     fun addSearchHistoryItem(value: String) {
-        SearchQueryStorage.getInstance().put(value)
+        searchQueryStorage.put(value)
     }
 
     fun deleteSearchHistoryItem(value: String) {
-        SearchQueryStorage.getInstance().remove(value)
+        searchQueryStorage.remove(value)
     }
 
     fun saveSearchHistory() {
-        SearchQueryStorage.getInstance().saveQueries()
+        searchQueryStorage.saveQueries()
     }
 
     fun clearSearchHistory() {
-        SearchQueryStorage.getInstance().removeAllQueries()
+        searchQueryStorage.removeAllQueries()
     }
 
    /* fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
@@ -180,7 +188,7 @@ class Repository {
             databaseHandler.getMessages(it, requestCount)
         }
 
-    suspend fun updateMessages(join_read: String?, join_deleted: String?) {
+    suspend fun updateMessages(join_read: String, join_deleted: String) {
         token?.let {
             databaseHandler.updateMessages(it, join_read, join_deleted)
         }

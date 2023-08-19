@@ -2,8 +2,10 @@ package com.example.shoplocalxml.classes.image_downloader
 
 import android.graphics.Bitmap
 import android.util.LruCache
+import com.example.shoplocalxml.dagger.MemoryCacheSize
+import javax.inject.Inject
 
-class ImageCacheMemoryImpl(override val maxCacheSize: Int): ImageCacheMemory {
+class ImageCacheMemoryImpl @Inject constructor(@MemoryCacheSize override val maxCacheSize: Int): ImageCacheMemory {
     private val MAX_CACHESIZE = maxCacheSize * 1024 * 1024
     private val cache = object: LruCache<String, Bitmap>(MAX_CACHESIZE){
         override fun sizeOf(hash: String, value: Bitmap): Int {

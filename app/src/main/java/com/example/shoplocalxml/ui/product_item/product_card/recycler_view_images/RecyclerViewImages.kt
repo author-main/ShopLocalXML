@@ -3,6 +3,7 @@ package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_imag
 import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.log
 
@@ -57,7 +58,7 @@ class RecyclerViewImages(context: Context,
         value?.let{
             var existCache = false
             for (url in it) {
-                if (ImageDownloadManager.existCache(url)) {
+                if (imageDownloadManager.existCache(url)) {
                         //log("in cache...")
                         existCache = true
                         break
