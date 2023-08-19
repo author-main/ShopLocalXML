@@ -2,6 +2,7 @@ package com.example.shoplocalxml.classes.image_downloader
 
 import com.example.shoplocalxml.CACHE_DIR
 import com.example.shoplocalxml.EXT_TEMPFILE
+import com.example.shoplocalxml.dagger.DriveCacheSize
 import com.example.shoplocalxml.deleteFile
 import com.example.shoplocalxml.deleteFiles
 import com.example.shoplocalxml.fileExists
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 data class ImageCacheItem (var timestamp: Long, var size: Long)
 
-class ImageCacheDriveImpl @Inject constructor(override val maxCacheSize: Int): ImageCacheDrive {
+class ImageCacheDriveImpl @Inject constructor(@DriveCacheSize override val maxCacheSize: Int): ImageCacheDrive {
     private val fileJournal         = File(CACHE_DIR + "imgcache.lst")
     private val fileJournalTemp     = File(CACHE_DIR + "imgcache.tmp")
     private val fileJournalBackup   = File(CACHE_DIR + "imgcache.bck")

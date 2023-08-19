@@ -23,6 +23,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import javax.inject.Qualifier
 import javax.inject.Scope
 import javax.inject.Singleton
 
@@ -31,9 +32,9 @@ interface AppComponent {
     fun injectApplication(appShopLocal: AppShopLocal)
     @Component.Factory
     interface ImageCache{
-        fun create(@BindsInstance pathDriveCache: String,
-                   @BindsInstance driveCacheSize: Int,
-                   @BindsInstance memoryCacheSize: Int
+        fun create(@[BindsInstance PathCache] pathDriveCache: String,
+                   @[BindsInstance DriveCacheSize] driveCacheSize: Int,
+                   @[BindsInstance MemoryCacheSize] memoryCacheSize: Int
         ): AppComponent
     }
 }
@@ -97,3 +98,15 @@ interface BindsModule {
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
 annotation class AppScope
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class PathCache
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class DriveCacheSize
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class MemoryCacheSize
