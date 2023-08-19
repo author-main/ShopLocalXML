@@ -16,6 +16,10 @@ class AppShopLocal: Application() {
     private lateinit var appComponent: AppComponent
     @Inject
     lateinit var repository: Repository
+
+    @Inject
+    lateinit var imageDownloadManager: ImageDownloadManager
+
     init{
         instance = this
     }
@@ -38,8 +42,13 @@ class AppShopLocal: Application() {
         private lateinit var instance: AppShopLocal
         val appComponent: AppComponent
             get () = instance.appComponent
+
         val repository: Repository
             get() = instance.repository
+
+        val imageDownloadManager: ImageDownloadManager
+            get() = instance.imageDownloadManager
+
         val applicationContext: Context
             get() = instance.applicationContext
     }

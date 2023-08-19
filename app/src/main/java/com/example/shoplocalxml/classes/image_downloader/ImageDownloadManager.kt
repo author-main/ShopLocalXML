@@ -18,13 +18,14 @@ import com.example.shoplocalxml.md5
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import javax.inject.Inject
-class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
-/*class ImageDownloadManager @Inject constructor(
+//class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
+@AppScope
+class ImageDownloadManager @Inject constructor(
         private val cacheDrive  : ImageCacheDrive,
         private val cacheMemory : ImageCacheMemory
-    ): DefaultLifecycleObserver {*/
-    private val cacheDrive  : ImageCacheDrive   = ImageCacheDriveImpl (MAX_DRIVE_CACHESIZE)
-    private val cacheMemory : ImageCacheMemory  = ImageCacheMemoryImpl(MAX_MEMORY_CACHESIZE)
+    ): DefaultLifecycleObserver {
+    /*private val cacheDrive  : ImageCacheDrive   = ImageCacheDriveImpl (MAX_DRIVE_CACHESIZE)
+    private val cacheMemory : ImageCacheMemory  = ImageCacheMemoryImpl(MAX_MEMORY_CACHESIZE)*/
     private var processClearTask = false
     private val executor =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
@@ -50,7 +51,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         super.onStop(owner)
     }
 
-    private fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
+    fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
         val hash = getReduceImageHash(url, reduce)//if (!reduce) md5(url) else md5("${url}_")
      //   log("task = $url...")
 
@@ -93,7 +94,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 
     }
 
-    private fun cancelAll(){
+    fun cancelAll(){
         if (processClearTask) return
         processClearTask = true
         queue.clear()
@@ -116,8 +117,8 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
         cancelAll()
     }*/
 
-//    @Synchronized
-    private fun existCache(url: String): Boolean{
+    @Synchronized
+    fun existCache(url: String): Boolean{
         val hash = md5(url)
         val existCacheMemory =  cacheMemory.get(hash) != null
         val existCacheDrive  =  cacheDrive.find(hash) != 0L
@@ -125,7 +126,7 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
     }
 
 
-    companion object {
+ /*   companion object {
         const val MAX_DRIVE_CACHESIZE  = 128
         const val MAX_MEMORY_CACHESIZE = 32
 /*        private val instance:ImageDownloadManager by lazy {
@@ -147,5 +148,5 @@ class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 
         fun getInstance() = instance
 
-    }
+    }*/
 }

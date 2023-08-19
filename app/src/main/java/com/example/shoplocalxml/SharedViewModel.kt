@@ -2,6 +2,7 @@ package com.example.shoplocalxml
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
@@ -113,7 +114,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         this.portionData = portionData
         this.setSortProduct(sort, false)
         this.setFilterProduct(filter, true)
-        ImageDownloadManager.cancelAll()
+        imageDownloadManager.cancelAll()
         _products.value = products.toMutableList()
     }
 
@@ -121,7 +122,7 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
             //log("update products...")
             val updateList = updateHostLink(list)
             if (uploadAgain) {
-                ImageDownloadManager.cancelAll()
+                imageDownloadManager.cancelAll()
                 _products.value = updateList.toMutableList()
             }
             else {
