@@ -7,7 +7,6 @@ import com.example.shoplocalxml.classes.image_downloader.ImageCacheDrive
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheDriveImpl
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheMemory
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheMemoryImpl
-import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl
@@ -26,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Scope
-import javax.inject.Singleton
 
 @[AppScope Component(modules = [DatabaseModule::class, BindsModule::class])]
 interface AppComponent {
@@ -57,11 +55,8 @@ class DatabaseModule {
 
 
     @[Provides AppScope]
-    fun provideUserShop(): User {
-        val userShop = User()
-        userShop.getUserData()
-        return userShop
-    }
+    fun provideUserShop(): User =
+        User().apply { getUserData() }
 
     @[Provides]
     fun provideDatabaseApiImpl(): DatabaseApiImpl {
