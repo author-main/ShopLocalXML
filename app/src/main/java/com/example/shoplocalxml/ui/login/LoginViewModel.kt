@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 //import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.TypeRequest
@@ -76,7 +77,7 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getUserEmail(): String? = repository.shopUser?.email
+    fun getUserEmail(): String? = AppShopLocal.userShop.email//repository.shopUser?.email
 
     fun performRegisterUser(user: User){
         repository.onRegister(user) {

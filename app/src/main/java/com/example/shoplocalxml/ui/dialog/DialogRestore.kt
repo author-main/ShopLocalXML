@@ -25,7 +25,7 @@ import com.example.shoplocalxml.ui.login.OnUserListener
 class DialogRestore: DialogFragment() {
     private lateinit var dataBinding: DialogRestoreBinding
     private lateinit var dialog: AlertDialog
-    val user = User.getInstance()
+    val user = User()//.getInstance()
             //ObservableField<User> = ObservableField<User>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

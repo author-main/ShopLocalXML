@@ -2,6 +2,7 @@ package com.example.shoplocalxml.dagger
 
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.SERVER_URL
+import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheDrive
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheDriveImpl
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheMemory
@@ -53,6 +54,14 @@ class DatabaseModule {
             .build()
         return retrofit.create()
     }*/
+
+
+    @[Provides AppScope]
+    fun provideUserShop(): User {
+        val userShop = User()
+        userShop.getUserData()
+        return userShop
+    }
 
     @[Provides]
     fun provideDatabaseApiImpl(): DatabaseApiImpl {

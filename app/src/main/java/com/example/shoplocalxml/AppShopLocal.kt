@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.dagger.AppComponent
 import com.example.shoplocalxml.dagger.DaggerAppComponent
@@ -14,6 +15,10 @@ import javax.inject.Singleton
 
 class AppShopLocal: Application() {
     private lateinit var appComponent: AppComponent
+
+    @Inject
+    lateinit var user: User
+
     @Inject
     lateinit var repository: Repository
 
@@ -45,6 +50,9 @@ class AppShopLocal: Application() {
 
         val repository: Repository
             get() = instance.repository
+
+        val userShop: User
+            get() = instance.user
 
         val imageDownloadManager: ImageDownloadManager
             get() = instance.imageDownloadManager

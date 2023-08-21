@@ -44,10 +44,10 @@ class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
     }
 
     suspend fun loginUser(mail: String, password: String): Response<User> {
-        val user = User.getInstance()
+        /*val user = User.getInstance()
         user.email      = mail
-        user.password   = password
-        return queryUser(QUERY_LOGINUSER, user)
+        user.password   = password*/
+        return queryUser(QUERY_LOGINUSER, User(email = mail, password = password))
     }
 
     suspend fun registerUser(user: User): Response<User> {
