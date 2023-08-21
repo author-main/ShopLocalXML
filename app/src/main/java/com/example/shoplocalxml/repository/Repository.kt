@@ -2,6 +2,7 @@ package com.example.shoplocalxml.repository
 
 import android.graphics.Bitmap
 import androidx.fragment.app.FragmentActivity
+import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
@@ -31,8 +32,8 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
     /**
      * shopUser - данные текущего пользователя
      */
-    val shopUser: User?
-        get() = User.getUserData()
+   /* val shopUser: User?
+        get() = User.getUserData()*/
 
     /**
      * token - уникальный токен пользователя,
@@ -64,11 +65,14 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
             token = it
             val result = it != null
             if (result) {
-                val user = User.getUserData()
+
+                /*val user = User.getUserData()
                 user?.let{_user ->
                     _user.email = email
                     _user.saveUserData()
-                }
+                }*/
+                AppShopLocal.userShop.getUserData()
+
             }
             action(result)
         }

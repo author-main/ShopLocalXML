@@ -2,11 +2,11 @@ package com.example.shoplocalxml.dagger
 
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.SERVER_URL
+import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheDrive
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheDriveImpl
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheMemory
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheMemoryImpl
-import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl
@@ -25,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Scope
-import javax.inject.Singleton
 
 @[AppScope Component(modules = [DatabaseModule::class, BindsModule::class])]
 interface AppComponent {
@@ -33,7 +32,7 @@ interface AppComponent {
     @Component.Factory
     interface ImageCache{
         //fun create(@[BindsInstance PathCache] pathDriveCache: String,
-        fun create(@BindsInstance pathDriveCache: String,
+        fun create( @BindsInstance pathDriveCache: String,
                    @[BindsInstance DriveCacheSize] driveCacheSize: Int,
                    @[BindsInstance MemoryCacheSize] memoryCacheSize: Int
         ): AppComponent
@@ -53,6 +52,11 @@ class DatabaseModule {
             .build()
         return retrofit.create()
     }*/
+
+
+    @[Provides AppScope]
+    fun provideUserShop(): User =
+        User().apply { getUserData() }
 
     @[Provides]
     fun provideDatabaseApiImpl(): DatabaseApiImpl {
