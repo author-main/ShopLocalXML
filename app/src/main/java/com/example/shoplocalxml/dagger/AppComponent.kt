@@ -32,7 +32,7 @@ interface AppComponent {
     @Component.Factory
     interface ImageCache{
         //fun create(@[BindsInstance PathCache] pathDriveCache: String,
-        fun create(@BindsInstance pathDriveCache: String,
+        fun create( @BindsInstance pathDriveCache: String,
                    @[BindsInstance DriveCacheSize] driveCacheSize: Int,
                    @[BindsInstance MemoryCacheSize] memoryCacheSize: Int
         ): AppComponent
