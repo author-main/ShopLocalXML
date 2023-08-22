@@ -22,8 +22,6 @@ class FactoryViewModel(
         modelClass: Class<T>,
         handle: SavedStateHandle
     ): T {
-
-
         return when (modelClass) {
             LoginViewModel::class.java  ->
                 LoginViewModel(repository!!) as T
