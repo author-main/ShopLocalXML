@@ -131,7 +131,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
            ViewModelProvider(this)[HomeViewModel::class.java]*/
 
         homeViewModel =
-            ViewModelProvider(this, FactoryViewModel(this))[HomeViewModel::class.java]
+            //ViewModelProvider(this, FactoryViewModel(this))[HomeViewModel::class.java]
+            ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity()))[HomeViewModel::class.java]
 
         homeViewModel.setOnChangeMode {
             if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.MAIN)    {
