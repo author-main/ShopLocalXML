@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        log("shop local...")
         //lifecycle.addObserver(ImageDownloadManager.getInstance())
         lifecycle.addObserver(imageDownloadManager)
 
