@@ -98,7 +98,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
 
 
-    private var orderQuery: String = ""
+    //private var orderQuery: String = ""
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             this,
@@ -112,6 +112,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
 
     private lateinit var homeViewModel: HomeViewModel
+
     private var searchHistoryPanel: SearchHistoryPanel? = null
     private lateinit var dataBinding: FragmentHomeBinding
 
@@ -125,8 +126,11 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
          /*val displaySize = getDisplaySize()
         val widthProductItemCard = (displaySize.width - 16.toPx * 3) / 2*/
+       /* homeViewModel =
+           ViewModelProvider(this)[HomeViewModel::class.java]*/
+
         homeViewModel =
-           ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+            ViewModelProvider(this, FactoryViewModel(this))[HomeViewModel::class.java]
 
         homeViewModel.setOnChangeMode {
             if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.MAIN)    {

@@ -6,12 +6,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.shoplocalxml.repository.Repository
+import com.example.shoplocalxml.ui.home.HomeViewModel
 import com.example.shoplocalxml.ui.login.LoginViewModel
 import java.lang.IllegalArgumentException
 
 class FactoryViewModel(
     private val owner: SavedStateRegistryOwner,
-    private val repository: Repository,
+    private val repository: Repository? = null,
     private val defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
@@ -25,9 +26,12 @@ class FactoryViewModel(
 
         return when (modelClass) {
             LoginViewModel::class.java  ->
-                LoginViewModel(repository) as T
+                LoginViewModel(repository!!) as T
             SharedViewModel::class.java -> {
-                SharedViewModel(repository) as T
+                SharedViewModel(repository!!) as T
+            }
+            HomeViewModel::class.java -> {
+                HomeViewModel() as T
             }
             else ->
                 throw IllegalArgumentException()
