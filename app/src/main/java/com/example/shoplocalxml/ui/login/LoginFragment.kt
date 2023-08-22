@@ -42,7 +42,8 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
 
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
-            this,
+            requireActivity(),
+            //this,
             repository
         )
     })
@@ -57,7 +58,8 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
         //loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
-        loginViewModel = ViewModelProvider(requireActivity(), FactoryViewModel(this, repository))[LoginViewModel::class.java]
+        loginViewModel = //ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
+            ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
 
       /*  sharedViewModel = run {
             //val factory = FactoryViewModel(this, repository)

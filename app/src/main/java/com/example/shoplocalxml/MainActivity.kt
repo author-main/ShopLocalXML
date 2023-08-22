@@ -254,6 +254,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
     }
 
     override fun openShop() {
+        //log("open shop...")
         val navController = findNavController(R.id.nav_host_fragment_content_main)
        /* val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main);
         val fragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
