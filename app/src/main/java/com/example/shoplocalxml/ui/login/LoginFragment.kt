@@ -42,7 +42,8 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
 
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
-            this,
+            requireActivity(),
+            //this,
             repository
         )
     })

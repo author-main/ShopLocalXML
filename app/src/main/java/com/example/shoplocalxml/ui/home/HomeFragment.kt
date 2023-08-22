@@ -101,7 +101,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     //private var orderQuery: String = ""
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
-            this,
+            requireActivity(),
+            //this,
             repository
         )
     })
