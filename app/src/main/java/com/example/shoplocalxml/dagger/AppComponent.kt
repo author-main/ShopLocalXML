@@ -26,7 +26,10 @@ import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Scope
 
+//@[AppScope Component(modules = [DatabaseModule::class, BindsModule::class, SubcomponentViewModel::class])]
+
 @[AppScope Component(modules = [DatabaseModule::class, BindsModule::class])]
+
 interface AppComponent {
     fun injectApplication(appShopLocal: AppShopLocal)
     @Component.Factory
@@ -38,6 +41,9 @@ interface AppComponent {
         ): AppComponent
     }
 }
+
+/*@Module(subcomponents = [ViewModelComponent::class])
+interface SubcomponentViewModel*/
 
 @Module
 class DatabaseModule {
