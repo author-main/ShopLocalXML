@@ -33,7 +33,7 @@ import javax.inject.Scope
 
 //@[AppScope Component(modules = [DatabaseModule::class, BindsModule::class, SubcomponentViewModel::class])]
 
-@[AppScope Component(modules = [DatabaseModule::class, BindsModule::class])]
+@[AppScope Component(modules = [DatabaseModule::class, BindsModule::class, ViewModelSubcomponent::class])]
 
 interface AppComponent {
     fun injectApplication(appShopLocal: AppShopLocal)
@@ -48,19 +48,7 @@ interface AppComponent {
 }
 
 @Module(subcomponents = [ViewModelComponent::class])
-interface SubcomponentViewModel{
-    @Binds
-    @[IntoMap ViewModelKey(HomeViewModel::class)]
-    fun provideHomeViewModel(homeViewModel: HomeViewModel): ViewModel
-
-    @Binds
-    @[IntoMap ViewModelKey(LoginViewModel::class)]
-    fun provideLoginViewModel(loginViewModel: LoginViewModel): ViewModel
-
-    @Binds
-    @[IntoMap ViewModelKey(SharedViewModel::class)]
-    fun provideSharedViewModel(sharedViewModel: SharedViewModel): ViewModel
-}
+interface ViewModelSubcomponent
 
 @Module
 class DatabaseModule {

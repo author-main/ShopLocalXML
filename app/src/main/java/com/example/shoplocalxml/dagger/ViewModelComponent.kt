@@ -1,6 +1,9 @@
 package com.example.shoplocalxml.dagger
 
 import androidx.lifecycle.ViewModel
+import com.example.shoplocalxml.SharedViewModel
+import com.example.shoplocalxml.ui.home.HomeViewModel
+import com.example.shoplocalxml.ui.login.LoginViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -20,6 +23,17 @@ interface ViewModelComponent {
 
 @Module
 interface ViewModelModule{
+    @Binds
+    @[IntoMap ViewModelKey(HomeViewModel::class)]
+    fun provideHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ViewModelKey(LoginViewModel::class)]
+    fun provideLoginViewModel(loginViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ViewModelKey(SharedViewModel::class)]
+    fun provideSharedViewModel(sharedViewModel: SharedViewModel): ViewModel
 }
 
 @MustBeDocumented
