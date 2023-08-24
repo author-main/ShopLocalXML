@@ -1,18 +1,26 @@
 package com.example.shoplocalxml.dagger
 
 import androidx.lifecycle.ViewModel
+import dagger.Binds
 import dagger.MapKey
 import dagger.Module
 import dagger.Subcomponent
+import dagger.multibindings.IntoMap
 import kotlin.reflect.KClass
 
 
 @Subcomponent(modules = [ViewModelModule::class])
-interface ViewModelComponent
+interface ViewModelComponent {
+    @Subcomponent.Builder
+    interface Builder {
+       fun build(): ViewModelComponent
+    }
+}
 
 
 @Module
-interface ViewModelModule
+interface ViewModelModule{
+}
 
 @MustBeDocumented
 @Target(AnnotationTarget.FUNCTION)

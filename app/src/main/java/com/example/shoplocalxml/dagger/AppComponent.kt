@@ -1,7 +1,9 @@
 package com.example.shoplocalxml.dagger
 
+import androidx.lifecycle.ViewModel
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.SERVER_URL
+import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheDrive
 import com.example.shoplocalxml.classes.image_downloader.ImageCacheDriveImpl
@@ -12,6 +14,8 @@ import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorageInterface
+import com.example.shoplocalxml.ui.home.HomeViewModel
+import com.example.shoplocalxml.ui.login.LoginViewModel
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import com.google.gson.GsonBuilder
@@ -20,6 +24,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -42,8 +47,20 @@ interface AppComponent {
     }
 }
 
-/*@Module(subcomponents = [ViewModelComponent::class])
-interface SubcomponentViewModel*/
+@Module(subcomponents = [ViewModelComponent::class])
+interface SubcomponentViewModel{
+    @Binds
+    @[IntoMap ViewModelKey(HomeViewModel::class)]
+    fun provideHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ViewModelKey(LoginViewModel::class)]
+    fun provideLoginViewModel(loginViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @[IntoMap ViewModelKey(SharedViewModel::class)]
+    fun provideSharedViewModel(sharedViewModel: SharedViewModel): ViewModel
+}
 
 @Module
 class DatabaseModule {
