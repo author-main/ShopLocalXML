@@ -1,6 +1,7 @@
 package com.example.shoplocalxml.dagger
 
 import androidx.lifecycle.ViewModel
+import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.ui.home.HomeViewModel
 import com.example.shoplocalxml.ui.login.LoginViewModel
@@ -14,6 +15,7 @@ import kotlin.reflect.KClass
 
 @Subcomponent(modules = [ViewModelModule::class])
 interface ViewModelComponent {
+    val factory: FactoryViewModel
     @Subcomponent.Builder
     interface Builder {
        fun build(): ViewModelComponent
@@ -25,15 +27,15 @@ interface ViewModelComponent {
 interface ViewModelModule{
     @Binds
     @[IntoMap ViewModelKey(HomeViewModel::class)]
-    fun provideHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+    fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
 
     @Binds
     @[IntoMap ViewModelKey(LoginViewModel::class)]
-    fun provideLoginViewModel(loginViewModel: LoginViewModel): ViewModel
+    fun bindLoginViewModel(loginViewModel: LoginViewModel): ViewModel
 
     @Binds
     @[IntoMap ViewModelKey(SharedViewModel::class)]
-    fun provideSharedViewModel(sharedViewModel: SharedViewModel): ViewModel
+    fun bindSharedViewModel(sharedViewModel: SharedViewModel): ViewModel
 }
 
 @MustBeDocumented

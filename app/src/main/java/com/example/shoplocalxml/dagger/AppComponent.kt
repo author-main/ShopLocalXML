@@ -96,19 +96,19 @@ class DatabaseModule {
 @Module
 interface BindsModule {
     @Binds
-    fun bind_AccessHandlerImpl_to_AccesHandler(accessHandlerImpl: AccessHandlerImpl): AccessHandler
+    fun bindAccessHandlerImpltoAccesHandler(accessHandlerImpl: AccessHandlerImpl): AccessHandler
 
     @Binds
-    fun bind_DatabaseHandlerImpl_to_DatabaseHandler(databaseHandlerImpl: DatabaseHandlerImpl): DatabaseHandler
+    fun bindDatabaseHandlerImpltoDatabaseHandler(databaseHandlerImpl: DatabaseHandlerImpl): DatabaseHandler
 
     @Binds
-    fun bind_SearchQueryStorageImpl_to_SearchQueryStorage(searchQueryStorageImpl: SearchQueryStorage): SearchQueryStorageInterface
+    fun bindSearchQueryStorageImpltoSearchQueryStorage(searchQueryStorageImpl: SearchQueryStorage): SearchQueryStorageInterface
 
     @Binds
-    fun bind_ImageCacheMemoryImpl_to_ImageCacheMemory(imageCacheMemoryImpl: ImageCacheMemoryImpl): ImageCacheMemory
+    fun bindImageCacheMemoryImpltoImageCacheMemory(imageCacheMemoryImpl: ImageCacheMemoryImpl): ImageCacheMemory
 
     @Binds
-    fun bind_ImageCacheDriveImpl_to_ImageCacheDrive(imageCacheDriveImpl: ImageCacheDriveImpl): ImageCacheDrive
+    fun bindImageCacheDriveImpltoImageCacheDrive(imageCacheDriveImpl: ImageCacheDriveImpl): ImageCacheDrive
 }
 
 @Scope
