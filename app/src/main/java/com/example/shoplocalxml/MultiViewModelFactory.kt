@@ -13,7 +13,6 @@ class MultiViewModelFactory @Inject constructor(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        log(modelClass)
         return viewModelFactories.getValue(modelClass as Class<ViewModel>).get() as T
     }
 

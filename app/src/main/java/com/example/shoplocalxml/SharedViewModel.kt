@@ -49,9 +49,9 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
         _reviews.value = value
     }*/
 
-    init{
+    /*init{
         log(this.hashCode())
-    }
+    }*/
 
     fun getListBrend(){
         viewModelScope.launch(Dispatchers.IO) {
