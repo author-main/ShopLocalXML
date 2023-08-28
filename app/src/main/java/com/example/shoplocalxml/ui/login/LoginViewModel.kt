@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel : RepositoryViewModel(repository) {
 //class LoginViewModel(private val repository: Repository) : ViewModel() {
+    private val repository = getRepository()!!
     var onChangePassword: ((count: Int, kei: Int) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     var onPerformLogin: () -> Unit = {}

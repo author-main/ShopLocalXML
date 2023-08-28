@@ -21,6 +21,7 @@ import kotlin.math.abs
 
 class SharedViewModel: RepositoryViewModel(repository) {
 //class SharedViewModel(private val repository: Repository): ViewModel() {
+    private val repository = getRepository()!!
     private val UUID_QUERY = System.nanoTime().toString()
     var sortProduct        = SortOrder()
     var filterProduct      = Filter().apply { discount = 2 }
