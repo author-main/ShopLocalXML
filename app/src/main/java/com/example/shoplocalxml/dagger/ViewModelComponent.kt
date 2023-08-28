@@ -22,7 +22,7 @@ import dagger.multibindings.Multibinds
 import kotlin.reflect.KClass
 
 
-@Subcomponent(modules = [ViewModelModule::class])//, ProviderViewModel::class])
+@[Subcomponent(modules = [ViewModelModule::class, ProviderViewModelModule::class])]
 interface ViewModelComponent {
     //val factory: MultiViewModelFactory
 
@@ -40,7 +40,7 @@ interface ViewModelComponent {
 
 
 @Module
-class ProviderViewModel {
+class ProviderViewModelModule {
     @[Provides]
     fun provideRepositoryViewModel(activity: AppCompatActivity):
             ViewModel {
