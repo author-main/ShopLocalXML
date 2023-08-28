@@ -29,11 +29,13 @@ import androidx.core.view.marginBottom
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.shoplocalxml.AppShopLocal.Companion.appComponent
 import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
+import com.example.shoplocalxml.dagger.ViewModelComponent
 import com.example.shoplocalxml.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,18 +52,27 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
     /*@Inject
     lateinit var imageDownloadManager: ImageDownloadManager*/
 
-    private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
+    /*private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
-            this,
-            repository
+            this/*,
+            repository*/
         )
-    })
+    })*/
+    private lateinit var sharedViewModel: SharedViewModel
 
     //lateinit var sharedViewModel: SharedViewModel
+    val viewModelComponent = appComponent.viewModelComponent().build()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         super.onCreate(savedInstanceState)
-        log("shop local...")
+        //log("create MainActivity...")
+        //viewModelComponent = appComponent.viewModelComponent().build()
+        viewModelComponent.inject(this)
+        sharedViewModel = viewModelComponent.factory.create(SharedViewModel::class.java)
+
+        //log("shop local...")
         //lifecycle.addObserver(ImageDownloadManager.getInstance())
         lifecycle.addObserver(imageDownloadManager)
 
@@ -79,7 +90,6 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
             ViewModelProvider(this, factory)[SharedViewModel::class.java]
         }*/
 
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
         binding = ActivityMainBinding.inflate(layoutInflater)
         //binding.appBarMain.fab.visibility = View.GONE
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)

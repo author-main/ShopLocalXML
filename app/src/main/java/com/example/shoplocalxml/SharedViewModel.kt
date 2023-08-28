@@ -3,6 +3,7 @@ package com.example.shoplocalxml
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
@@ -11,14 +12,19 @@ import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
+import com.example.shoplocalxml.dagger.ActivityMainScope
 import com.example.shoplocalxml.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.math.abs
 
-class SharedViewModel(private val repository: Repository): ViewModel() {
+@ActivityMainScope
+class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
+//class SharedViewModel(private val repository: Repository): ViewModel() {
+    private val repository = getRepository()!!
     private val UUID_QUERY = System.nanoTime().toString()
     var sortProduct        = SortOrder()
     var filterProduct      = Filter().apply { discount = 2 }
@@ -43,7 +49,9 @@ class SharedViewModel(private val repository: Repository): ViewModel() {
         _reviews.value = value
     }*/
 
-
+    /*init{
+        log(this.hashCode())
+    }*/
 
     fun getListBrend(){
         viewModelScope.launch(Dispatchers.IO) {

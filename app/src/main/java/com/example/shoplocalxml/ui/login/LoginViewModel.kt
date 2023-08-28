@@ -9,9 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
+import com.example.shoplocalxml.RepositoryViewModel
 //import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.dagger.ActivityMainScope
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.ui.dialog.DialogProgress
@@ -19,8 +22,12 @@ import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(private val repository: Repository) : ViewModel() {
+@ActivityMainScope
+class LoginViewModel @Inject constructor(): RepositoryViewModel(repository) {
+//class LoginViewModel(private val repository: Repository) : ViewModel() {
+    private val repository = getRepository()!!
     var onChangePassword: ((count: Int, kei: Int) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     var onPerformLogin: () -> Unit = {}

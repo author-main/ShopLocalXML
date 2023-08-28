@@ -52,8 +52,8 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
-            this,
-            AppShopLocal.repository
+            this/*,
+            AppShopLocal.repository*/
         )
     })
 

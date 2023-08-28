@@ -45,6 +45,7 @@ interface AppComponent {
                    @[BindsInstance MemoryCacheSize] memoryCacheSize: Int
         ): AppComponent
     }
+    fun viewModelComponent(): ViewModelComponent.Builder
 }
 
 @Module(subcomponents = [ViewModelComponent::class])
@@ -65,11 +66,11 @@ class DatabaseModule {
     }*/
 
 
-    @[Provides AppScope]
+    @Provides
     fun provideUserShop(): User =
         User().apply { getUserData() }
 
-    @[Provides]
+    @Provides
     fun provideDatabaseApiImpl(): DatabaseApiImpl {
         val gson = GsonBuilder()
             .setLenient()

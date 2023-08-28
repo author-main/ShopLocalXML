@@ -99,13 +99,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
 
     //private var orderQuery: String = ""
-    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+    private lateinit var sharedViewModel: SharedViewModel
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
-            requireActivity(),
+            requireActivity()/*,
             //this,
-            repository
+            repository*/
         )
-    })
+    })*/
 
 
     /*private val sharedViewModel: SharedViewModel =
@@ -130,9 +131,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
        /* homeViewModel =
            ViewModelProvider(this)[HomeViewModel::class.java]*/
 
+        val mainActivity = requireActivity() as MainActivity
+        sharedViewModel = mainActivity.viewModelComponent.factory.create(SharedViewModel::class.java)
+
         homeViewModel =
-            //ViewModelProvider(this, FactoryViewModel(this))[HomeViewModel::class.java]
-            ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity()))[HomeViewModel::class.java]
+            //ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity()))[HomeViewModel::class.java]
+            mainActivity.viewModelComponent.factory.create(HomeViewModel::class.java)
 
         homeViewModel.setOnChangeMode {
             if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.MAIN)    {
@@ -680,7 +684,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     if (changedViewMode)
                         getLayoutManagerRecyclerViewProductHome(data.filter.viewmode)
                     sharedViewModel.restoreDataMode(data.portionData, data.sort, data.filter, data.products)
-                    log("restored scroll ${data.scrollPosition}")
+                    //log("restored scroll ${data.scrollPosition}")
                     if (data.scrollPosition != -1) {
 
                         (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(

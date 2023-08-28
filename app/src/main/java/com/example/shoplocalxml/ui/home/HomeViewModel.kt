@@ -4,15 +4,20 @@ import android.graphics.Point
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.EMPTY_STRING
+import com.example.shoplocalxml.RepositoryViewModel
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
+import com.example.shoplocalxml.dagger.ActivityMainScope
 import com.example.shoplocalxml.log
 import java.lang.Exception
 import java.util.Stack
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@ActivityMainScope
+class HomeViewModel @Inject constructor(): RepositoryViewModel() {
 data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>, var scrollPosition: Int)
     private var onChangeMode: (() -> Unit)? = null
     fun setOnChangeMode(value: () -> Unit) {
