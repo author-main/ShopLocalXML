@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     private val sharedViewModel: SharedViewModel by viewModels(factoryProducer = {
         FactoryViewModel(
-            this,
-            repository
+            this/*,
+            repository*/
         )
     })
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        log("shop local...")
+        //log("shop local...")
         //lifecycle.addObserver(ImageDownloadManager.getInstance())
         lifecycle.addObserver(imageDownloadManager)
 

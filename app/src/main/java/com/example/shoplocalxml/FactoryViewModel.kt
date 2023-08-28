@@ -11,10 +11,10 @@ import com.example.shoplocalxml.ui.login.LoginViewModel
 import java.lang.IllegalArgumentException
 
 class FactoryViewModel(
-    private val owner: SavedStateRegistryOwner,
+    private val owner: SavedStateRegistryOwner/*,
     private val repository: Repository? = null,
-    private val defaultArgs: Bundle? = null
-) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+    private val defaultArgs: Bundle? = null*/
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs = null) {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(
@@ -24,9 +24,11 @@ class FactoryViewModel(
     ): T {
         return when (modelClass) {
             LoginViewModel::class.java  ->
-                LoginViewModel(repository!!) as T
+                //LoginViewModel(repository!!) as T
+                LoginViewModel() as T
             SharedViewModel::class.java -> {
-                SharedViewModel(repository!!) as T
+                SharedViewModel() as T
+                //SharedViewModel(repository!!) as T
             }
             HomeViewModel::class.java -> {
                 HomeViewModel() as T

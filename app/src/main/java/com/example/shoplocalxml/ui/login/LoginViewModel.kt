@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
+import com.example.shoplocalxml.RepositoryViewModel
 //import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
@@ -20,7 +22,8 @@ import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val repository: Repository) : ViewModel() {
+class LoginViewModel : RepositoryViewModel(repository) {
+//class LoginViewModel(private val repository: Repository) : ViewModel() {
     var onChangePassword: ((count: Int, kei: Int) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
     var onPerformLogin: () -> Unit = {}

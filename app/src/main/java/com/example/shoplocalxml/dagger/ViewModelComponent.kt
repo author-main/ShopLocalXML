@@ -2,6 +2,7 @@ package com.example.shoplocalxml.dagger
 
 import androidx.lifecycle.ViewModel
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.MultiViewModelFactory
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.ui.home.HomeViewModel
 import com.example.shoplocalxml.ui.login.LoginViewModel
@@ -10,12 +11,13 @@ import dagger.MapKey
 import dagger.Module
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
+import dagger.multibindings.Multibinds
 import kotlin.reflect.KClass
 
 
 @Subcomponent(modules = [ViewModelModule::class])
 interface ViewModelComponent {
-    val factory: FactoryViewModel
+    val factory: MultiViewModelFactory
     @Subcomponent.Builder
     interface Builder {
        fun build(): ViewModelComponent
@@ -43,3 +45,4 @@ interface ViewModelModule{
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey
 annotation class ViewModelKey(val value: KClass<out ViewModel>)
+

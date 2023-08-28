@@ -3,6 +3,7 @@ package com.example.shoplocalxml
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
+import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
@@ -18,7 +19,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
-class SharedViewModel(private val repository: Repository): ViewModel() {
+class SharedViewModel: RepositoryViewModel(repository) {
+//class SharedViewModel(private val repository: Repository): ViewModel() {
     private val UUID_QUERY = System.nanoTime().toString()
     var sortProduct        = SortOrder()
     var filterProduct      = Filter().apply { discount = 2 }
