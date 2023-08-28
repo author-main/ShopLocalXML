@@ -45,6 +45,7 @@ interface AppComponent {
                    @[BindsInstance MemoryCacheSize] memoryCacheSize: Int
         ): AppComponent
     }
+    fun viewModelComponent(): ViewModelComponent.Builder
 }
 
 @Module(subcomponents = [ViewModelComponent::class])

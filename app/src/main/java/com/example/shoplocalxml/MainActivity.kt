@@ -29,6 +29,7 @@ import androidx.core.view.marginBottom
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.shoplocalxml.AppShopLocal.Companion.appComponent
 import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
@@ -61,6 +62,9 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //appComponent.viewModelComponent().create().inject(this)
+
         //log("shop local...")
         //lifecycle.addObserver(ImageDownloadManager.getInstance())
         lifecycle.addObserver(imageDownloadManager)
