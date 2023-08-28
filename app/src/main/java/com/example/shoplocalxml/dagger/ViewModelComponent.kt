@@ -39,7 +39,7 @@ interface ViewModelComponent {
 }
 
 
-/*@Module
+@Module
 class ProviderViewModel {
     @[Provides]
     fun provideRepositoryViewModel(activity: AppCompatActivity):
@@ -47,9 +47,9 @@ class ProviderViewModel {
         return ViewModelProvider(
             activity.viewModelStore,
             FactoryViewModel(activity)
-        )[(ViewModel::class.java)]
+        )[(RepositoryViewModel::class.java)]
     }
-}*/
+}
 
 @Module
 interface ViewModelModule{
@@ -72,5 +72,5 @@ interface ViewModelModule{
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey
-annotation class ViewModelKey(val value: KClass<out RepositoryViewModel>)
+annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
