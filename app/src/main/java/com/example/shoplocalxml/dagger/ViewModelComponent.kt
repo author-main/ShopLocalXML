@@ -19,10 +19,11 @@ import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
 import dagger.multibindings.Multibinds
+import javax.inject.Scope
 import kotlin.reflect.KClass
 
 
-@[Subcomponent(modules = [ViewModelModule::class, ProviderViewModelModule::class])]
+@[ActivityMainScope Subcomponent(modules = [ViewModelModule::class, ProviderViewModelModule::class])]
 interface ViewModelComponent {
     val factory: MultiViewModelFactory
 
@@ -41,7 +42,7 @@ interface ViewModelComponent {
 
 @Module
 class ProviderViewModelModule {
-    @[Provides]
+    @Provides
     fun provideRepositoryViewModel(activity: AppCompatActivity):
             ViewModel {
         return ViewModelProvider(
@@ -73,4 +74,8 @@ interface ViewModelModule{
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey
 annotation class ViewModelKey(val value: KClass<out ViewModel>)
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ActivityMainScope
 

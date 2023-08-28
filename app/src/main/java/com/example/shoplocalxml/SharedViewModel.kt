@@ -12,6 +12,7 @@ import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
+import com.example.shoplocalxml.dagger.ActivityMainScope
 import com.example.shoplocalxml.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.abs
 
+@ActivityMainScope
 class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
 //class SharedViewModel(private val repository: Repository): ViewModel() {
     private val repository = getRepository()!!
@@ -47,7 +49,9 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
         _reviews.value = value
     }*/
 
-
+    init{
+        log(this.hashCode())
+    }
 
     fun getListBrend(){
         viewModelScope.launch(Dispatchers.IO) {

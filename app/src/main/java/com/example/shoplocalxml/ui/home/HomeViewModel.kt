@@ -10,11 +10,13 @@ import com.example.shoplocalxml.RepositoryViewModel
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.sort_filter.Filter
 import com.example.shoplocalxml.classes.sort_filter.SortOrder
+import com.example.shoplocalxml.dagger.ActivityMainScope
 import com.example.shoplocalxml.log
 import java.lang.Exception
 import java.util.Stack
 import javax.inject.Inject
 
+@ActivityMainScope
 class HomeViewModel @Inject constructor(): RepositoryViewModel() {
 data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: Int, var products: List<Product>, var scrollPosition: Int)
     private var onChangeMode: (() -> Unit)? = null

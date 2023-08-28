@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnOpenShopListener
 import com.example.shoplocalxml.R
@@ -25,6 +26,7 @@ import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
+import com.example.shoplocalxml.ui.home.HomeViewModel
 import com.example.shoplocalxml.ui.login.LoginViewModel.Companion.KEY_FINGER
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.vibrate
@@ -40,13 +42,15 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         )
     })*/
 
-    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             requireActivity()/*,
             //this,
             repository*/
         )
-    })
+    })*/
+
+    private lateinit var sharedViewModel: SharedViewModel
 
 
     private lateinit var loginViewModel: LoginViewModel
@@ -58,8 +62,16 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
         //loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
-        loginViewModel = //ViewModelProvider(this, FactoryViewModel(this, repository))[LoginViewModel::class.java]
-            ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity()/*, repository*/))[LoginViewModel::class.java]
+
+
+        val mainActivity = requireActivity() as MainActivity
+        sharedViewModel = mainActivity.viewModelComponent.factory.create(SharedViewModel::class.java)
+
+        loginViewModel =
+            //ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity()/*, repository*/))[LoginViewModel::class.java]
+            mainActivity.viewModelComponent.factory.create(LoginViewModel::class.java)
+
+
 
       /*  sharedViewModel = run {
             //val factory = FactoryViewModel(this, repository)

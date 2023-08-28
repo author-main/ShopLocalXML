@@ -14,6 +14,7 @@ import com.example.shoplocalxml.RepositoryViewModel
 //import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
+import com.example.shoplocalxml.dagger.ActivityMainScope
 import com.example.shoplocalxml.log
 import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.ui.dialog.DialogProgress
@@ -23,6 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ActivityMainScope
 class LoginViewModel @Inject constructor(): RepositoryViewModel(repository) {
 //class LoginViewModel(private val repository: Repository) : ViewModel() {
     private val repository = getRepository()!!
