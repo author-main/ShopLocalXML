@@ -66,11 +66,11 @@ class DatabaseModule {
     }*/
 
 
-    @[Provides AppScope]
+    @Provides
     fun provideUserShop(): User =
         User().apply { getUserData() }
 
-    @[Provides]
+    @Provides
     fun provideDatabaseApiImpl(): DatabaseApiImpl {
         val gson = GsonBuilder()
             .setLenient()

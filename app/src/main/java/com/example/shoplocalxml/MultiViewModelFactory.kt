@@ -16,5 +16,5 @@ class MultiViewModelFactory @Inject constructor(
         return viewModelFactories.getValue(modelClass as Class<ViewModel>).get() as T
     }
 
-    val viewModelsClasses get() = viewModelFactories.keys
+    //val viewModelsClasses get() = viewModelFactories.keys
 }

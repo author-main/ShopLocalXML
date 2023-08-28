@@ -3,10 +3,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.FILE_PREFERENCES
+import com.example.shoplocalxml.dagger.AppScope
 import com.example.shoplocalxml.log
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
+@AppScope
 data class User (
     @SerializedName("id")           var id: Int?                = null,
     @SerializedName("email")        var email: String?          = null,
