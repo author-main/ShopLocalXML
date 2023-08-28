@@ -21,8 +21,9 @@ import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : RepositoryViewModel(repository) {
+class LoginViewModel @Inject constructor(): RepositoryViewModel(repository) {
 //class LoginViewModel(private val repository: Repository) : ViewModel() {
     private val repository = getRepository()!!
     var onChangePassword: ((count: Int, kei: Int) -> Unit)? = null

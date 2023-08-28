@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
             repository*/
         )
     })
+    /*@Inject
+    lateinit var sharedViewModel: SharedViewModel*/
 
     //lateinit var sharedViewModel: SharedViewModel
 

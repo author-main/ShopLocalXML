@@ -17,9 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.math.abs
 
-class SharedViewModel: RepositoryViewModel(repository) {
+class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
 //class SharedViewModel(private val repository: Repository): ViewModel() {
     private val repository = getRepository()!!
     private val UUID_QUERY = System.nanoTime().toString()

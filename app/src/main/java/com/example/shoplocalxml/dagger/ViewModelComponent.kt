@@ -24,7 +24,7 @@ import kotlin.reflect.KClass
 
 @[Subcomponent(modules = [ViewModelModule::class, ProviderViewModelModule::class])]
 interface ViewModelComponent {
-    //val factory: MultiViewModelFactory
+    val factory: MultiViewModelFactory
 
     /*@Subcomponent.Factory
     interface Factory {
