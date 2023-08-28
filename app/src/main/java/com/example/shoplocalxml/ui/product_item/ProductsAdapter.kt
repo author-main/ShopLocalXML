@@ -25,9 +25,9 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
         }
     }
 
-    private fun notifyItemsChanged(){
+    /*private fun notifyItemsChanged(){
         notifyItemRangeChanged(0, products.size)
-    }
+    }*/
 
     fun setProducts(list: List<Product>){//, uploadAgain: Boolean = false) {
         swapData(list)
@@ -105,9 +105,13 @@ class ProductsAdapter(val context: Context, private var products: MutableList<Pr
 
 
     companion object {
-        enum class ItemViewMode(value: Int) {
+       /* enum class ItemViewMode(value: Int) {
             CARD(0),
             ROW(1)
+        }*/
+        enum class ItemViewMode {
+            CARD,
+            ROW
         }
     }
 

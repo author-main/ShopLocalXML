@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoplocalxml.log
 
 class SelectedImagesAdapter (val context: Context, private val linkImages: List<String> = listOf(), private var selectedIndex: Int): RecyclerView.Adapter<SelectedImagesAdapter.ViewHolder>(){
     private var recyclerView: RecyclerView? = null

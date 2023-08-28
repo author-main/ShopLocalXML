@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -24,17 +23,13 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.DATA_PORTION
 import com.example.shoplocalxml.FILTER_KEY
-import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnBottomNavigationListener
@@ -278,7 +273,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                         itemMenu, idProduct, favorite
                     )
                 }
-                val bundle = Bundle().apply {
+//                val bundle =
+                Bundle().apply {
                     putInt("idproduct", id)
                     sharedViewModel.getProductFromId(id)?.let {
                         putBoolean("favorite", it.favorite > 0)
@@ -326,9 +322,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }*/
 
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
-            sharedViewModel.getMessages() {
+            sharedViewModel.getMessages {messages ->
                 MessagesNotification.clear()
-                showUserMessages(it)
+                showUserMessages(messages)
             }
         }
 
@@ -1061,10 +1057,11 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                val elements = it.split(',')
                countUnreadMessages -= elements.size
             }
-            val deleteMessages = data.getStringExtra("delete_messages")
+
             // Без обновления данных на сервере (убрать для обновления на сервере)
             /*
-                    sharedViewModel.updateMessages(readMessages, deleteMessages)
+                val deleteMessages = data.getStringExtra("delete_messages")
+                sharedViewModel.updateMessages(readMessages, deleteMessages)
             */
         }
     }

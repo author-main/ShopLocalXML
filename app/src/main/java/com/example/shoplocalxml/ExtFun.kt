@@ -1,4 +1,4 @@
-package com.example.shoplocalxml
+ package com.example.shoplocalxml
 
 
 import android.content.Context
@@ -11,7 +11,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.util.Base64
-import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
 import android.util.TypedValue
@@ -41,8 +40,8 @@ val Boolean.visibility: Int
 val Float.toPx: Float
     get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, Resources.getSystem().displayMetrics)
 
-val Int.toDp: Int
-    get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+/*val Int.toDp: Int
+    get() = (this / Resources.getSystem().displayMetrics.density).toInt()*/
 
 val Int.toPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -116,7 +115,7 @@ fun setDialogStyle(dialog: AlertDialog, @StringRes title: Int? = null, noTitle: 
     drawable!!.setTint(bgColor)
     dialog.window?.let {
         if (noTitle)
-            it.requestFeature(Window.FEATURE_NO_TITLE);
+            it.requestFeature(Window.FEATURE_NO_TITLE)
         /*val layoutParams = WindowManager.LayoutParams()
         layoutParams.copyFrom(it.attributes)
         it.attributes = layoutParams*/
@@ -202,7 +201,7 @@ fun getDisplaySize(): Size {
     return Size(width, height)
 }
 
-fun isEven(value: Int) = value % 2 == 0
+//fun isEven(value: Int) = value % 2 == 0
 
 fun encodeBase64(value: String): String
         = Base64.encodeToString(value.toByteArray(charset = Charset.defaultCharset()), Base64.NO_WRAP)
@@ -218,12 +217,12 @@ fun<T> getInteger(value: T) : Int {
     dialog.window!!.setLayout(width, height)
 }*/
 
-fun setSizeDialog(dialog: AlertDialog, widthDP: Int = 0, heightDP: Int = 0){
+/*fun setSizeDialog(dialog: AlertDialog, widthDP: Int = 0, heightDP: Int = 0){
     val width: Int = if (widthDP == 0) ViewGroup.LayoutParams.MATCH_PARENT else widthDP.toPx
     val height = if (heightDP == 0) ViewGroup.LayoutParams.WRAP_CONTENT
         else heightDP.toPx
     dialog.window!!.setLayout(width, height)
-}
+}*/
 
 fun getReduceImageHash(url: String, reduce: Boolean) =
     if (!reduce) md5(url) else md5("${url}_")

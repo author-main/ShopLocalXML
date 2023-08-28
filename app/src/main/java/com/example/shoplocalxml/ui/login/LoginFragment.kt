@@ -9,10 +9,6 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import com.example.shoplocalxml.AppShopLocal.Companion.repository
-import com.example.shoplocalxml.FactoryViewModel
 import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.OnBackPressed
 import com.example.shoplocalxml.OnOpenShopListener
@@ -26,7 +22,6 @@ import com.example.shoplocalxml.getStringResource
 import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.dialog.DialogReg
 import com.example.shoplocalxml.ui.dialog.DialogRestore
-import com.example.shoplocalxml.ui.home.HomeViewModel
 import com.example.shoplocalxml.ui.login.LoginViewModel.Companion.KEY_FINGER
 import com.example.shoplocalxml.ui.login.finger_print.FingerPrint
 import com.example.shoplocalxml.vibrate

@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -19,7 +18,7 @@ import com.example.shoplocalxml.ui.user_messages.UserMessagesActivity
 import com.google.gson.Gson
 
 
-class MessagesNotification() {
+class MessagesNotification {
     companion object {
         private var instance: MessagesNotification? = null
         fun getInstance() : MessagesNotification {
@@ -113,30 +112,35 @@ class MessagesNotification() {
 
             notificationManager.apply {
                 val listOneMessage = mutableListOf<UserMessage>()
-                for (i in messages.indices) {
-                    val notificationId = NOTIFICATION_ID + messages[i].id
-                    val intentMessage = Intent(applicationContext, UserMessagesActivity::class.java)
+                try {
+                    for (i in messages.indices) {
+                        val notificationId = NOTIFICATION_ID + messages[i].id
+                        val intentMessage =
+                            Intent(applicationContext, UserMessagesActivity::class.java)
+                        listOneMessage.clear()
+                        listOneMessage.add(messages[i])
+                        messagesJson = gson.toJson(listOneMessage)
+                        intentMessage.putExtra("messages", messagesJson)
+                        intentMessage.putExtra("notification", 1)
+                        val pendingIntentMessage = PendingIntent.getActivity(
+                            applicationContext, notificationId, intentMessage,
+                            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                        )
+                        val notificationMessage =
+                            NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+                                .setSmallIcon(R.drawable.ic_delivery_notify)
+                                .setContentTitle(messages[i].date)
+                                .setContentText(messages[i].message)
+                                .setGroup(GROUP_KEY)
+                                //.setChannelId(CHANNEL_ID)
+                                .setContentIntent(pendingIntentMessage)
+                                .setAutoCancel(true)
+                                .build()
+                        notify(notificationId, notificationMessage)
+                    }
                     listOneMessage.clear()
-                    listOneMessage.add(messages[i])
-                    messagesJson = gson.toJson(listOneMessage)
-                    intentMessage.putExtra("messages", messagesJson)
-                    intentMessage.putExtra("notification",    1)
-                    val pendingIntentMessage = PendingIntent.getActivity(
-                        applicationContext, notificationId, intentMessage,
-                        PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-                    val notificationMessage = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_delivery_notify)
-                        .setContentTitle(messages[i].date)
-                        .setContentText(messages[i].message)
-                        .setGroup(GROUP_KEY)
-                        //.setChannelId(CHANNEL_ID)
-                        .setContentIntent(pendingIntentMessage)
-                        .setAutoCancel(true)
-                        .build()
-                    notify(notificationId, notificationMessage)
-                }
-                listOneMessage.clear()
-                notify(NOTIFICATION_GROUP_ID, notificationGroup)
+                    notify(NOTIFICATION_GROUP_ID, notificationGroup)
+                } catch(_: SecurityException){}
             }
 
         }

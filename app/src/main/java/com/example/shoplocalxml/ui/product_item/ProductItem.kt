@@ -1,19 +1,10 @@
 package com.example.shoplocalxml.ui.product_item
 
-import android.R.attr
-import android.R.attr.height
 import android.content.Context
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.classes.Product
-import com.example.shoplocalxml.databinding.ProductItemCardBinding
-import com.example.shoplocalxml.getDisplaySize
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.toDp
-import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.product_item.product_card.OnProductItemListener
 import com.example.shoplocalxml.widthProductCard
 

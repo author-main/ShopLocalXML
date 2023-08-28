@@ -1,7 +1,5 @@
 package com.example.shoplocalxml.ui.user_messages
 
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -23,7 +21,6 @@ import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.custom_view.SnackbarExt
 import com.example.shoplocalxml.databinding.ActivityUserMessagesBinding
 import com.example.shoplocalxml.getStringResource
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.toPx
 import com.example.shoplocalxml.ui.product_item.DividerItemRowDecoration
 import com.example.shoplocalxml.vibrate
@@ -31,10 +28,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.Math.abs
 
 
 class UserMessagesActivity: AppCompatActivity() {
@@ -239,7 +234,7 @@ class UserMessagesActivity: AppCompatActivity() {
 
 
              }*/
-                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                if(actionState == ACTION_STATE_SWIPE) {
                     val itemView = viewHolder.itemView
 
                     //log("alpha = $alpha")
@@ -297,8 +292,8 @@ class UserMessagesActivity: AppCompatActivity() {
                             icon?.let{
                                 val left_dest   = (itemView.width - widthBackground) + (widthBackground - dp24) / 2f
                                 val top_dest    = itemView.top + (widthBackground - dp24) / 2f
-                                val right_dest  = left_dest + dp24
-                                val bottom_dest = top_dest + dp24
+                                /*val right_dest  = left_dest + dp24
+                                val bottom_dest = top_dest + dp24*/
 
                                     c.drawBitmap(icon,
                                         left_dest, top_dest, p)

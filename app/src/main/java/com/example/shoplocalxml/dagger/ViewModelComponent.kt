@@ -4,21 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplocalxml.FactoryViewModel
-import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.MultiViewModelFactory
 import com.example.shoplocalxml.RepositoryViewModel
 import com.example.shoplocalxml.SharedViewModel
-import com.example.shoplocalxml.repository.Repository
 import com.example.shoplocalxml.ui.home.HomeViewModel
 import com.example.shoplocalxml.ui.login.LoginViewModel
 import dagger.Binds
-import dagger.BindsInstance
 import dagger.MapKey
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import dagger.multibindings.IntoMap
-import dagger.multibindings.Multibinds
 import javax.inject.Scope
 import kotlin.reflect.KClass
 

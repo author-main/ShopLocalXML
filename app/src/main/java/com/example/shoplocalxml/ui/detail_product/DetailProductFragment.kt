@@ -18,7 +18,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
-import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FRIDAY_PERCENT
 import com.example.shoplocalxml.FactoryViewModel
@@ -38,7 +37,6 @@ import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.ui.detail_product.recyclerview_reviews.ReviewsAdapter
 import com.example.shoplocalxml.ui.dialog.DialogReview
 import com.example.shoplocalxml.ui.home.HomeViewModel
-import com.example.shoplocalxml.ui.home.OnStackModeListener
 import com.example.shoplocalxml.ui.image_viewer.ImageViewerActivity
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.google.gson.Gson

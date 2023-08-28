@@ -7,15 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.Nullable
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.image_downloader.DiffCallback
-import com.example.shoplocalxml.log
 
 class SearchAdapter(private val items: MutableList<String>, private val onClickItem: (query: String, delete: Boolean) -> Unit): RecyclerView.Adapter<SearchAdapter.ViewHolder>(){
 
@@ -24,7 +21,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
             field = setSearchQuery(value)
         }
 
-    var filtered: Boolean = false
+    private var filtered: Boolean = false
     private val showItems = items.toMutableList()
 
 
@@ -33,7 +30,7 @@ class SearchAdapter(private val items: MutableList<String>, private val onClickI
 
     @JvmName("setSearchQuery_")
     private fun setSearchQuery(value: String): String {
-            filtered = value.isNotBlank() ?: false
+            filtered = value.isNotBlank()// ?: false
             val query = if (filtered) {
                 swapData(items.filter {
                     it.contains(value, true)

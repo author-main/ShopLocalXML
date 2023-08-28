@@ -1,6 +1,5 @@
 package com.example.shoplocalxml.repository
 
-import android.graphics.Bitmap
 import androidx.fragment.app.FragmentActivity
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.classes.Brend
@@ -9,20 +8,12 @@ import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.UserMessage
-import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.dagger.AppScope
 import com.example.shoplocalxml.encodeBase64
-import com.example.shoplocalxml.isConnectedNet
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.repository.database_api.DatabaseApi
 import com.example.shoplocalxml.ui.login.password_storage.PasswordStorage
-import com.example.shoplocalxml.repository.database_api.DatabaseApiImpl
 import com.example.shoplocalxml.repository.database_handler.DatabaseHandler
-import com.example.shoplocalxml.repository.database_handler.DatabaseHandlerImpl
-import com.example.shoplocalxml.ui.dialog.DialogProgress
 import com.example.shoplocalxml.ui.history_search.SearchQueryStorage
 import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
-import com.example.shoplocalxml.ui.login.access_handler.AccessHandlerImpl
 import javax.inject.Inject
 
 @AppScope

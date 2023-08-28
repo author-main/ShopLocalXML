@@ -11,13 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableField
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.custom_view.EditTextExt
-import com.example.shoplocalxml.databinding.DialogRegBinding
 import com.example.shoplocalxml.databinding.DialogRestoreBinding
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.setDialogStyle
 import com.example.shoplocalxml.ui.login.OnUserListener
 

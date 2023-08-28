@@ -1,25 +1,12 @@
 package com.example.shoplocalxml.repository.database_api
 
-import com.example.shoplocalxml.SERVER_URL
 import com.example.shoplocalxml.classes.Brend
 import com.example.shoplocalxml.classes.Category
 import com.example.shoplocalxml.classes.Product
 import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.classes.UserMessage
-import com.example.shoplocalxml.encodeBase64
-import com.example.shoplocalxml.log
-import com.google.gson.GsonBuilder
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
-import javax.inject.Inject
-import javax.inject.Singleton
 
 class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
     private val QUERY_REGUSER     = "reg_user"

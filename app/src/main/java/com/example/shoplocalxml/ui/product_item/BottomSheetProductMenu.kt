@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.appcompat.content.res.AppCompatResources
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.databinding.BottomsheetProductBinding
 import com.example.shoplocalxml.getStringArrayResource

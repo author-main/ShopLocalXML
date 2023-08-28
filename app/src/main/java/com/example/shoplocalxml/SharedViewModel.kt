@@ -1,6 +1,5 @@
 package com.example.shoplocalxml
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
 import com.example.shoplocalxml.AppShopLocal.Companion.repository

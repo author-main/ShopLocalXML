@@ -1,25 +1,20 @@
 package com.example.shoplocalxml.ui.product_item
 
-import android.R.attr.divider
-import android.R.attr.left
-import android.R.attr.right
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
-import androidx.core.graphics.alpha
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.alpha
 import com.example.shoplocalxml.paddingProductCard
 import com.example.shoplocalxml.toPx
 
 
 class DividerItemRowDecoration : ItemDecoration() {
     //private val colorDivider = applicationContext.getColor(R.color.EditTextFont).alpha(0.3f)
-    val px = 1.toPx
+    private val px = 1.toPx
     private val colorDivider = applicationContext.getColor(R.color.EditTextBackgroundDark)
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
         color = colorDivider
@@ -45,7 +40,7 @@ class DividerItemRowDecoration : ItemDecoration() {
         val childCount = parent.childCount
         for (i in 0 until childCount - 1) {
             val child = parent.getChildAt(i)
-            val params = child.layoutParams as RecyclerView.LayoutParams
+            //val params = child.layoutParams as RecyclerView.LayoutParams
             val top = child.bottom + paddingProductCard/2f + px
             c.drawLine(start, top, end, top+1f, paint)
         }

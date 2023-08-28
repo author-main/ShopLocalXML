@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.classes.Product
-import com.example.shoplocalxml.custom_view.RatingView
 import com.example.shoplocalxml.databinding.ProductItemCardBinding
 import com.example.shoplocalxml.databinding.ProductItemRowBinding
 import com.example.shoplocalxml.ui.product_item.product_card.ProductCard

@@ -7,8 +7,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.view.marginBottom
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext

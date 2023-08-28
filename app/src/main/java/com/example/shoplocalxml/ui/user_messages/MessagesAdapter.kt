@@ -1,16 +1,11 @@
 package com.example.shoplocalxml.ui.user_messages
 
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
-import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.log
-import com.example.shoplocalxml.ui.product_item.ProductItem
-import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 
 class MessagesAdapter(private val context: Context, private var listMessages: MutableList<UserMessage> = mutableListOf()): RecyclerView.Adapter<MessagesAdapter.ViewHolder>() {
     private var onMessageItemListener: OnMessageItemListener? = null
@@ -82,7 +77,7 @@ class MessagesAdapter(private val context: Context, private var listMessages: Mu
     fun getItem(position: Int): UserMessage =
         listMessages[position]
 
-    class ViewHolder(private val view: View, private val onMessageItemListener: OnMessageItemListener?): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val onMessageItemListener: OnMessageItemListener?): RecyclerView.ViewHolder(view) {
         val item = view as MessageItem
         fun changeBackgroundColor(color: Int) {
             item.changeBackgroundColor(color)

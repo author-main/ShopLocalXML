@@ -2,15 +2,11 @@ package com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.example.shoplocalxml.custom_view.ZoomImageView
-import com.example.shoplocalxml.log
 
 class ImageViewerAdapter (val context: Context, private val images: List<String> = listOf(), private val startIndex: Int = 0): RecyclerView.Adapter<ImageViewerAdapter.ViewHolder>(){
     private var handleEvent = true

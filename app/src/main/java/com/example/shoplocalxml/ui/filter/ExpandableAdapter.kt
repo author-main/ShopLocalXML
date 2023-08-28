@@ -11,12 +11,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.classes.sort_filter.Filter
-import com.example.shoplocalxml.log
-import java.util.zip.Inflater
-
-
-
 
 class ExpandableAdapter: BaseExpandableListAdapter() {
     private var onExpanded: ((groupPosition: Int) -> Unit)? = null
@@ -78,12 +72,12 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
         var convertview = convertView
         if (convertview == null) {
             val inflater: LayoutInflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertview = inflater.inflate(R.layout.group_item, null);
+            convertview = inflater.inflate(R.layout.group_item, null)
             groupViewHolder = GroupViewHolder()
             groupViewHolder?.let{
-                it.nameGroupItem        = convertview.findViewById<TextView>(R.id.textGroupItemName)
+                it.nameGroupItem        = convertview.findViewById(R.id.textGroupItemName)
             }
-            convertview.setTag(R.layout.group_item, groupViewHolder);
+            convertview.setTag(R.layout.group_item, groupViewHolder)
         } else
             groupViewHolder = convertView?.getTag(R.layout.group_item) as GroupViewHolder
 
@@ -107,15 +101,15 @@ class ExpandableAdapter: BaseExpandableListAdapter() {
         var convertview = convertView
         if (convertview == null) {
             val inflater: LayoutInflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertview = inflater.inflate(R.layout.child_item, null);
+            convertview = inflater.inflate(R.layout.child_item, null)
             childViewHolder = ChildViewHolder()
             childViewHolder?.let{
-                it.layoutChildItemRoot  = convertview.findViewById<LinearLayout>(R.id.layoutChildItemRoot)
-                it.nameChildItem        = convertview.findViewById<TextView>(R.id.textChildItemName)
-                it.countChildItem       = convertview.findViewById<TextView>(R.id.textChildItemCount)
-                it.selectedChildItem    = convertview.findViewById<CheckBox>(R.id.checkboxChildItem)
+                it.layoutChildItemRoot  = convertview.findViewById(R.id.layoutChildItemRoot)
+                it.nameChildItem        = convertview.findViewById(R.id.textChildItemName)
+                it.countChildItem       = convertview.findViewById(R.id.textChildItemCount)
+                it.selectedChildItem    = convertview.findViewById(R.id.checkboxChildItem)
             }
-            convertview.setTag(R.layout.child_item, childViewHolder);
+            convertview.setTag(R.layout.child_item, childViewHolder)
         } else
             childViewHolder = convertView?.getTag(R.layout.child_item) as ChildViewHolder
 

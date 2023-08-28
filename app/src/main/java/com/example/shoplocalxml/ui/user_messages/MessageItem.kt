@@ -1,25 +1,15 @@
 package com.example.shoplocalxml.ui.user_messages
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
-import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.BindingMethod
-import androidx.databinding.BindingMethods
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.UserMessage
-import com.example.shoplocalxml.custom_view.CheckableImageView
 import com.example.shoplocalxml.databinding.MessageItemBinding
-import com.example.shoplocalxml.databinding.ProductCardBinding
 import com.example.shoplocalxml.getStringArrayResource
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.toPx
 
 /*@BindingMethods(
     BindingMethod(type = MessageItem::class, attribute = "app:onClickItem",  method = "setOnClickItem"),
@@ -43,12 +33,12 @@ class MessageItem: ConstraintLayout {
         defStyleAttr
     )
 
-    constructor(
+    /*constructor(
         context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int,
         defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
+    ) : super(context, attrs, defStyleAttr, defStyleRes)*/
 
 
    /* interface OnClickItem {
@@ -71,11 +61,11 @@ class MessageItem: ConstraintLayout {
         onDeleteItem = value
     }*/
 
-    private lateinit var dataBinding: MessageItemBinding
+    private val dataBinding: MessageItemBinding
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dataBinding =
-            DataBindingUtil.inflate(inflater, com.example.shoplocalxml.R.layout.message_item, this, true)
+            DataBindingUtil.inflate(inflater, R.layout.message_item, this, true)
         dataBinding.message      = message
         dataBinding.eventhandler = this
 

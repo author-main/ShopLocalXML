@@ -10,7 +10,6 @@ import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.animation.DecelerateInterpolator
-import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.shoplocalxml.toPx
 
@@ -33,7 +32,7 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
             addUpdateListener (this@AnimatedImage)
-            setFloatValues(-1f, 0f);
+            setFloatValues(-1f, 0f)
         }
         visibility = GONE
     }
@@ -76,7 +75,7 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
             gradientDrawable.setBounds(0, 0, gradientWidht, gradientHeight)
             gradientDrawable.draw(canvas)
             gradientBitmap = bitmap
-            animator?.setFloatValues(-gradientWidht.toFloat(), (width + min).toFloat());
+            animator?.setFloatValues(-gradientWidht.toFloat(), (width + min).toFloat())
         }
     }
 

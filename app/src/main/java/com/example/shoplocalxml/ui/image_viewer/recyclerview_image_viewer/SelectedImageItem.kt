@@ -1,10 +1,8 @@
 package com.example.shoplocalxml.ui.image_viewer.recyclerview_image_viewer
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil

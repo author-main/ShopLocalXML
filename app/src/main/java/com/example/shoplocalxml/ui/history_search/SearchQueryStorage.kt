@@ -7,7 +7,6 @@ import java.io.*
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /*enum class SearchState {
     SEARCH_NONE,
@@ -76,7 +75,7 @@ class SearchQueryStorage @Inject constructor(): SearchQueryStorageInterface {
     }
 
     override fun saveQueries(): Boolean {
-        val callable = Callable<Boolean> {
+        val callable = Callable {
             val text = StringBuffer()
             for (i in 0 until listSQ.size)
                 text.append("${listSQ[i]}\n")

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
-import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.R
 
 

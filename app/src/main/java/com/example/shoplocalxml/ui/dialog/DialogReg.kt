@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.allViews
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableField
 import androidx.fragment.app.DialogFragment
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.classes.User

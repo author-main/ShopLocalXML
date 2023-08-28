@@ -15,32 +15,22 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.shoplocalxml.AppShopLocal.Companion.appComponent
 import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
-import com.example.shoplocalxml.AppShopLocal.Companion.repository
-import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
 import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.custom_view.SnackbarExt
-import com.example.shoplocalxml.dagger.ViewModelComponent
 import com.example.shoplocalxml.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Locale
-import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
@@ -247,7 +237,7 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
-            val v = currentFocus;
+            val v = currentFocus
             if ( v is EditTextExt) {
                 if (v.lossFocusOutside) {
                     val outRect = Rect()

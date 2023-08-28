@@ -1,25 +1,13 @@
 package com.example.shoplocalxml.ui.login
 
-import android.view.View
-import android.widget.Button
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoplocalxml.AppShopLocal
-import com.example.shoplocalxml.AppShopLocal.Companion.applicationContext
 import com.example.shoplocalxml.AppShopLocal.Companion.repository
 import com.example.shoplocalxml.RepositoryViewModel
-//import com.example.shoplocalxml.PasswordSymbol
 import com.example.shoplocalxml.TypeRequest
 import com.example.shoplocalxml.classes.User
 import com.example.shoplocalxml.dagger.ActivityMainScope
-import com.example.shoplocalxml.log
-import com.example.shoplocalxml.repository.Repository
-import com.example.shoplocalxml.ui.dialog.DialogProgress
-import com.example.shoplocalxml.ui.dialog.DialogReg
-import com.example.shoplocalxml.ui.login.access_handler.AccessHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject

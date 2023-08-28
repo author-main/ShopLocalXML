@@ -1,15 +1,12 @@
 package com.example.shoplocalxml.ui.filter
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Rect
-import android.nfc.cardemulation.CardEmulation
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import com.example.shoplocalxml.FILTER_KEY
 import com.example.shoplocalxml.ID_BRAND
 import com.example.shoplocalxml.ID_CATEGORY
@@ -21,7 +18,6 @@ import com.example.shoplocalxml.custom_view.EditTextExt
 import com.example.shoplocalxml.databinding.ActivityFilterBinding
 import com.example.shoplocalxml.getInteger
 import com.example.shoplocalxml.getStringResource
-import com.example.shoplocalxml.log
 import com.example.shoplocalxml.ui.product_item.ProductsAdapter
 import com.example.shoplocalxml.ui.user_messages.HeaderTitle
 import com.google.android.material.button.MaterialButton
@@ -155,7 +151,7 @@ class FilterActivity : AppCompatActivity() {
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
-            val v = currentFocus;
+            val v = currentFocus
             if ( v is EditTextExt) {
                 if (v.lossFocusOutside) {
                     val outRect = Rect()

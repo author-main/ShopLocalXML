@@ -2,8 +2,6 @@ package com.example.shoplocalxml.ui.product_item.product_card.recycler_view_imag
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,18 +11,16 @@ import com.example.shoplocalxml.AppShopLocal
 import com.example.shoplocalxml.AppShopLocal.Companion.imageDownloadManager
 import com.example.shoplocalxml.DEFAULT_BITMAP
 import com.example.shoplocalxml.R
-import com.example.shoplocalxml.classes.image_downloader.ImageDownloadManager
-import com.example.shoplocalxml.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-data class ImageItem(var url: String, var image: Bitmap?, var default: Boolean = false){}
+data class ImageItem(var url: String, var image: Bitmap?, var default: Boolean = false)
 
 class ImagesAdapter: RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     var reduceImage = false
-    private val handlerUI = Handler(Looper.getMainLooper())
+//    private val handlerUI = Handler(Looper.getMainLooper())
     private var countUploaded = 0
     private var images: MutableList<ImageItem> = mutableListOf()
     private var onClickItem: ((index: Int) -> Unit)? = null
