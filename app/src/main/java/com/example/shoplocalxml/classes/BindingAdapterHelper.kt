@@ -20,24 +20,12 @@ object BindingAdapterHelper {
         view.setCount(count)
     }
 
- /*   @BindingAdapter("android:text")
-    @JvmStatic
-    fun bindMessageTitle(view: TextView, message: UserMessage?) {
-        val title = getStringArrayResource(R.array.typemessage)
-        val text = message?.let{
-            title[it.type]
-        } ?: title[0]
-        view.text = text
-    }*/
-
-
     @BindingAdapter("app:srcCompat")
     @JvmStatic
     fun bindSrcCompat(imageView: ImageView, @DrawableRes drawableId: Int) {
         val drawable = AppCompatResources.getDrawable(AppShopLocal.applicationContext, drawableId)
         imageView.setImageDrawable(drawable)
     }
-
 
     @BindingAdapter("android:text")
     @JvmStatic
@@ -49,20 +37,5 @@ object BindingAdapterHelper {
     @JvmStatic
     fun getText(view: EditTextExt): Int {
         return getInteger(view.text)
-        //return Integer.parseInt(view.text.toString());
     }
 }
-
-
-/*
-android:text="@{String.valueOf(Integer)}"
-@BindingAdapter("android:text")
-    public static void setText(TextView view, int value) {
-        view.setText(Integer.toString(value));
-    }
-
-    @InverseBindingAdapter(attribute = "android:text")
-    public static int getText(TextView view) {
-        return Integer.parseInt(view.getText().toString());
-    }
- */

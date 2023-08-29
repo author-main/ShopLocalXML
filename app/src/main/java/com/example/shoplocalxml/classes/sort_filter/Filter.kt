@@ -8,10 +8,8 @@ data class Filter(
     var favorite: Boolean               = false,
     var fromPrice: Int                  = 0,
     var toPrice: Int                    = 0,
-    //var priceRange: Pair<Int, Int>  = 0 to 0,
     var discount: Int                   = 0
 ) {
-
     override fun equals(other: Any?): Boolean {
         val filter = other as Filter
         return  equalsFilter(filter)
@@ -23,7 +21,6 @@ data class Filter(
                 && filter.fromPrice         == fromPrice
                 && filter.toPrice           == toPrice
                 && filter.discount          == discount
-                //&& filter.viewmode          == viewmode
     }
 
     override fun hashCode(): Int {
@@ -33,10 +30,8 @@ data class Filter(
     private fun equalsHashMap(other: HashMap<Long, LongArray>): Boolean {
         if (other.isEmpty() && enum.isEmpty())
             return true
-
         if (other.size != enum.size)
             return false
-
         for (entry in other) {
             if (enum[entry.key] == null) {
                 return false

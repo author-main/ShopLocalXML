@@ -25,29 +25,17 @@ class ImageDownloaderImpl
     ): ImageDownloader {
 
     override fun download() {
-        //val result =
-            downloadImage()//url, reduce, timestamp)
-      //  onComplete(result.first, result.second)*/
+        downloadImage()//url, reduce, timestamp)
     }
 
-   /* override fun run() {
-        //download()
-        /*val result = downloadImage()//url, reduce, timestamp)
-        onComplete(result.first, result.second)*/
-        downloadImage()
-    }*/
-
-//    private fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {
     private fun downloadImage(): Pair<Bitmap?, Long> {
         var timeStamp = timestamp
         val bufferSize = 32768
-        //log("download $url...")
-        val fileHash = getReduceImageHash(url, reduce)//if (!reduce) md5(url) else md5("${url}_")
+        val fileHash = getReduceImageHash(url, reduce)
         val filenameCache = getCacheDirectory() + fileHash
         val filenameTemp  = "$filenameCache$.EXT_TEMPFILE"
         var bitmap: Bitmap? = null
         var success = false
-
         try {
             val conn = URL(url).openConnection() as HttpURLConnection
             conn.connect()
@@ -64,7 +52,6 @@ class ImageDownloaderImpl
                     while (inputStream.read(buffer).also { count = it } > 0) {
                         outputStream.write(buffer, 0, count)
                     }
-
                     inputStream.close()
                     outputStream.flush()
                     outputStream.close()
@@ -75,17 +62,10 @@ class ImageDownloaderImpl
                 }
             }
         } catch (_: Exception) {
-            //log(e.message)
         }
         if (!success)
             bitmap = loadBitmap(filenameCache, reduce)
-        //for (i in 0..1000000000){}
-       /* if (bitmap == null)
-            log("bitmap is null...")*/
         onComplete(bitmap, timeStamp)
         return bitmap to timeStamp
     }
-
-
-
 }

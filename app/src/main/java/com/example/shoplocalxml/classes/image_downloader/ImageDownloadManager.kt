@@ -18,21 +18,17 @@ import com.example.shoplocalxml.md5
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import javax.inject.Inject
-//class ImageDownloadManager private constructor(): DefaultLifecycleObserver {
 @AppScope
 class ImageDownloadManager @Inject constructor(
         private val cacheDrive  : ImageCacheDrive,
         private val cacheMemory : ImageCacheMemory
     ): DefaultLifecycleObserver {
-    /*private val cacheDrive  : ImageCacheDrive   = ImageCacheDriveImpl (MAX_DRIVE_CACHESIZE)
-    private val cacheMemory : ImageCacheMemory  = ImageCacheMemoryImpl(MAX_MEMORY_CACHESIZE)*/
     private var processClearTask = false
     private val executor =
         Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors())
-    private val taskList: HashMap<String, Future<*>> = hashMapOf() // * "звездная проекция, когда мы ничего не знаем о типе"
+    private val taskList: HashMap<String, Future<*>> = hashMapOf()
     private val queue = mutableListOf<Pair<String, ImageDownloader>>()
     private val handlerUI = Handler(Looper.getMainLooper())
-
     private fun findTaskQueue(url: String): Int{
         var indexFoundTask = -1
         var i = queue.size - 1
@@ -52,25 +48,18 @@ class ImageDownloadManager @Inject constructor(
     }
 
     fun download(url: String, reduce: Boolean, oncomplete: (Bitmap?)->Unit){
-        val hash = getReduceImageHash(url, reduce)//if (!reduce) md5(url) else md5("${url}_")
-     //   log("task = $url...")
-
+        val hash = getReduceImageHash(url, reduce)
         cacheMemory.get(hash)?.let{bitmap ->
-            //log("load from cache memory...")
-
                 handlerUI.post {
                     oncomplete(bitmap)
                 }
-
             return
         }
         val cacheTimestamp = cacheDrive.find(hash)
         val task = ImageDownloaderImpl(url, reduce, cacheTimestamp){ bitmap: Bitmap?, timestamp: Long ->
-
-                handlerUI.post {
-                    oncomplete(bitmap)
-                }
-
+            handlerUI.post {
+                oncomplete(bitmap)
+            }
             taskList.remove(url)
             bitmap?.let{
                 cacheMemory.put(hash, it)
@@ -82,16 +71,11 @@ class ImageDownloadManager @Inject constructor(
                 taskList[url] = executor.submit(queueTask)
                 queue.removeAt(indexTaskQueue)
             }
-
         }
-
-        //@Synchronized
         if (taskList.containsKey(url))
             queue.add(url to task)
         else
             taskList[url] = executor.submit(task)
-
-
     }
 
     fun cancelAll(){
@@ -112,11 +96,6 @@ class ImageDownloadManager @Inject constructor(
         processClearTask = false
     }
 
-  /*  @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun stopTaskDowload(){
-        cancelAll()
-    }*/
-
     @Synchronized
     fun existCache(url: String): Boolean{
         val hash = md5(url)
@@ -124,29 +103,4 @@ class ImageDownloadManager @Inject constructor(
         val existCacheDrive  =  cacheDrive.find(hash) != 0L
         return existCacheMemory || existCacheDrive
     }
-
-
- /*   companion object {
-        const val MAX_DRIVE_CACHESIZE  = 128
-        const val MAX_MEMORY_CACHESIZE = 32
-/*        private val instance:ImageDownloadManager by lazy {
-            ImageDownloadManager()
-        }*/
-        private val instance =
-            ImageDownloadManager()
-
-        fun download(url: String, reduce: Boolean = false, oncomplete: (Bitmap?)->Unit) {
-            instance.download(url, reduce, oncomplete)
-        }
-
-        fun cancelAll() {
-            instance.cancelAll()
-        }
-
-        @Synchronized
-        fun existCache(url: String) = instance.existCache(url)
-
-        fun getInstance() = instance
-
-    }*/
 }
