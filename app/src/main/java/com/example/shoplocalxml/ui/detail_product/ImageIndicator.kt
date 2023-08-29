@@ -20,7 +20,6 @@ class ImageIndicator: LinearLayout {
     private var initialized = false
     private val images = ArrayList<ImageView>()
     private var sizeSym = 8.toPx
-    //private val sym = getStringResource(R.string.fCharPassword)
     private var interval = 4.toPx
     var count = 0
         set(value) {
@@ -46,10 +45,6 @@ class ImageIndicator: LinearLayout {
         }
         gravity = Gravity.CENTER_VERTICAL
         orientation = HORIZONTAL
-        /*if (count > 0) {
-            initialized = false
-            setSelectedIndex(0)
-        }*/
     }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     private val colorSymbol = context.getColor(R.color.EditTextBackgroundDark)
@@ -70,46 +65,41 @@ class ImageIndicator: LinearLayout {
             initialized = true
             return
         }
-      //  log( "$prevIndex, $selectedIndex")
-
-            CoroutineScope(Dispatchers.Main).launch {
-                if (value != -1) {
-                    val colorAnimation1 =
-                        ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
-                    colorAnimation1.duration = 350
-                    colorAnimation1.addUpdateListener { animator ->
-                        images[value].setColorFilter(
-                            animator.animatedValue as Int
-                        )
-                    }
-                    colorAnimation1.start()
-                }
-
-                if (prevIndex != -1) {
-                    val colorAnimation =
-                        ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
-                    colorAnimation.duration = 350
-                    colorAnimation.addUpdateListener { animator ->
-                        val color = animator.animatedValue as Int
-                        images[prevIndex].setColorFilter(color)
-                    }
-                    colorAnimation.start()
-                }
-            }
+        CoroutineScope(Dispatchers.Main).launch {
+           if (value != -1) {
+               val colorAnimation1 =
+                   ValueAnimator.ofObject(ArgbEvaluator(), colorSymbol, selectedColorSymbol)
+               colorAnimation1.duration = 350
+               colorAnimation1.addUpdateListener { animator ->
+                   images[value].setColorFilter(
+                       animator.animatedValue as Int
+                   )
+               }
+               colorAnimation1.start()
+           }
+           if (prevIndex != -1) {
+               val colorAnimation =
+                   ValueAnimator.ofObject(ArgbEvaluator(), selectedColorSymbol, colorSymbol)
+               colorAnimation.duration = 350
+               colorAnimation.addUpdateListener { animator ->
+                   val color = animator.animatedValue as Int
+                   images[prevIndex].setColorFilter(color)
+               }
+               colorAnimation.start()
+           }
+        }
 
 
     }
 
     @JvmName("setCount_")
     private fun setCount(value: Int) {
-
         initialized = false
         this.removeAllViews()
         images.clear()
         val widthView = value * sizeSym + interval * (value - 1)
         val heightView = sizeSym
-
-       val params = if (layoutParams == null)
+        val params = if (layoutParams == null)
             ViewGroup.LayoutParams(
                 widthView,
                 heightView
@@ -119,24 +109,10 @@ class ImageIndicator: LinearLayout {
                     height = heightView
                 }
         }
-
-
-
-
-        /*val layoutParams = ViewGroup.LayoutParams(
-        value * sizeSym + interval * (value - 1),
-            sizeSym
-        )
-        this.layoutParams = layoutParams*/
         layoutParams = params
-
         for (i in 0 until value) {
             addImageView(i)
         }
-      /* if (value > 0) {
-           initialized = false
-           selectedIndex = 0
-       }*/
     }
 
     private fun addImageView(index: Int) {
@@ -146,7 +122,6 @@ class ImageIndicator: LinearLayout {
             imageView.setImageDrawable(drawable)
             val layoutParams = LayoutParams(
                 sizeSym, sizeSym
-                //LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT
             )
             if (index < count - 1)
                 layoutParams.marginEnd = interval
