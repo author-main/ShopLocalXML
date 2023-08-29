@@ -17,7 +17,6 @@ import com.example.shoplocalxml.setDialogStyle
 import com.example.shoplocalxml.toPx
 import com.google.gson.Gson
 
-
 class DialogReview: DialogFragment() {
     private lateinit var dialog: AlertDialog
     private lateinit var dataBinding: DialogReviewBinding
@@ -28,38 +27,22 @@ class DialogReview: DialogFragment() {
         dataBinding.reviewContent.root.background = null
         dataBinding.reviewContent.textUserName.setTextColor(applicationContext.getColor(R.color.colorBrend))
         dataBinding.reviewContent.textComment.maxLines = Integer.MAX_VALUE
-        /*val lparams = dataBinding.scroolViewReview.layoutParams
-        lparams.width = 200.toPx*/
         val gson = Gson()
         val dataReview = requireArguments().getString("review")
         val review = gson.fromJson(dataReview, Review::class.java)
         dataBinding.review = review
-
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder
             .setView(dataBinding.root)
-            //.setNegativeButton(R.string.button_cancel, null)
             .setPositiveButton(R.string.text_ok, null)
             .setCancelable(true)
         dialog = builder.create()
-
         setDialogStyle(dialog, noTitle = true)
-
-       /* dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.let {
-            val lparams = it.layoutParams as LinearLayout.LayoutParams
-            lparams.gravity = Gravity.CENTER
-            lparams.width = 60.toPx
-            it.layoutParams = lparams
-        }*/
-
         return dialog
-        //return super.onCreateDialog(savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
-
-
         dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.let {positive ->
             val parent = positive.parent as? LinearLayout
             parent?.gravity = Gravity.CENTER_HORIZONTAL
@@ -73,14 +56,5 @@ class DialogReview: DialogFragment() {
             lParams.gravity = Gravity.CENTER
             positive.layoutParams = lParams
         }
-
-        //setSizeDialog(dialog, heightDP = 400)
-
-        /*dialog.getButton(DialogInterface.BUTTON_POSITIVE)?.let {
-            val lparams = it.layoutParams as LinearLayout.LayoutParams
-            lparams.gravity = Gravity.CENTER
-            lparams.width = 60.toPx
-            it.layoutParams = lparams
-        }*/
     }
 }

@@ -22,32 +22,21 @@ import com.example.shoplocalxml.ui.login.OnUserListener
 class DialogRestore: DialogFragment() {
     private lateinit var dataBinding: DialogRestoreBinding
     private lateinit var dialog: AlertDialog
-    val user = User()//.getInstance()
-            //ObservableField<User> = ObservableField<User>()
-
+    val user = User()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dataBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.dialog_restore, null, false)
-        //user.set(User.getInstance())
-        //dataBinding.dialog = this
-        //dataBinding.user = user.get()
         dataBinding.user = user
-
         dataBinding.editTextPassword.onValidValue = {password ->
             password.length == 5
         }
-
         dataBinding.editTextMail.onValidValue = {email ->
             !(email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches())
         }
-
-
         val email = arguments?.getString("email")
         email?.let{
             user.email = it
         }
-
-
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder
             .setView(dataBinding.root)
@@ -76,7 +65,6 @@ class DialogRestore: DialogFragment() {
                 }
             }
         }
-
         var verified = true
         dataBinding.root.allViews.forEach { v ->
             if (v is EditTextExt) {
