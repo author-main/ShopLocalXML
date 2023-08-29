@@ -31,15 +31,12 @@ import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Scope
 
-//@[AppScope Component(modules = [DatabaseModule::class, BindsModule::class, SubcomponentViewModel::class])]
-
 @[AppScope Component(modules = [DatabaseModule::class, BindsModule::class, ViewModelSubcomponent::class])]
 
 interface AppComponent {
     fun injectApplication(appShopLocal: AppShopLocal)
     @Component.Factory
     interface ImageCache{
-        //fun create(@[BindsInstance PathCache] pathDriveCache: String,
         fun create( @BindsInstance pathDriveCache: String,
                    @[BindsInstance DriveCacheSize] driveCacheSize: Int,
                    @[BindsInstance MemoryCacheSize] memoryCacheSize: Int
@@ -53,19 +50,6 @@ interface ViewModelSubcomponent
 
 @Module
 class DatabaseModule {
- /*   @[Singleton Provides]
-    fun provideDatabaseApi(): DatabaseApi {
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
-        val retrofit = Retrofit.Builder()
-            .baseUrl(SERVER_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-        return retrofit.create()
-    }*/
-
-
     @Provides
     fun provideUserShop(): User =
         User().apply { getUserData() }
@@ -81,33 +65,18 @@ class DatabaseModule {
             .build()
         return DatabaseApiImpl(retrofit.create())
     }
-
-
-  /*  @[Provides]
-    fun provideAccessHandlerImpl(databaseApiImpl: DatabaseApiImpl): AccessHandlerImpl {
-        return AccessHandlerImpl(databaseApiImpl)
-    }
-
-    @[Singleton Provides]
-    fun provideDatabaseHandlerImpl(databaseApiImpl: DatabaseApiImpl): DatabaseHandlerImpl {
-        return DatabaseHandlerImpl(databaseApiImpl)
-    }*/
 }
 
 @Module
 interface BindsModule {
     @Binds
     fun bindAccessHandlerImpltoAccesHandler(accessHandlerImpl: AccessHandlerImpl): AccessHandler
-
     @Binds
     fun bindDatabaseHandlerImpltoDatabaseHandler(databaseHandlerImpl: DatabaseHandlerImpl): DatabaseHandler
-
     @Binds
     fun bindSearchQueryStorageImpltoSearchQueryStorage(searchQueryStorageImpl: SearchQueryStorage): SearchQueryStorageInterface
-
     @Binds
     fun bindImageCacheMemoryImpltoImageCacheMemory(imageCacheMemoryImpl: ImageCacheMemoryImpl): ImageCacheMemory
-
     @Binds
     fun bindImageCacheDriveImpltoImageCacheDrive(imageCacheDriveImpl: ImageCacheDriveImpl): ImageCacheDrive
 }
@@ -115,10 +84,6 @@ interface BindsModule {
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
 annotation class AppScope
-
-/*@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class PathCache*/
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)

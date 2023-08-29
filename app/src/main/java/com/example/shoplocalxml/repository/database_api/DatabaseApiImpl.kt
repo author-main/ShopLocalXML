@@ -13,27 +13,11 @@ class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
     private val QUERY_LOGINUSER   = "login_user"
     private val QUERY_RESTOREUSER = "restore_user"
 
-
-    /*private val retrofitInstance: DatabaseApi
-    init{
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
-        val retrofit = Retrofit.Builder()
-            .baseUrl(SERVER_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-        retrofitInstance = retrofit.create(DatabaseApi::class.java)
-    }*/
-
     private suspend fun queryUser(query: String, user: User): Response<User> {
         return retrofitInstance.queryUser(user, query)
     }
 
     suspend fun loginUser(mail: String, password: String): Response<User> {
-        /*val user = User.getInstance()
-        user.email      = mail
-        user.password   = password*/
         return queryUser(QUERY_LOGINUSER, User(email = mail, password = password))
     }
 
@@ -45,7 +29,6 @@ class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
         return queryUser(QUERY_RESTOREUSER, user)
     }
 
-
     suspend fun getSearchProducts(token: String, uuid: String, searchQuery: String, page: Int, order: String): Response<List<Product>>? {
         return try {
             retrofitInstance.getSearchProducts(token, uuid, searchQuery, page, order)
@@ -53,7 +36,6 @@ class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
             null
         }
     }
-
 
     suspend fun getProducts(token: String, page: Int, order: String): Response<List<Product>>? {
         return try {
@@ -73,16 +55,9 @@ class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
         retrofitInstance.updateFavorite(token, idProduct, if (favorite) 1 else 0)
     }
 
-
     suspend fun updateMessages(token: String, join_read: String, join_deleted: String){
-        /*val read_messages: String    = join_read ?: "x"
-        val deleted_messages: String = join_deleted ?: "x"*/
-        /*log(token)
-        log (read_messages)
-        log(deleted_messages)*/
         retrofitInstance.updateMessages(token, join_read, join_deleted)
     }
-
 
     suspend fun getReviewsProduct(id: Int, limit: Int): Response<List<Review>> =
         retrofitInstance.getReviewsProduct(id, limit)

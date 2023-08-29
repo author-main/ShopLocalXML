@@ -20,43 +20,19 @@ data class User (
 
 ) {
 
-  /*  private val sharedPrefs: SharedPreferences =
-        applicationContext.getSharedPreferences(FILE_PREFERENCES, Context.MODE_PRIVATE)*/
-
-
     private fun getSharedPreferences() =
         applicationContext.getSharedPreferences(FILE_PREFERENCES, Context.MODE_PRIVATE)
 
     fun saveUserData(){
-    /*    val sharedPrefs: SharedPreferences =
-            applicationContext.getSharedPreferences(FILE_PREFERENCES, Context.MODE_PRIVATE)*/
         id          = null
         password    = null
         token       = null
         val gson = Gson()
         val json = gson.toJson(this)
-        //sharedPrefs
         getSharedPreferences().edit().putString("user", json).apply()
     }
 
-    /*fun validUser() =
-        !token.isNullOrEmpty()*/
-
-
-    /*fun getUserData(): User {
-        var user = User()
-        try {
-            val gson = Gson()
-            val json = sharedPrefs.getString("user", null)
-            if (!json.isNullOrEmpty())
-                user = gson.fromJson(json, User::class.java)
-        } catch (_: Exception) {}
-        return user
-    }*/
-
     fun getUserData(){
-       /* val sharedPrefs: SharedPreferences =
-            applicationContext.getSharedPreferences(FILE_PREFERENCES, Context.MODE_PRIVATE)*/
         var user = User()
         try {
             val gson = Gson()
@@ -73,29 +49,4 @@ data class User (
         password    = user.password
         token       = user.token
     }
-
-
-
-   /* companion object {
-        private val sharedPrefs: SharedPreferences =
-            applicationContext.getSharedPreferences(FILE_PREFERENCES, Context.MODE_PRIVATE)
-        fun getUserData(): User? {
-            return try {
-                val gson = Gson()
-                val json: String? = sharedPrefs.getString("user", null)
-                gson.fromJson(json, User::class.java)
-            } catch (e: Exception) {
-                null
-            }
-        }
-        fun getInstance() =
-            User(null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null)
-
-    }*/
 }

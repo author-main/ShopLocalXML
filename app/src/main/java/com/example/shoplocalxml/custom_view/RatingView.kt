@@ -21,9 +21,6 @@ import kotlin.math.roundToInt
 
 class RatingView(context: Context, attrs: AttributeSet? = null)
  : View(context, attrs) {
-    /*private val df = DecimalFormat("#.#").apply {
-        roundingMode = RoundingMode.HALF_EVEN
-    }*/
     private var interval = 1.toPx
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var bitmapStar: Bitmap? = null
@@ -31,8 +28,6 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
     private var tintColor = applicationContext.getColor(R.color.colorAccent)
     private var tintBackgroundColor = applicationContext.getColor(R.color.EditTextBackgroundDark)
     private var count = 1f
-    //private val minSize = getMinSize()
-
     init {
             setLayerType(LAYER_TYPE_SOFTWARE, null) // удаления участка canvas
             context.obtainStyledAttributes(attrs, R.styleable.RatingView).run {
@@ -48,12 +43,6 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                 recycle()
             }
     }
-
-   /* private fun getMinSize(): Size {
-        val minValue = 8.toPx
-        val minWidth  = minValue * 5 + minValue/2 // minValue/2 = 4 * 1dp -> расстояние между звездами
-        return Size(0,minValue)
-    }*/
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -79,7 +68,6 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                 }
             posX += step
         }
-
         bitmapStar?.let {
             if (remains > 0f) {
                 remains = (remains * 10.0f).roundToInt() / 10.0f // округляем до одного знака
@@ -94,13 +82,9 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
                 val rectSource =  Rect().apply {
                     set(0, 0, widthStar.toInt(), it.height)
                 }
-
                 canvas.drawBitmap(it, rectSource, rect, paint)
-                //canvas?.drawBitmap(it, 0f, 0f, paint)
             }
         }
-
-
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -116,24 +100,6 @@ class RatingView(context: Context, attrs: AttributeSet? = null)
         setMeasuredDimension(widthStars + paddingWidth, heightStars + paddingHeight)
     }
 
-    /*val drawable = attrs?.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "src", -1)
-    drawable?.let{
-        stateDrawable = AppCompatResources.getDrawable(AppShopLocal.applicationContext, it) as StateListDrawable
-        stateDrawable?.let{stateListDrawable->
-            val savedState = stateListDrawable.state
-            stateListDrawable.state = intArrayOf(android.R.attr.state_checked)
-            checkedDrawable = stateListDrawable.current
-            stateListDrawable.state = intArrayOf(-android.R.attr.state_checked)
-            uncheckedDrawable = stateListDrawable.current
-            stateListDrawable.state = savedState
-
-        }
-    }*/
-
-   /* override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        log("resize $w, $h")
-    }*/
     fun setCount(value: Float){
         count = value
         invalidate()

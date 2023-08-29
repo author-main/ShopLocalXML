@@ -26,7 +26,6 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     init {
         animator = ValueAnimator().apply {
-            //startDelay = 50
             duration = 1200
             interpolator = DecelerateInterpolator()
             repeatCount = ValueAnimator.INFINITE
@@ -67,7 +66,7 @@ class AnimatedImage: AppCompatImageView, ValueAnimator.AnimatorUpdateListener {
                 0xaadadada.toInt(),
                 Color.TRANSPARENT
             )
-            val min = height//minOf(width, height)
+            val min = height
             val gradientHeight = (kotlin.math.sqrt((2 * min * min).toDouble()) + 2 * delta).toInt()
             val gradientDrawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
             val bitmap = Bitmap.createBitmap(gradientWidht,gradientHeight, Bitmap.Config.ARGB_8888)

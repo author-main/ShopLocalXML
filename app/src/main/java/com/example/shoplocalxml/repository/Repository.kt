@@ -31,15 +31,10 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
      * создается при входе пользователя в систему
      */
     private var token: String? = null
-
-   // private val databaseApi = DatabaseApiImpl()
-
     /**
      * accessHandler отвечает за обработку запросов пользователя
      * onLogin, onRestore, onRegister
      */
-   // private var accessHandler: AccessHandler        = AccessHandlerImpl(databaseApi)
-
     /**
      * Запрос пользователя на вход в систему
      * @param email String email пользователя
@@ -51,19 +46,11 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
      * token == null при неудачной попытке входа в систему
      */
     fun onLogin(email: String, password: String, finger: Boolean, performAction: ()-> Unit, action: (result: Boolean) -> Unit) {
-        //log("connected ${isConnectedNet()}...")
         accessHandler.onLogin(email, password, finger, performAction) {
             token = it
             val result = it != null
             if (result) {
-
-                /*val user = User.getUserData()
-                user?.let{_user ->
-                    _user.email = email
-                    _user.saveUserData()
-                }*/
                 AppShopLocal.userShop.getUserData()
-
             }
             action(result)
         }
@@ -75,12 +62,6 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
      * @param action callback передает результат отправки данных,
      * true - данные успешно переданы
      */
-    /*fun onRegister(vararg userdata: String, action: ((result: Boolean) -> Unit)) {
-        accessHandler.onRegister(*userdata) {
-            action(it)
-        }
-    }*/
-
     fun onRegister(user: User, action: ((result: Boolean) -> Unit)) {
         accessHandler.onRegister(user) {
             action(it)
@@ -102,10 +83,6 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
     /**
      * databaseHandler обрабатывает запросы к БД
      */
-    /*@Inject
-    lateinit var databaseHandler: DatabaseHandler*/
-   // private val databaseHandler: DatabaseHandler    = DatabaseHandlerImpl(databaseApi)
-
     /**
      * Установить FragmentActivity для BiometricPrompt
      * (используется для входа по отпечатку)
@@ -127,7 +104,6 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
     fun getSearchHistoryItems(): List<String> =
         searchQueryStorage.getQueries()
 
-
     fun addSearchHistoryItem(value: String) {
         searchQueryStorage.put(value)
     }
@@ -144,18 +120,10 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
         searchQueryStorage.removeAllQueries()
     }
 
-   /* fun downloadImage(url: String, reduce: Boolean = true, oncomplete: (Bitmap?) -> Unit){
-        ImageDownloadManager.download(url, reduce, oncomplete)
-    }*/
-
     suspend fun getProducts(page: Int, order: String): List<Product>? =
         token?.let {
-           /* log("token $token")
-            log("page $page")
-            log("order $order")*/
             databaseHandler.getProducts(it, page, order)
         }
-
 
     suspend fun getSearchProducts(uuid: String, searchQuery: String, page: Int, order: String): List<Product>? =
         token?.let {
@@ -188,8 +156,4 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
             databaseHandler.updateMessages(it, join_read, join_deleted)
         }
     }
-
-
-
-
 }

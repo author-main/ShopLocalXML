@@ -22,19 +22,12 @@ import kotlin.reflect.KClass
 @[ActivityMainScope Subcomponent(modules = [ViewModelModule::class, ProviderViewModelModule::class])]
 interface ViewModelComponent {
     val factory: MultiViewModelFactory
-
-    /*@Subcomponent.Factory
-    interface Factory {
-        fun create(@BindsInstance activity: AppCompatActivity) : ViewModelComponent
-    }*/
-
     @Subcomponent.Builder
     interface Builder {
         fun build() : ViewModelComponent
     }
     fun inject(activity: AppCompatActivity)
 }
-
 
 @Module
 class ProviderViewModelModule {
@@ -63,8 +56,6 @@ interface ViewModelModule{
     fun bindSharedViewModel(sharedViewModel: SharedViewModel): RepositoryViewModel
 }
 
-
-
 @MustBeDocumented
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
@@ -74,4 +65,3 @@ annotation class ViewModelKey(val value: KClass<out ViewModel>)
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ActivityMainScope
-

@@ -22,12 +22,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     fun setOnScaleImage(value: (Boolean)-> Unit) {
         onScaleImage = value
     }
-
-
-   /* val isNotScale
-        get() = getScaleState()*/
     private var flingAnimate = false
-//    private val handlerUI = Handler(Looper.getMainLooper())
     private var animDoubleZoom: DoubleTapAnimator? = null
     private val clickOffset = 3
     private var startTouch = PointF(0f, 0f)
@@ -72,7 +67,7 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
             Bitmap.Config.ARGB_8888
         )
         val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.WHITE)//ColorDrawable(0x90FFFFFF.toInt()).color)
+        canvas.drawColor(Color.WHITE)
         canvas.drawBitmap(
             sourceBitmap,
             Rect(0, 0, sourceBitmap.width, sourceBitmap.height),
@@ -104,13 +99,10 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 (widthView - widthDrawable * saveScale) / 2f,
                 (heightView - heightDrawable * saveScale) / 2f
             )
-          //  invalidate()
            return true
         }
         return false
     }
-
-
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -124,7 +116,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         val calcScale = (w.toFloat() / widthDrawable).coerceAtMost(h.toFloat() / heightDrawable)
         saveScale = if (calcScale > maxScale) maxScale else calcScale
         minScale = saveScale
-
         matrix.postScale(
             saveScale, saveScale
         )
@@ -157,7 +148,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
     private fun placeBound(value: Float, viewSize: Float, contentSize: Float): Float {
         val offsetFrom: Float
         val offsetTo: Float
-
         if (contentSize <= viewSize) {
             offsetFrom = 0f
             offsetTo = viewSize - contentSize
@@ -165,23 +155,12 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
             offsetFrom = viewSize - contentSize
             offsetTo   = 0f
         }
-
         if (value < offsetFrom)
             return -value + offsetFrom
-
         if (value > offsetTo)
             return -value + offsetTo
         return 0f
     }
-
-
-  /*  private fun updateMatrixFling(){
-        matrix.reset()
-        matrix.postScale(saveScale, saveScale)
-        matrix.postTranslate(transFlingX, transFlingY)
-        limitTranslate()
-        invalidate()
-    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -200,11 +179,9 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 startTouch.x = event.x
                 startTouch.y = event.y
             }
-
             MotionEvent.ACTION_POINTER_UP -> {
                 mode = ZoomMode.NONE
             }
-
             MotionEvent.ACTION_UP -> {
                 mode = ZoomMode.NONE
                 val xDiff = kotlin.math.abs(currX - startTouch.x)
@@ -212,7 +189,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 if (xDiff < clickOffset && yDiff < clickOffset)
                     performClick()
             }
-
            MotionEvent.ACTION_MOVE -> {
                 if (mode == ZoomMode.MOVE) {
                         val dx = currX - lastTouchX
@@ -233,30 +209,20 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         return true
     }
 
-
     private fun onAnimateMove(dx: Float, dy: Float, duration: Long) {
-
         val animateStart = Matrix(matrix)
         val posTrans = getTranslatePos()
         val animateInterpolator = DecelerateInterpolator()
-             //OvershootInterpolator()
         val startTime = System.currentTimeMillis()
         val endTime = startTime + duration
-
-
         val w = widthDrawable  * saveScale
         val h = heightDrawable * saveScale
         val maxOffsetX = (w - widthView).coerceAtLeast(0f)
         val maxOffsetY = (h - heightView).coerceAtLeast(0f)
-
         val minPosX = ((widthView  - w) / 2f).coerceAtLeast(0f)
         val minPosY = ((heightView - h) / 2f).coerceAtLeast(0f)
 
-       /* val minOffsetX = if (maxOffsetX != 0f) 0f else abs((widthView  .- minScale * widthDrawable)) / 2f
-        val minOffsetY = if (maxOffsetY != 0f) 0f else abs((heightView - minScale * heightDrawable)) / 2f*/
-
         fun onAnimateStep() {
-
             fun getOffset(curTrans: Float, deltaTrans: Float, minPos: Float, maxOffset: Float): Float {
                 if (maxOffset == 0f) return 0f
                 val calcTrans = curTrans + deltaTrans
@@ -274,54 +240,23 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
                 .getInterpolation(percentTime)
             val tdX = percentDistance * dx
             val tdY = percentDistance * dy
-
-
-
-            //log("minX $minPosX, minY $minPosY")
             val curDx = getOffset(posTrans.x, tdX, minPosX, maxOffsetX)
             val curDy = getOffset(posTrans.y, tdY, minPosY, maxOffsetY)
-
-
-          /*  curDx = if (tdX > 0) {   // -> сдвиг вправо
-                val offsetX = abs(posTrans.x) - tdX
-                if (offsetX > 0)
-                    tdX
-                else
-                    -posTrans.x
-            } else {
-                val offsetX = abs(posTrans.x + tdX)
-                if (offsetX < maxOffsetX)
-                    tdX
-                else
-                    - (maxOffsetX + posTrans.x)
-            }*/
-
-
-
-        //    if (curDx != 0f || curDy != 0f) {
-                matrix.set(animateStart)
-                matrix.postTranslate(curDx, curDy)
-                invalidate()
-                if (!flingAnimate)
-                    return
-                if (percentTime < 1.0f)
-                    post { onAnimateStep() }
-       //     }
+            matrix.set(animateStart)
+            matrix.postTranslate(curDx, curDy)
+            invalidate()
+            if (!flingAnimate)
+                return
+            if (percentTime < 1.0f)
+                post { onAnimateStep() }
         }
-
-
         if (maxOffsetX == 0f && maxOffsetY == 0f)
             return
-
         flingAnimate = true
         post {
             onAnimateStep()
         }
     }
-
-
-
-
 
     override fun onDown(e: MotionEvent): Boolean {return false}
     override fun onShowPress(e: MotionEvent) {}
@@ -339,20 +274,18 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         velocityX: Float,
         velocityY: Float
     ): Boolean {
-//        log("${e1.x}, ${e1.y} - ${e2.x}, ${e2.y}")
         val distanceTimeFactor = 0.4f
         val totalDx = (distanceTimeFactor * velocityX/2)
         val totalDy = (distanceTimeFactor * velocityY/2)
-
         onAnimateMove(totalDx, totalDy,
             (1000 * distanceTimeFactor).toLong())
         return true
     }
+
     override fun onSingleTapConfirmed(e: MotionEvent): Boolean {return false}
 
     override fun onDoubleTap(e: MotionEvent): Boolean {
         if (minScale == maxScale) return true
-
         val origScale = saveScale
         val transPos = getTranslatePos()
         saveScale = if (saveScale == maxScale)
@@ -363,7 +296,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         val centerX = (widthView - widthDrawable   * saveScale) / 2f
         val centerY = (heightView - heightDrawable * saveScale) / 2f
         animDoubleZoom = DoubleTapAnimator(transPos, PointF(centerX, centerY), origScale, saveScale)
-        //handlerUI.
         post(
             animDoubleZoom!!
         )
@@ -372,7 +304,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
     private fun stopZoomAnimate(){
         animDoubleZoom?.let {
-            //handlerUI.
             removeCallbacks(it)
             animDoubleZoom = null
         }
@@ -392,52 +323,32 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
         private var stepX = (endTrans.x - startTrans.x) / fraction
         private var stepY = (endTrans.y - startTrans.y) / fraction
         override fun run() {
-
             scale   += stepScale
             x       += stepX
             y       += stepY
-
-
-
             var rangeFrom = startScale
             var rangeTo   = endScale
-            /*if (startScale < endScale) {
-                rangeFrom = startScale
-                rangeTo   = endScale
-            } else*/
             if (startScale > endScale) {
                 rangeFrom = endScale
                 rangeTo   = startScale
             }
-
             if (roundScale(scale) !in roundScale(rangeFrom)..roundScale(rangeTo)){
                 stopZoomAnimate()
                 return
             }
-
-
-           /* if (scale  !in rangeFrom..rangeTo) {
-                stopZoomAnimate()
-                return
-            }*/
-
-
             matrix.reset()
             matrix.postScale(scale, scale)
             matrix.postTranslate(x, y)
             invalidate()
             post(this)
-            //postOnAnimation(this)
-        }
+         }
     }
-
 
     override fun onDoubleTapEvent(e: MotionEvent): Boolean {
         return false
     }
 
     private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-
         override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
            if (minScale != maxScale) {
                mode = ZoomMode.ZOOM
@@ -448,7 +359,6 @@ class ZoomImageView: androidx.appcompat.widget.AppCompatImageView, GestureDetect
 
         override fun onScale(detector: ScaleGestureDetector): Boolean {
             if (minScale == maxScale) return true
-
             var scaleFactor = detector.scaleFactor
             val origScale = saveScale
             saveScale *= scaleFactor

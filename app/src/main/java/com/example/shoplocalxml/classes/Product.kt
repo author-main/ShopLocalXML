@@ -30,7 +30,6 @@ data class Product(
     var sold:          Int? = null,
     @SerializedName("linkimages")
     var linkimages:     List<String>? = null,
-   // var imageindex: Int = 0
     ) {
         constructor(): this(
                 id              = -1,
@@ -46,41 +45,4 @@ data class Product(
                 sold            = 0,
                 linkimages      =  emptyList<String>()
         )
-
-    /**
- * // Структура таблицы PRODUCTS //
- * `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
- * `name` VARCHAR(50) NOT NULL,
- * `category` INT UNSIGNED NULL,
- * `description` TEXT NOT NULL,
- * `instock` INT NOT NULL DEFAULT 1,
- * `price` DECIMAL(10,2) UNSIGNED NOT NULL DEFAULT 0.00,
- * `deleted` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
- * `star` TINYINT NULL DEFAULT 1,
- * `brand` INT UNSIGNED NULL,
- * FOREIGN KEY (`category`) REFERENCES `shop_local`.`category` (`id`)
- * FOREIGN KEY (`brand`) REFERENCES `shop_local`.`brands` (`id`)
- */
-    fun getTypeSale() =
-        if (star >= 4)
-            getStringResource(R.string.text_bestseller)
-        else if (discount > 0)
-            getStringResource(R.string.text_action)
-        else
-            ""
-    fun copydata(value: Product){
-        id              = value.id
-        name            = value.name
-        category        = value.category
-        description     = value.description
-        instock         = value.instock
-        discount        = value.discount
-        price           = value.price
-        star            = value.star
-        favorite        = value.favorite
-        brand           = value.brand
-        sold            = value.sold
-        linkimages      = value.linkimages
-    }
-
  }

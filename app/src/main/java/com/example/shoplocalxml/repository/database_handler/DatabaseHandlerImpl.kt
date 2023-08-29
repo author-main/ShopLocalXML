@@ -17,7 +17,6 @@ class DatabaseHandlerImpl @Inject constructor(private val databaseApi: DatabaseA
             databaseApi.getMessages(token, requestCount).body()
         }
 
-
     override suspend fun updateMessages(token: String, join_read: String, join_deleted: String) {
         withContext(Dispatchers.IO) {
             databaseApi.updateMessages(token, join_read, join_deleted)

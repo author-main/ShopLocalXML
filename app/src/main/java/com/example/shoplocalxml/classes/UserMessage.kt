@@ -8,8 +8,7 @@ data class UserMessage(
     @SerializedName("message")  var message     :String = EMPTY_STRING,
     @SerializedName("type")     var type        :Int = 0,
     @SerializedName("read")     var read        :Int = 0,
-    @SerializedName("date")     var date        : String = EMPTY_STRING/*,
-    var deleted: Boolean = false*/
+    @SerializedName("date")     var date        : String = EMPTY_STRING
 ) {
     fun copydata(value: UserMessage) {
         id = value.id
@@ -17,6 +16,5 @@ data class UserMessage(
         type = value.type
         read = value.read
         date = value.date
-            // deleted = value.deleted
     }
 }
