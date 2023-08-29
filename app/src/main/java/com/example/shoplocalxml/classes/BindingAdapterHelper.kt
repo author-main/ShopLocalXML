@@ -42,7 +42,7 @@ object BindingAdapterHelper {
     @BindingAdapter("android:text")
     @JvmStatic
     fun setText(view: EditTextExt, value: Int) {
-        view.setText(value.toString());
+        view.setText(value.toString())
     }
 
     @InverseBindingAdapter(attribute = "android:text")
