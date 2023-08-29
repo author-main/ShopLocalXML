@@ -43,16 +43,4 @@ class ReviewItem: ConstraintLayout {
     }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
-    /*@JvmName("setReview_")
-    private fun setReview(value: Review) {
-        dataBinding.textUserName.t
-    }*/
-
-  /*  override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        val params = dataBinding.root.layoutParams
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT
-        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        dataBinding.root.layoutParams = params
-    }*/
-}
+ }

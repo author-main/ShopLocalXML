@@ -49,5 +49,4 @@ class ReviewsAdapter (val context: Context, private var reviews: List<Review> = 
             }
         }
     }
-
 }
