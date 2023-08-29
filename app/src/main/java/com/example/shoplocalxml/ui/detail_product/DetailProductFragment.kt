@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.example.shoplocalxml.EMPTY_STRING
 import com.example.shoplocalxml.FRIDAY_PERCENT
 import com.example.shoplocalxml.FactoryViewModel
+import com.example.shoplocalxml.MainActivity
 import com.example.shoplocalxml.R
 import com.example.shoplocalxml.SharedViewModel
 import com.example.shoplocalxml.WORD_RATE
@@ -48,12 +49,14 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     private lateinit var homeViewModel: HomeViewModel
 
-    private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+    private lateinit var sharedViewModel: SharedViewModel
+
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
         FactoryViewModel(
             this/*,
             AppShopLocal.repository*/
         )
-    })
+    })*/
 
 
 /*    override fun onPushStackMode(value: HomeViewModel.Companion.HomeMode) {
@@ -94,8 +97,15 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val mainActivity = requireActivity() as MainActivity
+        sharedViewModel = mainActivity.viewModelComponent.factory.create(SharedViewModel::class.java)
         homeViewModel =
-            ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+            mainActivity.viewModelComponent.factory.create(HomeViewModel::class.java)
+
+
+     /*   homeViewModel =
+            ViewModelProvider(requireActivity())[HomeViewModel::class.java]*/
 /*        arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
