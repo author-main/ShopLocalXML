@@ -14,7 +14,6 @@ class DividerItemCardDecoration : ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        //super.getItemOffsets(outRect, view, parent, state)
         val position = parent.getChildAdapterPosition(view)
             .let { if (it == RecyclerView.NO_POSITION) return else it }
         val evenPosition = (position + 1) % 2 == 0

@@ -15,12 +15,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 data class ImageItem(var url: String, var image: Bitmap?, var default: Boolean = false)
 
 class ImagesAdapter: RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
     var reduceImage = false
-//    private val handlerUI = Handler(Looper.getMainLooper())
     private var countUploaded = 0
     private var images: MutableList<ImageItem> = mutableListOf()
     private var onClickItem: ((index: Int) -> Unit)? = null
@@ -30,55 +28,23 @@ class ImagesAdapter: RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
         onUploaded = value
     }
 
-
-
-  /*  @Synchronized
-    fun updateImage(url: String, value: Bitmap?): Boolean{
-        //val bitmap = value //?: EMPTY_BITMAP
-        for (i in images.indices) {
-            if (images[i].url == url) {
-                var default = false
-                val bitmap = value ?: run{
-                    default = true
-                    DEFAULT_BITMAP
-                }
-                images[i].default = default
-                images[i].image = bitmap//DEFAULT_BITMAP
-                notifyItemChanged(i)
-                break
-            }
-        }
-        countUploaded += 1
-        return countUploaded == itemCount
-    }*/
-
     @Synchronized
     @SuppressLint("NotifyDataSetChanged")
     fun setImages(list: List<String>){
-       //images.clear()
         countUploaded = 0
         val listImages = mutableListOf<ImageItem>()
-        //handlerUI.post {
-            list.forEach {
-                listImages.add(ImageItem(it, image = null))
-            }
-            images = listImages
-           // notifyDataSetChanged()
-        //}
+        list.forEach {
+            listImages.add(ImageItem(it, image = null))
+        }
+        images = listImages
         CoroutineScope(Dispatchers.Main).launch {
-            //for (item in images){
             for (i in images.indices) {
                 val item = images[i]
-           /* for (i in list.indices) {
-                val item = ImageItem(list[i], image = null)
-                images.add(item)*/
                 imageDownloadManager.download(item.url, reduce = reduceImage) {
                     item.image = it ?: run {
                         item.default = true
                         DEFAULT_BITMAP
                     }
-
-                    //notifyDataSetChanged()
                     notifyItemChanged(i)
                     countUploaded += 1
                     if (countUploaded == images.size) {
@@ -88,21 +54,7 @@ class ImagesAdapter: RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
                 }
             }
         }
-
-      //  }
     }
-
-
-  /*  fun setImages(value: List<ImageItem>){
-        countUploaded = 0
-        images = value
-        notifyItemRangeChanged(0, images.size)
-      /*  images.forEach {image ->
-            ImageDownloadManager.download(image.url, reduce = true) {
-                images
-            }
-        }*/
-    }*/
 
     fun setOnClickItem(value: (index: Int) -> Unit){
         onClickItem = value
@@ -119,7 +71,6 @@ class ImagesAdapter: RecyclerView.Adapter<ImagesAdapter.ViewHolder>(){
 
     override fun getItemCount() =
         images.size
-
 
     class ViewHolder(view: View, private val onClickItem: ((index: Int) -> Unit)?) : RecyclerView.ViewHolder(view) {
         private val imageItem: ImageView = view.findViewById(R.id.imageItem)

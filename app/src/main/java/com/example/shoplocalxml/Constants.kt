@@ -12,9 +12,6 @@ enum class TypeRequest {
 }
 const val KEY_PASSWORD      = "password"
 const val EMPTY_STRING      = ""
-/*val EMPTY_BITMAP            = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888).apply {
-    this.eraseColor(Color.TRANSPARENT)
-}*/
 const val FILE_PREFERENCES  = "settings"
 const val EXT_TEMPFILE = "tmp"
 //const val SERVER_URL = "http://faceshot.ru"
@@ -26,17 +23,12 @@ val DEFAULT_BITMAP: Bitmap? = run{
 }
 val paddingProductCard = 12.toPx
 val widthProductCard = (getDisplaySize().width - (paddingProductCard * 3)) / 2
-//const val ANY_VALUE = -1
 const val DATA_PORTION = 8
-
 const val ID_CATEGORY = 1L
 const val ID_BRAND    = 2L
 const val FILTER_KEY  = "filter"
-
 const val BOUND_BESTSELLER = 10
 const val BOUND_ACTION     =  5
 const val WORD_REVIEW         = 0
 const val WORD_RATE           = 1
 const val FRIDAY_PERCENT      = 10
-    //val decimalSeparator = DecimalFormatSymbols(applicationContext.resources.configuration.locales[0]).decimalSeparator
-//const val SERVER_URL = "http://faceshot.ru"

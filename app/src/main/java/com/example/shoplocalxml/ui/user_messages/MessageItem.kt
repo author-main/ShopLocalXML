@@ -11,15 +11,7 @@ import com.example.shoplocalxml.classes.UserMessage
 import com.example.shoplocalxml.databinding.MessageItemBinding
 import com.example.shoplocalxml.getStringArrayResource
 
-/*@BindingMethods(
-    BindingMethod(type = MessageItem::class, attribute = "app:onClickItem",  method = "setOnClickItem"),
-    BindingMethod(type = MessageItem::class, attribute = "app:onDeleteItem", method = "setOnDeleteItem")
-)*/
 class MessageItem: ConstraintLayout {
-/*    private var onMessageItemListener: OnMessageItemListener? = null
-    fun setOnMessageItemListener(value: OnMessageItemListener) {
-        onMessageItemListener = value
-    }*/
     var message: UserMessage = UserMessage()
         set(value) {
             field = value
@@ -32,34 +24,6 @@ class MessageItem: ConstraintLayout {
         attrs,
         defStyleAttr
     )
-
-    /*constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)*/
-
-
-   /* interface OnClickItem {
-        fun onClickItem(index: Int)
-    }
-
-    interface OnDeleteItem {
-        fun onDeleteItem(index: Int)
-    }
-
-
-    private var onClickItem: OnClickItem? = null
-    private var onDeleteItem: OnDeleteItem? = null
-
-    fun setOnClickItem(value: OnClickItem) {
-        onClickItem = value
-    }
-
-    fun setOnDeleteItem(value: OnDeleteItem) {
-        onDeleteItem = value
-    }*/
 
     private val dataBinding: MessageItemBinding
     init {
@@ -93,10 +57,6 @@ class MessageItem: ConstraintLayout {
 
         @JvmStatic
         fun getMessageIcon(message: UserMessage): Int {
-          /*val USER_MESSAGE_NORMAL           = 0
-            val USER_MESSAGE_DELIVERY         = 1
-            val USER_MESSAGE_DISCOUNT         = 2
-            val USER_MESSAGE_GIFT             = 3  */
             val drawable = arrayOf(
                 R.drawable.ic_usermessage,
                 R.drawable.ic_delivery,
@@ -105,11 +65,11 @@ class MessageItem: ConstraintLayout {
             )
             return drawable[message.type]
         }
+
         @JvmStatic
         fun getMessageTitle(message: UserMessage): String {
             val title = getStringArrayResource(R.array.typemessage)
             return title[message.type]
         }
     }
-
 }

@@ -17,17 +17,18 @@ import kotlinx.coroutines.launch
 
 class BottomSheetProductMenu(
     private val onProductItemMenuListener: (itemMenu: MenuItemProduct, idProduct: Int, favorite: Boolean) -> Unit): BottomSheetDialogFragment(), View.OnClickListener {
-    //private val dataBinding: BottomsheetProductBinding = DataBindingUtil.inflate(layoutInflater, R.layout.bottomsheet_product, null, false)
     private lateinit var dataBinding: BottomsheetProductBinding
     private var idProduct: Int = -1
     private var favorite = false
     private val itemText = getStringArrayResource(R.array.bottomsheet_product_items)
+
     private fun updateFavoriteItem(){
         dataBinding.textMenuItemFavorite.text   = if (favorite) itemText[5]
         else itemText[2]
         dataBinding.imageMenuItemFavorite.setImageResource(if (favorite) R.drawable.ic_favorite
         else R.drawable.ic_favorite_bs)
     }
+
     override fun onClick(v: View?) {
         if (idProduct == -1) {
             dismiss()
@@ -65,16 +66,7 @@ class BottomSheetProductMenu(
         dataBinding = BottomsheetProductBinding.bind(inflater.inflate(R.layout.bottomsheet_product, container))
         dataBinding.textMenuItemCart.text       = itemText[0]
         dataBinding.textMenuItemBrend.text      = itemText[1]
-
         updateFavoriteItem()
-        /*dataBinding.textMenuItemFavorite.text   = if (favorite) itemText[5]
-            else itemText[2]
-
-        dataBinding.imageMenuItemFavorite.setImageResource(if (favorite) R.drawable.ic_favorite
-                                                                    else R.drawable.ic_favorite_bs)*/
-
-
-
         dataBinding.textMenuItemProduct.text    = itemText[3]
         dataBinding.textMenuItemCancel.text     = itemText[4]
         dataBinding.layoutMenuItemBrend.setOnClickListener(this)
@@ -90,13 +82,10 @@ class BottomSheetProductMenu(
         dialog?.let{bottomSheetDialog ->
             val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
             val behavior = BottomSheetBehavior.from(bottomSheet)
-            //bottomSheet.background = ColorDrawable(Color.TRANSPARENT)
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            //bottomSheetDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-
         }
     }
+
     companion object {
         enum class MenuItemProduct(val value: Int) {
             ITEM_CART(R.id.layoutMenuItemCart),

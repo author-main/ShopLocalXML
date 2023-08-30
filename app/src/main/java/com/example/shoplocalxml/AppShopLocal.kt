@@ -30,19 +30,14 @@ class AppShopLocal: Application() {
     }
     override fun onCreate() {
         super.onCreate()
-        //repository = Repository()
-        appComponent = DaggerAppComponent.factory().create(
+           appComponent = DaggerAppComponent.factory().create(
             CACHE_DIR,
             128,
             32
         )
-            /*.factory().create(
-                applicationInfo.dataDir + "/cache/",
-                8
-            )*/
         appComponent.injectApplication(this)
-
     }
+
     companion object {
         private lateinit var instance: AppShopLocal
         val appComponent: AppComponent
@@ -61,7 +56,3 @@ class AppShopLocal: Application() {
             get() = instance.applicationContext
     }
 }
-
-/*
-app:boxBackgroundColor="@android:color/transparent"
-android:background="@android:color/transparent">*/

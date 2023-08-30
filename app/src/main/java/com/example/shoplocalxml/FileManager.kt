@@ -10,11 +10,8 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.math.roundToInt
 
-
 val CART_IMAGE_SIZE = 150.toPx
 const val HASH_LENGTH = 32
-const val DISK_CACHESIZE  = 50 * 1024 * 1024  // 50Мб
-
 val CACHE_DIR = getCacheDirectory()
 
 fun renameFile(source: String, dest: String){
@@ -82,7 +79,6 @@ fun fileExists(file: File) = file.exists()
 
 fun getCacheDirectory(): String =
     AppShopLocal.applicationContext.applicationInfo.dataDir + "/cache/"
-
 
 fun getTempDirectory(): String =
     AppShopLocal.applicationContext.applicationInfo.dataDir + "/temp/"

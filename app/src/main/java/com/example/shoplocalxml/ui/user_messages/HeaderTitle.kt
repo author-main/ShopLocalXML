@@ -8,8 +8,6 @@ import android.widget.TextView
 import com.example.shoplocalxml.R
 
 class HeaderTitle(parent: ViewGroup, title: String, onBackPressed:() -> Unit) {
-    //private val dataBinding: HeaderTitleBinding = DataBindingUtil.inflate( LayoutInflater.from(parent.context), R.layout.header_title, parent, true)
-
     init{
         val layoutHeaderTitle =  LayoutInflater.from(parent.context)
             .inflate(R.layout.header_title, parent, false) as FrameLayout

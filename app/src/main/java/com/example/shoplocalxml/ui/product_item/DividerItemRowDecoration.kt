@@ -13,7 +13,6 @@ import com.example.shoplocalxml.toPx
 
 
 class DividerItemRowDecoration : ItemDecoration() {
-    //private val colorDivider = applicationContext.getColor(R.color.EditTextFont).alpha(0.3f)
     private val px = 1.toPx
     private val colorDivider = applicationContext.getColor(R.color.EditTextBackgroundDark)
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply{
@@ -40,7 +39,6 @@ class DividerItemRowDecoration : ItemDecoration() {
         val childCount = parent.childCount
         for (i in 0 until childCount - 1) {
             val child = parent.getChildAt(i)
-            //val params = child.layoutParams as RecyclerView.LayoutParams
             val top = child.bottom + paddingProductCard/2f + px
             c.drawLine(start, top, end, top+1f, paint)
         }

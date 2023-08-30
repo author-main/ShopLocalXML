@@ -1,6 +1,5 @@
  package com.example.shoplocalxml
 
-
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
@@ -33,21 +32,14 @@ import java.text.DecimalFormat
 import java.util.Calendar
 import kotlin.math.roundToInt
 
-
 val Boolean.visibility: Int
     get() = if (this) View.VISIBLE else View.GONE
 
 val Float.toPx: Float
     get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, Resources.getSystem().displayMetrics)
 
-/*val Int.toDp: Int
-    get() = (this / Resources.getSystem().displayMetrics.density).toInt()*/
-
 val Int.toPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
-
-/*val Int.toSp: Int
-    get() = (this / Resources.getSystem().displayMetrics.scaledDensity).toInt()*/
 
 fun<T> log(value: T?) {
     if (value != null) {
@@ -65,7 +57,6 @@ fun Int.alpha(value: Float): Int {
         val blue  = color.blue()
         return Color.argb(value, red, green, blue)
 }
-
 
 fun getStringArrayResource(@ArrayRes id: Int): Array<String> =
     applicationContext.resources.getStringArray(id)
@@ -151,57 +142,11 @@ fun getFormattedFloat(value: Float): String{
     return dec.format(result) + getStringResource(R.string.currency)
 }
 
-/*fun downloadImage(url: String, reduce: Boolean, timestamp: Long): Pair<Bitmap?, Long> {
-    var timeStamp = timestamp
-    val bufferSize = 32768
-    *//*val fileName = fileNameFromPath(url)
-    val fileHash = md5(fileName)*//*
-    val fileHash = md5(url)
-    val filenameCache = getCacheDirectory() + fileHash
-    val filenameTemp  = "$filenameCache$.EXT_TEMPFILE"
-    var bitmap: Bitmap? = null
-    var success = false
-
-    try {
-        val conn = URL(url).openConnection() as HttpURLConnection
-        conn.connect()
-        if (conn.responseCode == HttpURLConnection.HTTP_OK) {
-            conn.requestMethod = "HEAD"
-            val fileTime = conn.lastModified
-            if (timestamp != fileTime) {
-                timeStamp = fileTime
-                conn.requestMethod = "GET"
-                val inputStream = conn.inputStream
-                val outputStream = FileOutputStream(filenameTemp)
-                val buffer = ByteArray(bufferSize)
-                var count: Int
-                while (inputStream.read(buffer).also { count = it } > 0) {
-                    outputStream.write(buffer, 0, count)
-                }
-                inputStream.close()
-                outputStream.flush()
-                outputStream.close()
-                bitmap = loadBitmap(filenameTemp, reduce)
-                renameFile(filenameTemp, filenameCache)
-                conn.disconnect()
-                success = true
-            }
-        }
-    } catch (e: Exception) {
-        log(e.message)
-    }
-    if (!success)
-        bitmap = loadBitmap(filenameCache, reduce)
-    return bitmap to timeStamp
-}*/
-
 fun getDisplaySize(): Size {
     val width  = Resources.getSystem().displayMetrics.widthPixels
     val height = Resources.getSystem().displayMetrics.heightPixels
     return Size(width, height)
 }
-
-//fun isEven(value: Int) = value % 2 == 0
 
 fun encodeBase64(value: String): String
         = Base64.encodeToString(value.toByteArray(charset = Charset.defaultCharset()), Base64.NO_WRAP)
@@ -211,22 +156,8 @@ fun<T> getInteger(value: T) : Int {
     return try {strValue.toInt()} catch(_: Exception){0}
 }
 
-/*fun setWidthDialog(dialog: AlertDialog, widthDP: Int){
-    val width: Int = widthDP.toPx
-    val height = ViewGroup.LayoutParams.WRAP_CONTENT
-    dialog.window!!.setLayout(width, height)
-}*/
-
-/*fun setSizeDialog(dialog: AlertDialog, widthDP: Int = 0, heightDP: Int = 0){
-    val width: Int = if (widthDP == 0) ViewGroup.LayoutParams.MATCH_PARENT else widthDP.toPx
-    val height = if (heightDP == 0) ViewGroup.LayoutParams.WRAP_CONTENT
-        else heightDP.toPx
-    dialog.window!!.setLayout(width, height)
-}*/
-
 fun getReduceImageHash(url: String, reduce: Boolean) =
     if (!reduce) md5(url) else md5("${url}_")
-
 
 fun getAfterWord(count: Int?, what: Int): String {
     val idResource = when (what) {
@@ -237,10 +168,8 @@ fun getAfterWord(count: Int?, what: Int): String {
     if (idResource == -1)
         return EMPTY_STRING
     val aWord = getStringArrayResource(idResource)
-
     if (count == null)
         return "0 ${aWord[2]}"
-
     var sCount = count.toString()
     val length = sCount.length
     if (length >=2 )
