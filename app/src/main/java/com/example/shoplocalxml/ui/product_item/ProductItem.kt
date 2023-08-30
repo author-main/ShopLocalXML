@@ -76,7 +76,6 @@ class ProductItem: FrameLayout {
         // Обработка события добавления продукта в корзину
         dataBinding.buttonCart. setOnClickListener {
             onProductItemListener?.onAddCart(product.id)
-            //log("add cart...")
         }
         // Обработка события изменения favorite продукта
         dataBinding.productCard.setOnChangedFavorite {

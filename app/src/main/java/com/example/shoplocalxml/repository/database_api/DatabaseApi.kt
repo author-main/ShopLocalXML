@@ -46,9 +46,11 @@ interface DatabaseApi {
 
     @FormUrlEncoded
     @POST("/api/update_messages")
-    suspend fun updateMessages(@Field("token") token: String, @Field("read") join_read: String, @Field("deleted") join_deleted: String){
+    suspend fun updateMessages(@Field("token") token: String, @Field("read") join_read: String, @Field("deleted") join_deleted: String)
 
-    }
+    @FormUrlEncoded
+    @POST("/api/insert_product_cart")
+    suspend fun addProductCart(@Field("token") token: String, @Field("id") idProduct: Int): Response<Int>
     //suspend fun updateMessages(@Field("token") token: String, @Field("what") what: Int, @Field("id_message") id_message: String): Response<Int>
 
 }

@@ -60,4 +60,9 @@ class DatabaseHandlerImpl @Inject constructor(private val databaseApi: DatabaseA
         withContext(Dispatchers.IO) {
             databaseApi.getReviewsProduct(id, limit).body()
         }
+
+    override suspend fun addProductCart(token: String, idProduct: Int): Int =
+        withContext(Dispatchers.IO) {
+            databaseApi.addProductCart(token, idProduct).body() ?: -1
+        }
 }

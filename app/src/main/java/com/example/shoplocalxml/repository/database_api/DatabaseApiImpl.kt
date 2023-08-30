@@ -73,6 +73,8 @@ class DatabaseApiImpl (private val retrofitInstance: DatabaseApi) {
         retrofitInstance.updateFavorite(token, idProduct, if (favorite) 1 else 0)
     }
 
+    suspend fun addProductCart(token: String, idProduct: Int): Response<Int> =
+        retrofitInstance.addProductCart(token, idProduct)
 
     suspend fun updateMessages(token: String, join_read: String, join_deleted: String){
         /*val read_messages: String    = join_read ?: "x"

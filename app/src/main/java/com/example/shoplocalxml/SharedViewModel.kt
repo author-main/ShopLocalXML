@@ -371,4 +371,12 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
 
 
     }
+
+    fun addProductCart(idProduct: Int, processResponse: ((Int) -> Unit)? = null){
+        viewModelScope.launch {
+            val response = repository.addProductCart(idProduct)
+            processResponse?.invoke(response)
+        }
+    }
+
 }

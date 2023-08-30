@@ -285,7 +285,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
 
             override fun onAddCart(id: Int) {
+                //log("add cart $id...")
+                sharedViewModel.addProductCart(id) {idResponse ->
 
+                }
             }
         })
         dataBinding.recyclerViewProductHome.adapter = adapter

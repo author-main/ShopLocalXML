@@ -266,7 +266,9 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     }
 
     override fun onAddCart() {
-        log("add cart ${product.id}...")
+        sharedViewModel.addProductCart(id) {idResponse ->
+
+        }
     }
 
     override fun onBuyOneClick() {

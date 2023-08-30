@@ -189,6 +189,11 @@ class Repository @Inject constructor(private val accessHandler: AccessHandler,
         }
     }
 
+    suspend fun addProductCart(idProduct: Int): Int =
+        token?.let {
+            databaseHandler.addProductCart(it, idProduct)
+        } ?: -1
+
 
 
 
