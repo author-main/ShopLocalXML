@@ -71,94 +71,44 @@ import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
-   // private lateinit var sharedViewModel: SharedViewModel
-    //private var scrollPosition = 0
     private var isShowNotifications = false
     private var updateCountMessage = false
     private var countUnreadMessages = 0
     private val adapter:ProductsAdapter by lazy {
        ProductsAdapter(context = requireContext())
     }
-
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
        if (result.resultCode == Activity.RESULT_OK) {
            updateFilter(result.data)
        }
    }
-
     private val resultMessagesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             updateMessages(result.data)
     }
-
-
-
-
-    //private var orderQuery: String = ""
     private lateinit var sharedViewModel: SharedViewModel
-    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
-        FactoryViewModel(
-            requireActivity()/*,
-            //this,
-            repository*/
-        )
-    })*/
-
-
-    /*private val sharedViewModel: SharedViewModel =
-        ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity(), repository))[SharedViewModel::class.java]*/
-
-
     private lateinit var homeViewModel: HomeViewModel
-
     private var searchHistoryPanel: SearchHistoryPanel? = null
     private lateinit var dataBinding: FragmentHomeBinding
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-         /*val displaySize = getDisplaySize()
-        val widthProductItemCard = (displaySize.width - 16.toPx * 3) / 2*/
-       /* homeViewModel =
-           ViewModelProvider(this)[HomeViewModel::class.java]*/
-
         val mainActivity = requireActivity() as MainActivity
         sharedViewModel = mainActivity.viewModelComponent.factory.create(SharedViewModel::class.java)
-
         homeViewModel =
-            //ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity()))[HomeViewModel::class.java]
             mainActivity.viewModelComponent.factory.create(HomeViewModel::class.java)
-
         homeViewModel.setOnChangeMode {
             if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.MAIN)    {
-                //log("save data...")
                 saveHomeViewProductState()
             }
         }
-
-
-     /*   sharedViewModel = run {
-            val factory = FactoryViewModel(this, repository)
-            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
-        }*/
-
         dataBinding = FragmentHomeBinding.inflate(inflater, container, false)
         homeViewModel.modeFragment.observe(viewLifecycleOwner) {
-           /* val scrollPosition = try {
-                (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-            } catch(_: Exception) {-1}
-            log("scroll position $scrollPosition")
-            homeViewModel.getPrevMode()*/
-            //log(it)
-
             val visibility = if (it != HomeViewModel.Companion.HomeMode.MAIN)
                 View.VISIBLE else View.GONE
             dataBinding.buttonBack.visibility = visibility
-
            when (it) {
                HomeViewModel.Companion.HomeMode.NULL -> sharedViewModel.closeApp()
                HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL -> {
@@ -174,52 +124,28 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                    setVisibleUserMessageButton(true)
                }
                else -> {
-
                }
            }
-
-
-
-
-
-         /*  if (it == HomeViewModel.Companion.HomeMode.NULL) {
-               sharedViewModel.closeApp()
-           } else {
-               val visible = if (it != HomeViewModel.Companion.HomeMode.MAIN)
-                   View.VISIBLE else View.GONE
-               dataBinding.buttonBack.visibility = visible
-           }*/
-            /*if (it == HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
-                dataBinding.editTextSearchQuery.borderColor = applicationContext.getColor(R.color.colorBrend)
-            else
-                dataBinding.editTextSearchQuery.borderColor = Color.TRANSPARENT*/
         }
-
         dataBinding.eventhandler = this
-
         dataBinding.editTextSearchQuery.doAfterTextChanged {
             searchHistoryPanel?.setSearchQuery(it.toString())
         }
-
         dataBinding.editTextSearchQuery.setOnEditorActionListener { v, _, _ ->
             var result = false
             val query = (v as EditTextExt).text.toString()
             if (query.isNotBlank()) {
                 hideKeyboard()
                 result = true
-                //dataBinding.buttonBack.visibility = View.GONE
                 sharedViewModel.addSearchHistoryItem(query)
                 hideSearchHistoryPanel()
                 searchProducts(query)
             }
             result
         }
-
-
         dataBinding.editTextSearchQuery.setOnClickListener {
             showSearchHistoryPanel(dataBinding.editTextSearchQuery.text.toString())
         }
-
         dataBinding.buttonBack.setOnClickListener {
             performBack()
         }
@@ -227,20 +153,11 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             if (activity is OnSpeechRecognizer)
                 (activity as OnSpeechRecognizer).recognize()
         }
-
-
-
-        /*val layoutManager = GridLayoutManager(requireContext(), 2)
-        dataBinding.recyclerViewProductHome.layoutManager = layoutManager
-        dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemDecoration())
-        dataBinding.recyclerViewProductHome.itemAnimator = null*/
-
         getLayoutManagerRecyclerViewProductHome(sharedViewModel.filterProduct.viewmode)
         dataBinding.recyclerViewProductHome.itemAnimator = null
         dataBinding.recyclerViewProductHome.addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val showFab = recyclerView.canScrollVertically(-1) && dy < 0
-                //(activity as MainActivity).setFabVisibility(canScrollUp)//recyclerView.canScrollVertically(-1))
                 (activity as MainActivity).setFabVisibility(showFab)
                 if (!recyclerView.canScrollVertically(1)) {
                     val layoutManager = recyclerView.layoutManager as GridLayoutManager
@@ -255,15 +172,12 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
-
-//        val adapter = ProductsAdapter(context = requireContext())
         adapter.setOnProductItemListener(object: OnProductItemListener{
             override fun onChangedFavorite(id: Int, value: Boolean) {
                 sharedViewModel.updateProductFavorite(id, value)
             }
 
             override fun onClick(id: Int, index: Int) {
-               // log("product $id, index $index")
                 openDetailProductFragment(id, index)
             }
 
@@ -273,7 +187,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                         itemMenu, idProduct, favorite
                     )
                 }
-//                val bundle =
                 Bundle().apply {
                     putInt("idproduct", id)
                     sharedViewModel.getProductFromId(id)?.let {
@@ -289,68 +202,26 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
         })
         dataBinding.recyclerViewProductHome.adapter = adapter
-
-
-
-        /* sharedViewModel.run {
-            val errorMessage = "download error..."
-            downloadImage("file.txt", true, ) { bitmap ->
-                if (bitmap == null)
-                    log(errorMessage)
-            }
-        }*/
-
-     /*   dataBinding.cardProduct.setOnProductListener(object: OnProductListener {
-            override fun onChangedFavorite(value: Boolean) {
-                sharedViewModel.getProducts(1, "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE=")
-            }
-
-            override fun onClick(index: Int) {
-                log ("product $id, image $index")
-            }
-
-            override fun onShowMenu() {
-                log("show menu...")
-            }
-        })*/
-
-        //sharedViewModel.idViewModel = 20
-
-       /* dataBinding.imageView2.setImageBitmap(null)
-        dataBinding.buttonGradient.setOnClickListener {
-            dataBinding.imageView2.setDefaultDrawable()
-        }*/
-
         dataBinding.includeButtonMessage.buttonMessage.setOnClickListener {
             sharedViewModel.getMessages {messages ->
                 MessagesNotification.clear()
                 showUserMessages(messages)
             }
         }
-
         val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.PopupMenu)
         val popupMenu = androidx.appcompat.widget.PopupMenu(wrapper, dataBinding.includePanelOrderFilter.buttonSort)
         val sortItems = getStringArrayResource(R.array.sort_items)
         setTextButtonOrder(sharedViewModel.sortProduct)
         for (i in sortItems.indices){
-//            val item =
             popupMenu.menu.add(sortItems[i]).setOnMenuItemClickListener {
                 menuOrderClick(i)
                 true
             }
         }
-
-       /* popupMenu.setOnMenuItemClickListener {
-            menuOrderClick(it)
-            true
-        }*/
-
         dataBinding.includePanelOrderFilter.buttonSort.setOnClickListener {
             popupMenu.show()
         }
-
         dataBinding.includePanelOrderFilter.buttonFilter.setOnClickListener {
-
                 sharedViewModel.getFilterData {
                     if (it) {
                         val gson = Gson()
@@ -361,15 +232,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                         intent.putExtra("brands", brandsJson)
                         intent.putExtra("categories", categoriesJson)
                         intent.putExtra(FILTER_KEY, filterJson)
-
-
-                        /*val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                            if (result.resultCode == Activity.RESULT_OK) {
-                                val data: Intent? = result.data
-                            }
-                        }*/
                         resultLauncher.launch(intent)
-                        //activity?.startActivity(intent)
                     } else {
                         vibrate(400)
                         val snackbarExt = SnackbarExt(dataBinding.root, getStringResource(R.string.message_data_error))
@@ -379,105 +242,21 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 }
         }
 
-
-        //log("on create...")
-
-      /*  lifecycleScope.launch {
-
-            sharedViewModel.messages.collect {
-                log("collect messages...")
-                if (it.size > 0) {
-                    //log("show user messages...")
-                    showUserMessages(it)
-                }
-            }
-        }*/
-
         lifecycleScope.launch {
-
             sharedViewModel.products.collect {
                 val visibility = if (it.size > 0) View.VISIBLE else View.GONE
                 dataBinding.includePanelOrderFilter.panelOrderFilter.visibility = visibility
-
-              /*  Handler(Looper.getMainLooper()).post {
-                    dataBinding.recyclerViewProductHome.invalidateItemDecorations()
-                }*/
-
-                   // log("collect...")
-                   /* val products = mutableListOf<Product>()
-                    it.forEach {product ->
-                        val listUrl = mutableListOf<String>()
-                        product.linkimages?.let {linkimages_ ->
-                            linkimages_.forEach { url ->
-                                listUrl.add("$SERVER_URL/$DIR_IMAGES/$url")
-                            }
-                            products.add(
-                                product.copy(
-                                    linkimages = listUrl
-                                )
-                            )
-                        }
-                    }*/
-
-
-
-                    (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)//, sharedViewModel.uploadDataAgain)//, sharedViewModel.portionData)
-                    //log("set products...")
-
-
-
-            /* products.forEach { product ->
-                        product.linkimages?.forEach {url ->
-                            sharedViewModel.downloadImage(url) {bitmap ->
-                                (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).updateImage(url, bitmap)
-                                //productItemCard.updateImage(url, bitmap)
-                            }
-                        }
-                    }*/
-
-    /*                product.linkimages?.forEach {url ->
-                        sharedViewModel.downloadImage(url) {bitmap ->
-                            dataBinding.productItemCard.updateImage(url, bitmap)
-                        }
-                    }*/
-
-                 /*   val listUrl = mutableListOf<String>()
-                    it[1].linkimages?.let{linkImages_ ->
-                        linkImages_.forEach {url ->
-                            listUrl.add("$SERVER_URL/$DIR_IMAGES/$url")
-                        }
-                    }
-
-                    //listUrl[0] = listUrl[0] + "1"
-
-
-                    val product = it[1].copy(
-                        linkimages = listUrl
-                    )
-
-                    dataBinding.productItemCard.product = product
-
-                    product.linkimages?.forEach {url ->
-                        sharedViewModel.downloadImage(url) {bitmap ->
-                            dataBinding.productItemCard.updateImage(url, bitmap)
-                        }
-                    }*/
-
+                (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).setProducts(it)
             }
         }
-        /*val messagesNotification = MessagesNotification(applicationContext)
-        messagesNotification.notifyMessages(listOf())*/
-        //getUnreadDeliveryMessages()
         return dataBinding.root
     }
-
 
     private fun getUnreadDeliveryMessages(){
         lifecycleScope.launch {
             sharedViewModel.getUnreadDeliveryMessages {
                 if (it.isNotEmpty() && !isShowNotifications) {
                     isShowNotifications = true
-                    //log("show notifications")
                     MessagesNotification.getInstance()
                     MessagesNotification.notifyMessages(it)
                 }
@@ -504,12 +283,10 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 SearchHistoryPanel(dataBinding.layoutRoot, object : OnSearchHistoryListener {
                     override fun clearSearchHistory() {
                         sharedViewModel.clearSearchHistory()
-                        //dataBinding.buttonBack.visibility = View.GONE
                         hideSearchHistoryPanel()
                     }
 
                     override fun clickSearchHistoryItem(value: String) {
-                        //sharedViewModel.addSearchHistoryItem(value)
                         dataBinding.editTextSearchQuery.setText(value)
                     }
 
@@ -541,15 +318,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
     }
 
-    /*override fun onStart() {
-        super.onStart()
-        if (updateCountMessage) {
-            updateCountMessage = false
-            showUnreadMessage(countUnreadMessages)
-        } else
-            showUnreadMessage()
-    }*/
-
     private fun setVisibleDetailProductActionbarButtons(value: Boolean){
         val visibility = value.visibility
         val view = dataBinding.includeDetailProductButtons.layoutDetailProductButtons
@@ -576,10 +344,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         }
     }
 
-
-   /* private fun getVisibilityFromBoolean(value: Boolean) =
-        if (value) View.VISIBLE else View.GONE*/
-
     private fun showUnreadMessage(updateCount: Int = -1) {
         fun animateCountMessages(count: Int) {
             val layoutMessageCount = dataBinding.includeButtonMessage.layoutMessageCount
@@ -593,30 +357,24 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                 val textMessageCount = dataBinding.includeButtonMessage.textMessageCount
                 textMessageCount.text = count.toString()
                 textMessageCount.alpha = 0f
-
                 val imageMessage = dataBinding.includeButtonMessage.imageMessage
                 imageMessage.bringToFront()
-
-
                 val center = imageMessageCount.width / 2f
                 val animScale = ScaleAnimation(
                     0F, 1F, 0F, 1F,
                     center, center
                 )
                 animScale.duration = 400
-
                 val animTranslater = TranslateAnimation(-5f, 5f, 0f,0f)
                 animTranslater.duration = 30
                 animTranslater.repeatCount = 7
                 animTranslater.repeatMode = ValueAnimator.REVERSE
-
                 val animScale1 = ScaleAnimation(
                     1F, 0.56F, 1F, 0.56F,
                     32.toPx.toFloat(), 0f
                 )
                 animScale1.duration = 300
                 animScale1.fillAfter = true
-
                 layoutMessageCount.alpha = 1f
                 imageMessageCount.alpha  = 1f
                 CoroutineScope(Dispatchers.Main).launch {
@@ -629,15 +387,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     delay(300)
                     layoutMessageCount.bringToFront()
                 }
-            } /*else {
-                layoutMessageCount.alpha = 0f
-            }*/
-
-
-        //dataBinding.includeButtonMessage.layoutMessageCount.visibility = View.VISIBLE
-
+            }
         }
-
         if (updateCount != -1) {
             animateCountMessages(updateCount)
         } else {
@@ -658,19 +409,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
     private fun performBack(){
         val mode = homeViewModel.modeFragment.value
-       // if (homeViewModel.currentMode() == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
         if (mode == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
             activity?.supportFragmentManager?.popBackStack()
         }
         hideSearchHistoryPanel()
-        //val mode = homeViewModel.modeFragment.value//homeViewModel.getStackMode()
-
         val curMode = homeViewModel.popStackMode()
-
         if (curMode == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
             dataBinding.editTextSearchQuery.text?.clear()
         }
-
         if (curMode == HomeViewModel.Companion.HomeMode.MAIN) {
             dataBinding.editTextSearchQuery.text?.clear()
             if (mode == HomeViewModel.Companion.HomeMode.SEARCH_RESULT) {
@@ -680,20 +426,16 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                     if (changedViewMode)
                         getLayoutManagerRecyclerViewProductHome(data.filter.viewmode)
                     sharedViewModel.restoreDataMode(data.portionData, data.sort, data.filter, data.products)
-                    //log("restored scroll ${data.scrollPosition}")
                     if (data.scrollPosition != -1) {
-
                         (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(
                             data.scrollPosition,
                             0
                         )
                     }
                 }
-                //homeViewModel.removeData(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
                 homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
             }
         }
-
         hideKeyboard()
     }
 
@@ -703,7 +445,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         imm.hideSoftInputFromWindow(dataBinding.editTextSearchQuery.windowToken, 0)
     }
 
-
     private fun getRecyclerViewProductsScrollPosition(): Int {
         return try {
             (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstCompletelyVisibleItemPosition()
@@ -711,11 +452,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun saveHomeViewProductState(){
-        /*val scrollPosition = try {
-            (dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-        } catch(_: Exception) {-1}*/
         val scrollPosition = getRecyclerViewProductsScrollPosition()
-        //log("scrollPosition = $scrollPosition")
         homeViewModel.saveData(
             HomeViewModel.Companion.HomeMode.MAIN,
             sharedViewModel.sortProduct.copy(),
@@ -729,7 +466,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     private fun searchProducts(query: String){
         fun requestDetailProduct(emptyResult: Boolean): Boolean {
             var displaySearchResult = true
-           // if (homeViewModel.modeFragment.value == HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL) {
             if (homeViewModel.existStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)) {
                 if (emptyResult) {
                     homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)
@@ -741,23 +477,14 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
             return displaySearchResult
         }
-        //saveHomeViewProductState()
         sharedViewModel.getSearchProducts(query, page = 1, uploadAgain = true) {isEmpty ->
             homeViewModel.searchQuery = query
             if (isEmpty) {
-            /*    sharedViewModel.portionData = homeViewModel.getData(HomeViewModel.Companion.HomeMode.MAIN)?.portionData ?: run {
-                    val countProducts = sharedViewModel.products.value.size
-                    countProducts / DATA_PORTION + if (countProducts % DATA_PORTION > 0) 1 else 0
-                }
-                homeViewModel.removeData(HomeViewModel.Companion.HomeMode.MAIN)*/
                 showNoProductInfo()
-            }// else
+            }
             if (requestDetailProduct(isEmpty))
                 homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.SEARCH_RESULT)
-            //log(homeViewModel.modeFragment.value)
         }
-
-
     }
 
     private fun showNoProductInfo(){
@@ -809,10 +536,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     private fun setTextButtonOrder(sortOrder: SortOrder) {
-        /*val order = sharedViewModel.sortProduct.order
-        val sort  = getStringArrayResource(com.example.shoplocalxml.R.array.sort_items)[sharedViewModel.sortProduct.sort.value]*/
         val text = getStringArrayResource(R.array.sort_items)[sortOrder.sort.value]
-
         dataBinding.includePanelOrderFilter.buttonSort.text = text
         val sizeIcon = 24.toPx
         if (sortOrder.order == Order.DESCENDING) {
@@ -859,12 +583,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         if (prev.sort == sortOrder.sort)
             sortOrder.invertOrder()
         setTextButtonOrder(sortOrder)
-//        (dataBinding.recyclerViewProductHome.adapter as ProductsAdapter).
         sharedViewModel.setSortProduct(sortOrder)
         sharedViewModel.getProducts(1, true)
-        /*Handler(Looper.getMainLooper()).post {
-            dataBinding.recyclerViewProductHome.invalidateItemDecorations()
-        }*/
     }
 
     private fun updateFilter(intent: Intent?){
@@ -879,13 +599,8 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             if (changedViewMode || changedFilterData)
                 sharedViewModel.setFilterProduct(filter, changedFilterData)
             else return
-
             getLayoutManagerRecyclerViewProductHome(filter.viewmode)
             val onlyChangedViewMode = changedViewMode && !changedFilterData
-
-             //log("changedViewMode $changedViewMode, changedFilterData $changedFilterData")
-
-
             if (onlyChangedViewMode) { // если изменился только viewMode, не загружаем данные
                                        // и делаем скролл до позиции в предыдущем viewMode
                 val firstVisibled = try {
@@ -927,14 +642,9 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     @SuppressLint("NotifyDataSetChanged")
     private fun getLayoutManagerRecyclerViewProductHome(viewMode: ProductsAdapter.Companion.ItemViewMode){
         val countColumn = if (viewMode == ProductsAdapter.Companion.ItemViewMode.CARD) 2 else 1
-        /*firstVisibled = try {
-            val manager = dataBinding.recyclerViewProductHome.layoutManager
-            (manager as GridLayoutManager).findFirstVisibleItemPosition()
-        } catch(_:Exception) {-1}*/
-        if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
+         if (dataBinding.recyclerViewProductHome.itemDecorationCount > 0)
             dataBinding.recyclerViewProductHome.removeItemDecorationAt(0)
-        //adapter.setViewMode(sharedViewModel.filterProduct.viewmode)
-        adapter.setViewMode(viewMode)
+         adapter.setViewMode(viewMode)
         dataBinding.recyclerViewProductHome.adapter = null
         dataBinding.recyclerViewProductHome.layoutManager = null
         dataBinding.recyclerViewProductHome.layoutManager = GridLayoutManager(requireContext(), countColumn)
@@ -944,16 +654,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             dataBinding.recyclerViewProductHome.addItemDecoration(DividerItemRowDecoration())
         dataBinding.recyclerViewProductHome.itemAnimator = null
         dataBinding.recyclerViewProductHome.adapter = adapter
-
-        //adapter.notifyDataSetChanged()
-
-        //log("first visible = $firstVisibled")
-/*        if (firstVisibled != -1)
-            //Handler(Looper.getMainLooper()).post {
-                dataBinding.recyclerViewProductHome.scrollToPosition(firstVisibled)
-                //(dataBinding.recyclerViewProductHome.layoutManager as GridLayoutManager).scrollToPositionWithOffset(8, 0)
-            //}*/
-
     }
 
     fun clickDetailProductFavoriteButton(){
@@ -971,71 +671,21 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
     }
 
     fun clickDetailProductShareButton(){
-        log("click share button...")
+
     }
 
-
     private fun openDetailProductFragment(idProduct: Int, indexImage: Int) {
-
-
-
         sharedViewModel.products.value.find { it.id == idProduct } ?.let{product ->
-            //homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
-            //val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
                 activity?.supportFragmentManager?.let {
                     hideFab()
                     val fragmentTransaction = it.beginTransaction()
-                    //val brand = SharedViewModel.getProductBrend(product.brand)
-                    //val actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
-                    val fragment = DetailProductFragment.newInstance(product, indexImage/*, brand, actionSale, reviews = listOf(),
-                        object: OnDetailContentListener {
-                            override fun onShowReviews() {
-                                log("click reviews...")
-                            }
-
-                            override fun onShowReview(review: Review) {
-                                log("click on show reviews...")
-                            }
-
-                            override fun onShowQuestions() {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun onAddCart() {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun onBuyOneClick() {
-                                TODO("Not yet implemented")
-                            }
-                        }*/
-                        )
+                    val fragment = DetailProductFragment.newInstance(product, indexImage)
                     fragmentTransaction.add(R.id.layoutRoot, fragment)
                     fragmentTransaction.addToBackStack(null)//"DETAIL_FRAGMENT")
                     fragmentTransaction.commit()
                 }
-
-
             homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
         }
-
-
-
-
-
-
-
-
-/*        val gson = Gson()
-        val product = sharedViewModel.products.value.find { it.id == idProduct }
-        product?.let{
-            val productExtra = gson.toJson(it)
-            val intent = Intent(requireContext(), UserMessagesActivity::class.java)
-            intent.putExtra("product", productExtra)
-            val brand = SharedViewModel.getProductBrend(it.brand)
-            intent.putExtra("brand", brand)
-            activity?.startActivity(intent)
-        }*/
     }
 
     private fun showUserMessages(messages: MutableList<UserMessage>){
@@ -1045,7 +695,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         val intent = Intent(requireContext(), UserMessagesActivity::class.java)
         intent.putExtra("messages", messagesJson)
         resultMessagesLauncher.launch(intent)
-        //startActivity(intent)
     }
 
     private fun updateMessages(intent: Intent?){
@@ -1057,7 +706,6 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
                val elements = it.split(',')
                countUnreadMessages -= elements.size
             }
-
             // Без обновления данных на сервере (убрать для обновления на сервере)
             /*
                 val deleteMessages = data.getStringExtra("delete_messages")
@@ -1065,18 +713,4 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             */
         }
     }
-
-    /* override fun onStop() {
-        (activity as MainActivity).setFabVisibility(false)
-        super.onStop()
-    }*/
 }
-
-/*
-recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-
-app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-app:spanCount="2"
- */
-
-//<!--android:src="@android:drawable/ic_dialog_email"-->

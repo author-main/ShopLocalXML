@@ -12,51 +12,19 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
     private var handleEvent = true
     private var isScaledItem = false
     private var selectedIndex = 0
-    // images: список изображений в cache (полный путь + hash)
-    /*var startIndexItem: Int = 0
-        set(value) {
-            field = value
-            setStartItem(value)
-        }*/
     private var onChangeSelectedItem: ((Int) -> Unit)? = null
     fun setOnChangeSelectedItem(value: (Int) -> Unit) {
         onChangeSelectedItem = value
     }
     private var recyclerView: RecyclerView? = null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         this.recyclerView = recyclerView
         selectedIndex = startIndex
         setVisibledItem()
-       /* this.recyclerView!!.addOnItemTouchListener(object: OnItemTouchListener{
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                log(isScaledItem)
-                rv.
-                return false
-            }
-
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-            }
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-
-            }
-        })*/
-
-        /*recyclerView.setOnTouchListener(OnTouchListener { _, _ ->
-            log(isScaledItem)
-            recyclerView.suppressLayout(isScaledItem)
-            false
-        }
-
-        )*/
-
         recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
-            /*override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }*/
-
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!handleEvent) return
@@ -71,7 +39,6 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
                 }
             }
         })
-
     }
 
     fun showItem(index: Int){
@@ -97,7 +64,6 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
         return ViewHolder(view) {
             isScaledItem = it
             recyclerView?.suppressLayout(isScaledItem)
-            //log(isScaledItem)
         }
     }
 
@@ -119,5 +85,4 @@ class ImageViewerAdapter (val context: Context, private val images: List<String>
             }
         }
     }
-
 }

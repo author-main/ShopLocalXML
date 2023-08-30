@@ -59,8 +59,6 @@ class SelectedImagesAdapter (val context: Context, private val linkImages: List<
         }
     }
 
-
-
     private fun unselectItem() {
         recyclerView?.let{
             for ( i in 0..it.childCount) {

@@ -8,7 +8,6 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import com.example.shoplocalxml.databinding.ItemSelectedImageBinding
 
-
 class SelectedImageItem: CardView {
     private var index = -1
     var onClick: ((Int) -> Unit)? = null
@@ -45,19 +44,16 @@ class SelectedImageItem: CardView {
             setLinkImageItem(value)
         }
 
-
     constructor(context: Context) : super(context) {
         isSelected = false
         dataBinding.imageViewSelected.setOnClickListener {
-           // isSelected = !isSelected
             if (!isSelected) {
                 isSelected = true
                 onClick?.invoke(index)
             }
-            /*else
-                isSelected = false*/
         }
     }
+
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,

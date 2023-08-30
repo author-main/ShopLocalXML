@@ -39,23 +39,8 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
     private val _modeFragment = MutableLiveData(HomeMode.MAIN)
     val modeFragment: LiveData<HomeMode> = _modeFragment
 
-  /*  fun getStackMode(): HomeMode{
-        return try {
-        //    stackMode.lastElement()
-            stackMode.peek()
-        } catch(_: Exception){
-            HomeMode.NULL
-        }
-    }*/
-
     fun existStackMode(value: HomeMode) =
         stackMode.search(value) != -1
-
-
-   /* fun getPrevMode(): HomeMode{
-        log(stackMode.size)
-        return HomeMode.NULL
-    }*/
 
     fun popStackMode(): HomeMode{
         try {
@@ -84,11 +69,6 @@ data class DataMode(var sort: SortOrder, var filter: Filter, var portionData: In
             stackMode.push(value)
         }
     }
-    //fun currentMode() = stackMode.peek()
-
-    /*private fun setOrderQuery(value: String) {
-        orderQuery = value
-    }*/
 
     override fun onCleared() {
         hashDataMode.clear()

@@ -14,9 +14,7 @@ import com.example.shoplocalxml.R
 class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySearchHistoryListener: OnSearchHistoryListener) {
     private val layoutHistorySearch =  LayoutInflater.from(parent.context)
         .inflate(R.layout.history_search_panel, parent, false) as LinearLayout
-
     private lateinit var adapter: SearchAdapter
-
 
     fun setSearchQuery(value: String){
         adapter.searchQuery = value
@@ -34,11 +32,8 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
     fun show(items: List<String>, start: String){
         layoutHistorySearch.elevation = 10f
         layoutHistorySearch.findViewById<Button>(R.id.buttonClear).setOnClickListener {
-            //adapter.clearHistory()
             onHistorySearchHistoryListener.clearSearchHistory()
-            //hide()
         }
-
         val manager = LinearLayoutManager(layoutHistorySearch.context)
         adapter = SearchAdapter(items.toMutableList()) {query, delete ->
             if (delete)
@@ -61,6 +56,4 @@ class SearchHistoryPanel(private val parent: ViewGroup, private val onHistorySea
         layoutHistorySearch.startAnimation(animation)
         parent.removeView(layoutHistorySearch)
     }
-
-
 }

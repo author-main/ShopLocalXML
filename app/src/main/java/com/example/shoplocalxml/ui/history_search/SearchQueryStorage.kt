@@ -8,17 +8,9 @@ import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
-/*enum class SearchState {
-    SEARCH_NONE,
-    SEARCH_QUERY,
-    SEARCH_RESULT
-}*/
-
-//@Singleton
 class SearchQueryStorage @Inject constructor(): SearchQueryStorageInterface {
     private var changed = false
     private val listSQ = mutableListOf<String>()
-
     override val fileNameStorage: String =
         AppShopLocal.applicationContext.applicationInfo.dataDir + "/search.lst"
 
@@ -32,29 +24,11 @@ class SearchQueryStorage @Inject constructor(): SearchQueryStorageInterface {
             moveFirst(value)
     }
 
-    /*override fun remove(index: Int){
-        changed = listSQ.removeAt(index).isNotEmpty()
-    }*/
-
     override fun remove(value: String){
         changed = listSQ.remove(value)
     }
 
     override fun getQueries(fromFile: Boolean): List<String> {
-
-      /*  val items = mutableListOf<String>()
-        items.add("Samsung")
-        items.add("NVidia")
-        items.add("AMD")
-        items.add("Intel")
-        items.add("AOC")
-        items.add("Corsair")
-        items.add("Kingstone")
-        items.add("Xiaomi")
-        listSQ.clear()
-        listSQ.addAll(items)
-        return listSQ*/
-
         val callable = Callable<List<String>> {
         if (fromFile) {
             listSQ.clear()
@@ -97,21 +71,8 @@ class SearchQueryStorage @Inject constructor(): SearchQueryStorageInterface {
             listSQ.add(0, value)
     }
 
-    /*fun dispose(){
-        listSQ.clear()
-    }*/
-
     override fun removeAllQueries() {
         listSQ.clear()
         deleteFile(fileNameStorage)
     }
-
-  /*  companion object {
-        private lateinit var instance: SearchQueryStorage
-        fun getInstance(): SearchQueryStorage {
-            if (!this::instance.isInitialized)
-                instance = SearchQueryStorage()
-            return instance
-        }
-    }*/
 }
