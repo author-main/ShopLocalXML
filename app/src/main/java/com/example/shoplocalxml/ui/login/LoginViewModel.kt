@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @ActivityMainScope
 class LoginViewModel @Inject constructor(): RepositoryViewModel(repository) {
-//class LoginViewModel(private val repository: Repository) : ViewModel() {
     private val repository = getRepository()!!
     var onChangePassword: ((count: Int, kei: Int) -> Unit)? = null
     var onValidEmail: (() -> String?)? = null
@@ -37,11 +36,8 @@ class LoginViewModel @Inject constructor(): RepositoryViewModel(repository) {
             when (index) {
                 KEY_FINGER -> {
                     changed = true
-               //     key = PasswordSymbol.FINGER_PRINT
-                    //userPassword = "*****"
                 }
                 KEY_BACKSPACE -> {
-                    //typeKey = PasswordSymbol.BACKSPACE
                     if (userPassword.isNotBlank()) {
                         changed = true
                         userPassword = userPassword.substring(0, userPassword.length - 1)

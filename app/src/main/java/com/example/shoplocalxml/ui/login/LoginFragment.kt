@@ -29,25 +29,7 @@ import com.example.shoplocalxml.vibrate
 
 class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
     private var logged_in = false
-    //private lateinit var sharedViewModel: SharedViewModel
-    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
-        FactoryViewModel(
-            this,
-            repository
-        )
-    })*/
-
-    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
-        FactoryViewModel(
-            requireActivity()/*,
-            //this,
-            repository*/
-        )
-    })*/
-
     private lateinit var sharedViewModel: SharedViewModel
-
-
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var dataBinding: FragmentLoginBinding
     private val passwordSymbols = arrayOfNulls<TextView>(5)
@@ -56,25 +38,10 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = FragmentLoginBinding.inflate(inflater, container, false)
-        //loginViewModel = ViewModelProvider(this, FactoryViewModel(requireActivity(), repository))[LoginViewModel::class.java]
-
-
         val mainActivity = requireActivity() as MainActivity
         sharedViewModel = mainActivity.viewModelComponent.factory.create(SharedViewModel::class.java)
-
         loginViewModel =
-            //ViewModelProvider(requireActivity(), FactoryViewModel(requireActivity()/*, repository*/))[LoginViewModel::class.java]
             mainActivity.viewModelComponent.factory.create(LoginViewModel::class.java)
-
-
-
-      /*  sharedViewModel = run {
-            //val factory = FactoryViewModel(this, repository)
-            val factory = FactoryViewModel(this, repository)
-            ViewModelProvider(requireActivity(), factory)[SharedViewModel::class.java]
-        }*/
-
-
         loginViewModel.onRequestProcessed = {data, typeRequest, result ->
             requestProcessed(data, typeRequest, result)
         }
@@ -96,7 +63,6 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
                 }
             }
         }
-
         loginViewModel.onValidEmail = {
             if (dataBinding.editTextEmailAddress.validateValue())
                 dataBinding.editTextEmailAddress.text.toString()
@@ -121,12 +87,7 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         passwordSymbols[2] = dataBinding.textViewSym3f
         passwordSymbols[3] = dataBinding.textViewSym4f
         passwordSymbols[4] = dataBinding.textViewSym5f
-
         fillPasswordSym(clear = true)
-        /*passwordSymbols.forEach {
-            it?.alpha = 0f
-        }*/
-
         loginViewModel.setActivityFingerPrint(requireActivity())
         loginViewModel.getUserEmail()?.let{
             dataBinding.editTextEmailAddress.setText(it)
@@ -134,7 +95,6 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
         dataBinding.editTextEmailAddress.onValidValue = {
             !(it.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(it).matches())
         }
-
         loginViewModel.onPerformLogin = {
             fillPasswordSym()
             DialogProgress.show(requireContext())
@@ -172,7 +132,6 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
                 if (result) {
                     activity?.let{
                         if (it is OnOpenShopListener) {
-                            //activity?.viewModelStore?.clear()
                             DialogProgress.hide()
                             (it as OnOpenShopListener).openShop()
                             logged_in = true
@@ -186,10 +145,6 @@ class LoginFragment : Fragment(), OnUserListener, OnBackPressed {
                     snackbarExt.type = SnackbarExt.Companion.SnackbarType.ERROR
                     snackbarExt.show()
                 }
-
-                /*passwordSymbols.forEach{textView ->
-                    textView?.alpha = 0f
-                }*/
             }
             TypeRequest.USER_REGISTER -> {
                 if (result) {
