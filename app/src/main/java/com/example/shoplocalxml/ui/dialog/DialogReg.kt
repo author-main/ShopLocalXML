@@ -35,6 +35,13 @@ class DialogReg: DialogFragment() {
         dataBinding.editTextPassword.onValidValue = {password ->
             password.length == 5
         }
+
+        dataBinding.editTextPassword.setDrawableOnClick {
+
+        }
+
+
+
         dataBinding.editTextLName.onValidValue = {lname ->
             lname.isNotBlank()
         }
