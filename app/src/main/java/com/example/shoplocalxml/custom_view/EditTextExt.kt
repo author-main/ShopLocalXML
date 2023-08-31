@@ -134,7 +134,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         var drawableClick = false
-        //if (drawableOnClick != null) {
             event?.let {
                 if (it.action == MotionEvent.ACTION_DOWN) {
                     drawableEnd?.let { _ ->
@@ -163,7 +162,6 @@ class EditTextExt(context: Context, attrs: AttributeSet) : AppCompatEditText(con
                     }
                 }
             }
-       // }
         return if (drawableClick) false else {
             performClick()
             super.onTouchEvent(event)
