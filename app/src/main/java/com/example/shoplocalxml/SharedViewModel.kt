@@ -225,9 +225,9 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
         val sorttype           = sortProduct.sort.value
         val enum               =  filterProduct.enum
         val filterfavorite     = if (filterProduct.favorite) 1 else 0
-        val filterprice        = "${filterProduct.fromPrice}-${filterProduct.toPrice}"
+        val filterprice        = "${filterProduct.fromPrice.toFloat()}-${filterProduct.toPrice.toFloat()}"
         val filterdiscount = filterProduct.discount
-        val filterscreen   = 0
+        val filterscreen   = 1
         var section = EMPTY_STRING
         for (entry in enum) {
             val key = abs(entry.key)
