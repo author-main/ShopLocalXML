@@ -269,11 +269,6 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     override fun onAddCart() {
         if (parentFragment is OnAddProductCart)
             (parentFragment as OnAddProductCart).addProductCart(product.id)
-
-
-        /*sharedViewModel.addProductCart(product.id) { idResponse ->
-
-        }*/
     }
 
     override fun onBuyOneClick() {
