@@ -285,7 +285,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
 
             override fun onAddCart(id: Int) {
-                onAddCart(id)
+                addProductCart(id)
             }
         })
         dataBinding.recyclerViewProductHome.adapter = adapter
