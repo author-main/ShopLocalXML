@@ -302,7 +302,7 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
          *  0 - sort_order:         0 - ASCENDING, 1 - DESCENDING
          *  1 - sort_type:          0 POPULAR, 1 - RATING, 2 - PRICE
 
-        /*   2 - filter_category:    ID категории продукта
+        /*  2 - filter_category:    ID категории продукта
          *  3 - filter_brand:       ID бренда  */
 
          *  2 - filter_enum:        выборка по категории и бренду
@@ -319,6 +319,7 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
         //log("queryOrder = $queryOrder")
         //val queryOrder = "$sortorder $sorttype $filtercategory $filterbrend $filterfavorite $filterprice $filterdiscount $filterscreen"
         //log(encodeBase64(queryOrder))
+        // на выходе строка 0 0 1[1,2]-2[4,5] 0 0-0 2 0
         return encodeBase64(queryOrder)
 
         //return "MCAwIC0xIC0xIDAgMC4wLTAuMCAwIDE="
