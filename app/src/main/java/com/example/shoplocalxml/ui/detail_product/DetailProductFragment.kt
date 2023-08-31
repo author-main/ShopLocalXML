@@ -38,6 +38,7 @@ import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.ui.detail_product.recyclerview_reviews.ReviewsAdapter
 import com.example.shoplocalxml.ui.dialog.DialogReview
 import com.example.shoplocalxml.ui.home.HomeViewModel
+import com.example.shoplocalxml.ui.home.OnAddProductCart
 import com.example.shoplocalxml.ui.image_viewer.ImageViewerActivity
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.google.gson.Gson
@@ -266,9 +267,13 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
     }
 
     override fun onAddCart() {
-        sharedViewModel.addProductCart(id) {idResponse ->
+        if (parentFragment is OnAddProductCart)
+            (parentFragment as OnAddProductCart).addProductCart(product.id)
 
-        }
+
+        /*sharedViewModel.addProductCart(product.id) { idResponse ->
+
+        }*/
     }
 
     override fun onBuyOneClick() {

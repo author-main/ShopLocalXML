@@ -70,7 +70,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener{
+class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListener, OnAddProductCart{
    // private lateinit var sharedViewModel: SharedViewModel
     //private var scrollPosition = 0
     private var isShowNotifications = false
@@ -285,10 +285,7 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
             }
 
             override fun onAddCart(id: Int) {
-                //log("add cart $id...")
-                sharedViewModel.addProductCart(id) {idResponse ->
-
-                }
+                onAddCart(id)
             }
         })
         dataBinding.recyclerViewProductHome.adapter = adapter
@@ -983,50 +980,17 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
 
 
         sharedViewModel.products.value.find { it.id == idProduct } ?.let{product ->
-            //homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
-            //val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
-                activity?.supportFragmentManager?.let {
+                //activity?.supportFragmentManager?.let {
+                childFragmentManager.let{
                     hideFab()
                     val fragmentTransaction = it.beginTransaction()
-                    //val brand = SharedViewModel.getProductBrend(product.brand)
-                    //val actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
-                    val fragment = DetailProductFragment.newInstance(product, indexImage/*, brand, actionSale, reviews = listOf(),
-                        object: OnDetailContentListener {
-                            override fun onShowReviews() {
-                                log("click reviews...")
-                            }
-
-                            override fun onShowReview(review: Review) {
-                                log("click on show reviews...")
-                            }
-
-                            override fun onShowQuestions() {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun onAddCart() {
-                                TODO("Not yet implemented")
-                            }
-
-                            override fun onBuyOneClick() {
-                                TODO("Not yet implemented")
-                            }
-                        }*/
-                        )
+                    val fragment = DetailProductFragment.newInstance(product, indexImage)
                     fragmentTransaction.add(R.id.layoutRoot, fragment)
                     fragmentTransaction.addToBackStack(null)//"DETAIL_FRAGMENT")
                     fragmentTransaction.commit()
                 }
-
-
             homeViewModel.pushStackMode(HomeViewModel.Companion.HomeMode.PRODUCT_DETAIL)
         }
-
-
-
-
-
-
 
 
 /*        val gson = Gson()
@@ -1073,6 +1037,13 @@ class HomeFragment : Fragment(), OnBackPressed, OnSpeechRecognizer, OnFabListene
         (activity as MainActivity).setFabVisibility(false)
         super.onStop()
     }*/
+
+    override fun addProductCart(idProduct: Int) {
+        log("add product in cart...")
+        /*sharedViewModel.addProductCart(id) {idResponse ->
+
+        }*/
+    }
 }
 
 /*
