@@ -282,12 +282,12 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
         //val filtercategory     = filterProduct.category
         //val filterbrend        = filterProduct.brend
         val filterfavorite     = if (filterProduct.favorite) 1 else 0
-        val filterprice        = "${filterProduct.fromPrice}-${filterProduct.toPrice}" /*run {
+        val filterprice        = "${filterProduct.fromPrice.toFloat()}-${filterProduct.toPrice.toFloat()}" /*run {
             val value: Pair<Int, Int>   = filterProduct.priceRange
             "${value.first}-${value.second}"
         }*/
         val filterdiscount = filterProduct.discount
-        val filterscreen   = 0
+        val filterscreen   = 1
         var section = EMPTY_STRING
         for (entry in enum) {
             val key = abs(entry.key)
@@ -311,6 +311,10 @@ class SharedViewModel @Inject constructor(): RepositoryViewModel(repository) {
          *  5 - filter_discount:    скидка
          *  6 - filrter_screen:     текущий экран
          */
+
+
+        // jetpack compose  - 0 0 1[1,2]-2[2,4,5] 0 0.0-0.0 2 1
+        // xml              - 0 0 1[1,2]-2[2,4,5] 0 0.0-0.0 2 1
 
         //log("$sortorder $sorttype $section $filterfavorite $filterprice $filterdiscount $filterscreen")
 
