@@ -38,6 +38,7 @@ import com.example.shoplocalxml.md5
 import com.example.shoplocalxml.ui.detail_product.recyclerview_reviews.ReviewsAdapter
 import com.example.shoplocalxml.ui.dialog.DialogReview
 import com.example.shoplocalxml.ui.home.HomeViewModel
+import com.example.shoplocalxml.ui.home.OnAddProductCart
 import com.example.shoplocalxml.ui.image_viewer.ImageViewerActivity
 import com.example.shoplocalxml.ui.product_item.product_card.recycler_view_images.OnChangeSelectedItem
 import com.google.gson.Gson
@@ -46,28 +47,70 @@ import java.util.Calendar
 
 
 class DetailProductFragment : Fragment(), OnDetailContentListener {
+
     private lateinit var homeViewModel: HomeViewModel
+
     private lateinit var sharedViewModel: SharedViewModel
+
+    /*private val sharedViewModel: SharedViewModel by activityViewModels(factoryProducer = {
+        FactoryViewModel(
+            this/*,
+            AppShopLocal.repository*/
+        )
+    })*/
+
+
+/*    override fun onPushStackMode(value: HomeViewModel.Companion.HomeMode) {
+        homeViewModel.pushStackMode(value)
+    }
+
+
+    override fun onPopStackMode() {
+        log("pop stackmode...")
+        homeViewModel.popStackMode()
+    }*/
+
     override fun onDestroy() {
         instance = null
         super.onDestroy()
     }
+
+    /*private var onDetailProductButtonsListener: OnDetailProductButtonsListener? = null
+    fun setOnDetailProductButtonsListener(value: OnDetailProductButtonsListener) {
+        onDetailProductButtonsListener = value
+    }*/
+
+
     private val adapter: ReviewsAdapter by lazy {
         ReviewsAdapter(context = requireContext())
     }
+
     private lateinit var dataBinding: FragmentDetailProductBinding
+    //private var onDetailContentListener: OnDetailContentListener? = null
     private var product: Product = Product()
-    private var brand = EMPTY_STRING
-    private var actionSale = EMPTY_STRING
+    private var brand = EMPTY_STRING//SharedViewModel.getProductBrend(product.brand)
+    private var actionSale = EMPTY_STRING//SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
+    //private var brand: String = EMPTY_STRING
     private var imageIndex: Int = 0
+    //private var actionSale = EMPTY_STRING
     private var reviews = listOf<Review>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val mainActivity = requireActivity() as MainActivity
         sharedViewModel = mainActivity.viewModelComponent.factory.create(SharedViewModel::class.java)
         homeViewModel =
             mainActivity.viewModelComponent.factory.create(HomeViewModel::class.java)
+
+
+     /*   homeViewModel =
+            ViewModelProvider(requireActivity())[HomeViewModel::class.java]*/
+/*        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }*/
     }
 
     override fun onCreateView(
@@ -90,10 +133,14 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         val textFriday = "-${FRIDAY_PERCENT}%"
         dataBinding.detailProductContent.textPercentFriday.text = textFriday
         dataBinding.detailProductContent.textProductPrice.paintFlags = dataBinding.detailProductContent.textProductPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+
         val animation = ObjectAnimator.ofFloat(dataBinding.detailProductContent.textViewSale, View.ROTATION_Y, 0.0f, 360f)
         animation.startDelay = 3000
         animation.duration = 2400
+        //animation.repeatCount = ObjectAnimator.INFINITE
         animation.interpolator = AccelerateDecelerateInterpolator()
+
         animation.addListener(object: AnimatorListenerAdapter(){
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
@@ -103,7 +150,9 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         })
         animation.start()
         sharedViewModel.getReviewsProduct(product.id, limit = 2) {
+            //log(it)
             reviews = it
+            //dataBinding.invalidateAll()
             val count = getReviewsCount()
             dataBinding.detailProductContent.textRating.text =
                 getAfterWord(count, WORD_RATE)
@@ -123,9 +172,16 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         dataBinding.detailProductContent.textDescription.text = product.description
         dataBinding.detailProductContent.ratingProduct.setCount(product.star)
         dataBinding.detailProductContent.textStarUsers.text = product.star.toString()
+        /*lifecycleScope.launch {
+            sharedViewModel.reviews.collect {
+                log(it)
+            }
+        }*/
+
         dataBinding.product = product
         dataBinding.eventhandler = this
         setDateDelivery(System.currentTimeMillis())
+
         val manager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
         dataBinding.detailProductContent.recyclerViewReviews.layoutManager = manager
         val snapHelper: SnapHelper = LinearSnapHelper()
@@ -133,6 +189,7 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         dataBinding.detailProductContent.recyclerViewReviews.adapter = adapter
         return dataBinding.root
     }
+
 
     private fun getReviewsCount(): Int{
         var count = 0
@@ -155,6 +212,8 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
     private fun setDateDelivery(date: Long){
         val arrayMonth = getStringArrayResource(R.array.month)
+        //val dateFormat = SimpleDateFormat.getDateInstance()
+        //val dateDelivery = Date(date)
         val calendar: Calendar = Calendar.getInstance()
         calendar.timeInMillis = date
         calendar.add(Calendar.DAY_OF_MONTH, 3)
@@ -163,6 +222,10 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
         val textDate = "${getString(R.string.text_datedelivery)} $day ${arrayMonth[month]}"
         dataBinding.textViewDateDelivery.text = textDate
     }
+
+    /*private fun setReviews(value: List<Review>) {
+        reviews = value
+    }*/
 
     private fun hideLayoutFriday(){
         dataBinding.detailProductContent.layoutFriday.visibility = View.GONE
@@ -174,28 +237,42 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
        actionSale = SharedViewModel.getProductPromotion(product.discount, product.sold ?: 0)
     }
 
+   /* private fun setOnDetailContentListener(value: OnDetailContentListener){
+        onDetailContentListener = value
+    }*/
+
+   /* private fun setActionSale(value: String) {
+        actionSale = value
+    }
+
+    private fun setBrandName(value: String) {
+        brand = value
+    }*/
+
     private fun setImageIndex(value: Int) {
         imageIndex = value
+        //dataBinding.cardViewProductImages.getRecyclerViewImages().scrollToPosition(value)
     }
 
     override fun onShowReviews() {
-
+        log("show reviews...")
     }
 
     override fun onShowReview(review: Review) {
-
+        TODO("Not yet implemented")
     }
 
     override fun onShowQuestions() {
-
+        log("show questions...")
     }
 
     override fun onAddCart() {
-
+        if (parentFragment is OnAddProductCart)
+            (parentFragment as OnAddProductCart).addProductCart(product.id)
     }
 
     override fun onBuyOneClick() {
-
+        log("one click ${product.id}...")
     }
 
     override fun onShowImage(index: Int) {
@@ -210,13 +287,32 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             val intent = Intent(requireContext(), ImageViewerActivity::class.java)
             intent.putExtra("listimages", extraList)
             intent.putExtra("startindex", index)
+            /*intent.putExtra("stackmode_listener", object: OnStackModeListener{
+                override fun onPushStackMode(value: HomeViewModel.Companion.HomeMode) {
+                    homeViewModel.pushStackMode(value)
+                }
+
+                override fun onPopStackMode() {
+                    homeViewModel.popStackMode()
+                }
+            })*/
+
             startActivity(intent)
         }
+    /*    product.linkimages?.get(index)?.let {link ->
+ //           if (!reduce) md5(url) else md5("${url}_")
+            val srcimage = "${getCacheDirectory()}${md5(link)}"
+            val intent = Intent(requireContext(), ImageViewerActivity::class.java)
+            intent.putExtra("srcimage", srcimage)
+            startActivity(intent)
+        }*/
+        //intent.putExtra("imagehash", imagehash)
     }
 
     override fun onShowBrand() {
         log("log brand ${product.brand}...")
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -243,6 +339,10 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             DetailProductFragment().apply {
                 setProduct(product)
                 setImageIndex(imageIndex)
+/*                setBrandName(brandName)
+                setActionSale(actionSale)
+                setReviews(reviews)*/
+                //setOnDetailContentListener(onDetailContentListener)
                 instance = this
             }
 
@@ -251,6 +351,12 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
 
         @JvmStatic
         fun getActionSale() = instance?.actionSale ?: EMPTY_STRING
+
+/*        @JvmStatic
+        fun getRating() = getAfterWord(instance?.reviews?.count(), WORD_RATE)
+
+        @JvmStatic
+        fun getCountReviews() = instance?.reviews?.count().toString() ?: "0"*/
 
         @JvmStatic
         fun getCountQuestions() = "4"
@@ -268,4 +374,8 @@ class DetailProductFragment : Fragment(), OnDetailContentListener {
             return finalPrice
         }
     }
+
+
+
+
 }

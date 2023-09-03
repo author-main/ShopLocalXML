@@ -7,6 +7,7 @@ import com.example.shoplocalxml.classes.Review
 import com.example.shoplocalxml.classes.UserMessage
 
 interface DatabaseHandler {
+    suspend fun addProductCart(token: String, idProduct: Int): Int
     suspend fun updateMessages(token: String, join_read: String, join_deleted: String)
     suspend fun getMessages(token: String, requestCount: Int): List<UserMessage>?
     suspend fun getProducts(token: String, page: Int, order: String): List<Product>?
