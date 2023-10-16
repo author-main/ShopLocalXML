@@ -31,6 +31,7 @@ import com.example.shoplocalxml.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.Locale
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigationListener, OnSpeechRecognizer {
@@ -48,7 +49,8 @@ class MainActivity : AppCompatActivity(), OnOpenShopListener, OnBottomNavigation
             repository*/
         )
     })*/
-    private lateinit var sharedViewModel: SharedViewModel
+
+    lateinit var sharedViewModel: SharedViewModel
 
     //lateinit var sharedViewModel: SharedViewModel
     val viewModelComponent = appComponent.viewModelComponent().build()
